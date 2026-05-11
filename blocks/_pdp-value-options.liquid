@@ -1,0 +1,98 @@
+<div
+  class="
+    {% if block.settings.visibility contains 'mobile' %}
+      tw-flex
+      md:tw-hidden
+    {% elsif block.settings.visibility contains "desktop" %}
+      tw-hidden
+      md:tw-flex
+    {% else %}
+      tw-flex
+    {% endif %} tw-flex-row tw-justify-start tw-rounded-md
+  "
+  style="background-color: {{ block.settings.bg_color }}; gap: {{ block.settings.gap }}px; padding: {{ block.settings.padding }}px;"
+>
+  {% content_for 'blocks' %}
+</div>
+
+{% schema %}
+{
+  "name": "PDP Value Options",
+  "class": "tw-contents",
+  "settings": [
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Visibility",
+      "options": [
+        {
+          "value": "both",
+          "label": "Mobile and Desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Mobile only"
+        },
+        {
+          "value": "desktop",
+          "label": "Desktop only"
+        }
+      ],
+      "default": "both"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#D1D5DB"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Gap",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "padding",
+      "label": "Padding",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    }
+  ],
+  "blocks": [
+    {
+      "type": "_pdp-value-item"
+    },
+    {
+      "type": "_pdp-picture-callout-item"
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP Value Options",
+      "blocks": [
+        {
+          "type": "_pdp-value-item",
+          "settings": {
+            "text": "Enjoy Free Shipping"
+          }
+        },
+        {
+          "type": "_pdp-value-item",
+          "settings": {
+            "text": "30 Day Trial"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

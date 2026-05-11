@@ -1,0 +1,65 @@
+<div
+  class="
+    {% if block.settings.visibility contains 'mobile' %}
+      tw-flex
+      md:tw-hidden
+    {% elsif block.settings.visibility contains "desktop" %}
+      tw-hidden
+      md:tw-flex
+    {% else %}
+      tw-flex
+    {% endif %} tw-flex-col tw-gap-4 tw-mb-2
+  "
+>
+  {% assign solid_button_classes = 'tw-bg-white tw-text-black tw-w-full tw-border-2 tw-py-2 tw-px-8 tw-text-center tw-transition-button tw-font-montserrat tw-rounded-full hover:tw-scale-105 tw-border-black tw-border-solid' %}
+  <!-- Add to cart button -->
+  <button
+    type="submit"
+    v-if="!addingToCart"
+    @click="addToCart"
+    class="{{ solid_button_classes }}"
+  >
+    Add to Cart
+  </button>
+
+  <!-- Adding To Cart Spinner Button -->
+  <div class="{{ solid_button_classes }} tw-cursor-wait" v-if="addingToCart">
+    <div class="tw-size-6 tw-mx-auto tw-animate-spin">
+      {% render 'icon-spin' %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "PDP Checkout Buttons",
+  "class": "tw-contents",
+  "settings": [
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Visibility",
+      "options": [
+        {
+          "value": "both",
+          "label": "Mobile and Desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Mobile only"
+        },
+        {
+          "value": "desktop",
+          "label": "Desktop only"
+        }
+      ],
+      "default": "both"
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP Checkout Buttons"
+    }
+  ]
+}
+{% endschema %}

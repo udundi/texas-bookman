@@ -1,0 +1,74 @@
+<div
+  class="tw-bg-grey-light tw-w-full tw-flex tw-flex-row tw-gap-4 tw-items-center tw-rounded-lg tw-text-navy"
+  style="padding: {{ block.settings.padding_y }}px {{ block.settings.padding_x }}px;"
+>
+  <div class="tw-h-14 tw-aspect-square">
+    {% if block.settings.image != blank %}
+      {{
+        block.settings.image
+        | image_url: width: 800
+        | image_tag: class: 'tw-h-14 tw-aspect-square tw-object-contain'
+      }}
+    {% else %}
+      {{ 'product-1' | placeholder_svg_tag: 'tw-size-14 tw-border' }}
+    {% endif %}
+  </div>
+  <div class="tw-flex tw-flex-col tw-gap-2">
+    {% if block.settings.header != blank %}
+      <div class="tw-font-bold tw-text-12">{{ block.settings.header }}</div>
+    {% endif %}
+    {% if block.settings.body != blank %}
+      <div class="tw-text-12">{{ block.settings.body }}</div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Picture Callout Item",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "header",
+      "label": "Header",
+      "default": "Lorem Ipsum"
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body",
+      "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Horizontal Padding",
+      "min": 0,
+      "max": 64,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_y",
+      "label": "Vertical Padding",
+      "min": 0,
+      "max": 64,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    }
+  ],
+  "presets": [
+    {
+      "name": "Picture Callout Item"
+    }
+  ]
+}
+{% endschema %}

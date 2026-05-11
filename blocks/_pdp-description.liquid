@@ -1,0 +1,68 @@
+{% if block.settings.body != blank or block.settings.body_default != blank %}
+  <div
+    class="
+      {% if block.settings.visibility contains 'mobile' %}
+        tw-contents
+        md:tw-hidden
+      {% elsif block.settings.visibility contains "desktop" %}
+        tw-hidden
+        md:tw-contents
+      {% else %}
+        tw-contents
+      {% endif %}
+    "
+  >
+    <div class="ud-rich-text tw-py-2 tw-text-14 tw-font-montserrat tw-text-offblack max-md:tw-items-start max-md:tw-text-start">
+      {% if block.settings.body != blank %}
+        {{ block.settings.body }}
+      {% else %}
+        {{ block.settings.body_default }}
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "PDP Description",
+  "class": "tw-contents",
+  "settings": [
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Visibility",
+      "options": [
+        {
+          "value": "both",
+          "label": "Mobile and Desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Mobile only"
+        },
+        {
+          "value": "desktop",
+          "label": "Desktop only"
+        }
+      ],
+      "default": "both"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Mini Description"
+    },
+    {
+      "type": "richtext",
+      "id": "body_default",
+      "label": "Fallback Mini Description",
+      "info": "If body text is empty then text will default to this fallback text. If fallback text is empty, nothing will render."
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP Description"
+    }
+  ]
+}
+{% endschema %}

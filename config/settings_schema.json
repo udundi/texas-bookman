@@ -23,6 +23,36 @@
     ]
   },
   {
+    "name": "Sales",
+    "settings": [
+      {
+        "id": "sitewide_sale",
+        "type": "checkbox",
+        "label": "Display Sitewide Sale?"
+      },
+      {
+        "id": "sitewide_sale_discount",
+        "type": "number",
+        "label": "Sitewide Sale Percentage Discount"
+      },
+      {
+        "id": "flash_sale",
+        "type": "checkbox",
+        "label": "Display Flash Sale?"
+      },
+      {
+        "id": "flash_sale_discount",
+        "type": "number",
+        "label": "Flash Sale Percentage Discount"
+      },
+      {
+        "id": "flash_sale_products",
+        "type": "product_list",
+        "label": "Flash Sale Products"
+      }
+    ]
+  },
+  {
     "name": "t:general.layout",
     "settings": [
       {

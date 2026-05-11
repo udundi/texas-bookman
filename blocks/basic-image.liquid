@@ -1,0 +1,430 @@
+{% assign object_fit_class = 'tw-object-cover' %}
+{% if block.settings.object_fit == 'contain' %}
+  {% assign object_fit_class = 'tw-object-contain' %}
+{% endif %}
+
+<style>
+  .block-{{ block.id }} {
+    border-width: {{ block.settings.border }}px;
+    border-style: solid;
+    border-color: {{ block.settings.border_color }};
+    max-width: {{ block.settings.max_width }}px;
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  @media screen and (max-width: 749px) {
+    .block-{{ block.id }} {
+      max-width: {{ block.settings.mobile_max_width }}px;
+    }
+  }
+</style>
+{% if block.settings.image != blank %}
+  <img
+    srcset="
+      {%- if block.settings.image.width >= 165 -%}{{ block.settings.image | image_url: width: 165 }} 165w,{%- endif -%}
+      {%- if block.settings.image.width >= 360 -%}{{ block.settings.image | image_url: width: 360 }} 360w,{%- endif -%}
+      {%- if block.settings.image.width >= 533 -%}{{ block.settings.image | image_url: width: 533 }} 533w,{%- endif -%}
+      {%- if block.settings.image.width >= 720 -%}{{ block.settings.image | image_url: width: 720 }} 720w,{%- endif -%}
+      {%- if block.settings.image.width >= 940 -%}{{ block.settings.image | image_url: width: 940 }} 940w,{%- endif -%}
+      {%- if block.settings.image.width >= 1066 -%}{{ block.settings.image | image_url: width: 1066 }} 1066w,{%- endif -%}
+      {{ block.settings.image | image_url }} {{ block.settings.image.width }}w
+    "
+    sizes="(max-width: 749px) {{ block.settings.mobile_max_width }}px, {{ block.settings.max_width }}px"
+    src="{{ block.settings.image | image_url: width: 2000 }}"
+    alt="{% if block.settings.alt_text %}{{ block.settings.alt_text | escape }}{% else %}{{ block.settings.image.alt | escape }}{% endif %}"
+    width="{{ block.settings.image.width }}"
+    height="{{ block.settings.image.height }}"
+    class="
+      block-{{ block.id }}
+      {{ object_fit_class }}
+      tw-mx-auto
+
+      {% if block.settings.aspect_ratio == 'none' %}
+      {% elsif block.settings.aspect_ratio == 'square' %}
+        md:tw-aspect-square
+      {% elsif block.settings.aspect_ratio == 'video' %}
+        md:tw-aspect-video
+      {% elsif block.settings.aspect_ratio == '4/3' %}
+        md:tw-aspect-4/3
+      {% elsif block.settings.aspect_ratio == '5/4' %}
+        md:tw-aspect-5/4
+      {% elsif block.settings.aspect_ratio == '6/5' %}
+        md:tw-aspect-6/5
+      {% elsif block.settings.aspect_ratio == '7/6' %}
+        md:tw-aspect-7/6
+      {% elsif block.settings.aspect_ratio == '10/9' %}
+        md:tw-aspect-10/9
+      {% elsif block.settings.aspect_ratio == '9/10' %}
+        md:tw-aspect-9/10
+      {% elsif block.settings.aspect_ratio == '6/7' %}
+        md:tw-aspect-6/7
+      {% elsif block.settings.aspect_ratio == '5/6' %}
+        md:tw-aspect-5/6
+      {% elsif block.settings.aspect_ratio == '4/5' %}
+        md:tw-aspect-4/5
+      {% elsif block.settings.aspect_ratio == '3/2' %}
+        md:tw-aspect-3/2
+      {% elsif block.settings.aspect_ratio == '2/3' %}
+        md:tw-aspect-2/3
+      {% elsif block.settings.aspect_ratio == '3/4' %}
+        md:tw-aspect-3/4
+      {% elsif block.settings.aspect_ratio == '3/8' %}
+        md:tw-aspect-3/8
+      {% elsif block.settings.aspect_ratio == '9/16' %}
+        md:tw-aspect-9/16
+      {% elsif block.settings.aspect_ratio == '8/3' %}
+        md:tw-aspect-8/3
+      {% endif %}
+
+      {% if block.settings.mobile_aspect_ratio == 'none' %}
+      {% elsif block.settings.mobile_aspect_ratio == 'square' %}
+        tw-aspect-square
+      {% elsif block.settings.mobile_aspect_ratio == 'video' %}
+        tw-aspect-video
+      {% elsif block.settings.mobile_aspect_ratio == '4/3' %}
+        tw-aspect-4/3
+      {% elsif block.settings.mobile_aspect_ratio == '5/4' %}
+        tw-aspect-5/4
+      {% elsif block.settings.mobile_aspect_ratio == '6/5' %}
+        tw-aspect-6/5
+      {% elsif block.settings.mobile_aspect_ratio == '7/6' %}
+        tw-aspect-7/6
+      {% elsif block.settings.mobile_aspect_ratio == '10/9' %}
+        tw-aspect-10/9
+      {% elsif block.settings.mobile_aspect_ratio == '9/10' %}
+        tw-aspect-9/10
+      {% elsif block.settings.mobile_aspect_ratio == '6/7' %}
+        tw-aspect-6/7
+      {% elsif block.settings.mobile_aspect_ratio == '5/6' %}
+        tw-aspect-5/6
+      {% elsif block.settings.mobile_aspect_ratio == '4/5' %}
+        tw-aspect-4/5
+      {% elsif block.settings.mobile_aspect_ratio == '3/2' %}
+        tw-aspect-3/2
+      {% elsif block.settings.mobile_aspect_ratio == '2/3' %}
+        tw-aspect-2/3
+      {% elsif block.settings.mobile_aspect_ratio == '3/4' %}
+        tw-aspect-3/4
+      {% elsif block.settings.mobile_aspect_ratio == '3/8' %}
+        tw-aspect-3/8
+      {% elsif block.settings.mobile_aspect_ratio == '9/16' %}
+        tw-aspect-9/16
+      {% elsif block.settings.mobile_aspect_ratio == '8/3' %}
+        tw-aspect-8/3
+      {% endif %}
+
+      {% if block.settings.rounded == 'full' %}
+        tw-rounded-full
+      {% elsif block.settings.rounded == 'sm' %}
+        tw-rounded-md
+      {% elsif block.settings.rounded == 'md' %}
+        tw-rounded-xl
+      {% elsif block.settings.rounded == 'lg' %}
+        tw-rounded-3xl
+      {% else %}
+        tw-rounded-none
+      {% endif %}
+    "
+    {% unless block.settings.lazy_load == false %}
+    loading="lazy"
+    {% endunless %}
+    decoding="async">
+{% else %}
+  {{ 'product-1' | placeholder_svg_tag: 'tw-w-full tw-max-w-96 tw-aspect-square tw-h-full tw-object-contain' }}
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Image",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "header",
+        "content": "Aspect Ratio"
+      },
+      {
+        "type": "select",
+        "id": "aspect_ratio",
+        "label": "Desktop",
+        "options": [
+          {
+            "value": "none",
+            "label": "None"
+          },
+          {
+            "value": "square",
+            "label": "Square (1 / 1)"
+          },
+          {
+            "value": "2/3",
+            "label": "Tall Photo (2 / 3)"
+          },
+          {
+            "value": "3/4",
+            "label": "Tall Photo (3 / 4)"
+          },
+          {
+            "value": "4/5",
+            "label": "Tall Photo (4 / 5)"
+          },
+          {
+            "value": "5/6",
+            "label": "Tall Photo (5 / 6)"
+          },
+          {
+            "value": "6/7",
+            "label": "Tall Photo (6 / 7)"
+          },
+          {
+            "value": "9/10",
+            "label": "Tall Photo (9 / 10)"
+          },
+          {
+            "value": "video",
+            "label": "Video (16 / 9)"
+          },
+          {
+            "value": "8/3",
+            "label": "Wide Banner (8 / 3)"
+          },
+          {
+            "value": "10/9",
+            "label": "Wide Photo (10 / 9)"
+          },
+          {
+            "value": "7/6",
+            "label": "Wide Photo (7 / 6)"
+          },
+          {
+            "value": "6/5",
+            "label": "Wide Photo (6 / 5)"
+          },
+          {
+            "value": "5/4",
+            "label": "Wide Photo (5 / 4)"
+          },
+          {
+            "value": "4/3",
+            "label": "Wide Photo (4 / 3)"
+          },
+          {
+            "value": "3/2",
+            "label": "Wide Photo (3 / 2)"
+          },
+          {
+            "value": "9/16",
+            "label": "Tall Banner (9 / 16)"
+          },
+          {
+            "value": "3/8",
+            "label": "Really Tall Banner (3 / 8)"
+          }
+        ],
+        "default": "square"
+      },
+
+      {
+        "type": "select",
+        "id": "mobile_aspect_ratio",
+        "label": "Mobile",
+        "options": [
+          {
+            "value": "none",
+            "label": "None"
+          },
+          {
+            "value": "square",
+            "label": "Square (1 / 1)"
+          },
+          {
+            "value": "2/3",
+            "label": "Tall Photo (2 / 3)"
+          },
+          {
+            "value": "3/4",
+            "label": "Tall Photo (3 / 4)"
+          },
+          {
+            "value": "4/5",
+            "label": "Tall Photo (4 / 5)"
+          },
+          {
+            "value": "5/6",
+            "label": "Tall Photo (5 / 6)"
+          },
+          {
+            "value": "6/7",
+            "label": "Tall Photo (6 / 7)"
+          },
+          {
+            "value": "9/10",
+            "label": "Tall Photo (9 / 10)"
+          },
+          {
+            "value": "video",
+            "label": "Video (16 / 9)"
+          },
+          {
+            "value": "8/3",
+            "label": "Wide Banner (8 / 3)"
+          },
+          {
+            "value": "10/9",
+            "label": "Wide Photo (10 / 9)"
+          },
+          {
+            "value": "7/6",
+            "label": "Wide Photo (7 / 6)"
+          },
+          {
+            "value": "6/5",
+            "label": "Wide Photo (6 / 5)"
+          },
+          {
+            "value": "5/4",
+            "label": "Wide Photo (5 / 4)"
+          },
+          {
+            "value": "4/3",
+            "label": "Wide Photo (4 / 3)"
+          },
+          {
+            "value": "3/2",
+            "label": "Wide Photo (3 / 2)"
+          },
+          {
+            "value": "9/16",
+            "label": "Tall Banner (9 / 16)"
+          },
+          {
+            "value": "3/8",
+            "label": "Really Tall Banner (3 / 8)"
+          }
+        ],
+        "default": "square"
+      },
+      {
+        "type": "header",
+        "content": "Image Fit"
+      },
+      {
+        "type": "select",
+        "id": "object_fit",
+        "label": "Object Fit",
+        "options": [
+          {
+            "value": "cover",
+            "label": "Cover"
+          },
+          {
+            "value": "contain",
+            "label": "Contain"
+          }
+        ],
+        "default": "cover"
+      },
+      {
+        "type": "header",
+        "content": "Rounded Corners / Image Shape"
+      },
+      {
+        "type": "select",
+        "id": "rounded",
+        "label": "Rounded Corners",
+        "options": [
+          {
+            "value": "none",
+            "label": "None"
+          },
+          {
+            "value": "sm",
+            "label": "Small"
+          },
+          {
+            "value": "md",
+            "label": "Medium"
+          },
+          {
+            "value": "lg",
+            "label": "Large"
+          },
+          {
+            "value": "full",
+            "label": "Full (Circle)"
+          }
+        ],
+        "default": "none",
+        "info": "This can turn the image into a circle if the aspect ratio is square (1 / 1)"
+      },
+      {
+        "type": "header",
+        "content": "Max Width of Image"
+      },
+      {
+        "type": "range",
+        "min": 0,
+        "max": 1040,
+        "step": 16,
+        "unit": "px",
+        "id": "max_width",
+        "label": "Desktop",
+        "default": 320
+      },
+      {
+        "type": "range",
+        "min": 0,
+        "max": 1040,
+        "step": 16,
+        "unit": "px",
+        "id": "mobile_max_width",
+        "label": "Mobile",
+        "default": 320
+      },
+      {
+        "type": "header",
+        "content": "Image Border"
+      },
+      {
+        "type": "range",
+        "id": "border",
+        "min": 0,
+        "max": 8,
+        "step": 1,
+        "unit": "px",
+        "label": "Image Border",
+        "default": 0
+      },
+      {
+        "type": "color",
+        "id": "border_color",
+        "label": "Border Color"
+      },
+      {
+        "type": "header",
+        "content": "Advanced Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "lazy_load",
+        "label": "Lazy Load Image",
+        "default": true,
+        "info": "Only Uncheck this if it is visible when the page loads"
+      },
+      {
+        "type": "text",
+        "id": "alt_text",
+        "label": "Image Alt Text"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Base Image"
+      }
+    ]
+  }
+{% endschema %}

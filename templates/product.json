@@ -10,11 +10,16 @@
 {
   "sections": {
     "main": {
+      "type": "ud-pdp-details",
+      "settings": {}
+    },
+    "legacy-product": {
       "type": "product",
       "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "legacy-product"
   ]
 }

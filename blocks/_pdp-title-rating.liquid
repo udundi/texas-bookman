@@ -1,0 +1,85 @@
+<div class="
+    {% if block.settings.visibility contains 'mobile' %}
+      tw-contents
+      md:tw-hidden
+    {% elsif block.settings.visibility contains "desktop" %}
+      tw-hidden
+      md:tw-contents
+    {% else %}
+      tw-contents
+    {% endif %}
+  ">
+  <!-- Mobile Extra Header -->
+  <div class="tw-flex tw-flex-col tw-justify-center tw-gap-2">
+    <!-- Mobile Title -->
+    {% assign title_text = product.title | remove: '18mm ' | remove: '9mm ' %}
+    {% if block.settings.title_override != blank %}
+      {% assign title_text = block.settings.title_override %}
+    {% endif %}
+    {% if block.settings.visibility contains 'desktop' %}
+      <h1 class="tw-text-32 md:tw-text-40 !tw-font-playfair tw-m-0 tw-text-offblack tw-w-full max-md:tw-text-center tw-justify-start tw-leading-tight">
+        {{ title_text }}
+      </h1>
+    {% else %}
+      <p class="tw-text-32 md:tw-text-40 !tw-font-playfair tw-m-0 tw-text-offblack tw-w-full max-md:tw-text-center tw-justify-start tw-leading-tight">
+        {{ title_text }}
+      </p>
+    {% endif %}
+    <!-- Star Rating -->
+    <div id="star-rating" class="tw-flex tw-flex-row max-md:tw-justify-center tw-gap-2">
+      <div class="tw-flex md:tw-items-end tw-items-center max-md:tw-justify-center tw-gap-2">
+        <div class="stars tw-text-12 tw-text-navy tw-font-semibold">
+          <script async src="//loox.io/widget/loox.js?shop=three-form.myshopify.com"></script>
+          {% if shop.metafields.loox.global_stats %}
+            {% assign looxstats = shop.metafields.loox.global_stats | split: ',' %}
+            <div
+              class="loox-rating loox-rating-hp"
+              data-rating="{{ looxstats[0] }}"
+              data-raters="{{ looxstats[1] }}"></div>
+          {% endif %}
+        </div>
+        <a class="tw-text-12 tw-pl-2 tw-font-semibold tw-text-navy" href="#Reviews">See Reviews</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "PDP Title & Ratings",
+    "class": "tw-contents",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title_override",
+        "label": "Title Override",
+        "placeholder": "Leave blank to use product title"
+      },
+      {
+        "type": "select",
+        "id": "visibility",
+        "label": "Visibility",
+        "options": [
+          {
+            "value": "both",
+            "label": "Mobile and Desktop"
+          },
+          {
+            "value": "mobile",
+            "label": "Mobile only"
+          },
+          {
+            "value": "desktop",
+            "label": "Desktop only"
+          }
+        ],
+        "default": "both"
+      }
+    ],
+    "presets": [
+      {
+        "name": "PDP Title & Ratings"
+      }
+    ]
+  }
+{% endschema %}

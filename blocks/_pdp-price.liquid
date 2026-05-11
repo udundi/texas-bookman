@@ -1,0 +1,63 @@
+<div
+  class="
+    {% if block.settings.visibility contains 'mobile' %}
+      tw-contents
+      md:tw-hidden
+    {% elsif block.settings.visibility contains "desktop" %}
+      tw-hidden
+      md:tw-contents
+    {% else %}
+      tw-contents
+    {% endif %}
+  "
+>
+  {% comment %}
+    Snippet Description: Product price with compare price and per-set/per-tile labels
+    Accepts:
+    - product: {Object} Product object
+    Usage:
+    {% render 'ud-pdp-price', product: product %}
+  {% endcomment %}
+
+  <div class="tw-flex tw-items-center tw-gap-1">
+    {% render 'ud-product-price',
+      price: product.selected_or_first_available_variant.price,
+      compare_price: product.selected_or_first_available_variant.compare_at_price,
+      product: product
+    %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "PDP Price",
+  "class": "tw-contents",
+  "settings": [
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Visibility",
+      "options": [
+        {
+          "value": "both",
+          "label": "Mobile and Desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Mobile only"
+        },
+        {
+          "value": "desktop",
+          "label": "Desktop only"
+        }
+      ],
+      "default": "both"
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP Price"
+    }
+  ]
+}
+{% endschema %}

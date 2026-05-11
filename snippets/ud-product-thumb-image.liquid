@@ -1,0 +1,14 @@
+<!-- Used In Product Details Section -->
+{% comment %}{% render 'ud-product-thumb-image', thumb_image: image, thumb_number: slide_number %}{% endcomment %}
+
+<button
+  class="swiper-slide tw-h-fit tw-w-full  tw-cursor-pointer tw-aspect-[5/3]"
+  @click="goToSlide({{ thumb_number }})"
+>
+  {{
+    thumb_image
+    | image_url: width: 275
+    | image_tag:
+      class: 'tw-h-full tw-w-full tw-object-cover tw-object-center tw-rounded-md tw-border tw-border-solid tw-border-black'
+  }}
+</button>

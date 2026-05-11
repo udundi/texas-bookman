@@ -1,0 +1,25 @@
+{% if closest.metaobject.logic_validation.true != blank %}
+      {% content_for 'blocks' %}
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Variant Container",
+    "blocks": [
+      {
+        "type": "_basic-variant"
+      },
+      {
+        "type": "_basic-variant-selector"
+      },
+      {
+        "type": "_basic-variant-text-inside"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Variant Container"
+      }
+    ]
+  }
+{% endschema %}

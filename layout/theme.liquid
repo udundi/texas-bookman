@@ -16,6 +16,9 @@
       {% comment %} Preload the base font variant for initial page render {% endcomment %}
       {{ settings.type_primary_font | font_url | preload_tag: as: 'font', crossorigin: 'anonymous' }}
     {% endunless %}
+    {{ 'theme.css' | asset_url | stylesheet_tag: preload: true }}
+
+    {% render 'script__external-head' %}
 
     {% # Load and preload the critical CSS %}
     {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
@@ -28,9 +31,12 @@
 
   <body>
     {% sections 'header-group' %}
+    <main id="root" role="main">
+      {{ content_for_layout }}
+    </main>
 
-    {{ content_for_layout }}
-
+    {% sections 'overlay-group' %}
     {% sections 'footer-group' %}
+    {% render 'script__external-body' %}
   </body>
 </html>

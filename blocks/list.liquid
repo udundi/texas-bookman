@@ -1,0 +1,74 @@
+<style>
+  .column-padding-{{ block.id }} {
+    padding: {{ block.settings.padding-top }}rem {{ block.settings.padding-right }}rem {{ block.settings.padding-bottom }}rem {{ block.settings.padding-left }}rem;
+  }
+</style>
+
+<ul class="tw-w-full tw-flex tw-flex-col tw-gap-4 tw-items-start tw-text-start column-padding-{{ block.id }} tw-list-disc">
+  {% for block in block.blocks %}
+    <li>
+      {% render block %}
+    </li>
+  {% endfor %}
+</ul>
+
+{% schema %}
+{
+  "name": "List",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "gap-border",
+      "label": "Add Gap Border",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding-left",
+      "label": "padding left",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "padding-right",
+      "label": "padding right",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "padding-top",
+      "label": "padding top",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "padding-bottom",
+      "label": "padding bottom",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 4
+    }
+  ],
+  "blocks": [
+    {
+      "type": "_list-item"
+    }
+  ],
+  "presets": [
+    {
+      "name": "List",
+      "blocks": []
+    }
+  ]
+}
+{% endschema %}

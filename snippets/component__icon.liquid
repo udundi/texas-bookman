@@ -1,0 +1,2334 @@
+<!-- snippets/component__icon.liquid -->
+{% comment %}
+  All available icons can be rendered from this snippet.
+
+  Accepts:
+    - icon: string of icon to render
+    - size: number to set the width and height of the icon
+    - class: string of classes to add to the icon container
+
+  Usage:
+    {% render 'component__icon',
+      icon: 'minus',
+      size: '14',
+      class: '' %}
+
+  Possible enhancements:
+    - Add support for more icon styles.
+    - Add support documentation to upload custom icons.
+
+  Pro tips:
+    - Icons will display inline using text color.
+{% endcomment %}
+
+<span class="inline-flex align-middle {{ class }}" aria-hidden="true">
+  {% case icon %}
+    {% when 'clipboard' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-clipboard"
+      >
+        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+      </svg>
+    {% when 'chat' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-message-circle"
+      >
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+      </svg>
+    {% when 'help' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-help-circle"
+      >
+        <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line>
+      </svg>
+    {% when 'spinner' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-loader"
+      >
+        <line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
+      </svg>
+    {% when 'account' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-user"
+      >
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle>
+      </svg>
+    {% when 'cart' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-shopping-cart"
+      >
+        <circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+      </svg>
+    {% when 'menu' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-menu"
+      >
+        <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    {% when 'arrow-left' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-arrow-left inline-block"
+      >
+        <line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+    {% when 'arrow-right' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-arrow-right inline-block"
+      >
+        <line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline>
+      </svg>
+    {% when 'arrow-right-circle' %}
+      <svg
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 15 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g id="Arrow">
+        <circle id="Oval Copy" cx="7.5" cy="8" r="7.08333" fill="white" stroke="#217A97" stroke-width="0.833333"/>
+        <g id="np_arrow-right_888647_000000 copy">
+        <path id="Path" d="M3 7.47656H10.7933V8.52113H3V7.47656Z" fill="#217A97"/>
+        <path id="Path_2" d="M8.63197 11.5L7.92773 10.7684L10.5929 8L7.92773 5.23163L8.63197 4.5L12.0004 8.00001L8.63197 11.5Z" fill="#217A97"/>
+        </g>
+        </g>
+      </svg>
+    {% when 'arrow-down' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-arrow-down"
+      >
+        <line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline>
+      </svg>
+    {% when 'chevron-down' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-chevron-down"
+      >
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    {% when 'chevron-up' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-chevron-up"
+      >
+        <polyline points="18 15 12 9 6 15"></polyline>
+      </svg>
+    {% when 'chevron-right' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-chevron-right"
+      >
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    {% when 'chevron-left' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-chevron-left"
+      >
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    {% when 'refresh-cw' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-refresh-cw"
+      >
+        <polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+      </svg>
+    {% when 'check' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-check"
+      >
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+    {% when 'search' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-search"
+      >
+        <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    {% when 'x' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-x"
+      >
+        <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    {% when 'play' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-play"
+      >
+        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+      </svg>
+    {% when 'pause' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-pause"
+      >
+        <rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>
+      </svg>
+    {% when 'volume-x' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-volume-x"
+      >
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line>
+      </svg>
+    {% when 'volume' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-volume-2"
+      >
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+      </svg>
+    {% when 'minus' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-minus"
+      >
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+      </svg>
+    {% when 'plus' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-plus"
+      >
+        <line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line>
+      </svg>
+    {% when 'trash' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-trash-2"
+      >
+        <polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line>
+      </svg>
+    {% when 'edit' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-edit-2"
+      >
+        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+      </svg>
+    {% when 'star' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-star"
+      >
+        <polygon  fill="currentColor" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+      </svg>
+    {% when 'heart' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-heart"
+      >
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+      </svg>
+    {% when 'heart-fill' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-heart"
+      >
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+      </svg>
+    {% when 'heart-red' %}
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_707_87054)">
+        <path id="Vector" d="M7.31804 6.31804C6.90017 6.7359 6.5687 7.23198 6.34255 7.77795C6.1164 8.32392 6 8.90909 6 9.50004C6 10.091 6.1164 10.6762 6.34255 11.2221C6.5687 11.7681 6.90017 12.2642 7.31804 12.682L15 20.364L22.682 12.682C23.526 11.8381 24.0001 10.6935 24.0001 9.50004C24.0001 8.30656 23.526 7.16196 22.682 6.31804C21.8381 5.47412 20.6935 5.00001 19.5 5.00001C18.3066 5.00001 17.162 5.47412 16.318 6.31804L15 7.63604L13.682 6.31804C13.2642 5.90017 12.7681 5.5687 12.2221 5.34255C11.6762 5.1164 11.091 5 10.5 5C9.90909 5 9.32392 5.1164 8.77795 5.34255C8.23198 5.5687 7.7359 5.90017 7.31804 6.31804Z" fill="#E63360"/>
+        <path id="Vector_2" d="M4.31804 6.31804C3.90017 6.7359 3.5687 7.23198 3.34255 7.77795C3.1164 8.32392 3 8.90909 3 9.50004C3 10.091 3.1164 10.6762 3.34255 11.2221C3.5687 11.7681 3.90017 12.2642 4.31804 12.682L12 20.364L19.682 12.682C20.526 11.8381 21.0001 10.6935 21.0001 9.50004C21.0001 8.30656 20.526 7.16196 19.682 6.31804C18.8381 5.47412 17.6935 5.00001 16.5 5.00001C15.3066 5.00001 14.162 5.47412 13.318 6.31804L12 7.63604L10.682 6.31804C10.2642 5.90017 9.7681 5.5687 9.22213 5.34255C8.67616 5.1164 8.09099 5 7.50004 5C6.90909 5 6.32392 5.1164 5.77795 5.34255C5.23198 5.5687 4.7359 5.90017 4.31804 6.31804V6.31804Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <defs>
+        <clipPath id="clip0_707_87054">
+        <rect width="24" height="24" fill="white"/>
+        </clipPath>
+        </defs>
+      </svg>
+    {% when 'tag' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-tag"
+      >
+        <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+      </svg>
+    {% when 'tiktok' %}
+      <svg
+        aria-hidden="true"
+        width="{{ size }}"
+        height="{{ size }}"
+        focusable="false"
+        data-prefix="fab"
+        data-icon="tiktok"
+        class="svg-inline--fa fa-tiktok fa-w-14"
+        role="img"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 448 512"
+      >
+        <path fill="currentColor" d="M448,209.91a210.06,210.06,0,0,1-122.77-39.25V349.38A162.55,162.55,0,1,1,185,188.31V278.2a74.62,74.62,0,1,0,52.23,71.18V0l88,0a121.18,121.18,0,0,0,1.86,22.17h0A122.18,122.18,0,0,0,381,102.39a121.43,121.43,0,0,0,67,20.14Z"></path>
+      </svg>
+    {% when 'instagram' %}
+      <svg
+        aria-hidden="true"
+        width="{{ size }}"
+        height="{{ size }}"
+        focusable="false"
+        data-prefix="fab"
+        data-icon="instagram"
+        class="svg-inline--fa fa-instagram fa-w-14"
+        role="img"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 448 512"
+      >
+        <path fill="currentColor" d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"></path>
+      </svg>
+    {% when 'twitter' %}
+      <svg
+        aria-hidden="true"
+        width="{{ size }}"
+        height="{{ size }}"
+        focusable="false"
+        data-prefix="fab"
+        data-icon="twitter"
+        class="svg-inline--fa fa-twitter fa-w-16"
+        role="img"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 512 512"
+      >
+        <path fill="currentColor" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
+      </svg>
+    {% when 'facebook' %}
+      <svg
+        aria-hidden="true"
+        width="{{ size }}"
+        height="{{ size }}"
+        focusable="false"
+        data-prefix="fab"
+        data-icon="facebook"
+        class="svg-inline--fa fa-facebook fa-w-16"
+        role="img"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 512 512"
+      >
+        <path fill="currentColor" d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"></path>
+      </svg>
+    {% when 'pinterest' %}
+      <svg
+        aria-hidden="true"
+        width="{{ size }}"
+        height="{{ size }}"
+        focusable="false"
+        data-prefix="fab"
+        data-icon="pinterest"
+        class="svg-inline--fa fa-pinterest fa-w-16"
+        role="img"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 496 512"
+      >
+        <path fill="currentColor" d="M496 256c0 137-111 248-248 248-25.6 0-50.2-3.9-73.4-11.1 10.1-16.5 25.2-43.5 30.8-65 3-11.6 15.4-59 15.4-59 8.1 15.4 31.7 28.5 56.8 28.5 74.8 0 128.7-68.8 128.7-154.3 0-81.9-66.9-143.2-152.9-143.2-107 0-163.9 71.8-163.9 150.1 0 36.4 19.4 81.7 50.3 96.1 4.7 2.2 7.2 1.2 8.3-3.3.8-3.4 5-20.3 6.9-28.1.6-2.5.3-4.7-1.7-7.1-10.1-12.5-18.3-35.3-18.3-56.6 0-54.7 41.4-107.6 112-107.6 60.9 0 103.6 41.5 103.6 100.9 0 67.1-33.9 113.6-78 113.6-24.3 0-42.6-20.1-36.7-44.8 7-29.5 20.5-61.3 20.5-82.6 0-19-10.2-34.9-31.4-34.9-24.9 0-44.9 25.7-44.9 60.2 0 22 7.4 36.8 7.4 36.8s-24.5 103.8-29 123.2c-5 21.4-3 51.6-.9 71.2C65.4 450.9 0 361.1 0 256 0 119 111 8 248 8s248 111 248 248z"></path>
+      </svg>
+    {% when 'tumblr' %}
+      <svg
+        aria-hidden="true"
+        width="{{ size }}"
+        height="{{ size }}"
+        focusable="false"
+        data-prefix="fab"
+        data-icon="tumblr"
+        class="svg-inline--fa fa-tumblr fa-w-10"
+        role="img"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 320 512"
+      >
+        <path fill="currentColor" d="M309.8 480.3c-13.6 14.5-50 31.7-97.4 31.7-120.8 0-147-88.8-147-140.6v-144H17.9c-5.5 0-10-4.5-10-10v-68c0-7.2 4.5-13.6 11.3-16 62-21.8 81.5-76 84.3-117.1.8-11 6.5-16.3 16.1-16.3h70.9c5.5 0 10 4.5 10 10v115.2h83c5.5 0 10 4.4 10 9.9v81.7c0 5.5-4.5 10-10 10h-83.4V360c0 34.2 23.7 53.6 68 35.8 4.8-1.9 9-3.2 12.7-2.2 3.5.9 5.8 3.4 7.4 7.9l22 64.3c1.8 5 3.3 10.6-.4 14.5z"></path>
+      </svg>
+    {% when 'discord' %}
+      <svg
+        aria-hidden="true"
+        width="{{ size }}"
+        height="{{ size }}"
+        focusable="false"
+        data-prefix="fab"
+        data-icon="discord"
+        class="svg-inline--fa fa-discord fa-w-20"
+        role="img"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 640 512"
+      >
+        <path fill="currentColor" d="M524.531,69.836a1.5,1.5,0,0,0-.764-.7A485.065,485.065,0,0,0,404.081,32.03a1.816,1.816,0,0,0-1.923.91,337.461,337.461,0,0,0-14.9,30.6,447.848,447.848,0,0,0-134.426,0,309.541,309.541,0,0,0-15.135-30.6,1.89,1.89,0,0,0-1.924-.91A483.689,483.689,0,0,0,116.085,69.137a1.712,1.712,0,0,0-.788.676C39.068,183.651,18.186,294.69,28.43,404.354a2.016,2.016,0,0,0,.765,1.375A487.666,487.666,0,0,0,176.02,479.918a1.9,1.9,0,0,0,2.063-.676A348.2,348.2,0,0,0,208.12,430.4a1.86,1.86,0,0,0-1.019-2.588,321.173,321.173,0,0,1-45.868-21.853,1.885,1.885,0,0,1-.185-3.126c3.082-2.309,6.166-4.711,9.109-7.137a1.819,1.819,0,0,1,1.9-.256c96.229,43.917,200.41,43.917,295.5,0a1.812,1.812,0,0,1,1.924.233c2.944,2.426,6.027,4.851,9.132,7.16a1.884,1.884,0,0,1-.162,3.126,301.407,301.407,0,0,1-45.89,21.83,1.875,1.875,0,0,0-1,2.611,391.055,391.055,0,0,0,30.014,48.815,1.864,1.864,0,0,0,2.063.7A486.048,486.048,0,0,0,610.7,405.729a1.882,1.882,0,0,0,.765-1.352C623.729,277.594,590.933,167.465,524.531,69.836ZM222.491,337.58c-28.972,0-52.844-26.587-52.844-59.239S193.056,219.1,222.491,219.1c29.665,0,53.306,26.82,52.843,59.239C275.334,310.993,251.924,337.58,222.491,337.58Zm195.38,0c-28.971,0-52.843-26.587-52.843-59.239S388.437,219.1,417.871,219.1c29.667,0,53.307,26.82,52.844,59.239C470.715,310.993,447.538,337.58,417.871,337.58Z"></path>
+      </svg>
+    {% when 'linkedin' %}
+      <svg
+        aria-hidden="true"
+        width="{{ size }}"
+        height="{{ size }}"
+        focusable="false"
+        data-prefix="fab"
+        data-icon="linkedin"
+        class="svg-inline--fa fa-linkedin fa-w-14"
+        role="img"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 448 512"
+      >
+        <path fill="currentColor" d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"></path>
+      </svg>
+    {% when 'snapchat' %}
+      <svg
+        aria-hidden="true"
+        width="{{ size }}"
+        height="{{ size }}"
+        focusable="false"
+        data-prefix="fab"
+        data-icon="snapchat"
+        class="svg-inline--fa fa-snapchat fa-w-16"
+        role="img"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 496 512"
+      >
+        <path fill="currentColor" d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm169.5 338.9c-3.5 8.1-18.1 14-44.8 18.2-1.4 1.9-2.5 9.8-4.3 15.9-1.1 3.7-3.7 5.9-8.1 5.9h-.2c-6.2 0-12.8-2.9-25.8-2.9-17.6 0-23.7 4-37.4 13.7-14.5 10.3-28.4 19.1-49.2 18.2-21 1.6-38.6-11.2-48.5-18.2-13.8-9.7-19.8-13.7-37.4-13.7-12.5 0-20.4 3.1-25.8 3.1-5.4 0-7.5-3.3-8.3-6-1.8-6.1-2.9-14.1-4.3-16-13.8-2.1-44.8-7.5-45.5-21.4-.2-3.6 2.3-6.8 5.9-7.4 46.3-7.6 67.1-55.1 68-57.1 0-.1.1-.2.2-.3 2.5-5 3-9.2 1.6-12.5-3.4-7.9-17.9-10.7-24-13.2-15.8-6.2-18-13.4-17-18.3 1.6-8.5 14.4-13.8 21.9-10.3 5.9 2.8 11.2 4.2 15.7 4.2 3.3 0 5.5-.8 6.6-1.4-1.4-23.9-4.7-58 3.8-77.1C183.1 100 230.7 96 244.7 96c.6 0 6.1-.1 6.7-.1 34.7 0 68 17.8 84.3 54.3 8.5 19.1 5.2 53.1 3.8 77.1 1.1.6 2.9 1.3 5.7 1.4 4.3-.2 9.2-1.6 14.7-4.2 4-1.9 9.6-1.6 13.6 0 6.3 2.3 10.3 6.8 10.4 11.9.1 6.5-5.7 12.1-17.2 16.6-1.4.6-3.1 1.1-4.9 1.7-6.5 2.1-16.4 5.2-19 11.5-1.4 3.3-.8 7.5 1.6 12.5.1.1.1.2.2.3.9 2 21.7 49.5 68 57.1 4 1 7.1 5.5 4.9 10.8z"></path>
+      </svg>
+    {% when 'twitch' %}
+      <svg
+        aria-hidden="true"
+        width="{{ size }}"
+        height="{{ size }}"
+        focusable="false"
+        data-prefix="fab"
+        data-icon="twitch"
+        class="svg-inline--fa fa-twitch fa-w-16"
+        role="img"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 512 512"
+      >
+        <path fill="currentColor" d="M391.17,103.47H352.54v109.7h38.63ZM285,103H246.37V212.75H285ZM120.83,0,24.31,91.42V420.58H140.14V512l96.53-91.42h77.25L487.69,256V0ZM449.07,237.75l-77.22,73.12H294.61l-67.6,64v-64H140.14V36.58H449.07Z"></path>
+      </svg>
+    {% when 'youtube' %}
+      <svg
+        aria-hidden="true"
+        width="{{ size }}"
+        height="{{ size }}"
+        focusable="false"
+        data-prefix="fab"
+        data-icon="youtube"
+        class="svg-inline--fa fa-youtube fa-w-18"
+        role="img"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 576 512"
+      >
+        <path fill="currentColor" d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"></path>
+      </svg>
+    {% when 'vimeo' %}
+      <svg
+        aria-hidden="true"
+        width="{{ size }}"
+        height="{{ size }}"
+        focusable="false"
+        data-prefix="fab"
+        data-icon="vimeo"
+        class="svg-inline--fa fa-vimeo fa-w-14"
+        role="img"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 448 512"
+      >
+        <path fill="currentColor" d="M403.2 32H44.8C20.1 32 0 52.1 0 76.8v358.4C0 459.9 20.1 480 44.8 480h358.4c24.7 0 44.8-20.1 44.8-44.8V76.8c0-24.7-20.1-44.8-44.8-44.8zM377 180.8c-1.4 31.5-23.4 74.7-66 129.4-44 57.2-81.3 85.8-111.7 85.8-18.9 0-34.8-17.4-47.9-52.3-25.5-93.3-36.4-148-57.4-148-2.4 0-10.9 5.1-25.4 15.2l-15.2-19.6c37.3-32.8 72.9-69.2 95.2-71.2 25.2-2.4 40.7 14.8 46.5 51.7 20.7 131.2 29.9 151 67.6 91.6 13.5-21.4 20.8-37.7 21.8-48.9 3.5-33.2-25.9-30.9-45.8-22.4 15.9-52.1 46.3-77.4 91.2-76 33.3.9 49 22.5 47.1 64.7z"></path>
+      </svg>
+    {% when 'wishlist' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-heart"
+      >
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+      </svg>
+      {% comment %} Additional icon picker icons {% endcomment %}
+    {% when 'activity' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-activity"
+      >
+        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+      </svg>
+    {% when 'alert-circle' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-alert-circle"
+      >
+        <circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+    {% when 'alert-triangle' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-alert-triangle"
+      >
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line>
+      </svg>
+    {% when 'anchor' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-anchor"
+      >
+        <circle cx="12" cy="5" r="3"></circle><line x1="12" y1="22" x2="12" y2="8"></line><path d="M5 12H2a10 10 0 0 0 20 0h-3"></path>
+      </svg>
+    {% when 'archive' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-archive"
+      >
+        <polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line>
+      </svg>
+    {% when 'award' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-award"
+      >
+        <circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+      </svg>
+    {% when 'at-sign' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-at-sign"
+      >
+        <circle cx="12" cy="12" r="4"></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path>
+      </svg>
+    {% when 'bell' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-bell"
+      >
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+      </svg>
+    {% when 'book-open' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-book-open"
+      >
+        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+      </svg>
+    {% when 'book' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-book"
+      >
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+      </svg>
+    {% when 'bookmark' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-bookmark"
+      >
+        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+      </svg>
+    {% when 'box' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-box"
+      >
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line>
+      </svg>
+    {% when 'briefcase' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-briefcase"
+      >
+        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+      </svg>
+    {% when 'calendar' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-calendar"
+      >
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+      </svg>
+    {% when 'camera' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-camera"
+      >
+        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle>
+      </svg>
+    {% when 'check-square' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-check-square"
+      >
+        <polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+      </svg>
+    {% when 'clipboard' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-clipboard"
+      >
+        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+      </svg>
+    {% when 'cloud' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-cloud"
+      >
+        <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>
+      </svg>
+    {% when 'coffee' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-coffee"
+      >
+        <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line>
+      </svg>
+    {% when 'code' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-code"
+      >
+        <polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline>
+      </svg>
+    {% when 'cpu' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-cpu"
+      >
+        <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line>
+      </svg>
+    {% when 'droplet' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-droplet"
+      >
+        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+      </svg>
+    {% when 'dollar-sign' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-dollar-sign"
+      >
+        <line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+      </svg>
+    {% when 'badge-dollar-sign' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 512 512"
+        class="feather feather-badge-dollar-sign"
+      >
+        <path d="M512 256c0-37.7-23.7-69.9-57.1-82.4 14.7-32.4 8.8-71.9-17.9-98.6-26.7-26.7-66.2-32.6-98.6-17.9C325.9 23.7 293.7 0 256 0s-69.9 23.7-82.4 57.1c-32.4-14.7-72-8.8-98.6 17.9-26.7 26.7-32.6 66.2-17.9 98.6C23.7 186.1 0 218.3 0 256s23.7 69.9 57.1 82.4c-14.7 32.4-8.8 72 17.9 98.6 26.6 26.6 66.1 32.7 98.6 17.9 12.5 33.3 44.7 57.1 82.4 57.1s69.9-23.7 82.4-57.1c32.6 14.8 72 8.7 98.6-17.9 26.7-26.7 32.6-66.2 17.9-98.6 33.4-12.5 57.1-44.7 57.1-82.4zm-232 94.44V368c0 8.84-7.16 16-16 16h-16c-8.84 0-16-7.16-16-16v-17.73c-11.42-1.35-22.28-5.19-31.78-11.46-6.22-4.11-6.82-13.11-1.55-18.38l17.52-17.52c3.74-3.74 9.31-4.24 14.11-2.03 3.18 1.46 6.66 2.22 10.26 2.22h32.78c4.66 0 8.44-3.78 8.44-8.42 0-3.75-2.52-7.08-6.12-8.11l-50.07-14.3c-22.25-6.35-40.01-24.71-42.91-47.67-4.05-32.07 19.03-59.43 49.32-63.05V144c0-8.84 7.16-16 16-16h16c8.84 0 16 7.16 16 16v17.73c11.42 1.35 22.28 5.19 31.78 11.46 6.22 4.11 6.82 13.11 1.55 18.38l-17.52 17.52c-3.74 3.74-9.31 4.24-14.11 2.03a24.516 24.516 0 0 0-10.26-2.22h-32.78c-4.66 0-8.44 3.78-8.44 8.42 0 3.75 2.52 7.08 6.12 8.11l50.07 14.3c22.25 6.36 40.01 24.71 42.91 47.67 4.05 32.06-19.03 59.42-49.32 63.04z"/>
+      </svg>
+    {% when 'edit' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-edit"
+      >
+        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+      </svg>
+    {% when 'eye' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-eye"
+      >
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>
+      </svg>
+    {% when 'flag' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-flag"
+      >
+        <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line>
+      </svg>
+    {% when 'folder' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-folder"
+      >
+        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+      </svg>
+    {% when 'gift' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-gift"
+      >
+        <polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+      </svg>
+    {% when 'globe' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-globe"
+      >
+        <circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+      </svg>
+    {% when 'hash' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-hash"
+      >
+        <line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line>
+      </svg>
+    {% when 'headphones' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-headphones"
+      >
+        <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+      </svg>
+    {% when 'help-circle' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-help-circle"
+      >
+        <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line>
+      </svg>
+    {% when 'home' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-home"
+      >
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline>
+      </svg>
+    {% when 'image' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-image"
+      >
+        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline>
+      </svg>
+    {% when 'inbox' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-inbox"
+      >
+        <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path>
+      </svg>
+    {% when 'info' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-info"
+      >
+        <circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+    {% when 'key' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-key"
+      >
+        <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path>
+      </svg>
+    {% when 'life-buoy' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-life-buoy"
+      >
+        <circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"></line><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"></line><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"></line><line x1="14.83" y1="9.17" x2="18.36" y2="5.64"></line><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"></line>
+      </svg>
+    {% when 'link' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-link"
+      >
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+      </svg>
+    {% when 'lock' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-lock"
+      >
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+      </svg>
+    {% when 'mail' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-mail"
+      >
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>
+      </svg>
+    {% when 'map-pin' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-map-pin"
+      >
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle>
+      </svg>
+    {% when 'map' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-map"
+      >
+        <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line>
+      </svg>
+    {% when 'meh' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-meh"
+      >
+        <circle cx="12" cy="12" r="10"></circle><line x1="8" y1="15" x2="16" y2="15"></line><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line>
+      </svg>
+    {% when 'monitor' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-monitor"
+      >
+        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line>
+      </svg>
+    {% when 'mouse-pointer' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-mouse-pointer"
+      >
+        <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"></path><path d="M13 13l6 6"></path>
+      </svg>
+    {% when 'music' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-music"
+      >
+        <path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle>
+      </svg>
+    {% when 'package' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-package"
+      >
+        <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line>
+      </svg>
+    {% when 'paperclip' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-paperclip"
+      >
+        <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
+      </svg>
+    {% when 'save' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-save"
+      >
+        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline>
+      </svg>
+    {% when 'settings' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-settings"
+      >
+        <circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+      </svg>
+    {% when 'shield' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-shield"
+      >
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+      </svg>
+    {% when 'shopping-bag' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-shopping-bag"
+      >
+        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path>
+      </svg>
+    {% when 'slash' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-slash"
+      >
+        <circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+      </svg>
+    {% when 'sliders' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-sliders"
+      >
+        <line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line>
+      </svg>
+    {% when 'smile' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-smile"
+      >
+        <circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line>
+      </svg>
+    {% when 'speaker' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-speaker"
+      >
+        <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><circle cx="12" cy="14" r="4"></circle><line x1="12" y1="6" x2="12.01" y2="6"></line>
+      </svg>
+    {% when 'sun' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-sun"
+      >
+        <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+    {% when 'sunrise' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-sunrise"
+      >
+        <path d="M17 18a5 5 0 0 0-10 0"></path><line x1="12" y1="2" x2="12" y2="9"></line><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"></line><line x1="1" y1="18" x2="3" y2="18"></line><line x1="21" y1="18" x2="23" y2="18"></line><line x1="18.36" y1="11.64" x2="19.78" y2="10.22"></line><line x1="23" y1="22" x2="1" y2="22"></line><polyline points="8 6 12 2 16 6"></polyline>
+      </svg>
+    {% when 'sunset' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-sunset"
+      >
+        <path d="M17 18a5 5 0 0 0-10 0"></path><line x1="12" y1="9" x2="12" y2="2"></line><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"></line><line x1="1" y1="18" x2="3" y2="18"></line><line x1="21" y1="18" x2="23" y2="18"></line><line x1="18.36" y1="11.64" x2="19.78" y2="10.22"></line><line x1="23" y1="22" x2="1" y2="22"></line><polyline points="16 5 12 9 8 5"></polyline>
+      </svg>
+    {% when 'table' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-table"
+      >
+        <path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"></path>
+      </svg>
+    {% when 'thermometer' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-thermometer"
+      >
+        <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"></path>
+      </svg>
+    {% when 'thumbs-up' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-thumbs-up"
+      >
+        <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+      </svg>
+    {% when 'thumbs-up-solid' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 512 512"
+        class="feather feather-thumbs-up-solid"
+      >
+        <path d="M104 224H24c-13.255 0-24 10.745-24 24v240c0 13.255 10.745 24 24 24h80c13.255 0 24-10.745 24-24V248c0-13.255-10.745-24-24-24zM64 472c-13.255 0-24-10.745-24-24s10.745-24 24-24 24 10.745 24 24-10.745 24-24 24zM384 81.452c0 42.416-25.97 66.208-33.277 94.548h101.723c33.397 0 59.397 27.746 59.553 58.098.084 17.938-7.546 37.249-19.439 49.197l-.11.11c9.836 23.337 8.237 56.037-9.308 79.469 8.681 25.895-.069 57.704-16.382 74.757 4.298 17.598 2.244 32.575-6.148 44.632C440.202 511.587 389.616 512 346.839 512l-2.845-.001c-48.287-.017-87.806-17.598-119.56-31.725-15.957-7.099-36.821-15.887-52.651-16.178-6.54-.12-11.783-5.457-11.783-11.998v-213.77c0-3.2 1.282-6.271 3.558-8.521 39.614-39.144 56.648-80.587 89.117-113.111 14.804-14.832 20.188-37.236 25.393-58.902C282.515 39.293 291.817 0 312 0c24 0 72 8 72 81.452z"/>
+      </svg>
+    {% when 'thumbs-down' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-thumbs-down"
+      >
+        <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path>
+      </svg>
+    {% when 'trending-up' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-trending-up"
+      >
+        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline>
+      </svg>
+    {% when 'tool' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-tool"
+      >
+        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+      </svg>
+    {% when 'truck' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-truck"
+      >
+        <rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle>
+      </svg>
+    {% when 'tv' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-tv"
+      >
+        <rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect><polyline points="17 2 12 7 7 2"></polyline>
+      </svg>
+    {% when 'umbrella' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-umbrella"
+      >
+        <path d="M23 12a11.05 11.05 0 0 0-22 0zm-5 7a3 3 0 0 1-6 0v-7"></path>
+      </svg>
+    {% when 'unlock' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-unlock"
+      >
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+      </svg>
+    {% when 'user-check' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-user-check"
+      >
+        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline>
+      </svg>
+    {% when 'user-plus' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-user-plus"
+      >
+        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line>
+      </svg>
+    {% when 'user' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-user"
+      >
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle>
+      </svg>
+    {% when 'users' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-users"
+      >
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+      </svg>
+    {% when 'zap' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-zap"
+      >
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+      </svg>
+      {% comment %} SCG Added {% endcomment %}
+    {% when 'scg-logo' %}
+      <svg
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g id="Logo / SCG (Icon-Only) / Red">
+        <mask id="mask0_1224_41842" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="16">
+        <path id="Clip 2" fill-rule="evenodd" clip-rule="evenodd" d="M0 0H15.0729V15.0727H0V0Z" fill="white"/>
+        </mask>
+        <g mask="url(#mask0_1224_41842)">
+        <path id="Fill 1" fill-rule="evenodd" clip-rule="evenodd" d="M13.1919 8.9756C13.7798 8.95352 14.3786 8.88447 14.9718 8.76362C15.1023 7.98815 15.1046 7.19258 14.9897 6.41654C14.3956 6.28833 13.8016 6.20994 13.2112 6.17965C13.1413 5.89465 13.0521 5.61475 12.9437 5.34248C12.8314 5.07135 12.7009 4.80814 12.5523 4.55541C12.9548 4.12239 13.3261 3.6523 13.6626 3.14626C13.2047 2.50947 12.6485 1.94031 12.0149 1.47503C11.5054 1.80192 11.0274 2.16928 10.5907 2.56352C10.3397 2.41154 10.0779 2.27881 9.80873 2.16192L9.78553 2.21682L9.80873 2.16192C9.53732 2.05013 9.25939 1.95503 8.97581 1.88088C8.95402 1.29277 8.88468 0.693899 8.76411 0.100692C7.98864 -0.02978 7.19279 -0.0317611 6.41704 0.0831446C6.28855 0.677201 6.20987 1.27097 6.17987 1.86135C5.89515 1.93097 5.61524 2.02069 5.3427 2.12937C5.07185 2.24116 4.80864 2.37192 4.55562 2.5205C4.12289 2.11777 3.65251 1.74673 3.14647 1.40994C2.50968 1.86814 1.94081 2.42399 1.47553 3.05767C1.80213 3.56739 2.16977 4.04569 2.56373 4.48211C2.41175 4.73314 2.27873 4.99494 2.16213 5.26437C2.05034 5.53522 1.95524 5.81315 1.88109 6.09701C1.29326 6.11881 0.694395 6.18814 0.101188 6.30871C-0.0295671 7.0839 -0.0315482 7.87975 0.0833574 8.65579C0.677414 8.78399 1.27147 8.86267 1.86156 8.89267C1.93147 9.17767 2.0209 9.45758 2.12958 9.72984C2.24138 10.001 2.37213 10.2642 2.52072 10.5172C2.11826 10.9497 1.74694 11.4203 1.41015 11.9258C1.86836 12.5629 2.42449 13.132 3.05817 13.5976C3.56789 13.2707 4.0459 12.9028 4.4826 12.5088C4.73364 12.6608 4.99543 12.7938 5.2643 12.9107C5.53572 13.0219 5.81364 13.1176 6.09751 13.1917C6.1193 13.7796 6.18836 14.3784 6.30892 14.9716C7.08439 15.1021 7.87996 15.1044 8.656 14.9892C8.78421 14.3954 8.86289 13.8014 8.89289 13.211C9.17789 13.1411 9.45779 13.0516 9.73005 12.9432C10.0015 12.8312 10.2647 12.7004 10.5174 12.5518C10.9501 12.9546 11.4205 13.3256 11.9263 13.6621C12.5631 13.2042 13.1325 12.6483 13.5978 12.0147C13.2709 11.5049 12.9033 11.0269 12.5093 10.5902C12.661 10.3392 12.794 10.0771 12.9109 9.80824C13.0224 9.53739 13.1178 9.25918 13.1919 8.9756ZM2.71176 6.96618C2.49496 6.01694 5.27053 4.46996 7.37562 3.81901C10.1311 2.96684 12.1841 4.92788 11.7324 5.50552C11.3636 5.97703 8.8094 6.50345 7.2177 6.79128C6.47223 6.92599 5.47883 7.14675 4.906 7.25882C4.01308 7.43373 2.84392 7.54439 2.71176 6.96618ZM7.46506 11.1741C4.65326 12.131 2.78109 9.54901 3.27949 8.83496C3.67062 8.27486 6.0777 7.74194 7.69034 7.44081C8.53826 7.2826 9.63864 7.03241 10.2202 6.91581C11.1217 6.73524 12.2871 6.64977 12.3686 7.38816C12.5034 8.60401 9.61232 10.4425 7.46506 11.1741Z" fill="#FAFAFA"/>
+        </g>
+        </g>
+      </svg>
+    {% when 'blog' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size | plus: 4 }}"
+        height="{{ size | minus: 4 }}"
+        viewBox="0 0 576 512"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-blog"
+      >
+        <path d="M561.91 0C549.44 0 406.51 6.49 320 56.89 233.49 6.49 90.56 0 78.09 0 35.03 0 0 34.34 0 76.55v313.72c0 40.73 32.47 74.3 73.92 76.41 36.78 1.91 128.81 9.5 187.73 38.69 8.19 4.05 17.25 6.29 26.34 6.58v.05h64.02v-.05c9.09-.29 18.15-2.53 26.34-6.58 58.92-29.19 150.95-36.78 187.73-38.69C607.53 464.57 640 431 640 390.27V76.55C640 34.34 604.97 0 561.91 0zM296 438.15c0 11.09-10.96 18.91-21.33 14.96-64.53-24.54-153.96-32.07-198.31-34.38-15.9-.8-28.36-13.3-28.36-28.46V76.55C48 60.81 61.5 48 78.06 48c19.93.1 126.55 7.81 198.53 40.49 11.63 5.28 19.27 16.66 19.28 29.44L296 224v214.15zm296-47.88c0 15.16-12.46 27.66-28.36 28.47-44.35 2.3-133.78 9.83-198.31 34.38-10.37 3.94-21.33-3.87-21.33-14.96V224l.14-106.08c.02-12.78 7.65-24.15 19.28-29.44C435.4 55.81 542.02 48.1 561.94 48 578.5 48 592 60.81 592 76.55v313.72z"/>
+      </svg>
+    {% when 'headset' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 512 512"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-headset"
+      >
+        <path d="M192 224c0-17.67-14.33-32-32-32h-32c-35.35 0-64 28.65-64 64v63.64c0 35.35 28.65 64 64 64h32c17.67 0 32-14.33 32-32V224zm-32 127.64h-32c-17.64 0-32-14.36-32-32V256c0-17.64 14.36-32 32-32h32v127.64zm224 32c35.35 0 64-28.65 64-64V256c0-35.35-28.65-64-64-64h-32c-17.67 0-32 14.33-32 32v127.64c0 17.67 14.33 32 32 32h32zM352 224h32c17.64 0 32 14.36 32 32v63.64c0 17.64-14.36 32-32 32h-32V224zM256 0C113.97 0 3.92 117.82.1 256L0 280c0 4.42 3.58 8 8 8h16c4.42 0 8-3.58 8-8l.09-24C35.43 135.19 131.63 32 256 32c123.5 0 224 100.48 224 224v176c0 26.47-21.53 48-48 48h-82.94c1.79-5.03 2.94-10.36 2.94-16 0-26.51-21.49-48-48-48h-64c-26.51 0-48 21.49-48 48s21.49 48 48 48h192c44.12 0 80-35.89 80-80V256C512 114.85 397.16 0 256 0zm48 480h-64c-8.82 0-16-7.18-16-16s7.18-16 16-16h64c8.82 0 16 7.18 16 16s-7.18 16-16 16z"/>
+      </svg>
+    {% when 'check-shield' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size | plus: 2 }}"
+        viewBox="0 0 15 17"
+        fill="none"
+        class="feather feather-check-shield"
+      >
+        <g id="Group">
+        <path id="Vector" d="M14.4806 3.27259C14.4999 3.14974 14.4282 3.03087 14.3106 2.99036C12.092 2.01683 9.87875 1.03332 7.67062 0.039326C7.56968 -0.0118066 7.45015 -0.0118066 7.34922 0.039326C5.12664 1.02745 2.90525 2.01286 0.685386 2.9958C0.573824 3.02502 0.501446 3.13259 0.515386 3.24748C0.530659 4.76021 0.513394 6.27501 0.530659 7.78767C0.54062 9.87221 1.21996 11.899 2.46832 13.5677C3.67559 15.1926 5.21892 16.3574 7.17579 16.9457C7.3863 17.0121 7.61274 17.0121 7.82325 16.9457C9.62814 16.4059 11.2139 15.3062 12.3522 13.806C13.7368 12.0674 14.4866 9.90791 14.4772 7.68601V5.72438C14.4706 4.90825 14.4707 4.09007 14.4806 3.27259ZM13.2807 6.19982V7.82478V7.82545C13.2893 9.66689 12.6691 11.4565 11.5229 12.8982C10.5799 14.144 9.26444 15.0571 7.76759 15.506C7.59295 15.5612 7.40501 15.5612 7.23035 15.506C5.65586 15.0279 4.28391 14.0424 3.32902 12.7024C2.29308 11.3192 1.72929 9.63901 1.72067 7.91045C1.70739 6.65603 1.72067 5.40091 1.72067 4.14648C1.70938 4.05284 1.76782 3.96519 1.85813 3.93928C3.69294 3.12648 5.53047 2.30833 7.36987 1.4855C7.45354 1.44366 7.55248 1.44366 7.63682 1.4855C9.47299 2.30827 11.3078 3.12374 13.1413 3.93197C13.2382 3.9665 13.2973 4.06478 13.2807 4.16705L13.2807 6.19982Z" fill="black"/>
+        <path id="Vector_2" d="M9.89468 6.26391C10.5518 6.24846 10.8804 6.99286 10.4122 7.42733L7.06075 10.5919C6.8554 10.7858 6.51046 10.7858 6.30511 10.5919L4.60484 8.97857C3.89828 8.34262 4.94176 7.35768 5.61527 8.02448L6.55991 8.91644C6.62569 8.97855 6.74056 8.97855 6.81469 8.91644L9.40217 6.47325C9.53341 6.34145 9.70569 6.27178 9.89468 6.26391Z" fill="#218368"/>
+        </g>
+      </svg>
+    {% when 'truck-moving' %}
+      <svg
+        width="{{ size | plus: 10 }}"
+        height="{{ size }}"
+        viewBox="0 0 25 14"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g>
+        <path id="Fill 1" fill-rule="evenodd" clip-rule="evenodd" d="M23.5237 11.6162H22.7326C22.504 10.8608 21.7915 10.3288 20.9737 10.3288C20.1564 10.3288 19.4439 10.8608 19.2147 11.6162H18.4243V4.23642H20.801C21.3629 4.23642 21.8207 4.68501 21.8207 5.23567V7.26159H19.6606C19.3719 7.26159 19.1368 7.49142 19.1368 7.77492C19.1368 8.05726 19.3719 8.28767 19.6606 8.28767H22.0993C22.8844 8.28767 23.5237 8.91417 23.5237 9.68359V11.6162ZM20.9737 12.9036C20.5385 12.9036 20.1844 12.5559 20.1844 12.1295C20.1844 11.7025 20.5385 11.356 20.9737 11.356C21.4094 11.356 21.7635 11.7025 21.7635 12.1295C21.7635 12.5559 21.4094 12.9036 20.9737 12.9036ZM9.88676 12.9036C9.45104 12.9036 9.09747 12.5559 9.09747 12.1295C9.09747 11.7025 9.45104 11.356 9.88676 11.356C10.3225 11.356 10.6766 11.7025 10.6766 12.1295C10.6766 12.5559 10.3225 12.9036 9.88676 12.9036ZM22.8677 7.38351V5.23567C22.8677 4.11859 21.9403 3.20976 20.801 3.20976H18.4243V1.09576C18.4243 0.812841 18.1891 0.583008 17.9004 0.583008H5.32009C5.03199 0.583008 4.79688 0.812841 4.79688 1.09576C4.79688 1.37926 5.03199 1.60967 5.32009 1.60967H17.3766V11.6162H11.6457C11.4171 10.8608 10.704 10.3288 9.88676 10.3288C9.06949 10.3288 8.35699 10.8608 8.12783 11.6162H5.32009C5.03199 11.6162 4.79688 11.8466 4.79688 12.1295C4.79688 12.413 5.03199 12.6428 5.32009 12.6428H8.12783C8.35699 13.3983 9.06949 13.9297 9.88676 13.9297C10.704 13.9297 11.4171 13.3983 11.6457 12.6428H19.2147C19.4439 13.3983 20.1564 13.9297 20.9737 13.9297C21.7915 13.9297 22.504 13.3983 22.7326 12.6428H24.0475C24.3362 12.6428 24.5713 12.413 24.5713 12.1295V9.68359C24.5713 8.63009 23.8796 7.70726 22.8677 7.38351Z" fill="#282828"/>
+        <path id="Fill 4" fill-rule="evenodd" clip-rule="evenodd" d="M3.50233 4.45049H9.77137C10.0607 4.45049 10.2952 4.22008 10.2952 3.93716C10.2952 3.65424 10.0607 3.42383 9.77137 3.42383H3.50233C3.21363 3.42383 2.97852 3.65424 2.97852 3.93716C2.97852 4.22008 3.21363 4.45049 3.50233 4.45049Z" fill="#282828"/>
+        <path id="Fill 6" fill-rule="evenodd" clip-rule="evenodd" d="M1.85779 7.12628H6.63756C6.92684 7.12628 7.16137 6.89586 7.16137 6.61294C7.16137 6.33003 6.92684 6.09961 6.63756 6.09961H1.85779C1.5691 6.09961 1.33398 6.33003 1.33398 6.61294C1.33398 6.89586 1.5691 7.12628 1.85779 7.12628Z" fill="#282828"/>
+        <path id="Fill 8" fill-rule="evenodd" clip-rule="evenodd" d="M3.97202 9.05762H0.523809C0.234524 9.05762 0 9.28803 0 9.57095C0 9.85387 0.234524 10.0843 0.523809 10.0843H3.97202C4.26071 10.0843 4.49583 9.85387 4.49583 9.57095C4.49583 9.28803 4.26071 9.05762 3.97202 9.05762Z" fill="#282828"/>
+        </g>
+      </svg>
+    {% when 'message-bubble' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 512 512"
+      >
+        <path d="M160 368c26.5 0 48 21.5 48 48v16l72.5-54.4c8.3-6.2 18.4-9.6 28.8-9.6H448c8.8 0 16-7.2 16-16V64c0-8.8-7.2-16-16-16H64c-8.8 0-16 7.2-16 16V352c0 8.8 7.2 16 16 16h96zm48 124l-.2 .2-5.1 3.8-17.1 12.8c-4.8 3.6-11.3 4.2-16.8 1.5s-8.8-8.2-8.8-14.3V474.7v-6.4V468v-4V416H112 64c-35.3 0-64-28.7-64-64V64C0 28.7 28.7 0 64 0H448c35.3 0 64 28.7 64 64V352c0 35.3-28.7 64-64 64H309.3L208 492z"/>
+      </svg>
+    {% when 'thumbs-up-alt' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 25 29"
+        fill="none"
+      >
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M13.6365 9.70821C13.9964 9.3052 14.5976 8.89355 15.5211 8.89355L15.5209 8.89372C16.4454 8.89372 17.1404 9.2935 17.5703 9.8991C17.983 10.481 18.1037 11.1437 18.1037 11.7515V14.9302H20.6865C22.6057 14.9302 24.1369 16.4797 24.1369 18.3752L24.1379 24.4152C24.1379 26.815 22.2016 28.7234 19.8289 28.7234H12.0718C11.4994 28.7234 10.7815 28.4837 10.1535 28.274L10.1535 28.274L10.1535 28.2739L10.073 28.2471C9.52342 28.0639 9.05685 27.9195 8.81333 27.8796C8.32412 28.4152 7.64421 28.7234 6.90394 28.7234H3.45584C2.03459 28.7234 1.00769 27.5962 0.87084 26.2234L0.0120422 17.5993C-0.139867 16.0875 1.16934 14.9302 2.58951 14.9302H6.90405C7.87492 14.9302 8.73047 15.4603 9.17227 16.2771L11.378 15.1748L12.7831 11.3041C12.9857 10.7448 13.2076 10.1888 13.6365 9.70821ZM16.3798 11.7513C16.3798 11.4033 16.2925 11.0757 16.1664 10.8989L16.1653 10.8989C16.0112 10.6813 15.785 10.6177 15.521 10.6177C15.2581 10.6177 15.0803 10.6823 14.9219 10.8601C14.7635 11.0379 14.5803 11.4011 14.4003 11.8978L12.88 16.0854C12.8056 16.2913 12.6558 16.4615 12.4608 16.5618L9.48909 18.0488V26.1415C9.48909 26.1651 9.4867 26.1903 9.48434 26.2152L9.48433 26.2152C9.48282 26.2312 9.48131 26.247 9.48047 26.2622C9.83436 26.3475 10.1749 26.4614 10.5183 26.5761L10.6205 26.6103C11.267 26.8258 11.8068 26.9993 12.0719 26.9993H19.829C21.2762 26.9993 22.414 25.8366 22.414 24.4152L22.413 18.3752C22.413 17.4043 21.6275 16.6543 20.6868 16.6543H17.245C16.7688 16.6543 16.3798 16.2718 16.3798 15.7955V11.7513ZM2.58959 16.6543H6.89531C7.38775 16.6543 7.76271 17.0444 7.76271 17.5163V26.1404C7.76271 26.5994 7.39636 26.9992 6.90391 26.9992H3.45581C3.01401 26.9992 2.64981 26.6469 2.59056 26.0509L1.72531 17.4269C1.68544 17.0379 2.10029 16.6543 2.58948 16.6543H2.58959ZM3.45333 19.2406C3.45333 18.7643 3.83907 18.3786 4.31535 18.3786C4.79163 18.3786 5.17738 18.7643 5.17738 19.2406C5.17738 19.7169 4.79163 20.1027 4.31535 20.1027C3.83907 20.1027 3.45333 19.7169 3.45333 19.2406Z" fill="#282828"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M15.4829 0.275391C14.538 0.294825 13.7804 1.07438 13.7911 2.02241V3.75859C13.8406 6.01088 17.1897 6.01088 17.2392 3.75859V2.02456C17.2499 1.04851 16.4557 0.258143 15.4829 0.277547V0.275391Z" fill="#218369"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M23.2984 2.00001C22.6737 1.99776 22.1026 2.33252 21.8009 2.90991L20.9431 4.46237C19.7965 6.61023 22.8149 8.29302 23.9123 6.24627L24.7573 4.70054C25.4354 3.50979 24.5947 2.02923 23.2984 2.00001Z" fill="#218369"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M7.71554 2.00088C6.40476 2.04139 5.61957 3.5044 6.26104 4.6973L7.12345 6.25257C8.30984 8.30751 11.1931 6.56992 10.1012 4.4587L9.23876 2.90568C8.92768 2.31375 8.3613 1.98059 7.71774 2.00088H7.71554Z" fill="#218369"/>
+      </svg>
+    {% when 'lightbulb' %}
+      <svg xmlns="http://www.w3.org/2000/svg" height="{{ size }}" viewBox="0 0 384 512">
+        <path d="M297.2 248.9C311.6 228.3 320 203.2 320 176c0-70.7-57.3-128-128-128S64 105.3 64 176c0 27.2 8.4 52.3 22.8 72.9c3.7 5.3 8.1 11.3 12.8 17.7l0 0c12.9 17.7 28.3 38.9 39.8 59.8c10.4 19 15.7 38.8 18.3 57.5H109c-2.2-12-5.9-23.7-11.8-34.5c-9.9-18-22.2-34.9-34.5-51.8l0 0 0 0c-5.2-7.1-10.4-14.2-15.4-21.4C27.6 247.9 16 213.3 16 176C16 78.8 94.8 0 192 0s176 78.8 176 176c0 37.3-11.6 71.9-31.4 100.3c-5 7.2-10.2 14.3-15.4 21.4l0 0 0 0c-12.3 16.8-24.6 33.7-34.5 51.8c-5.9 10.8-9.6 22.5-11.8 34.5H226.4c2.6-18.7 7.9-38.6 18.3-57.5c11.5-20.9 26.9-42.1 39.8-59.8l0 0 0 0 0 0c4.7-6.4 9-12.4 12.7-17.7zM192 128c-26.5 0-48 21.5-48 48c0 8.8-7.2 16-16 16s-16-7.2-16-16c0-44.2 35.8-80 80-80c8.8 0 16 7.2 16 16s-7.2 16-16 16zm0 384c-44.2 0-80-35.8-80-80V416H272v16c0 44.2-35.8 80-80 80z"/>
+      </svg>
+    {% when 'toolbox' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 512 512"
+      >
+        <path d="M512 237.25c0-8.49-3.37-16.62-9.37-22.63l-45.26-45.26c-6-6-14.14-9.37-22.63-9.37H384V80c0-26.51-21.49-48-48-48H176c-26.51 0-48 21.49-48 48v80H77.26c-8.49 0-16.63 3.37-22.63 9.37L9.37 214.63c-6 6-9.37 14.14-9.37 22.63L.01 304 0 448c0 17.67 14.33 32 32 32h448c17.67 0 32-14.33 32-32V237.25zM176 80h160v80H176V80zM48 243.88L83.88 208h344.23L464 243.88l.01 60.12H376v-16c0-8.84-7.16-16-16-16h-16c-8.84 0-16 7.16-16 16v16H184v-16c0-8.84-7.16-16-16-16h-16c-8.84 0-16 7.16-16 16v16H48.01L48 243.88zM464 432H48v-80h88v16c0 8.84 7.16 16 16 16h16c8.84 0 16-7.16 16-16v-16h144v16c0 8.84 7.16 16 16 16h16c8.84 0 16-7.16 16-16v-16h88v80z"/>
+      </svg>
+    {% when 'gem' %}
+      <svg xmlns="http://www.w3.org/2000/svg" height="{{ size }}" viewBox="0 0 576 512">
+        <path d="M464 0H112c-4 0-7.8 2-10 5.4L2 152.6c-2.9 4.4-2.6 10.2.7 14.2l276 340.8c4.8 5.9 13.8 5.9 18.6 0l276-340.8c3.3-4.1 3.6-9.8.7-14.2L474.1 5.4C471.8 2 468.1 0 464 0zm-19.3 48l63.3 96h-68.4l-51.7-96h56.8zm-202.1 0h90.7l51.7 96H191l51.6-96zm-111.3 0h56.8l-51.7 96H68l63.3-96zm-43 144h51.4L208 352 88.3 192zm102.9 0h193.6L288 435.3 191.2 192zM368 352l68.2-160h51.4L368 352z"/>
+      </svg>
+    {% when 'wrench' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 512 512"
+      >
+        <path d="M507.48 117.18c-3-12.17-12.41-21.79-24.5-25.15-12.1-3.34-25.16.11-33.97 8.97l-58.66 58.63-32.44-5.4-5.38-32.41 58.67-58.64c8.84-8.89 12.28-21.92 8.91-33.99-3.38-12.11-13.06-21.5-25.29-24.53-53.09-13.19-107.91 2.07-146.54 40.69-37.63 37.62-52.6 91.37-40.72 143.27L24.04 372.06C8.53 387.53 0 408.12 0 430.02s8.53 42.49 24.04 57.97C39.51 503.47 60.1 512 82.01 512c21.88 0 42.47-8.53 57.98-24.01l183.34-183.26c51.79 11.87 105.64-3.14 143.49-40.93 38.09-38.1 53.69-94.27 40.66-146.62zm-74.61 112.69c-28.47 28.46-70.2 38.1-109.01 25.21l-14.06-4.69-203.75 203.67c-12.85 12.84-35.29 12.81-48.07 0-6.44-6.42-9.97-14.96-9.97-24.04 0-9.08 3.53-17.61 9.97-24.03l203.84-203.78-4.63-14.03c-12.81-38.9-3.22-80.62 25.04-108.9 20.35-20.32 47.19-31.24 75.04-31.24h1.12l-57.32 57.3 15.13 90.59 90.57 15.09 57.35-57.29c.32 28.26-10.62 55.52-31.25 76.14zM88.01 408.02c-8.84 0-16 7.16-16 16s7.16 16 16 16 16-7.16 16-16-7.16-16-16-16z"/>
+      </svg>
+    {% when 'hammer' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        height="{{ size }}"
+        viewBox="0 0 576 512"
+      >
+        <path d="M571.31 193.94l-22.63-22.63c-6.25-6.24-16.38-6.25-22.63 0l-11.31 11.31-28.91-28.9c5.63-21.31.36-44.9-16.35-61.61l-45.25-45.25C392.99 15.62 352.05 0 311.1 0c-40.95 0-81.9 15.62-113.14 46.86l67.88 67.88v18.75c0 8.05 1.62 15.91 4.5 23.27L22.77 387.89C-6.88 415.57-7.68 462.32 21 491c14.03 14.03 32.37 21 50.69 21 19.15 0 38.27-7.62 52.42-22.77l230.92-247.34c7.56 3 15.58 4.52 23.61 4.52 5.61 0 11.23-.73 16.7-2.17l28.91 28.9-11.31 11.31c-6.25 6.25-6.25 16.38 0 22.63l22.62 22.63c6.25 6.24 16.37 6.25 22.63 0l113.14-113.14c6.23-6.25 6.23-16.38-.02-22.63zM89.02 456.47c-9.86 10.56-25.36 9.31-34.08.59-10.21-10.22-8.44-25.66.59-34.08L300.3 194.46l17.24 17.24L89.02 456.47zm380.47-205.96l-59.74-59.73-26.68 7.05c-9.5 2.52-15.12-3.61-15.4-3.88l-49.14-49.14c-2.98-2.98-4.69-7.1-4.69-11.31V94.86l-40.4-40.4C285.37 50.21 298.06 48 311.1 48c29.92 0 58.04 11.65 79.2 32.8l45.25 45.25c5.84 5.84 4.45 13.26 3.89 15.4l-7.05 26.69 59.74 59.73-22.64 22.64z"/>
+      </svg>
+    {% when 'screwdriver' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 512 512"
+      >
+        <path d="M400 224L512 74.67 437.33 0 288 112v78.06l-75.85 75.85c-44.88-23.79-82.68.42-96.41 14.16L12.03 383.77c-16.04 16.05-16.04 42.06 0 58.11l58.09 58.09C78.15 507.99 88.66 512 99.18 512c10.51 0 21.03-4.01 29.05-12.03l103.71-103.71c26.14-26.14 30.61-65.37 14.16-96.41L321.94 224H400zm-64-88l96.83-72.62 15.79 15.79L376 176h-40v-40zM197.99 362.32l-98.82 98.82-48.31-48.31 98.82-98.82c13.34-13.34 34.95-13.36 48.31 0 13.32 13.32 13.32 34.99 0 48.31z"/>
+      </svg>
+    {% when 'stopwatch' %}
+      <svg xmlns="http://www.w3.org/2000/svg" height="{{ size }}" viewBox="0 0 448 512">
+        <path d="M393.9 184l22.6-22.6c4.7-4.7 4.7-12.3 0-17l-17-17c-4.7-4.7-12.3-4.7-17 0l-20.7 20.7c-31.1-27.5-70.4-45.9-113.8-50.8V48h28c6.6 0 12-5.4 12-12V12c0-6.6-5.4-12-12-12H172c-6.6 0-12 5.4-12 12v24c0 6.6 5.4 12 12 12h28v49.4C96.4 109.3 16 197.2 16 304c0 114.9 93.1 208 208 208s208-93.1 208-208c0-44.7-14.1-86.1-38.1-120zM224 464c-88.4 0-160-71.6-160-160s71.6-160 160-160 160 71.6 160 160-71.6 160-160 160zm12-112h-24c-6.6 0-12-5.4-12-12V204c0-6.6 5.4-12 12-12h24c6.6 0 12 5.4 12 12v136c0 6.6-5.4 12-12 12z"/>
+      </svg>
+    {% when 'balance-scale' %}
+      <svg xmlns="http://www.w3.org/2000/svg" height="{{ size }}" viewBox="0 0 640 512">
+        <path d="M256 336h-.02c0-16.18 1.34-8.73-85.05-181.51-8.83-17.65-25.89-26.49-42.95-26.49-17.04 0-34.08 8.82-42.92 26.49C-2.06 328.75.02 320.33.02 336H0c0 44.18 57.31 80 128 80s128-35.82 128-80zM83.24 265.13c11.4-22.65 26.02-51.69 44.46-89.1.03-.01.13-.03.29-.03l.02-.04c19.82 39.64 35.03 69.81 46.7 92.96 11.28 22.38 19.7 39.12 25.55 51.08H55.83c6.2-12.68 15.24-30.69 27.41-54.87zM528 464H344V155.93c27.42-8.67 48.59-31.36 54.39-59.93H528c8.84 0 16-7.16 16-16V64c0-8.84-7.16-16-16-16H393.25C380.89 19.77 352.79 0 320 0s-60.89 19.77-73.25 48H112c-8.84 0-16 7.16-16 16v16c0 8.84 7.16 16 16 16h129.61c5.8 28.57 26.97 51.26 54.39 59.93V464H112c-8.84 0-16 7.16-16 16v16c0 8.84 7.16 16 16 16h416c8.84 0 16-7.16 16-16v-16c0-8.84-7.16-16-16-16zM320 112c-17.64 0-32-14.36-32-32s14.36-32 32-32 32 14.36 32 32-14.36 32-32 32zm319.98 224c0-16.18 1.34-8.73-85.05-181.51-8.83-17.65-25.89-26.49-42.95-26.49-17.04 0-34.08 8.82-42.92 26.49-87.12 174.26-85.04 165.84-85.04 181.51H384c0 44.18 57.31 80 128 80s128-35.82 128-80h-.02zm-200.15-16c6.19-12.68 15.23-30.69 27.4-54.87 11.4-22.65 26.02-51.69 44.46-89.1.03-.01.13-.03.29-.03l.02-.04c19.82 39.64 35.03 69.81 46.7 92.96 11.28 22.38 19.7 39.12 25.55 51.08H439.83z"/>
+      </svg>
+    {% when 'ruler' %}
+      <svg xmlns="http://www.w3.org/2000/svg" height="{{ size }}" viewBox="0 0 640 512">
+        <path d="M635.7 179.2L543.2 16.3c-7.6-13.5-26.5-22-43.7-11.9L16 288.3c-15.3 9-20.6 28.9-11.7 44.5l92.5 162.9c7.6 13.4 26.5 22 43.7 11.9L624 223.7c15.3-9 20.5-28.9 11.7-44.5zm-505.4 278L53.9 322.5l46-27 34.2 60.3c2.2 3.9 7.1 5.2 10.9 3l26.6-15.6c3.8-2.2 5.1-7.2 2.9-11.1l-34.2-60.3 40.4-23.7 18.7 32.9c2.2 3.9 7.1 5.2 10.9 3l26.6-15.6c3.8-2.2 5.1-7.2 2.9-11.1l-18.7-32.9 40.4-23.7 34.2 60.3c2.2 3.9 7.1 5.2 10.9 3l26.6-15.6c3.8-2.2 5.1-7.2 2.9-11.1L302 176.8l40.4-23.7 18.7 32.9c2.2 3.9 7.1 5.2 10.9 3l26.6-15.6c3.8-2.2 5.1-7.2 2.9-11.1l-18.7-32.9 40.4-23.7 34.2 60.3c2.2 3.9 7.1 5.2 10.9 3l26.6-15.6c3.8-2.2 5.1-7.2 2.9-11.1L463.6 82l46-27 76.5 134.7-455.8 267.5z"/>
+      </svg>
+    {% when 'ruler-combined' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 512 512"
+      >
+        <path d="M480 288H224V32c0-17.67-14.33-32-32-32H32C14.33 0 0 14.33 0 32v448c0 17.67 14.33 32 32 32h448c17.67 0 32-14.33 32-32V320c0-17.67-14.33-32-32-32zM48 48h128v48h-72c-4.42 0-8 3.58-8 8v16c0 4.42 3.58 8 8 8h72v48h-72c-4.42 0-8 3.58-8 8v16c0 4.42 3.58 8 8 8h72v48h-72c-4.42 0-8 3.58-8 8v16c0 4.42 3.58 8 8 8h72v25.38l-128 128V48zm416 416H70.62l128-128H224v72c0 4.42 3.58 8 8 8h16c4.42 0 8-3.58 8-8v-72h48v72c0 4.42 3.58 8 8 8h16c4.42 0 8-3.58 8-8v-72h48v72c0 4.42 3.58 8 8 8h16c4.42 0 8-3.58 8-8v-72h48v128z"/>
+      </svg>
+    {% when 'ruler-triangle' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 512 512"
+      >
+        <path d="M501.65 452.08L59.91 10.35C52.76 3.2 43.97 0 35.35 0 17.31 0 0 14.01 0 35.17V476.9C0 496.29 15.71 512 35.1 512h441.73c31.27 0 46.93-37.8 24.82-59.92zM48 464V66.32l63.08 63.08-11.31 11.31c-6.25 6.25-6.25 16.38 0 22.63l11.31 11.31c6.25 6.25 16.38 6.25 22.63 0l11.31-11.31 45.26 45.25-11.31 11.31c-6.25 6.25-6.25 16.38 0 22.63l11.31 11.31c6.25 6.25 16.38 6.25 22.63 0l11.31-11.31 45.25 45.25-11.31 11.31c-6.25 6.25-6.25 16.38 0 22.63l11.31 11.31c6.25 6.25 16.38 6.25 22.63 0l11.31-11.31 45.25 45.26-11.31 11.31c-6.25 6.25-6.25 16.38 0 22.63l11.31 11.31c6.25 6.25 16.38 6.25 22.63 0l11.31-11.31L445.68 464H48zm80-80h124.54L128 259.46V384z"/>
+      </svg>
+    {% when 'fire-alt' %}
+      <svg xmlns="http://www.w3.org/2000/svg" height="{{ size }}" viewBox="0 0 448 512">
+        <path d="M323.56 51.2c-20.8 19.3-39.58 39.59-56.22 59.97C240.08 73.62 206.28 35.53 168 0 69.74 91.17 0 209.96 0 281.6 0 408.85 100.29 512 224 512s224-103.15 224-230.4c0-53.27-51.98-163.14-124.44-230.4zM224 464c-97.05 0-176-81.83-176-182.4 0-45.37 44.3-133.21 120.16-214.09 22.34 23.36 42.82 47.72 60.34 71.86l36.62 50.44 39.41-48.29c5.83-7.15 11.85-14.15 18.01-20.97C368.89 177.96 400 250.42 400 281.6 400 382.17 321.05 464 224 464zm89.47-220.84l-51.3 58.52S181.75 198.98 175.69 192C133.27 242.86 112 272.62 112 306.41 112 374.23 163.37 416 226.5 416c25.26 0 48.62-7.87 67.58-21.13 43.08-30.14 53.18-88.58 29.26-134.24-2.95-5.62-6.24-11.48-9.87-17.47z"/>
+      </svg>
+    {% when 'mug-hot' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 512 512"
+      >
+        <path d="M400 192H32c-17.7 0-32 14.3-32 32v192c0 53 43 96 96 96h192c53 0 96-43 96-96h16c61.8 0 112-50.2 112-112s-50.2-112-112-112zm-64 224c0 26.5-21.5 48-48 48H96c-26.5 0-48-21.5-48-48V240h288v176zm64-48h-16V240h16c35.3 0 64 28.7 64 64s-28.7 64-64 64zM239.1 146.5c1.3 7.7 8 13.5 16 13.5h16.5c9.8 0 17.6-8.5 16.3-18-3.8-28.2-16.4-54.2-36.6-74.7-14.4-14.7-23.6-33.3-26.4-53.5C223.8 5.9 217 0 208.8 0h-16.4c-9.8 0-17.5 8.5-16.3 18 3.9 31.9 18 61.3 40.6 84.4 12 12.2 19.7 27.5 22.4 44.1zm-112 0c1.3 7.7 8 13.5 16 13.5h16.5c9.8 0 17.6-8.5 16.3-18-3.8-28.2-16.4-54.2-36.6-74.7-14.4-14.7-23.6-33.3-26.4-53.5C111.8 5.9 105 0 96.8 0H80.4C70.6 0 63 8.5 64.1 18c3.9 31.9 18 61.3 40.6 84.4 12 12.2 19.7 27.5 22.4 44.1z"/>
+      </svg>
+    {% when 'glass' %}
+      <svg xmlns="http://www.w3.org/2000/svg" height="{{ size }}" viewBox="0 0 384 512">
+        <path d="M352 0H32A32 32 0 0 0 .06 34l32 448A32 32 0 0 0 64 512h256a32 32 0 0 0 31.94-30l32-448A32 32 0 0 0 352 0zm-17.19 48l-8 112H57.18l-8-112zM305.1 464H78.9L60.61 208h262.77z"/>
+      </svg>
+    {% when 'cog' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 512 512"
+      >
+        <path d="M452.515 237l31.843-18.382c9.426-5.441 13.996-16.542 11.177-27.054-11.404-42.531-33.842-80.547-64.058-110.797-7.68-7.688-19.575-9.246-28.985-3.811l-31.785 18.358a196.276 196.276 0 0 0-32.899-19.02V39.541a24.016 24.016 0 0 0-17.842-23.206c-41.761-11.107-86.117-11.121-127.93-.001-10.519 2.798-17.844 12.321-17.844 23.206v36.753a196.276 196.276 0 0 0-32.899 19.02l-31.785-18.358c-9.41-5.435-21.305-3.877-28.985 3.811-30.216 30.25-52.654 68.265-64.058 110.797-2.819 10.512 1.751 21.613 11.177 27.054L59.485 237a197.715 197.715 0 0 0 0 37.999l-31.843 18.382c-9.426 5.441-13.996 16.542-11.177 27.054 11.404 42.531 33.842 80.547 64.058 110.797 7.68 7.688 19.575 9.246 28.985 3.811l31.785-18.358a196.202 196.202 0 0 0 32.899 19.019v36.753a24.016 24.016 0 0 0 17.842 23.206c41.761 11.107 86.117 11.122 127.93.001 10.519-2.798 17.844-12.321 17.844-23.206v-36.753a196.34 196.34 0 0 0 32.899-19.019l31.785 18.358c9.41 5.435 21.305 3.877 28.985-3.811 30.216-30.25 52.654-68.266 64.058-110.797 2.819-10.512-1.751-21.613-11.177-27.054L452.515 275c1.22-12.65 1.22-25.35 0-38zm-52.679 63.019l43.819 25.289a200.138 200.138 0 0 1-33.849 58.528l-43.829-25.309c-31.984 27.397-36.659 30.077-76.168 44.029v50.599a200.917 200.917 0 0 1-67.618 0v-50.599c-39.504-13.95-44.196-16.642-76.168-44.029l-43.829 25.309a200.15 200.15 0 0 1-33.849-58.528l43.819-25.289c-7.63-41.299-7.634-46.719 0-88.038l-43.819-25.289c7.85-21.229 19.31-41.049 33.849-58.529l43.829 25.309c31.984-27.397 36.66-30.078 76.168-44.029V58.845a200.917 200.917 0 0 1 67.618 0v50.599c39.504 13.95 44.196 16.642 76.168 44.029l43.829-25.309a200.143 200.143 0 0 1 33.849 58.529l-43.819 25.289c7.631 41.3 7.634 46.718 0 88.037zM256 160c-52.935 0-96 43.065-96 96s43.065 96 96 96 96-43.065 96-96-43.065-96-96-96zm0 144c-26.468 0-48-21.532-48-48 0-26.467 21.532-48 48-48s48 21.533 48 48c0 26.468-21.532 48-48 48z"/>
+      </svg>
+    {% when 'phone' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 512 512"
+      >
+        <path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/>
+      </svg>
+    {% when 'phone-alt' %}
+      <svg xmlns="http://www.w3.org/2000/svg" width="{{ size }}" height="{{ size }}" viewBox="0 0 512 512">
+        <path d="M493.09 351.3L384.7 304.8a31.36 31.36 0 0 0-36.5 8.9l-44.1 53.9A350 350 0 0 1 144.5 208l53.9-44.1a31.35 31.35 0 0 0 8.9-36.49l-46.5-108.5A31.33 31.33 0 0 0 125 .81L24.2 24.11A31.05 31.05 0 0 0 0 54.51C0 307.8 205.3 512 457.49 512A31.23 31.23 0 0 0 488 487.7L511.19 387a31.21 31.21 0 0 0-18.1-35.7zM456.89 480C222.4 479.7 32.3 289.7 32.1 55.21l99.6-23 46 107.39-72.8 59.5C153.3 302.3 209.4 358.6 313 407.2l59.5-72.8 107.39 46z"/>
+      </svg>
+    {% when 'badge-check' %}
+      <svg
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 13 15"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path id="Shape" fill-rule="evenodd" clip-rule="evenodd" d="M8.52167 13.0081C8.43952 13.0081 8.33744 13.0286 8.2561 13.0499C7.97919 13.1353 7.73146 13.4399 7.48085 13.748C7.17715 14.1214 6.86922 14.5 6.5 14.5C6.12737 14.5 5.81716 14.1209 5.51073 13.7464C5.26299 13.4437 5.01771 13.1439 4.7439 13.0499L4.73478 13.0477C4.6557 13.0279 4.57663 13.0081 4.47833 13.0081C4.24346 13.0081 3.97291 13.0764 3.70236 13.1448C3.43181 13.2131 3.16126 13.2815 2.92639 13.2815C2.7629 13.2815 2.62014 13.2388 2.49733 13.1551C2.20806 12.9369 2.17361 12.4564 2.13917 11.9759C2.11047 11.5755 2.08176 11.1751 1.90559 10.9265C1.73833 10.6777 1.37677 10.5292 1.01311 10.3798C0.577446 10.2008 0.138763 10.0206 0.0274882 9.66529C-0.0831144 9.32364 0.159706 8.92032 0.40548 8.5121C0.613375 8.16679 0.823384 7.81797 0.823384 7.5C0.823384 7.18203 0.613371 6.8332 0.405473 6.48788C0.159702 6.07965 -0.0831134 5.67634 0.0274882 5.33471C0.139325 4.97758 0.575903 4.79736 1.01159 4.6175C1.37126 4.46903 1.73033 4.3208 1.90559 4.07351C2.08169 3.825 2.11028 3.42463 2.13886 3.02427C2.17319 2.54347 2.20751 2.06269 2.49733 1.84495C2.62015 1.76038 2.7629 1.7185 2.92639 1.7185C3.16126 1.7185 3.43181 1.78686 3.70236 1.85522C3.97291 1.92357 4.24346 1.99193 4.47833 1.99193C4.56048 1.99193 4.66256 1.9714 4.7439 1.95005C5.01771 1.85608 5.26299 1.55634 5.51073 1.25358C5.81716 0.879093 6.12737 0.5 6.5 0.5C6.87263 0.5 7.18284 0.879093 7.48927 1.25358C7.73701 1.55634 7.98229 1.85608 8.2561 1.95005L8.26522 1.95234C8.34429 1.97213 8.42337 1.99193 8.52167 1.99193C8.75653 1.99193 9.02709 1.92357 9.29764 1.85522C9.56819 1.78686 9.83874 1.7185 10.0736 1.7185C10.2371 1.7185 10.3799 1.7612 10.5027 1.84495C10.7919 2.06312 10.8264 2.54362 10.8608 3.02411C10.8895 3.42453 10.9182 3.82493 11.0944 4.07351C11.2617 4.32231 11.6232 4.47083 11.9869 4.62021C12.4226 4.79917 12.8612 4.97937 12.9725 5.33471C13.0831 5.67636 12.8403 6.07968 12.5945 6.4879C12.3866 6.83321 12.1766 7.18203 12.1766 7.5C12.1766 7.81797 12.3866 8.1668 12.5945 8.51212C12.8403 8.92035 13.0831 9.32366 12.9725 9.66529C12.8607 10.0224 12.4241 10.2026 11.9884 10.3825C11.6287 10.531 11.2697 10.6792 11.0944 10.9265C10.9183 11.175 10.8897 11.5754 10.8611 11.9757C10.8268 12.4565 10.7925 12.9373 10.5027 13.1551C10.3798 13.2396 10.2371 13.2815 10.0736 13.2815C9.83874 13.2815 9.56819 13.2131 9.29764 13.1448C9.02709 13.0764 8.75653 13.0081 8.52167 13.0081ZM5.72405 10.0019C5.90747 10.0019 6.11163 9.93871 6.27512 9.77038L9.25613 6.72242C9.56237 6.40712 9.56237 5.88161 9.25613 5.56631C8.94989 5.25101 8.4395 5.25101 8.13326 5.56631L5.74479 8.0469L4.82608 7.10099C4.51984 6.78569 4.00944 6.78569 3.7032 7.10099C3.39696 7.41629 3.39696 7.9418 3.7032 8.2571L5.17298 9.77038C5.31573 9.91819 5.54063 10.0019 5.72405 10.0019Z" fill="white"/>
+      </svg>
+    {% when 'sparkles' %}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="{{ size }}"
+        height="{{ size }}"
+        viewBox="0 0 512 512"
+      >
+        <path d="M324.42 103.15L384 128l24.84 59.58a8 8 0 0 0 14.32 0L448 128l59.58-24.85a8 8 0 0 0 0-14.31L448 64 423.16 4.42a8 8 0 0 0-14.32 0L384 64l-59.58 24.84a8 8 0 0 0 0 14.31zm183.16 305.69L448 384l-24.84-59.58a8 8 0 0 0-14.32 0L384 384l-59.58 24.84a8 8 0 0 0 0 14.32L384 448l24.84 59.58a8 8 0 0 0 14.32 0L448 448l59.58-24.84a8 8 0 0 0 0-14.32zM384 255.64a16.06 16.06 0 0 0-8.84-14.33l-112.57-56.39-56.28-112.77c-5.44-10.87-23.19-10.87-28.62 0l-56.28 112.77L8.84 241.31a16 16 0 0 0 0 28.67l112.57 56.39 56.28 112.77a16 16 0 0 0 28.62 0l56.28-112.77L375.16 270a16.07 16.07 0 0 0 8.84-14.36z"/>
+      </svg>
+    {% when 'leaf' %}
+      <svg
+        width="{{ size }}"
+        height="{{ size | minus: 1 }}"
+        viewBox="0 0 35 34"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g id="Icon">
+        <path id="Vector" d="M12.7007 30.2217C13.0662 30.3428 13.5529 30.3428 13.9185 30.4662C13.5529 30.3428 13.0662 30.2217 12.7007 30.2217Z" fill="white"/>
+        <path id="Vector_2" d="M2.58585 20.7158C2.70694 21.2025 2.83032 21.568 2.95142 21.9336C2.83032 21.568 2.70694 21.0814 2.58585 20.7158Z" fill="white"/>
+        <path id="Vector_3" d="M3.07209 22.0566C3.31656 22.5433 3.55875 23.0323 3.80322 23.5189C3.56104 23.1533 3.31656 22.6644 3.07209 22.0566Z" fill="white"/>
+        <path id="Vector_4" d="M2.21988 19.1328C2.21988 19.4984 2.34098 19.8639 2.46436 20.2295C2.34098 19.8639 2.34098 19.4984 2.21988 19.1328Z" fill="white"/>
+        <path id="Vector_5" d="M2.46411 20.2285C2.46411 20.3496 2.58521 20.473 2.58521 20.5941C2.58521 20.4707 2.5852 20.3496 2.46411 20.2285Z" fill="white"/>
+        <path id="Vector_6" d="M2.22021 18.6426C2.22021 18.7637 2.22022 18.887 2.34131 19.1292C2.22022 18.887 2.22021 18.766 2.22021 18.6426Z" fill="white"/>
+        <path id="Vector_7" d="M3.07275 21.9346C3.07275 22.0557 3.07275 22.0557 3.19385 22.179C3.07275 22.0579 3.07275 21.9346 3.07275 21.9346Z" fill="white"/>
+        <path id="Vector_8" d="M5.26576 25.713C9.16591 21.0817 14.6494 15.9637 18.5472 12.4315C18.7917 12.187 18.9128 11.9448 18.9128 11.5793C18.9128 10.8482 18.4261 10.3615 17.695 10.3615C17.4505 10.3615 17.0849 10.4826 16.8428 10.606H16.7217C11.2382 15.6028 6.85142 19.8662 3.6824 23.5219C3.43792 23.0352 3.19574 22.5463 2.95126 22.0596C2.95126 22.0596 2.95126 21.9385 2.83017 21.8151C2.70908 21.4496 2.5857 20.9629 2.4646 20.5974C2.4646 20.4763 2.34351 20.3529 2.34351 20.2318C2.22242 19.8662 2.22242 19.5007 2.09904 19.1351C2.09904 19.014 2.09904 18.8906 1.97794 18.6484C2.09904 18.1572 2.09904 17.5472 2.09904 17.0605C2.09904 7.55582 12.0904 2.55896 21.5951 2.43789C30.2476 2.31679 35 0 35 0C35 0 33.7822 12.4293 31.2233 19.375C28.2965 27.2964 22.9363 30.4654 15.5016 30.4654C15.0149 30.4654 14.526 30.4654 14.0393 30.3443H13.9182C13.5527 30.3443 13.066 30.2232 12.7004 30.0998H12.5793C11.7271 29.8554 10.8726 29.6132 10.0204 29.2476C9.28925 28.8821 8.55812 28.5165 7.82699 28.0299C5.3891 30.8333 3.80576 33.0267 3.80576 34H0.150097C0.271187 32.1699 2.34122 29.003 5.26576 25.713Z" fill="white"/>
+        </g>
+      </svg>
+
+    {% when 'question-cloud' %}
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.54532 3.05463e-05H15.4548L15.4547 0C17.9613 0 20 2.03875 20 4.54528V11.8188C20 14.3245 17.9612 16.3641 15.4547 16.3641H10.2753L5.04988 19.8474C4.89818 19.9489 4.72175 20 4.54532 20C4.39789 20 4.25043 19.9651 4.11662 19.8935C3.82088 19.7349 3.63593 19.4264 3.63593 19.0914L3.63678 16.272C1.56398 15.8494 0 14.0127 0 11.8179V4.54532C0 2.03873 2.03876 3.05463e-05 4.54532 3.05463e-05ZM15.4548 14.5453C16.9591 14.5453 18.1822 13.3222 18.1822 11.8179L18.1822 4.54539C18.1822 3.04109 16.9592 1.81804 15.4549 1.81804H4.54541C3.0411 1.81804 1.81804 3.04109 1.81804 4.54539V11.818C1.81804 13.3223 3.0411 14.5454 4.54541 14.5454C5.04827 14.5454 5.45482 14.9528 5.45482 15.4548V17.392L9.49634 14.6979C9.50947 14.6889 9.52362 14.6844 9.53782 14.6799C9.54943 14.6762 9.56108 14.6725 9.5722 14.6663C9.6259 14.6365 9.67959 14.6152 9.73925 14.5973C9.80062 14.5785 9.85943 14.5657 9.92249 14.5606C9.93476 14.5595 9.94616 14.5563 9.95748 14.5531C9.97133 14.5492 9.98505 14.5453 10.0001 14.5453H15.4548Z" fill="#282828"/>
+        <path d="M9.99983 2.72754C8.49552 2.72754 7.27246 3.95059 7.27246 5.45488C7.27246 5.95689 7.67901 6.36429 8.18187 6.36429C8.68474 6.36429 9.09129 5.95689 9.09129 5.45488C9.09129 4.95373 9.49869 4.54548 10.0007 4.54548C10.5027 4.54548 10.9101 4.95373 10.9101 5.45488C10.9101 5.74809 10.7746 6.01569 10.5385 6.18871C9.61802 6.86202 9.09046 7.8328 9.09046 8.85213V9.09079C9.09046 9.59279 9.49701 10.0002 9.99987 10.0002C10.5027 10.0002 10.9093 9.59279 10.9093 9.09079V8.85213C10.9093 8.25892 11.3499 7.84727 11.6124 7.65465C12.3096 7.14241 12.7273 6.31995 12.7273 5.45488C12.7273 3.95059 11.5042 2.72754 9.99989 2.72754H9.99983Z" fill="#217A97"/>
+        <path d="M10.9096 11.8182C10.9096 13.031 9.09082 13.031 9.09082 11.8182C9.09082 10.6062 10.9096 10.6062 10.9096 11.8182Z" fill="#217A97"/>
+      </svg>
+    {% when 'thumbs-up-sparke' %}
+      <svg width="20" height="24" viewBox="0 0 25 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g id="Icon">
+        <path id="Shape" fill-rule="evenodd" clip-rule="evenodd" d="M13.6365 9.70918C13.9964 9.30617 14.5976 8.89453 15.5211 8.89453L15.5209 8.8947C16.4454 8.8947 17.1404 9.29448 17.5703 9.90008C17.983 10.482 18.1037 11.1447 18.1037 11.7524V14.9312H20.6865C22.6057 14.9312 24.1369 16.4807 24.1369 18.3762L24.1379 24.4162C24.1379 26.8159 22.2016 28.7244 19.8289 28.7244H12.0718C11.4994 28.7244 10.7815 28.4846 10.1535 28.2749L10.1535 28.2749L10.1535 28.2749L10.073 28.2481C9.52342 28.0649 9.05685 27.9205 8.81333 27.8806C8.32412 28.4162 7.64421 28.7244 6.90394 28.7244H3.45584C2.03459 28.7244 1.00769 27.5972 0.87084 26.2244L0.0120422 17.6003C-0.139867 16.0885 1.16934 14.9311 2.58951 14.9311H6.90405C7.87492 14.9311 8.73047 15.4613 9.17227 16.2781L11.378 15.1757L12.7831 11.3051C12.9857 10.7458 13.2076 10.1898 13.6365 9.70918ZM16.3798 11.7523C16.3798 11.4042 16.2925 11.0766 16.1664 10.8999L16.1653 10.8999C16.0112 10.6822 15.785 10.6187 15.521 10.6187C15.2581 10.6187 15.0803 10.6833 14.9219 10.8611C14.7635 11.0389 14.5803 11.4021 14.4003 11.8988L12.88 16.0864C12.8056 16.2923 12.6558 16.4625 12.4608 16.5627L9.48909 18.0498V26.1425C9.48909 26.1661 9.4867 26.1913 9.48434 26.2161L9.48433 26.2162C9.48282 26.2322 9.48131 26.248 9.48047 26.2632C9.83436 26.3485 10.1749 26.4623 10.5183 26.5771L10.6205 26.6113C11.267 26.8268 11.8068 27.0003 12.0719 27.0003H19.829C21.2762 27.0003 22.414 25.8375 22.414 24.4162L22.413 18.3762C22.413 17.4053 21.6275 16.6553 20.6868 16.6553H17.245C16.7688 16.6553 16.3798 16.2727 16.3798 15.7964V11.7523ZM2.58959 16.6552H6.89531C7.38775 16.6552 7.76271 17.0453 7.76271 17.5173V26.1413C7.76271 26.6004 7.39636 27.0002 6.90391 27.0002H3.45581C3.01401 27.0002 2.64981 26.6478 2.59056 26.0519L1.72531 17.4279C1.68544 17.0389 2.10029 16.6552 2.58948 16.6552H2.58959ZM3.45333 19.2416C3.45333 18.7653 3.83907 18.3795 4.31535 18.3795C4.79163 18.3795 5.17738 18.7653 5.17738 19.2416C5.17738 19.7179 4.79163 20.1037 4.31535 20.1037C3.83907 20.1037 3.45333 19.7179 3.45333 19.2416Z" fill="#282828"/>
+        <g id="Group 28">
+        <path id="Path" fill-rule="evenodd" clip-rule="evenodd" d="M15.4829 0.275879C14.538 0.295314 13.7804 1.07487 13.7911 2.02289V3.75907C13.8406 6.01137 17.1897 6.01137 17.2392 3.75907V2.02505C17.2499 1.04899 16.4557 0.258631 15.4829 0.278035V0.275879Z" fill="#218369"/>
+        <path id="Path_2" fill-rule="evenodd" clip-rule="evenodd" d="M23.2984 2.00001C22.6737 1.99776 22.1026 2.33252 21.8009 2.90991L20.9431 4.46237C19.7965 6.61023 22.8149 8.29302 23.9123 6.24627L24.7573 4.70054C25.4354 3.50979 24.5947 2.02923 23.2984 2.00001Z" fill="#218369"/>
+        <path id="Path_3" fill-rule="evenodd" clip-rule="evenodd" d="M7.71554 2.00088C6.40476 2.04139 5.61957 3.5044 6.26104 4.6973L7.12345 6.25257C8.30984 8.30751 11.1931 6.56992 10.1012 4.4587L9.23876 2.90568C8.92768 2.31375 8.3613 1.98059 7.71774 2.00088H7.71554Z" fill="#218369"/>
+        </g>
+        </g>
+      </svg>
+    {% when 'checklist' %}
+      <svg width="24" height="19" viewBox="0 0 24 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M1.14024 0.5H6.93036C7.55964 0.5 8.06941 1.00141 8.09988 1.62155V7.34559C8.09988 7.96574 7.59012 8.46715 6.95964 8.46715H1.14024C0.50976 8.46715 0 7.96574 0 7.34559V1.62155C0 1.00141 0.50976 0.5 1.14024 0.5ZM3.98913 5.90021L5.96961 3.95219L5.9696 3.95222C6.20983 3.68711 6.20983 3.30326 5.9403 3.06696C5.70006 2.83067 5.28053 2.83067 5.0403 3.06696L3.5403 4.54238L3.00006 4.011C2.75982 3.7747 2.34029 3.7747 2.10006 4.011C1.85983 4.2473 1.85983 4.65995 2.10006 4.89625L3.08913 5.90021C3.20865 6.01894 3.35866 6.07772 3.53913 6.07772C3.7196 6.07772 3.8696 6.01779 3.98913 5.90021Z" fill="#217A97"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M1.14024 10.5332H6.93036C7.55964 10.5332 8.06941 11.0346 8.09988 11.6548V17.3788C8.09988 17.9989 7.59012 18.5004 6.95964 18.5004H1.14024C0.50976 18.5004 0 17.9989 0 17.3788V11.6548C0 11.0346 0.50976 10.5332 1.14024 10.5332ZM3.98913 15.9334L5.96961 13.9854L5.9696 13.9854C6.20983 13.7203 6.20983 13.3365 5.9403 13.1002C5.70006 12.8639 5.28053 12.8639 5.0403 13.1002L3.5403 14.5756L3.00006 14.0442C2.75982 13.8079 2.34029 13.8079 2.10006 14.0442C1.85983 14.2805 1.85983 14.6932 2.10006 14.9295L3.08913 15.9334C3.20865 16.0521 3.35866 16.1109 3.53913 16.1109C3.7196 16.1109 3.8696 16.051 3.98913 15.9334Z" fill="#282828"/>
+        <path d="M10.8303 3.53945H23.19C23.64 3.53945 23.9997 3.18558 23.9997 2.74296C23.9997 2.30033 23.64 1.94647 23.19 1.94647L10.8303 1.94531C10.3803 1.94531 10.0205 2.29918 10.0205 2.7418C10.0193 3.18558 10.3803 3.53944 10.8303 3.53944V3.53945Z" fill="#282828"/>
+        <path d="M10.8303 6.96212H18.6303C19.0803 6.96212 19.44 6.60826 19.44 6.16563C19.44 5.72301 19.0803 5.36914 18.6303 5.36914H10.8303C10.3803 5.36914 10.0205 5.72301 10.0205 6.16563C10.0193 6.60826 10.3803 6.96212 10.8303 6.96212Z" fill="#282828"/>
+        <path d="M23.19 12.0078H10.8303C10.3803 12.0078 10.0205 12.3617 10.0205 12.8043C10.0205 13.2469 10.3803 13.6008 10.8303 13.6008H23.19C23.64 13.6008 23.9997 13.2469 23.9997 12.8043C23.9997 12.3617 23.64 12.0078 23.19 12.0078Z" fill="#282828"/>
+        <path d="M10.8303 17.0246H18.6303C19.0803 17.0246 19.44 16.6708 19.44 16.2281C19.44 15.7855 19.0803 15.4316 18.6303 15.4316H10.8303C10.3803 15.4316 10.0205 15.7855 10.0205 16.2281C10.0193 16.6708 10.3803 17.0246 10.8303 17.0246Z" fill="#282828"/>
+      </svg>
+    {% when 'exclamation' %}
+      <svg xmlns="http://www.w3.org/2000/svg" height="{{ size }}" viewBox="0 0 64 512">
+        <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V320c0 17.7 14.3 32 32 32s32-14.3 32-32V64zM32 480a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/>
+      </svg>
+    {% when 'location-marker' %}
+      <svg width="{{ size }}" height="{{ size }}" viewBox="0 0 32 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g id="np_location_3000230_000000 1">
+        <g id="Group">
+        <path id="Vector" d="M29.5 11.7148C29.5 6.92042 25.2638 3 20 3C14.7362 3 10.5 6.92042 10.5 11.7148C10.5 14.8453 13.6648 20.6858 20 29C26.3352 20.6858 29.5 14.8454 29.5 11.7148Z" fill="#E63360"/>
+        <path id="Vector_2" d="M5.98828 12.2971C5.98828 7.09497 10.4858 2.90625 15.9991 2.90625C21.5125 2.90625 26.0099 7.09497 26.0099 12.2971C26.0099 15.5992 23.0989 20.96 17.2828 28.5925C16.7427 29.301 15.7304 29.4378 15.0208 28.8977C14.9057 28.8093 14.8028 28.7076 14.7144 28.5925C8.89944 20.96 5.98828 15.5992 5.98828 12.2971ZM24.0724 12.2971C24.0724 8.19671 20.4724 4.84375 15.9991 4.84375C11.5258 4.84375 7.92578 8.19671 7.92578 12.2971C7.92578 14.9745 10.6153 19.9696 15.9991 27.0804C21.3829 19.9696 24.0724 14.9746 24.0724 12.2971Z" fill="white"/>
+        <circle id="Ellipse 39" cx="16" cy="12.5" r="3.5" fill="white"/>
+        <path id="Vector_3" d="M15.9991 16.7275C13.6802 16.7275 11.8008 14.8481 11.8008 12.5304C11.8008 10.2114 13.6802 8.33203 15.9991 8.33203C18.3181 8.33203 20.1974 10.2114 20.1974 12.5304C20.1974 14.8481 18.3181 16.7275 15.9991 16.7275ZM15.9991 14.79C17.2476 14.79 18.2599 13.7788 18.2599 12.5303C18.2599 11.2819 17.2476 10.2695 15.9991 10.2695C14.7506 10.2695 13.7383 11.2818 13.7383 12.5303C13.7383 13.7788 14.7506 14.79 15.9991 14.79Z" fill="white"/>
+        </g>
+        </g>
+      </svg>
+    {% when 'letter' %}
+      <svg xmlns="http://www.w3.org/2000/svg" width="{{ size }}" height="{{ size }}" viewBox="0 0 512 512">
+        <path d="M464 64H48C21.5 64 0 85.5 0 112v288c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48zM48 96h416c8.8 0 16 7.2 16 16v41.4c-21.9 18.5-53.2 44-150.6 121.3-16.9 13.4-50.2 45.7-73.4 45.3-23.2.4-56.6-31.9-73.4-45.3C85.2 197.4 53.9 171.9 32 153.4V112c0-8.8 7.2-16 16-16zm416 320H48c-8.8 0-16-7.2-16-16V195c22.8 18.7 58.8 47.6 130.7 104.7 20.5 16.4 56.7 52.5 93.3 52.3 36.4.3 72.3-35.5 93.3-52.3 71.9-57.1 107.9-86 130.7-104.7v205c0 8.8-7.2 16-16 16z"/>
+      </svg>
+    {% when 'coffee-espresso' %}
+      <svg xmlns="http://www.w3.org/2000/svg" width="79.501" height="79.501" viewBox="0 0 79.501 79.501">
+        <defs>
+            <style>
+                .cls-3{fill:#231f20}
+            </style>
+        </defs>
+        <path id="Rectangle_177" fill="#fff" d="M0 0H79.501V79.501H0z"/>
+        <path id="Path_902" fill="#c7c8ce" d="M-11394.263-8245.059v-14.056l1.987-2.5s4.184-2.553 4.319-2.539 34.9 0 34.9 0l5.777 5.042v45.93l4 6.105h-55.186l5.275-7.777h21.515v-30.2z" transform="translate(11414.491 8274.697)"/>
+        <path id="Path_106" d="M3673.281 200.724a1.041 1.041 0 0 1-1.041-1.041V155.77a2.255 2.255 0 0 0-.788-1.714l-2.231-1.912a3.291 3.291 0 0 0-2.143-.792h-34.035a3.3 3.3 0 0 0-2.144.793l-1.159.993a1.041 1.041 0 0 1-1.354-1.581l1.159-.993a5.378 5.378 0 0 1 3.5-1.294h34.035a5.374 5.374 0 0 1 3.5 1.294l2.232 1.912a4.339 4.339 0 0 1 1.515 3.295v43.913a1.041 1.041 0 0 1-1.046 1.04z" class="cls-3" transform="translate(-3606.461 -139.97)"/>
+        <path id="Path_107" d="M3619.851 181.321a1.04 1.04 0 0 1-1.04-1.041v-8.405a2.959 2.959 0 0 1 2.956-2.957h40.957a1.041 1.041 0 1 1 0 2.082h-40.957a.876.876 0 0 0-.875.875v8.405a1.04 1.04 0 0 1-1.041 1.041z" class="cls-3" transform="translate(-3599.596 -154.61)"/>
+        <path id="Path_108" d="M3757.641 229.059a1.041 1.041 0 0 1-1.04-1.041v-39.681a1.041 1.041 0 1 1 2.081 0v39.681a1.041 1.041 0 0 1-1.041 1.041z" class="cls-3" transform="translate(-3702.268 -168.305)"/>
+        <path id="Path_109" d="M3651.168 279.234h-1.477a2.438 2.438 0 0 1-2.434-2.209l-.285-2.928a1.041 1.041 0 0 1 2.072-.2l.284 2.928a.365.365 0 0 0 .363.329h1.477a.361.361 0 0 0 .362-.329l.287-2.928a1.041 1.041 0 0 1 2.072.2l-.286 2.929a2.439 2.439 0 0 1-2.435 2.208z" class="cls-3" transform="translate(-3620.576 -232.131)"/>
+        <path id="Path_110" d="M3658.925 263.549h-54.609a1.041 1.041 0 0 1-1.042-1.041v-.938a3.429 3.429 0 0 1 .655-2.021l2.606-3.6a4.466 4.466 0 0 1 3.608-1.842h19.3v-28.318h-18.723l2.455 2.979h11.981a1.042 1.042 0 0 1 1.041 1.041v5.76a2.775 2.775 0 0 1-2.772 2.771h-9.011a2.774 2.774 0 0 1-2.771-2.771v-2.117a1.041 1.041 0 0 1 2.082 0v2.117a.69.69 0 0 0 .689.689h9.011a.69.69 0 0 0 .689-.69v-4.718h-11.433a1.043 1.043 0 0 1-.8-.379l-4.168-5.062a1.041 1.041 0 0 1 .8-1.7h21.967a1.041 1.041 0 0 1 1.041 1.041v30.4a1.041 1.041 0 0 1-1.041 1.041h-20.339a2.379 2.379 0 0 0-1.922.982l-2.6 3.6a1.36 1.36 0 0 0-.255.7h52.52a1.344 1.344 0 0 0-.255-.7l-3.315-4.58h-20.185a1.041 1.041 0 1 1 0-2.082h20.717a1.041 1.041 0 0 1 .843.431l3.627 5.011a3.428 3.428 0 0 1 .655 2.021v.937a1.042 1.042 0 0 1-1.046 1.038z" class="cls-3" transform="translate(-3588.02 -195.435)"/>
+        <path id="Path_112" d="M3560.091 259.243a3.058 3.058 0 0 1-3.054-3.059v-1.021a3.057 3.057 0 0 1 3.177-3.056l14.367.52a1.041 1.041 0 1 1-.081 2.08l-14.366-.52a.959.959 0 0 0-.715.272.97.97 0 0 0-.3.7v1.021a.977.977 0 0 0 1.015.976l17.141-1a1.041 1.041 0 0 1 .082 2.081l-17.142 1z" class="cls-3" transform="translate(-3553.566 -216.595)"/>
+        <path id="Path_901" fill="#9a7054" d="M3640.676 668.828v3.284a2.428 2.428 0 0 0 .173 1.592 1.156 1.156 0 0 0 .991.732h7.274a1.153 1.153 0 0 0 .99-.732 2.422 2.422 0 0 0 .175-1.592v-3.284z" transform="translate(-3614.224 -615.722)"/>
+        <path id="Path_900" d="M3656.268 279.234h-6.577a2.438 2.438 0 0 1-2.434-2.209l-.285-5.928a1.041 1.041 0 0 1 2.072-.2l.284 5.928a.365.365 0 0 0 .363.329h6.577a.361.361 0 0 0 .362-.329l.287-5.928a1.041 1.041 0 0 1 2.072.2l-.286 5.929a2.439 2.439 0 0 1-2.435 2.208z" class="cls-3" transform="translate(-3621.576 -218.48)"/>
+      </svg>
+    {% when 'coffee-pourover' %}
+      <svg xmlns="http://www.w3.org/2000/svg" width="79.501" height="79.501" viewBox="0 0 79.501 79.501">
+        <defs>
+            <style>
+                .cls-3{fill:#231f20}
+            </style>
+        </defs>
+        <path id="Rectangle_178" fill="#fff" d="M0 0H79.501V79.501H0z" transform="translate(0)"/>
+        <path id="Path_903" fill="#c7c8ce" d="M24.585 7.845l9.321 21.479h13.9l9.167-21.479z" transform="translate(-0.842 2.612)"/>
+        <path id="Path_102" d="M3641.012 566.984a2.61 2.61 0 0 1-.132-5.216l6.508-.329a.464.464 0 0 0 .392-.672l-9.376-18.751a2.012 2.012 0 0 1 1.8-2.912h30.916a2.012 2.012 0 0 1 1.8 2.912l-4.935 9.87a1.041 1.041 0 0 1-1.862-.931l4.885-9.77h-30.691l9.326 18.65a2.547 2.547 0 0 1-2.149 3.682l-6.507.329a.528.528 0 0 0 .027 1.055 1.041 1.041 0 0 1 0 2.082z" class="cls-3" transform="translate(-3615.9 -529.55)"/>
+        <path id="Path_103" d="M3667.362 683.074h-22.891a5.934 5.934 0 0 1-5.646-7.765l4.756-14.66a1.041 1.041 0 1 1 1.98.642l-4.755 14.66a3.852 3.852 0 0 0 3.665 5.042h22.891a3.852 3.852 0 0 0 3.664-5.042l-5.465-16.846a9.79 9.79 0 0 1-.264-.99 3.06 3.06 0 0 1 .62-2.561 3.026 3.026 0 0 1 2.358-1.122h1.289a1.041 1.041 0 1 1 0 2.082h-1.289a.942.942 0 0 0-.742.353.977.977 0 0 0-.2.823 7.435 7.435 0 0 0 .2.773l5.466 16.847a5.934 5.934 0 0 1-5.645 7.765z" class="cls-3" transform="translate(-3616.154 -615.483)"/>
+        <path id="Path_751" fill="#9a7054" d="M3643.108 668.834l-2.3 7.117a3.852 3.852 0 0 0 3.665 5.042h22.891a3.852 3.852 0 0 0 3.664-5.042l-2.307-7.123z" transform="translate(-3616.154 -615.483)"/>
+        <path id="Path_104" d="M3616.4 601.041a1.033 1.033 0 0 1-.586-.182 9.353 9.353 0 0 1-3.511-10.931l.514-1.411a9.2 9.2 0 0 1 9.82-6.012l2.138.262a7.571 7.571 0 0 0-.072-2.3l-.286-1.521a1.669 1.669 0 0 1 1.641-1.978h24.542a.528.528 0 0 0 .026-1.055l-6.507-.329a2.546 2.546 0 0 1-2.149-3.682l2.165-4.328a2.853 2.853 0 0 1 1.727-1.453c5.7-2.084 8.151-3.107 10.031-4.918a2.193 2.193 0 0 0 .581-2.3 2.219 2.219 0 0 0-1.795-1.534 1.041 1.041 0 1 1 .289-2.062 4.325 4.325 0 0 1 2.37 7.394c-2.118 2.04-4.862 3.234-10.877 5.413a.765.765 0 0 0-.464.39l-2.165 4.328a.465.465 0 0 0 .393.672l6.507.329a2.61 2.61 0 0 1-.131 5.216h-24.046l.193 1.034a9.491 9.491 0 0 1 .088 2.975 2.053 2.053 0 0 1-2.279 1.779l-2.174-.267a7.131 7.131 0 0 0-7.609 4.659l-.514 1.41a7.274 7.274 0 0 0 2.728 8.5 1.041 1.041 0 0 1-.587 1.9z" class="cls-3" transform="translate(-3596.191 -541.617)"/>
+        <path id="Path_105" d="M3702.842 624.911h-9.226a1.041 1.041 0 0 1 0-2.082h9.226a1.041 1.041 0 0 1 0 2.082z" class="cls-3" transform="translate(-3656.426 -591.935)"/>
+      </svg>
+    {% when 'coffee-press' %}
+      <svg xmlns="http://www.w3.org/2000/svg" width="79.501" height="79.501" viewBox="0 0 79.501 79.501">
+        <defs>
+            <style>
+                .cls-4{fill:#231f20}
+            </style>
+        </defs>
+        <g transform="translate(-2026.96 -1057.32)">
+            <path id="Rectangle_230" fill="#fff" d="M0 0H79.501V79.501H0z" transform="translate(2026.96 1057.32)"/>
+            <path id="Path_908" fill="#c7c8ce" d="M2050.895 1086.233l-2.908-5.948s5.959-.741 5.885-.793 6.2-4.278 6.2-4.278h12.007l5.043 2.223 3.036 2.849-.077 5.948z" transform="translate(-1.505 2.468)"/>
+            <path id="Path_755" fill="#9a7054" d="M3640.778 668.828v7.123a4.376 4.376 0 0 0 .465 3.454 3.118 3.118 0 0 0 2.648 1.587h19.444a3.115 3.115 0 0 0 2.646-1.587 4.369 4.369 0 0 0 .466-3.454v-7.123z" transform="translate(-1588.688 446.167)"/>
+            <path id="Path_709" d="M2077.916 1137.934h-18.98a4.586 4.586 0 0 1-4.581-4.58v-35.441a1.081 1.081 0 0 1 1.081-1.081h22.106a1.081 1.081 0 0 1 0 2.161h-21.025v34.361a2.421 2.421 0 0 0 2.419 2.418h18.98a2.421 2.421 0 0 0 2.419-2.418v-34.97a16.17 16.17 0 0 1 .873-5.248h-29.6a14.857 14.857 0 0 1 2.239 8.361 1.081 1.081 0 0 1-2.162 0c0-2.612-.545-6.232-3.14-8.651a1.08 1.08 0 0 1 .737-1.871h31.979a2.122 2.122 0 0 1 2.006 2.816 14.019 14.019 0 0 0-.771 4.592v34.97a4.586 4.586 0 0 1-4.58 4.581z" class="cls-4" transform="translate(-3.341 -9.441)"/>
+            <path id="Path_710" d="M2058.744 1090.372a1.081 1.081 0 0 1-.892-1.69 12.8 12.8 0 0 1 10.569-5.612h6.627a12.684 12.684 0 0 1 7.169 2.213 1.081 1.081 0 1 1-1.217 1.786 10.529 10.529 0 0 0-5.952-1.838h-6.627a10.639 10.639 0 0 0-8.783 4.668 1.078 1.078 0 0 1-.894.473z" class="cls-4" transform="translate(-6.651 -6.676)"/>
+            <path id="Path_711" d="M2082.934 1142.407H2064.7a1.081 1.081 0 1 1 0-2.161h18.232a1.081 1.081 0 1 1 0 2.161z" class="cls-4" transform="translate(-8.733 -26.671)"/>
+            <path id="Path_712" d="M2078.72 1130.36a1.081 1.081 0 0 1-1.08-1.081v-22.4a1.081 1.081 0 1 1 2.161 0v22.4a1.081 1.081 0 0 1-1.081 1.081z" class="cls-4" transform="translate(-13.635 -14.625)"/>
+            <path id="Path_713" d="M2105.453 1132.154h-6.753a1.081 1.081 0 1 1 0-2.161h6.757a5.966 5.966 0 0 0 5.539-3.714 26.726 26.726 0 0 0 0-20.42 5.966 5.966 0 0 0-5.539-3.714h-2.975a1.081 1.081 0 1 1 0-2.161h2.975a8.122 8.122 0 0 1 7.54 5.055 28.884 28.884 0 0 1 0 22.061 8.123 8.123 0 0 1-7.544 5.054z" class="cls-4" transform="translate(-20.622 -12.59)"/>
+            <path id="Path_715" d="M2076.876 1070.353a1.081 1.081 0 0 1-1.08-1.081v-3.018a2.213 2.213 0 0 1 1.663-2.149 2.349 2.349 0 1 0-2.2-3.98 2.349 2.349 0 0 0-.376 2.948 1.081 1.081 0 0 1-1.831 1.148 4.51 4.51 0 0 1 4.065-6.9 4.511 4.511 0 0 1 .876 8.874.055.055 0 0 0-.037.054v3.018a1.081 1.081 0 0 1-1.08 1.086z" class="cls-4" transform="translate(-11.792 7.329)"/>
+        </g>
+      </svg>
+    {% when 'coffee-superauto' %}
+      <svg xmlns="http://www.w3.org/2000/svg" width="{{ size }}" height="{{ size }}" viewBox="0 0 79.501 79.501">
+        <defs>
+            <style>
+                .csa-1{fill:#fff}.csa-2{fill:#c7c8ce}.csa-3{fill:#231f20}
+            </style>
+        </defs>
+        <g transform="translate(-254 -484)">
+            <path id="Rectangle_231" d="M0 0H79.501V79.501H0z" class="csa-1" transform="translate(254 484)"/>
+            <g id="Group_2167" transform="translate(-3.5 -1.608)">
+                <path id="Path_906" d="M273.679 508.02v-16.726h43.863v16.726z" class="csa-2" transform="translate(1.259 4.471)"/>
+                <path id="Path_907" d="M273.679 499.532v-8.238h47.1v8.238z" class="csa-2" transform="translate(-0.234 55.612)"/>
+                <path id="Path_909" d="M2448.926 1122.07h16.919l-3.644 6.338h-9.153l-4.123-6.338z" class="csa-1" transform="translate(-2160.481 -583.502)"/>
+                <path id="Path_754" fill="#9a7054" d="M2448.926 1122.07h16.207l-3.49 6.338h-8.768l-3.949-6.338z" transform="translate(-2159.77 -581.502)"/>
+                <path id="Path_716" d="M2479.472 1137.723h-45.418a1.787 1.787 0 0 1-1.785-1.784v-6.668a1.787 1.787 0 0 1 1.785-1.784h40.308a1.064 1.064 0 0 1 0 2.128H2434.4v5.981h44.733v-5.981h-.329a1.064 1.064 0 0 1-1.064-1.064v-48.121c.006-.006 2.15.04 2.127 0v47.1a1.787 1.787 0 0 1 1.393 1.741v6.668a1.787 1.787 0 0 1-1.788 1.784zm0-8.109z" class="csa-3" transform="translate(-2159.77 -581.473)"/>
+                <path id="Path_718" d="M2459.631 1121.364a2.59 2.59 0 0 0 2.587-2.586v-.721h.969v.721a2.587 2.587 0 0 0 5.174 0v-9.935a1.064 1.064 0 0 0-2.128 0v9.935a.46.46 0 1 1-.919 0v-1.784a1.063 1.063 0 0 0-1.063-1.063h-3.1a1.063 1.063 0 0 0-1.064 1.063v1.784a.46.46 0 1 1-.919 0v-9.935a1.063 1.063 0 1 0-2.127 0v9.935a2.589 2.589 0 0 0 2.59 2.586z" class="csa-3" transform="translate(-2165.726 -593.527)"/>
+                <path id="Path_721" d="M2474.955 1095.994h-39.788a1.064 1.064 0 0 1-1.063-1.064v-14.353a17.893 17.893 0 0 1 2.127 0v13.29h38.725a1.064 1.064 0 1 1 0 2.128z" class="csa-3" transform="translate(-2160.211 -582.621)"/>
+                <path id="Path_723" d="M2463.131 1095.527a4.307 4.307 0 1 1 4.308-4.307 4.312 4.312 0 0 1-4.308 4.307zm0-6.488a2.18 2.18 0 1 0 2.181 2.181 2.183 2.183 0 0 0-2.181-2.181z" class="csa-3" transform="translate(-2166.153 -587.32)"/>
+                <path id="Path_759" d="M2476.346 1113.95v-6.535l-41.949.032v6.52c.028-.016-2.128 1.254-2.128.181v-6.881a1.949 1.949 0 0 1 1.947-1.946l42.312-.032a1.948 1.948 0 0 1 1.946 1.946v6.881c0 .69-2.13-.18-2.128-.166z" class="csa-3" transform="translate(-2158.377 -610.681)"/>
+                <path id="Path_898" d="M2435.49 1137.723h45.417c.984 0-.434-2.091-.343-2.128h-44.732v-5.981h.329a1.064 1.064 0 0 0 1.064-1.064v-48.121c-.006-.006-2.15.04-2.127 0v47.1a1.787 1.787 0 0 0-1.393 1.741v6.668a1.787 1.787 0 0 0 1.785 1.785zm0-8.109z" class="csa-3" transform="translate(-2161.205 -581.473)"/>
+                <g id="Group_2168" transform="translate(-0.238)">
+                    <path id="Path_727" d="M2465.432 1142.759h-6.873a1.062 1.062 0 0 1-.539-.147 10.629 10.629 0 0 1-5.233-9.13 10.753 10.753 0 0 1 .1-1.451 1.063 1.063 0 0 1 1.054-.919h8.551a1.063 1.063 0 0 1 0 2.127h-7.575v.243a8.5 8.5 0 0 0 3.943 7.149h6.276c.021.021.486 2.128.296 2.128z" class="csa-3" transform="translate(-2164.703 -594.619)"/>
+                    <path id="Path_905" d="M2452.833 1142.759h6.873a1.062 1.062 0 0 0 .539-.147 10.629 10.629 0 0 0 5.233-9.129 10.753 10.753 0 0 0-.1-1.451 1.063 1.063 0 0 0-1.054-.919h-8.551a1.063 1.063 0 0 0 0 2.127h7.575v.243a8.5 8.5 0 0 1-3.943 7.148h-6.276c-.021.021-.485 2.128-.296 2.128z" class="csa-3" transform="translate(-2159.133 -594.619)"/>
+                </g>
+            </g>
+        </g>
+      </svg>
+    {% when 'coffee-drip' %}
+      <svg xmlns="http://www.w3.org/2000/svg" width="79.501" height="79.501" viewBox="0 0 79.501 79.501">
+        <defs>
+            <style>
+                .cls-4{fill:#231f20}
+            </style>
+        </defs>
+        <path id="Rectangle_179" fill="#fff" d="M0 0H79.501V79.501H0z" transform="translate(0)"/>
+        <path id="Path_904" fill="#c7c8ce" d="M18.4 13.919L21.436 41.2l-2.653 24.127h39.782L56.4 57.775l-19.424-2.046V35.3h13.915s4.585-5.728 6.367-11.659a54.151 54.151 0 0 0 1.914-12.576H19.483z" transform="translate(-2.372 3)"/>
+        <path id="Path_752" fill="#9a7054" d="M3640.74 668.828v7.123a5.554 5.554 0 0 0 .356 3.454 2.378 2.378 0 0 0 2.028 1.587h14.892c.812 0 1.907 1.009 2.383 0s.251-3.855 0-5.042l-1.5-7.123z" transform="translate(-3605.791 -620.412)"/>
+        <path id="Path_115" d="M965.43 1041.353h-1.794a2.235 2.235 0 0 1-2.232-2.232 53.471 53.471 0 0 0-2.52-16.438.6.6 0 0 0-.574-.413h-12.748a1.041 1.041 0 0 1 0-2.082h12.748a2.676 2.676 0 0 1 2.555 1.857 55.542 55.542 0 0 1 2.62 17.076.151.151 0 0 0 .15.151h1.794a5.726 5.726 0 0 0 5.719-5.72v-4.527a5.725 5.725 0 0 0-5.719-5.719h-1.85a1.042 1.042 0 1 1 0-2.082h1.85a7.81 7.81 0 0 1 7.8 7.8v4.527a7.81 7.81 0 0 1-7.799 7.802z" class="cls-4" transform="translate(-907.804 -982.774)"/>
+        <path id="Path_117" d="M894.143 960.962h-4.435a1.041 1.041 0 1 1 0-2.082h4.435a1.041 1.041 0 1 1 0 2.082z" class="cls-4" transform="translate(-866.185 -938.716)"/>
+        <path id="Path_118" d="M895.59 976.637h-3.94a1.041 1.041 0 1 1 0-2.081h3.94a1.041 1.041 0 1 1 0 2.081z" class="cls-4" transform="translate(-867.632 -950.396)"/>
+        <path id="Path_119" d="M897.036 992.314h-3.445a1.041 1.041 0 1 1 0-2.082h3.445a1.041 1.041 0 1 1 0 2.082z" class="cls-4" transform="translate(-869.078 -962.077)"/>
+        <path id="Path_120" d="M898.482 1007.991h-2.951a1.041 1.041 0 1 1 0-2.082h2.951a1.041 1.041 0 1 1 0 2.082z" class="cls-4" transform="translate(-870.524 -973.759)"/>
+        <path id="Path_121" d="M899.929 1023.666h-2.456a1.041 1.041 0 1 1 0-2.082h2.456a1.041 1.041 0 1 1 0 2.082z" class="cls-4" transform="translate(-871.971 -985.438)"/>
+        <path id="Path_122" d="M896.553 940.2a1.041 1.041 0 0 1-.855-1.634 35.894 35.894 0 0 0 6.414-18.816.549.549 0 0 0-.153-.408.557.557 0 0 0-.406-.174h-38.065a1.058 1.058 0 1 1 0-2.1l38.069.017a2.656 2.656 0 0 1 1.911.817 2.614 2.614 0 0 1 .728 1.941 37.976 37.976 0 0 1-6.782 19.908 1.041 1.041 0 0 1-.861.449z" class="cls-4" transform="translate(-845.865 -903.975)"/>
+        <path id="Path_123" d="M900.256 997.391h-39.978a1.041 1.041 0 0 1-1.041-1.041v-3.44a36.169 36.169 0 0 1 .269-4.393l1.855-15.064a30.021 30.021 0 0 0 .224-3.655c0-.937-.045-1.884-.133-2.816l-1.973-20.858a1.041 1.041 0 1 1 2.073-.2l1.973 20.858c.094 1 .142 2.01.142 3.012a32.1 32.1 0 0 1-.24 3.909l-1.855 15.064a34.006 34.006 0 0 0-.254 4.138v2.4h37.9v-1.622a4.167 4.167 0 0 0-.387-1.747l-.893-1.919h-15.787a4.3 4.3 0 0 1-4.3-4.3V947.4a1.041 1.041 0 1 1 2.082 0v38.326a2.22 2.22 0 0 0 2.218 2.218H898.6a1.039 1.039 0 0 1 .943.6l1.173 2.521a6.261 6.261 0 0 1 .581 2.625v2.663a1.041 1.041 0 0 1-1.041 1.038z" class="cls-4" transform="translate(-844.256 -928.363)"/>
+        <path id="Path_124" d="M936.983 996.435a1.04 1.04 0 0 1-.857-.448 38.924 38.924 0 0 1-3.776-6.811 1.041 1.041 0 1 1 1.913-.82 36.927 36.927 0 0 0 3.574 6.446 1.041 1.041 0 0 1-.855 1.634z" class="cls-4" transform="translate(-898.671 -960.209)"/>
+      </svg>
+    {% when 'coffee-processing-washed' %}
+      <svg xmlns="http://www.w3.org/2000/svg" width="{{ size }}" viewBox="0 0 576 512">
+        <path d="M133.8 106.8C150.3 118 171.1 128 192 128s41.6-9.9 58.2-21.2c9.8-6.7 18-14 25.9-21.9c6.6-6.5 17.2-6.5 23.7 0c7.9 7.9 16.2 15.2 26 21.9C342.3 118 363.1 128 384 128s41.6-9.9 58.2-21.2c9.8-6.7 18-14 25.9-21.9c6.6-6.5 17.2-6.5 23.7 0c7.9 7.9 16.2 15.2 26 21.9c12.8 8.7 28.1 16.6 44.1 19.8c7.7 1.5 14.1 7.8 14.1 15.7c0 9.8-8 17.9-17.7 16.2c-23.1-4-43.6-15-58.5-25.2c-7.9-5.4-14.7-10.8-19.8-15.3c-5.1 4.5-11.8 9.9-19.8 15.3C441.5 145.9 414.3 160 384 160s-57.6-14.1-76.2-26.8c-7.9-5.4-14.7-10.8-19.8-15.3c-5.1 4.5-11.8 9.9-19.8 15.3C249.5 145.9 222.3 160 192 160s-57.6-14.1-76.2-26.8c-7.9-5.4-14.6-10.8-19.8-15.3c-5.1 4.5-11.8 9.9-19.8 15.3c-14.9 10.2-35.4 21.2-58.5 25.2C8 160.1 0 152 0 142.2c0-7.9 6.4-14.1 14.1-15.7c15.9-3.1 31.3-11.1 44-19.8c9.8-6.7 18-14 25.9-21.9c6.6-6.5 17.2-6.6 23.8 0c7.9 7.9 16.2 15.2 25.9 21.9zm0 288C150.3 406 171.1 416 192 416s41.6-9.9 58.2-21.2c9.8-6.7 18-14 25.9-21.9c6.6-6.5 17.2-6.5 23.7 0c7.9 7.9 16.2 15.2 26 21.9C342.3 406 363.1 416 384 416s41.6-9.9 58.2-21.2c9.8-6.7 18-14 25.9-21.9c6.6-6.5 17.2-6.6 23.7 0c7.9 7.9 16.2 15.2 26 21.9c12.8 8.7 28.1 16.6 44.1 19.8c7.7 1.5 14.1 7.8 14.1 15.7c0 9.8-8 17.9-17.7 16.2c-23.1-4-43.6-15-58.5-25.2c-7.9-5.4-14.7-10.8-19.8-15.3c-5.1 4.5-11.8 9.9-19.8 15.3C441.5 433.9 414.3 448 384 448s-57.6-14.1-76.2-26.8c-7.9-5.4-14.7-10.8-19.8-15.3c-5.1 4.5-11.8 9.9-19.8 15.3C249.5 433.9 222.3 448 192 448s-57.6-14.1-76.2-26.8c-7.9-5.4-14.6-10.8-19.8-15.3c-5.1 4.5-11.8 9.9-19.8 15.3c-14.9 10.2-35.4 21.2-58.5 25.2C8 448.1 0 440 0 430.2c0-7.9 6.4-14.1 14.1-15.7c15.9-3.1 31.3-11.1 44-19.8c9.8-6.7 18-14 25.9-21.9c6.6-6.5 17.2-6.6 23.8 0c7.9 7.9 16.2 15.2 25.9 21.9zM192 272c20.9 0 41.6-9.9 58.2-21.2c9.8-6.7 18-14 25.9-21.9c6.6-6.5 17.2-6.5 23.7 0c7.9 7.9 16.2 15.2 26 21.9C342.3 262 363.1 272 384 272s41.6-9.9 58.2-21.2c9.8-6.7 18-14 25.9-21.9c6.6-6.5 17.2-6.5 23.7 0c7.9 7.9 16.2 15.2 26 21.9c12.8 8.7 28.1 16.6 44.1 19.8c7.7 1.5 14.1 7.8 14.1 15.7c0 9.8-8 17.9-17.7 16.2c-23.1-4-43.6-15-58.5-25.2c-7.9-5.4-14.7-10.8-19.8-15.3c-5.1 4.5-11.8 9.9-19.8 15.3C441.5 289.9 414.3 304 384 304s-57.6-14.1-76.2-26.8c-7.9-5.4-14.7-10.8-19.8-15.3c-5.1 4.5-11.8 9.9-19.8 15.3C249.5 289.9 222.3 304 192 304s-57.6-14.1-76.2-26.8c-7.9-5.4-14.6-10.8-19.8-15.3c-5.1 4.5-11.8 9.9-19.8 15.3c-14.9 10.2-35.4 21.2-58.5 25.2C8 304.1 0 296 0 286.2c0-7.9 6.4-14.1 14.1-15.7c15.9-3.1 31.3-11.1 44-19.8c9.8-6.7 18-14 25.9-21.9c6.6-6.5 17.2-6.6 23.8 0c7.9 7.9 16.2 15.2 25.9 21.9C150.3 262 171.1 272 192 272z"/>
+      </svg>
+    {% when 'coffee-region-africa' %}
+      <svg xmlns="http://www.w3.org/2000/svg" width="{{ size }}" height="{{ size }}" viewBox="0 0 512 512">
+        <path d="M480 256c0-16.8-1.8-33.1-5.3-48.8l-47.2-11.8c-4.1-1-8.4 .2-11.3 3.1c-2 2-3.6 4.2-4.9 6.7l-.3 .6c-7.9 15.8-22.1 27.3-38.6 31.9l15.1 15.1c8 8 12.5 18.9 12.5 30.2c0 19.5-13.2 36.5-32 41.4v6.2c0 17.3-5.6 34.2-16 48l-25.6 34.1C317.3 424.9 303.1 432 288 432c-26.5 0-48-21.5-48-48V336H208c-35.3 0-64-28.7-64-64V244c0-17.6 8.3-34.2 22.4-44.8l39.4-29.5c8.4-6.3 18.5-9.7 29-9.7c5.2 0 10.3 .8 15.3 2.5l32 10.7c4.3 1.4 9 1.6 13.4 .5l34.3-8.6c3.7-.9 6.3-4.3 6.3-8.1c0-2.8-1.4-5.4-3.7-6.9L306 132.6c-7.6 7.3-17.7 11.4-28.2 11.4c-6.3 0-12.5-1.5-18.2-4.3l-13.2-6.6c-23.9 36.9-83 14.6-74.9-30.2L175 84.3c.4-2 .2-4.1-.4-6.1l-9-27.1C86.9 85.8 32 164.5 32 256c0 123.7 100.3 224 224 224s224-100.3 224-224zm-16.5-84.6C430.1 89.6 349.8 32 256 32c-20.9 0-41.2 2.9-60.4 8.2l9.3 27.8c2.4 7.1 2.9 14.6 1.6 22l-3.4 18.7c-1.9 10.2 12 15.2 17.1 6.1c7.4-13.4 24.1-18.5 37.8-11.7l16 8c1.2 .6 2.5 .9 3.8 .9c2.3 0 4.5-.9 6.1-2.5l3.5-3.5c8.5-8.5 21.7-9.8 31.7-3.1L350 123.5c11.2 7.5 18 20.1 18 33.5c0 18.5-12.6 34.6-30.5 39.1l-34.3 8.6c-10.3 2.6-21.2 2.2-31.3-1.2l-32-10.7c-1.7-.6-3.4-.8-5.1-.8c-3.5 0-7 1.1-9.8 3.3l-39.4 29.5c-6 4.5-9.6 11.6-9.6 19.2v28c0 17.7 14.3 32 32 32h32c17.7 0 32 14.3 32 32v48c0 8.8 7.2 16 16 16c5 0 9.8-2.4 12.8-6.4l25.6-34.1c6.2-8.3 9.6-18.4 9.6-28.8V318.6c0-11.2 7.6-21 18.5-23.7l5.3-1.3c4.8-1.2 8.2-5.5 8.2-10.5c0-2.9-1.1-5.6-3.2-7.6l-40.2-40.2c-4.6-4.6-5.9-11.5-3.5-17.4s8.3-9.9 14.8-9.9h19.7c11.3 0 21.6-6.4 26.7-16.5l.3-.6c2.8-5.6 6.4-10.7 10.9-15.1c10.9-10.9 26.8-15.3 41.7-11.6l28.2 7.1zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"/>
+      </svg>
+    {% when 'coffee-region-asia' %}
+      <svg xmlns="http://www.w3.org/2000/svg" width="{{ size }}" height="{{ size }}" viewBox="0 0 512 512">
+        <path d="M480 256c0-91.8-55.2-170.7-134.2-205.3l-22.3 55.8c-4.8 11.9-15 20.8-27.4 24l-17 4.3c-5.6 1.4-7.9 8-4.5 12.6l16.1 21.5c10.2 13.6 10.7 32.1 1.3 46.2l-10.7 16.1c-10.4 15.6-27.9 24.9-46.6 24.9h-2.3c-5.4 0-9.2 5.2-7.7 10.3l6 19.9c7.4 24.8-11.1 49.8-37 49.8c-16.8 0-32.2-9.5-39.7-24.5l-9.3-18.5c-2.4-4.9-9-5.9-12.8-2.1l-15.4 15.4c-9.5 9.5-23 13.6-36.1 10.9l-42-8.4C62 407 150.5 480 256 480c47.4 0 91.4-14.7 127.6-39.9l-8.5-6.1-10.6 3.9c-27.7 10.3-58.6-2.7-70.6-29.6L288.4 396c-11.9-26.5-1.5-57.7 23.8-71.8L348.4 304l6.1-9.5c9-14 24.4-22.5 41.1-22.5s32.1 8.5 41.1 22.5l1.9 2.9 15.7-4.4c7.5-2.1 15.4-1.9 22.8 .4c2-12.2 3.1-24.7 3.1-37.4zm-11.6 68.4c-1.8-.9-3.8-1-5.6-.5l-15.8 4.4c-13.4 3.8-27.8-1.7-35.3-13.5l-2-3.1c-3.1-4.8-8.4-7.7-14.1-7.7s-11 2.9-14.1 7.7l-6.1 9.5c-2.8 4.4-6.7 8.1-11.4 10.7l-36.2 20.2c-10.9 6.1-15.3 19.4-10.2 30.8l5.5 12.4c5.2 11.5 18.4 17.1 30.3 12.7L372 401c5-1.9 10.6-1.1 15 2l22.4 16.2c27.3-25.6 48.1-58 59.9-94.5l-.9-.4zM315.6 40c-19-5.2-38.9-8-59.6-8C132.3 32 32 132.3 32 256c0 6.4 .3 12.8 .8 19l53.7 10.7c2.6 .5 5.3-.3 7.2-2.2l15.4-15.4c19.3-19.3 51.9-14 64.1 10.4l9.3 18.5c2.1 4.2 6.4 6.8 11 6.8c4.5 0 7.7-4.3 6.4-8.6l-6-19.9c-7.7-25.7 11.5-51.5 38.3-51.5h2.3c8 0 15.5-4 20-10.7l10.7-16.1c1.9-2.8 1.8-6.5-.3-9.2l-16.1-21.5c-17.2-22.9-5.5-55.9 22.3-62.8l17-4.3c2.5-.6 4.5-2.4 5.5-4.8L315.6 40zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm163.9 88.5l32 8c8.6 2.1 13.8 10.8 11.6 19.4s-10.8 13.8-19.4 11.6l-32-8c-8.6-2.1-13.8-10.8-11.6-19.4s10.8-13.8 19.4-11.6zm84.2 3c-8.6-2.1-13.8-10.8-11.6-19.4l8-32c2.1-8.6 10.8-13.8 19.4-11.6s13.8 10.8 11.6 19.4l-8 32c-2.1 8.6-10.8 13.8-19.4 11.6zM366.3 143.2l-16 32c-4 7.9-13.6 11.1-21.5 7.2s-11.1-13.6-7.2-21.5l16-32c4-7.9 13.6-11.1 21.5-7.2s11.1 13.6 7.2 21.5z"/>
+      </svg>
+    {% when 'coffee-region-americas' %}
+      <svg xmlns="http://www.w3.org/2000/svg" width="{{ size }}" height="{{ size }}" viewBox="0 0 512 512">
+        <path d="M256 480C132.3 480 32 379.7 32 256c0-11.8 .9-23.3 2.7-34.6l3 6.7c9.3 21 27.3 37 49.2 43.9l63 19.7c15.5 4.9 26.1 19.2 26.1 35.5v15c0 17 9.6 32.6 24.8 40.2c4.4 2.2 7.2 6.7 7.2 11.6v22.7c0 26.2 21.2 47.4 47.4 47.4c21.8 0 40.7-14.8 46-35.9l4.4-17.6c2.6-10.2 9.2-19 18.3-24.2l11.6-6.6c19.9-11.4 32.2-32.6 32.2-55.6v-8.3c0-17-6.7-33.3-18.7-45.3l-3.9-3.9c-12-12-28.3-18.7-45.3-18.7H251.3c-5 0-9.9-1.2-14.3-3.4l-45.9-22.9c-2.1-1-3.8-2.7-4.8-4.8l-.7-1.4c-2.3-4.6-.4-10.2 4.2-12.5c2.2-1.1 4.8-1.3 7.1-.5l24.2 8.1c15 5 31.5-.7 40.3-13.8c8.6-12.9 7.7-30-2.2-41.9l-17.9-21.5c-2.5-3-2.5-7.4 .1-10.3l20.1-23.5c13.2-15.4 15.3-37.4 5.2-55.1L259.6 32C337.1 33.2 405 73.8 444.3 134.6l-38.2 15.3c-23.6 9.4-35.7 35.6-27.7 59.7l16.9 50.7c5.2 15.6 18 27.4 33.9 31.4L475 303.2C453.3 404.3 363.5 480 256 480zM48 172.7C77.3 99.7 143.8 45.7 224 34.3l14.9 26.1c3.4 5.9 2.7 13.2-1.7 18.4l-20.1 23.5c-12.7 14.8-12.9 36.6-.4 51.6l17.9 21.5c.9 1.1 1 2.6 .2 3.7c-.8 1.2-2.2 1.7-3.6 1.2L207 172.1c-10.4-3.5-21.7-2.7-31.5 2.2c-20.4 10.2-28.7 35-18.5 55.4l.7 1.4c4.1 8.3 10.9 15 19.2 19.2l45.9 22.9c8.9 4.4 18.7 6.8 28.6 6.8h48.8c8.5 0 16.6 3.4 22.6 9.4l3.9 3.9c6 6 9.4 14.1 9.4 22.6v8.3c0 11.5-6.2 22.1-16.1 27.8l-11.6 6.6c-16.7 9.6-28.8 25.5-33.5 44.2l-4.4 17.6c-1.7 6.9-7.9 11.7-15 11.7c-8.5 0-15.4-6.9-15.4-15.4V393.9c0-17-9.6-32.6-24.8-40.2c-4.4-2.2-7.2-6.7-7.2-11.6v-15c0-30.3-19.7-57-48.6-66.1l-63-19.7c-13.2-4.1-23.9-13.7-29.5-26.3L48 172.7zM480 256c0 5.2-.2 10.3-.5 15.4l-42.6-10.6c-5.3-1.3-9.6-5.3-11.3-10.5l-16.9-50.7c-2.7-8 1.4-16.8 9.2-19.9l41.8-16.7c13 28.3 20.2 59.9 20.2 93.1zM256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"/>
+      </svg>
+    {% when 'coffee-region-globe' %}
+      <svg xmlns="http://www.w3.org/2000/svg" width="{{ size }}" height="{{ size }}" viewBox="0 0 512 512">
+        <path d="M215.1 476.3c-25-26.4-55.5-67.6-72.9-124.3H53.6c30.3 63.8 90 111.1 161.5 124.3zm2.4-46.5c14 18.5 27.9 32.4 38.5 41.6c10.5-9.3 24.5-23.1 38.5-41.6c15.4-20.3 30.7-46.1 41.7-77.7H175.8c11 31.6 26.3 57.4 41.7 77.7zM160 256c0 23.1 2.5 44.5 6.8 64H345.2c4.3-19.5 6.8-40.9 6.8-64s-2.5-44.5-6.8-64H166.8c-4.3 19.5-6.8 40.9-6.8 64zm-25.9-64H41.3c-6 20.3-9.3 41.8-9.3 64s3.2 43.7 9.3 64h92.8c-3.9-19.8-6.1-41.1-6.1-64s2.2-44.2 6.1-64zm41.7-32H336.2c-11-31.6-26.3-57.4-41.7-77.7c-14-18.5-27.9-32.4-38.5-41.6c-10.5 9.3-24.5 23.1-38.5 41.6c-15.4 20.3-30.7 46.1-41.7 77.7zm202.1 32c3.9 19.8 6.1 41.1 6.1 64s-2.2 44.2-6.1 64h92.8c6-20.3 9.3-41.8 9.3-64s-3.2-43.7-9.3-64H377.9zm80.6-32c-30.3-63.8-90-111.1-161.5-124.3c25 26.4 55.5 67.6 72.9 124.3h88.6zm-316.3 0c17.5-56.6 47.9-97.9 72.9-124.3C143.5 48.9 83.9 96.2 53.6 160h88.6zM296.9 476.3c71.6-13.2 131.2-60.4 161.5-124.3H369.8c-17.5 56.6-47.9 97.9-72.9 124.3zM256 512A256 256 0 1 1 256 0a256 256 0 1 1 0 512z"/>
+      </svg>
+
+    {% when 'coffee-crowd-pleaser' %}
+      <svg xmlns="http://www.w3.org/2000/svg" width="45.85" height="50.85" viewBox="0 0 45.85 50.85">
+        <defs>
+            <style>
+                .ccp-1{fill:none;stroke:#231f20;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.7px}
+            </style>
+        </defs>
+        <g id="Crowd_Pleaser_Icon" transform="translate(-2805.661 -1788.189)">
+            <path id="Heart" fill="#d2324c" d="M2870.514 1803.611c-.38-.231-9.316-5.72-9.316-11.534a26.388 26.388 0 0 0 14.019-5.086 5.092 5.092 0 0 1 5.086 5.086c0 5.813-8.937 11.3-9.317 11.534l-.236.144z" transform="translate(-28.791 1.198)" />
+            <path id="Path_125" d="M2844.159 1822.875a5.127 5.127 0 1 1 5.127-5.127 5.127 5.127 0 0 1-5.127 5.127z" class="ccp-1" transform="translate(-19.227 -16.139)"/>
+            <path id="Path_126" d="M2837 1857.341v20.953a2.28 2.28 0 0 0 2.212 2.47 2.446 2.446 0 0 0 2.42-2.47v-9.125a1.327 1.327 0 0 1 1.326-1.327 1.327 1.327 0 0 1 1.327 1.327v9.125a2.445 2.445 0 0 0 2.42 2.47 2.28 2.28 0 0 0 2.212-2.47v-20.953" class="ccp-1" transform="translate(-18.023 -42.575)"/>
+            <path id="Path_127" d="M2830.726 1857.049a2.263 2.263 0 0 1-2.24 2.286 2.11 2.11 0 0 1-2.048-2.286v-7.889a5.226 5.226 0 0 1 5.226-5.226h10.095a5.226 5.226 0 0 1 5.226 5.226v7.889a2.11 2.11 0 0 1-2.048 2.286 2.263 2.263 0 0 1-2.24-2.286" class="ccp-1" transform="translate(-11.779 -34.652)"/>
+            <path id="Path_128" d="M2816.906 1839.1a4.33 4.33 0 1 1 6.446-5.61" class="ccp-1" transform="translate(-5.219 -27.261)"/>
+            <path id="Path_129" d="M2815.428 1868.953v16.593a1.926 1.926 0 0 0 1.869 2.086 2.065 2.065 0 0 0 2.043-2.086v-7.177a1.121 1.121 0 0 1 1.121-1.121" class="ccp-1" transform="translate(-5.271 -49.443)"/>
+            <path id="Path_130" d="M2810.132 1868.134a1.912 1.912 0 0 1-1.892 1.931 1.783 1.783 0 0 1-1.729-1.931v-6.09a4.414 4.414 0 0 1 4.414-4.414h-.28" class="ccp-1" transform="translate(0 -42.751)"/>
+            <path id="Path_131" d="M2874.457 1839.1a4.331 4.331 0 1 0-6.447-5.61" class="ccp-1" transform="translate(-36.359 -27.261)"/>
+            <path id="Path_132" d="M2880.254 1868.953v16.593a1.926 1.926 0 0 1-1.869 2.086 2.065 2.065 0 0 1-2.042-2.086v-7.177a1.121 1.121 0 0 0-1.121-1.121" class="ccp-1" transform="translate(-40.625 -49.443)"/>
+            <path id="Path_133" d="M2886.445 1868.134a1.912 1.912 0 0 0 1.892 1.931 1.783 1.783 0 0 0 1.73-1.931v-6.09a4.414 4.414 0 0 0-4.414-4.414h.279" class="ccp-1" transform="translate(-46.793 -42.751)"/>
+        </g>
+      </svg>
+
+    {% when 'coffee-adventurous' %}
+      <svg xmlns="http://www.w3.org/2000/svg" width="45.126" height="50.25" viewBox="0 0 45.126 50.25">
+        <defs>
+            <style>
+                .cls-2{fill:#231f20;stroke:#282828;stroke-width:.25px}
+            </style>
+        </defs>
+        <g transform="translate(-208.083 -1714.883)">
+            <path id="Path_1003" fill="#f3b347" d="M9.656 0a9.8 9.8 0 0 1 6.828 2.828c-.013.006-2.06 4.2-2.06 6.981 0 1.013 4.323 3.06 4.344 3.05A9.657 9.657 0 1 1 9.656 0z" transform="translate(208.083 1723.318)"/>
+            <path id="Path_12" d="M336.308 1796.18a.707.707 0 0 1-.111 1 40.129 40.129 0 0 1-8.066 4.653.729.729 0 0 1-.944-.355.669.669 0 0 1-.06-.287.685.685 0 0 1 .425-.642 44.013 44.013 0 0 0 5.837-3.142l-6.407-14.247h-6.773a.724.724 0 0 1-.528-.228l-1.106-1.225-3.012-3.352a.686.686 0 0 1 .06-.988.716.716 0 0 1 1 .05l3.9 4.333h7.734a1.364 1.364 0 1 0 0-2.728h-5.9a.7.7 0 0 1-.579-.3l-3.489-4.848a2.582 2.582 0 0 0-1.106-.726 2.888 2.888 0 0 0-2.263.085 2.851 2.851 0 0 0-1.455 1.546l-3.344 9.67-.57 1.638a2.944 2.944 0 0 0 1.727 3.7l8.262 3.226a.727.727 0 0 1 .442.524l1.617 7.938a1.6 1.6 0 0 0 1.693 1.267 1.6 1.6 0 0 0 1.447-1.917l-2.28-10.708-6.637-2.677a.709.709 0 0 1-.4-.9l1.489-4.172a.716.716 0 0 1 .91-.431.688.688 0 0 1 .281.177.722.722 0 0 1 .153.726l-1.268 3.538 6.356 2.568a.68.68 0 0 1 .425.507l2.357 11.08a3.01 3.01 0 0 1-2.723 3.615c-.077 0-.153.008-.238.008a3.032 3.032 0 0 1-2.961-2.407l-1.54-7.567-2.714-1.056-.578 4.358a.676.676 0 0 1-.153.346l-6.441 7.812a2.953 2.953 0 0 1-1.949 1.14 3.669 3.669 0 0 1-.434.026 3 3 0 0 1-1.787-.591 2.944 2.944 0 0 1-1.166-1.976 2.888 2.888 0 0 1 .6-2.213l5.378-5.979.817-5.219a4.317 4.317 0 0 1-2.034-5.2l.34-.98-1.88-.676a3.328 3.328 0 0 1-2.051-4.172l3.353-9.991a3.416 3.416 0 0 1 6.263-.481 3.313 3.313 0 0 1 .221 2.576 4.324 4.324 0 0 1 3.233-.084 4.078 4.078 0 0 1 1.583 1.03.6.6 0 0 1 .128.127c0 .008 3.327 4.628 3.327 4.628h5.531a2.767 2.767 0 0 1 .272 5.523l6.05 13.47c.459-.321.715-.524.723-.532a.719.719 0 0 1 1.013.112zm-22.319.921l.6-4.5-3-1.174-.791 5.059a.633.633 0 0 1-.17.355l-5.488 6.089a1.558 1.558 0 0 0 .332 2.162 1.529 1.529 0 0 0 1.157.3 1.579 1.579 0 0 0 1.038-.6zm-.893-25.572a1.978 1.978 0 0 0-1.327-2.534 1.9 1.9 0 0 0-.57-.084 1.983 1.983 0 0 0-1.881 1.351l-3.344 9.991a1.906 1.906 0 0 0 1.174 2.4l1.863.667 3.055-8.859a.856.856 0 0 1 .06-.127z" class="cls-2" transform="translate(-83.382 -48.45)"/>
+            <path id="Path_13" d="M471.451 1715.008a4.31 4.31 0 1 1-4.306 4.306 4.312 4.312 0 0 1 4.306-4.306zm2.893 4.306a2.889 2.889 0 1 0-2.893 2.893 2.894 2.894 0 0 0 2.894-2.893z" class="cls-2" transform="translate(-234.284 0)"/>
+            <path id="Path_14" d="M403.35 2236.139a.714.714 0 0 1-.562.834 34.135 34.135 0 0 1-3.889.544c-1.523.127-2.944.281-4.237.46a.424.424 0 0 1-.1.008.709.709 0 0 1-.1-1.412c1.327-.187 2.774-.34 4.323-.468a33.731 33.731 0 0 0 3.735-.528.72.72 0 0 1 .83.562z" class="cls-2" transform="translate(-166.525 -480.806)"/>
+            <path id="Path_15" d="M221.992 2275.03a.707.707 0 0 1-.383.927 34.1 34.1 0 0 0-8.3 5.659.707.707 0 0 1-.519.221.706.706 0 0 1-.519-1.191 35.485 35.485 0 0 1 8.8-6 .7.7 0 0 1 .921.384z" class="cls-2" transform="translate(-1.122 -516.829)"/>
+        </g>
+      </svg>
+    {% when 'coffee-different' %}
+      <svg xmlns="http://www.w3.org/2000/svg" width="45" height="51.061" viewBox="0 0 45 51.061">
+        <defs>
+            <style>
+                .cls-1{fill:none;stroke:#000;stroke-miterlimit:10;stroke-width:1.75px}
+            </style>
+        </defs>
+        <g transform="translate(0 1.061)">
+            <path id="Path_998" d="M60.081 114.087a4.16 4.16 0 1 1 5 3.105 4.159 4.159 0 0 1-5-3.105z" class="cls-1" transform="translate(-28.286 -82.874)"/>
+            <path id="Path_999" d="M77.593 113.608a2.4 2.4 0 0 0 2.176-2.529A15.78 15.78 0 0 1 82.85 100.6l.57-.751.033-.044 1.57-2.171a7.783 7.783 0 0 1 .5-.627l.177-.2a19.438 19.438 0 0 1 9.8-5.918l.063-.016A2.357 2.357 0 0 0 97.3 88a2.4 2.4 0 0 0-2.913-1.7l-.066.016a24.247 24.247 0 0 0-10.945 6.06s-5.447-5.33-5.739-5.489a14.68 14.68 0 0 1 5.641-9.951 2.336 2.336 0 0 0 .413-3.312 2.419 2.419 0 0 0-3.362-.407 19.389 19.389 0 0 0-7.482 13.435h-.23a25.265 25.265 0 0 1-13.489-3.611 2.417 2.417 0 0 0-3.293.783 2.339 2.339 0 0 0 .794 3.243 30.089 30.089 0 0 0 15.537 4.308h.433c.173.4 6.279 6.585 6.279 6.585a20.416 20.416 0 0 0-3.896 13.34 2.365 2.365 0 0 0 2.611 2.308z" class="cls-1" transform="translate(-54.092 -72.717)"/>
+            <path id="Path_1000" fill="#5a957f" d="M96.7 132.03H54.074l-.958-6.224 2.841 2.319s1.538-2.414 1.775-2.319 2.959 1.909 2.959 1.909 3.906-3.15 3.906-2.768a31.449 31.449 0 0 0 1.538 3.494l2.486-2.73 2.13 2.414s1.3-4.9 1.42-4.227a38.889 38.889 0 0 0 2.67 4.543l1.472-2.157.6 1.833 4.731-3.646v3.655l2.977-2.032 1.047 2.348 3.328-2.635 1.169 3.054s4.024-3.054 4.024-2.768a21.564 21.564 0 0 0 .829 2.348s3.432-2.539 3.077-2.348-1.395 5.937-1.395 5.937z" transform="translate(-53.116 -82.031)"/>
+        </g>
+      </svg>
+    {% when 'coffee-bean' %}
+      <svg xmlns="http://www.w3.org/2000/svg" width="{{ size }}" viewBox="0 0 448 512">
+        <path d="M331.4 203.3c24.4-24.6 45.4-67.3 59.9-101.7c5.1-12.2 20.9-15.3 28.2-4.3c51.2 77.7 26.2 201.2-63.4 290.8c-79.6 79.6-186 108.1-263.2 77.7c-14.8-5.8-20-23.2-13.2-37.5c.7-1.6 1.5-3.1 2.2-4.7c16.5-34.5 37.5-72.2 57.4-92.3c29.7-29.9 59.7-44.9 91.8-61l.5-.3 0 0c32-15.9 66.1-32.9 99.7-66.8zM53.1 409.7c-5.3 11-19.9 13.6-26.9 3.6c-54-77.4-29.6-203.2 61.2-294C167.6 39.1 275.1 10.7 352.5 42.4c14 5.7 19.4 22 13.7 36c-1.4 3.5-2.9 7.1-4.4 10.8c-14.5 34.5-33.5 71.8-53.1 91.5c-29.7 29.9-59.7 44.9-91.8 61l-.5 .3c-32 15.9-66.1 32.9-99.7 66.8c-24.1 24.3-47.1 66.6-63.6 101z"/>
+      </svg>
+    {% when 'arrow-trend-up' %}
+      <svg xmlns="http://www.w3.org/2000/svg" width="{{ size }}" viewBox="0 0 576 512">
+        <!--!Font Awesome Pro 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2024 Fonticons, Inc.--><path d="M352 120c0-13.3 10.7-24 24-24H552c13.3 0 24 10.7 24 24V296c0 13.3-10.7 24-24 24s-24-10.7-24-24V177.9L337 369c-9.4 9.4-24.6 9.4-33.9 0l-111-111L41 409c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9L175 207c9.4-9.4 24.6-9.4 33.9 0l111 111L494.1 144H376c-13.3 0-24-10.7-24-24z"/>
+      </svg>
+    {% when 'rotate-reverse' %}
+      <svg xmlns="http://www.w3.org/2000/svg" width="{{ size }}" viewBox="0 0 512 512">
+        <!--!Font Awesome Pro 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2024 Fonticons, Inc.--><path d="M418 187.1C391.2 124.1 328.7 80 256 80c-39.7 0-77.8 15.8-105.9 43.9l-4.1 4.1 35.7 35.7c6.6 6.6 10.3 15.6 10.3 25c0 19.5-15.8 35.3-35.3 35.3H40c-13.3 0-24-10.7-24-24V83.3C16 63.8 31.8 48 51.3 48c9.4 0 18.3 3.7 25 10.3L112 94.1l4.1-4.1C153.2 52.8 203.5 32 256 32c92.6 0 172.1 56.2 206.2 136.3c5.2 12.2-.5 26.3-12.7 31.5s-26.3-.5-31.5-12.7zM50 344.1c-5.2-12.2 .4-26.3 12.6-31.5s26.3 .4 31.5 12.6C121 388.1 183.4 432 256 432c39.7 0 77.8-15.8 105.9-43.9l4.1-4.1-35.7-35.7c-6.6-6.6-10.3-15.6-10.3-25c0-19.5 15.8-35.3 35.3-35.3H472c13.3 0 24 10.7 24 24V428.7c0 19.5-15.8 35.3-35.3 35.3c-9.4 0-18.3-3.7-25-10.3L400 417.9l-4.1 4.1C358.8 459.2 308.5 480 256 480c-92.5 0-171.8-56-206-135.9zM64 176h62.1L64 113.9V176zM448 336H385.9L448 398.1V336z"/>
+      </svg>
+    {% when 'count-down' %}
+      <svg xmlns="http://www.w3.org/2000/svg" width="{{ size }}" viewBox="0 0 512 512">
+        <!--!Font Awesome Pro 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2024 Fonticons, Inc.--><path d="M232 24c0-13.3 10.7-24 24-24C397.4 0 512 114.6 512 256s-114.6 256-256 256S0 397.4 0 256c0-37.9 8.2-73.8 23-106.1c6-13.2 13.1-25.8 21.2-37.6c0-.1 .1-.1 .1-.2C53.4 98.7 63.6 86.3 75 75c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9c-9.2 9.2-17.6 19.3-25 30.1c0 .1-.1 .1-.1 .2c-21.2 31.2-34.2 68.5-35.7 108.7c-.1 2.7-.2 5.4-.2 8.1c0 114.9 93.1 208 208 208s208-93.1 208-208c0-106.8-80.4-194.7-184-206.6V104c0 13.3-10.7 24-24 24s-24-10.7-24-24V24zM159 159c9.4-9.4 24.6-9.4 33.9 0l80 80c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-80-80c-9.4-9.4-9.4-24.6 0-33.9z"/>
+      </svg>
+    {% when 'brush' %}
+      <svg xmlns="http://www.w3.org/2000/svg" width="{{ size }}" viewBox="0 0 576 512">
+        <!--!Font Awesome Pro 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2024 Fonticons, Inc.--><path d="M295.7 360c-5.4 0-10.6-.5-15.7-1.5c0 0 0 0 0-.1c-1.3-.3-2.6-.6-3.9-.9l-57.7-57.7c-.3-1.3-.6-2.6-.9-3.9c0 0 0 0-.1 0c-1-5.1-1.5-10.3-1.5-15.7c0-25.5 12.2-49.5 32.8-64.5L493.1 38.1c12.7-9.3 30.3-7.9 41.4 3.2s12.5 28.7 3.3 41.4L360.2 327.2c-15 20.6-39 32.8-64.5 32.8zm-42.2 20.1c.3 1.3 .6 2.6 .9 4c1 5.1 1.6 10.4 1.6 15.9c0 44.2-35.8 80-80 80L36.8 480C58 480 74.3 468.5 84 455.1c9.5-13.1 14.2-30 12.5-46.7c-.3-2.7-.4-5.5-.4-8.3c0-44.2 35.8-80 80-80c5.4 0 10.7 .5 15.9 1.6c1.3 .3 2.7 .6 4 .9l57.7 57.7zm34.2 11.6c2.6 .2 5.3 .3 8 .3c35.7 0 69.3-17.1 90.4-46L563.7 101.6c18.5-25.5 15.8-60.6-6.5-82.9s-57.4-25-82.9-6.5L230 190c-28.9 21-46 54.6-46 90.3c0 2.7 .1 5.4 .3 8c-2.7-.2-5.5-.3-8.3-.3c-61.9 0-112 50.1-112 112c0 3.9 .2 7.8 .6 11.6C66.4 429.1 54.4 448 36.8 448L32 448c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0c61.9 0 112-50.1 112-112c0-2.8-.1-5.5-.3-8.3z"/>
+      </svg>
+  {% endcase %}
+</span>

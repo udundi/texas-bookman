@@ -1,0 +1,88 @@
+<!-- Compose -->
+{% comment %}
+  {% render 'compose-head' %}
+  <style class="compose-style">
+    {% render 'ab-test.css' %}
+  </style>
+{% endcomment %}
+
+<!-- Swiper -->
+<link
+  rel="preload"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+  as="style"
+  onload="this.onload=null;this.rel='stylesheet'"
+>
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"></noscript>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<!-- Adding Vue.js 3 with Migration Build (Compatibility Mode) -->
+<script src="https://unpkg.com/@vue/compat@3.4.38/dist/vue.global.prod.js"></script>
+<script>
+  // Configure Vue 3 compatibility mode for gradual migration
+  Vue.configureCompat({
+    MODE: 2, // Enable full Vue 2 compatibility
+    WATCH_ARRAY: false,
+    COMPONENT_V_MODEL: false,
+    RENDER_FUNCTION: false,
+    GLOBAL_MOUNT: 'suppress-warning',
+    GLOBAL_EXTEND: 'suppress-warning',
+    GLOBAL_PROTOTYPE: 'suppress-warning',
+    INSTANCE_EVENT_EMITTER: 'suppress-warning',
+    INSTANCE_LISTENERS: 'suppress-warning',
+    INSTANCE_DESTROY: 'suppress-warning',
+    INSTANCE_SCOPED_SLOTS: 'suppress-warning',
+    INSTANCE_SET: 'suppress-warning',
+    INSTANCE_DELETE: 'suppress-warning',
+    INSTANCE_EVENT_HOOKS: 'suppress-warning',
+    V_ON_KEYCODE_MODIFIER: 'suppress-warning',
+    CUSTOM_DIR: 'suppress-warning',
+    ATTR_FALSE_VALUE: 'suppress-warning',
+    ATTR_ENUMERATED_COERCION: 'suppress-warning',
+    TRANSITION_GROUP_ROOT: 'suppress-warning',
+    COMPONENT_ASYNC: 'suppress-warning',
+    COMPONENT_FUNCTIONAL: 'suppress-warning',
+    OPTIONS_DATA_FN: 'suppress-warning',
+    OPTIONS_DATA_MERGE: 'suppress-warning',
+    OPTIONS_BEFORE_DESTROY: 'suppress-warning',
+    OPTIONS_DESTROYED: 'suppress-warning',
+    PROPS_DEFAULT_THIS: 'suppress-warning',
+    FILTERS: 'suppress-warning',
+  });
+</script>
+<!-- Adding Vue.js 3 with Migration Build (Compatibility Mode) -->
+<script src="https://unpkg.com/@vue/compat@3.4.38/dist/vue.global.prod.js"></script>
+<script>
+  // Configure Vue 3 compatibility mode for gradual migration
+  Vue.configureCompat({
+    MODE: 2, // Enable full Vue 2 compatibility
+    WATCH_ARRAY: false,
+    COMPONENT_V_MODEL: false,
+    RENDER_FUNCTION: false,
+    GLOBAL_MOUNT: 'suppress-warning',
+    GLOBAL_EXTEND: 'suppress-warning',
+    GLOBAL_PROTOTYPE: 'suppress-warning',
+    INSTANCE_EVENT_EMITTER: 'suppress-warning',
+    INSTANCE_LISTENERS: 'suppress-warning',
+    INSTANCE_DESTROY: 'suppress-warning',
+    INSTANCE_SCOPED_SLOTS: 'suppress-warning',
+    INSTANCE_SET: 'suppress-warning',
+    INSTANCE_DELETE: 'suppress-warning',
+    INSTANCE_EVENT_HOOKS: 'suppress-warning',
+    V_ON_KEYCODE_MODIFIER: 'suppress-warning',
+    CUSTOM_DIR: 'suppress-warning',
+    ATTR_FALSE_VALUE: 'suppress-warning',
+    ATTR_ENUMERATED_COERCION: 'suppress-warning',
+    TRANSITION_GROUP_ROOT: 'suppress-warning',
+    COMPONENT_ASYNC: 'suppress-warning',
+    COMPONENT_FUNCTIONAL: 'suppress-warning',
+    OPTIONS_DATA_FN: 'suppress-warning',
+    OPTIONS_DATA_MERGE: 'suppress-warning',
+    OPTIONS_BEFORE_DESTROY: 'suppress-warning',
+    OPTIONS_DESTROYED: 'suppress-warning',
+    PROPS_DEFAULT_THIS: 'suppress-warning',
+    FILTERS: 'suppress-warning',
+  });
+</script>
+{% render 'vue-mix-global' %}
+{% render 'vue-mix-cart' %}

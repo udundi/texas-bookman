@@ -1,0 +1,64 @@
+<div class=" tw-w-full">
+  <button @click="openDrawer()" class="block-container-{{ block.id }} tw-flex tw-w-full tw-max-w-screen-md tw-mx-auto tw-justify-between tw-items-center tw-px-8 tw-py-4 tw-my-4 tw-rounded-lg tw-border-2 hover:tw-border-navy tw-duration-150 tw-border-white tw-border-solid">
+    <div class="tw-font-playfair tw-font-semibold tw-text-32 tw-text-navy">
+      {{ block.settings.title }}
+    </div>
+    <div
+      :class="drawerOpen ? '' : 'tw-rotate-180'"
+      class="tw-duration-200 tw-size-8 "
+    >
+      <svg width="100%" height="100%" viewBox="0 0 24 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22.4717 13.2035L11.5205 2.25214L0.82679 12.9459" stroke="#313558" stroke-width="2"/>
+      </svg>
+    </div>
+  
+  </button>
+  <div id="drawer-{{ block.id }}" class="">
+    {% content_for 'blocks' %}
+    </div>
+  </div>
+
+<script scoped>
+  new Vue({
+    el: '.block-container-{{ block.id }}',
+    delimiters: ['[[', ']]'],
+    data() {
+      return {
+        drawerOpen: true,
+      };
+    },
+    methods: {
+      openDrawer() {
+        let drawer = document.getElementById('drawer-{{ block.id }}')
+        if (this.drawerOpen) {
+          drawer.classList.add('tw-hidden')
+          this.drawerOpen = false
+        } else {
+          drawer.classList.remove('tw-hidden')
+          this.drawerOpen = true
+        }
+      },
+    }
+  });
+</script>
+
+
+{% schema %}
+{
+  "name": "Collapsing Container",
+  "class": "tw-w-full",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    }
+  ],
+  "blocks": [{ "type": "@theme" }],
+  "presets": [
+    {
+      "name": "Collapsing Container"
+    }
+  ]
+}
+{% endschema %}

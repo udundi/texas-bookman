@@ -1,0 +1,392 @@
+<script>
+  var global = {
+    data() {
+      return {
+        cart: {
+          items: [],
+          total_price: 0,
+        },
+        grabbingCart: false,
+
+        designs: [],
+        grabbingDesigns: false,
+        variationDetails: {},
+        renderFilters: true,
+
+        designCategories: [],
+        showBreakout: null,
+        commercialTabs: false,
+        upsells: [],
+        addingUpsell: false,
+        checkingOut: false,
+
+        variantTitle: {},
+        variantPricing: {},
+        variantImage: {},
+        variantData: {},
+        productDetails: {},
+      };
+    },
+
+    async mounted() {},
+
+    watch: {
+      storage: {
+        deep: true,
+        handler(newStorage) {
+          localStorage.storage = JSON.stringify(this.storage);
+        },
+      },
+    },
+
+    methods: {
+      showCart() {
+        this.bus.$emit('showCart');
+      },
+
+      async removeItems(items) {
+        let remove_items = [];
+
+        for (let item of items) {
+          if (item.product_description.indexOf('Design ID') > -1) {
+            remove_items.push(item);
+          }
+        }
+
+        let updates = {};
+        for (let item of remove_items) {
+          updates[item.id] = 0;
+        }
+
+        await axios.post('/cart/update.js', { updates: updates });
+
+        return true;
+      },
+
+      async addItems(items) {
+        let add_items = [];
+
+        let products = [];
+        for (let item of items) {
+          if (item.product_description.indexOf('Design ID') > -1) {
+            let design_id = item.product_description.split('Design ID:')[1];
+            design_id = design_id.split(' // ')[0].trim();
+
+            this.design_links.push(`https://studio.feltright.com/preview/${design_id}`);
+
+            let productArray = item.product_description.split('Products: ')[1].trim().split('|');
+            for (let i in productArray) {
+              let product = productArray[i].split(':');
+
+              let existingIndex = null;
+
+              for (let p in products) {
+                let data = products[p];
+                if (data.id == product[0]) {
+                  existingIndex = p;
+                }
+              }
+              if (!existingIndex) {
+                products.push({
+                  id: product[0],
+                  quantity: parseFloat(product[1]) * item.quantity,
+                  // parent_quantity: item.quantity
+                });
+              } else {
+                products[existingIndex].quantity += parseFloat(product[1]) * item.quantity;
+              }
+            }
+          }
+        }
+        if (products.length) {
+          await axios.post('/cart/add.js', { items: products });
+        }
+
+        return true;
+      },
+
+      getShopifyImage(data = {}) {
+        let image = data.image;
+
+        if (!image) return '';
+
+        let extension = data.extension || '.jpg';
+        if (image.includes('png')) extension = '.png';
+        if (image.includes('jpg')) extension = '.jpg';
+        if (image.includes('gif')) extension = '.gif';
+
+        if (data.width) {
+          image = image.split(extension);
+          image[0] += '_';
+          image[0] += `${data.width}x`;
+          image = image.join(extension);
+        }
+        if (data.height) {
+          // if(!image.includes('x.jpg')) {
+          //   image = image.split(extension);
+          //   image[0] += '_x';
+          //   image = image.join(extension);
+          // }
+          image = image.split(extension);
+          image[0] += data.height;
+          image = image.join(extension);
+        }
+
+        if (data.crop) {
+          image = image.split(extension);
+          image[0] += `_crop_${data.crop}`;
+          image = image.join(extension);
+        }
+
+        return image;
+      },
+
+      setCookie(cname, cvalue, exdays) {
+        if (!exdays) exdays = 30;
+        var d = new Date();
+        d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+        var expires = 'expires=' + d.toUTCString();
+        document.cookie = cname + '=' + cvalue + ';samesite=none;secure;' + expires + ';path=/';
+      },
+
+      getCookie(cname) {
+        var name = cname + '=';
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c && c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          } else {
+            // console.log('getCookie is undefined')
+          }
+        }
+        return null;
+      },
+
+      deleteCookie(cname) {
+        var expires = 'expires=Thu, 01 Jan 1970 00:00:00 UTC';
+        document.cookie = cname + '=;samesite=none;secure;' + expires + ';path=/';
+      },
+
+      addFilter(list, category) {
+        this.renderFilters = false;
+        if (!list.includes(category)) {
+          list.push(category);
+        } else {
+          list.splice(list.indexOf(category), 1);
+        }
+        this.$forceUpdate();
+
+        this.grabFilteredDesigns();
+
+        this.$nextTick(() => {
+          this.renderFilters = true;
+        });
+      },
+      setSortPosition(category) {
+        if (this.designs) {
+          for (let design of this.designs) {
+            if (typeof design.category_position[category] != 'undefined') {
+              design.sorted_position = parseInt(design.category_position[category]);
+            } else {
+              design.sorted_position = design.position + 10000;
+            }
+          }
+
+          this.designs = this.designs.sort((a, b) => a.sorted_position - b.sorted_position);
+        }
+      },
+      clearFilters(spacesPage) {
+        this.storage.designTypeFilters = [];
+        this.storage.colorFilter = [];
+        // console.log("Clearing filters");
+        if (spacesPage) {
+          switch (spacesPage) {
+            case 'office':
+              this.storage.roomTypeFilter = ['Office'];
+              break;
+            case 'living':
+              this.storage.roomTypeFilter = ['Living Spaces'];
+              break;
+            case 'family':
+              this.storage.roomTypeFilter = ['Family / Kitchen Organization'];
+              break;
+            case 'podcast':
+              this.storage.roomTypeFilter = ['Podcast / Recording Studio'];
+              break;
+            case 'headboard':
+              this.storage.roomTypeFilter = ['Headboard'];
+              break;
+            case 'kids':
+              this.storage.roomTypeFilter = ['Kids / Classroom'];
+              break;
+          }
+        } else this.storage.roomTypeFilter = [];
+        this.storage.categoryFilter = [];
+        this.allDesignTypes = false;
+        this.categoryTypeFilter = null;
+        this.storage.designsPage = 0;
+
+        this.renderFilters = false;
+        this.$nextTick(() => {
+          this.renderFilters = true;
+        });
+
+        this.setSortPosition('Felt Right Design');
+      },
+      variationObject(tile) {
+        var obj = {};
+
+        let pattern, shape, color;
+
+        if (typeof tile.color == 'object') {
+          pattern = tile.pattern ? tile.pattern.label : '';
+          shape = tile.shape ? tile.shape.label : '';
+          color = tile.color ? tile.color.label : '';
+        }
+
+        if (typeof tile.color == 'string') {
+          pattern = tile.pattern || 'Blank';
+          shape = tile.shape || 'Tile';
+          color = tile.color || 'Admiral';
+        }
+
+        if (shape == 'Square') shape = 'Tile';
+
+        if (!tile.pattern) {
+          tile.pattern = 'Blank';
+        }
+
+        if (!shape || shape == 'Tile') obj = this.variationDetails[color + '-' + pattern];
+        if (shape && shape != 'Tile') obj = this.variationDetails[shape + '-' + color];
+        if (shape && (shape == 'Hex' || shape == 'Diamond')) obj = this.variationDetails[shape + '-' + color];
+
+        if (!obj) obj = {};
+        return obj;
+      },
+      async grabCategories(parameters) {
+        axios.post('https://studio.feltright.com/grab-categories').then((response) => {
+          this.designCategories = response.data;
+        });
+      },
+
+      async grabVariations() {
+        if (!grabbingVariations) {
+          grabbingVariations = true;
+          setTimeout(() => {
+            axios.post(`https://studio.feltright.com/grab-variations`).then((response) => {
+              let variations = response.data;
+
+              this.bus.$emit('variationDetailsReady', variations);
+
+              grabbingVariations = false;
+            });
+          }, 100);
+        }
+      },
+
+      smoothScroll(data) {
+        let item = document.querySelector(data.element);
+        let scroller = window;
+        if (data.scroller) scroller = document.querySelector(data.scroller);
+        let offset = data.offset || 0;
+        let speed = data.speed || 5; // Lower is faster 0 is instant
+
+        let isWindowScroll = true;
+        if (data.scroller) isWindowScroll = false;
+
+        let scrollY = scroller.scrollY || scroller.scrollTop;
+
+        var diff = (item.offsetTop - scrollY + offset) / speed;
+
+        if (!scroller._lastDiff) {
+          scroller._lastDiff = 0;
+        }
+
+        if (Math.abs(diff) > 2) {
+          if (isWindowScroll) {
+            scroller.scrollTo(0, scrollY + diff);
+          } else {
+            scroller.scrollTop = scrollY + diff;
+          }
+          clearTimeout(scroller._TO);
+
+          if (diff !== scroller._lastDiff) {
+            scroller._lastDiff = diff;
+            scroller._TO = setTimeout(this.smoothScroll, 15, {
+              element: data.element,
+              offset: data.offset,
+              scroller: data.scroller,
+            });
+          }
+        } else {
+          if (isWindowScroll) {
+            scroller.scrollTo(0, item.offsetTop);
+          } else {
+            scroller.scrollTop = scrollY + diff;
+          }
+        }
+      },
+
+      scrollBodyTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      },
+
+      getParameter(name, url) {
+        if (!url) {
+          url = window.location.href;
+        }
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+          results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+      },
+
+      getImage(parameters) {
+        if (parameters.image) {
+          var image = parameters.image;
+          var image = image.replace('http://', 'https://');
+          var imageSrc = image;
+          var parameterArray = [];
+          if (parameters.type) {
+            parameterArray.push(parameters.type);
+          }
+          if (parameters.width) {
+            parameterArray.push('w_' + parameters.width);
+          }
+          if (parameters.height) {
+            parameterArray.push('h_' + parameters.height);
+          }
+          if (parameters.quality) {
+            parameterArray.push('q_' + parameters.quality);
+          }
+          var parameterString = parameterArray.join();
+          if (parameterString) {
+            imageSrc = imageSrc.replace('/image/upload/', '/image/upload/' + parameterString + '/');
+            imageSrc = imageSrc.replace('/video/upload/', '/video/upload/' + parameterString + '/');
+
+            if (imageSrc.includes('/w_520/') && parameters.width) {
+              imageSrc = imageSrc.replace('/w_520/', '/');
+            }
+
+            // var imageSrc = str_replace('/image/upload/', '/image/upload/'.$parameterString.'/', $imageSrc);
+          }
+          if (parameters.format) {
+            imageSrc = imageSrc.replace(/.jpg/gi, parameters.format);
+            imageSrc = imageSrc.replace(/.mp4/gi, parameters.format);
+            imageSrc = imageSrc.replace(/.mov/gi, parameters.format);
+            imageSrc = imageSrc.replace(/.png/gi, parameters.format);
+            imageSrc = imageSrc.replace(/.gif/gi, parameters.format);
+          }
+          return imageSrc;
+        }
+      },
+    },
+  };
+</script>

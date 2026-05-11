@@ -1,0 +1,108 @@
+<div
+  class="
+    {% if block.settings.visibility contains 'mobile' %}
+      tw-contents
+      md:tw-hidden
+    {% elsif block.settings.visibility contains "desktop" %}
+      tw-hidden
+      md:tw-contents
+    {% else %}
+      tw-contents
+    {% endif %}
+  "
+>
+  <div
+    class="tw-w-full tw-rounded-md tw-border tw-border-solid tw-p-3"
+    style="background-color: {{ block.settings.bg_color }}; border-color: {{ block.settings.border_color }};"
+  >
+    <div class="tw-flex tw-items-center tw-justify-center tw-gap-3">
+      <!-- Alert Icon -->
+      {% if block.settings.show_icon %}
+        <div class="tw-flex-shrink-0 tw-mt-0.5">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="11.7432" cy="11.7432" r="11.7432" fill="{{ block.settings.icon_color }}"/>
+            <path d="M11.288 13.713C11.096 13.521 11 13.2833 11 13V6C11 5.71667 11.096 5.47934 11.288 5.288C11.48 5.09667 11.7173 5.00067 12 5C12.2827 4.99934 12.5203 5.09534 12.713 5.288C12.9057 5.48067 13.0013 5.718 13 6V13C13 13.2833 12.904 13.521 12.712 13.713C12.52 13.905 12.2827 14.0007 12 14C11.7173 13.9993 11.48 13.9033 11.288 13.712M11.288 18.712C11.096 18.5213 11 18.284 11 18C11 17.716 11.096 17.4787 11.288 17.288C11.48 17.0973 11.7173 17.0013 12 17C12.2827 16.9987 12.5203 17.0947 12.713 17.288C12.9057 17.4813 13.0013 17.7187 13 18C12.9987 18.2813 12.9027 18.519 12.712 18.713C12.5213 18.907 12.284 19.0027 12 19C11.716 18.9973 11.4787 18.9013 11.288 18.712Z" fill="black"/>
+          </svg>
+        </div>
+      {% endif %}
+      <!-- Text -->
+      <div class="tw-flex tw-flex-col">
+        {% if block.settings.header != blank %}
+          <span class="tw-font-montserrat tw-font-semibold md:tw-text-16 tw-text-10 tw-text-offblack tw-leading-normal">
+            {{ block.settings.header }}
+          </span>
+        {% endif %}
+        {% if block.settings.subheader != blank %}
+          <span class="tw-font-montserrat tw-font-normal md:tw-text-16 tw-text-10 tw-text-offblack tw-leading-normal">
+            {{ block.settings.subheader }}
+          </span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Info Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "header",
+      "label": "Header",
+      "default": "Important Information"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Visibility",
+      "options": [
+        { "value": "both", "label": "Mobile and Desktop" },
+        { "value": "mobile", "label": "Mobile only" },
+        { "value": "desktop", "label": "Desktop only" }
+      ],
+      "default": "both"
+    },
+    {
+      "type": "text",
+      "id": "subheader",
+      "label": "Subheader",
+      "default": "Additional details go here."
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFBEA"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border Color",
+      "default": "#F1E1A1"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_icon",
+      "label": "Show Icon",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon Color",
+      "default": "#F1E1A1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Info Section (Alert)",
+      "settings": {
+        "bg_color": "#FFFBEA",
+        "border_color": "#F1E1A1",
+        "icon_color": "#F1E1A1"
+      }
+    }
+  ]
+}
+{% endschema %}

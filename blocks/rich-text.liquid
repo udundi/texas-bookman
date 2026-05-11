@@ -1,0 +1,73 @@
+<style>
+  .font-color-{{ block.id }} {
+    color: {{ block.settings.color }};
+  }
+  .gap-border-{{ block.id }}::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    right: 38%;
+    width: 25%;
+    height: 2px;
+    background-color: #DEDEDE;
+  }
+  .list-item-{{ block.id }}::before {
+    content: "•";
+    margin-right: 0.5em;
+    color: inherit;
+    font-size: 1em;
+    display: inline-block;
+  }
+  .max-width-{{ block.id }} {
+    max-width: {{ block.settings.max_width }}px;
+  }
+</style>
+
+<div class="tw-w-full max-width-{{ block.id }} font-color-{{ block.id }} tw-flex tw-h-fit tw-font-montserrat {% if block.settings.align == 'center' %} tw-text-center {% elsif block.settings.align == 'end' %} tw-text-end {% elsif block.settings.align == 'start' %} tw-text-start {% endif %} tw-prose-fr tw-prose tw-relative">
+  {{ block.settings.text }}
+</div>
+
+{% schema %}
+{
+  "name": "Rich Text",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text Content",
+      "default": "<p>Lorem ipsum dolor sit amet.</p>"
+    },
+    {
+      "type": "select",
+      "id": "align",
+      "label": "Alignment",
+      "options": [
+        { "value": "start", "label": "Start" },
+        { "value": "center", "label": "Center" },
+        { "value": "end", "label": "End" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max Width",
+      "min": 400,
+      "max": 1000,
+      "step": 10,
+      "default": 600
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rich Text"
+    }
+  ]
+}
+{% endschema %}

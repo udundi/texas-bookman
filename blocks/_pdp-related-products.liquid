@@ -1,0 +1,47 @@
+{% if block.settings.related_product_list != blank %}
+  <div class="tw-overflow-hidden">
+    <div class="swiper related-swiper">
+      <h3 class="tw-text-24 tw-font-bold">Also Available:</h3>
+      <div class="swiper-wrapper">
+        {% for rel_product in block.settings.related_product_list %}
+          <div class="swiper-slide">
+            <a href="{{ rel_product.url }}" class="tw-flex tw-flex-col tw-gap-2">
+              <div class="tw-w-full tw-aspect-square tw-rounded-md tw-overflow-hidden">
+                {% if product.featured_image != blank %}
+                  {{
+                    product.featured_image
+                    | image_url: width: 400
+                    | image_tag: class: 'tw-w-full tw-h-full tw-object-cover'
+                  }}
+                {% else %}
+                  {{ 'product-1' | placeholder_svg_tag: 'tw-w-full tw-h-full tw-object-cover' }}
+                {% endif %}
+              </div>
+              <div class="tw-text-16 tw-font-semibold tw-text-offblack">{{ product.title }}</div>
+              <div class="tw-text-14 tw-text-navy">{{ product.price | money }}</div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "PDP Related Products",
+  "class": "tw-contents",
+  "settings": [
+    {
+      "type": "product_list",
+      "label": "Related Product List",
+      "id": "related_product_list"
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP Related Products"
+    }
+  ]
+}
+{% endschema %}

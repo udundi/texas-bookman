@@ -1,0 +1,30 @@
+{
+  "name": "udundi_skeleton",
+  "version": "1.0.0",
+  "description": "",
+  "main": "push.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tailwindcss build -i ./assets/styles.css -o ./assets/theme.css",
+    "dev": "concurrently 'npm:watch:css' 'npm:start'",
+    "start": "shopify theme dev --store=texasbookman --live-reload full-page",
+    "css": "tailwindcss build -i ./assets/styles.css -o ./assets/theme.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@shopify/cli": "^3.90.0",
+    "swiper": "^11.2.10",
+    "tailwindcss": "^3.4.4"
+  },
+  "devDependencies": {
+    "@shopify/prettier-plugin-liquid": "^1.7.2",
+    "@tailwindcss/typography": "^0.5.19",
+    "concurrently": "^9.1.0",
+    "nodemon": "^3.1.7",
+    "postcss-prefixer": "^3.0.0",
+    "prettier": "^3.4.2",
+    "prettier-plugin-tailwindcss": "^0.6.11"
+  }
+}

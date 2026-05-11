@@ -1,0 +1,58 @@
+<div
+  class="tw-w-full tw-text-12 tw-text-center tw-font-semibold tw-rounded-md"
+  style="background-color: {{ block.settings.bg_color }}; color: {{ block.settings.text_color }}; padding: {{ block.settings.padding_y }}px {{ block.settings.padding_x }}px;"
+  {{ block.shopify_attributes }}
+>
+  {{ block.settings.text }}
+</div>
+
+{% schema %}
+{
+  "name": "Value Item",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Value proposition"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Horizontal Padding",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "padding_y",
+      "label": "Vertical Padding",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    }
+  ],
+  "presets": [
+    {
+      "name": "Value Item"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,84 @@
+{% comment %} Snippet Description {% endcomment %}
+<!--
+  {% comment %}
+    Accepts:
+    - price: {Number} Text
+    - compare_price: {Number} URL link
+    Usage:
+    {% render 'ud-product-price',
+    price: product.selected_or_first_available_variant.price,
+    compare_price: product.selected_or_first_available_variant.compare_at_price,
+    stacked: true,
+    side_sale: true,
+    product: product
+    %}
+  {% endcomment %}
+-->
+{% assign no_discount = false %}
+
+{% assign flash_sale_live = false %}
+{% if settings.flash_sale %}
+  {% for flash_product in settings.flash_sale_products %}
+    {% if product.handle == flash_product.handle %}
+      {% assign flash_sale_live = true %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if customer.tags contains 'Trade Program' %}
+  {% if settings.sitewide_sale and flash_sale_live %}
+    {% if settings.sitewide_sale_discount > settings.flash_sale_discount %}
+      {% assign site_discount = settings.sitewide_sale_discount | divided_by: 100.00 %}
+    {% else %}
+      {% assign site_discount = settings.flash_sale_discount | divided_by: 100.00 %}
+    {% endif %}
+  {% elsif settings.sitewide_sale_discount > 15 and settings.sitewide_sale %}
+    {% assign site_discount = settings.sitewide_sale_discount | divided_by: 100.00 %}
+  {% elsif settings.flash_sale_discount > 15 and flash_sale_live %}
+    {% assign site_discount = settings.flash_sale_discount | divided_by: 100.00 %}
+  {% else %}
+    {% assign site_discount = 15 | divided_by: 100.0 %}
+  {% endif %}
+{% elsif settings.sitewide_sale and flash_sale_live %}
+  {% if settings.sitewide_sale_discount > settings.flash_sale_discount %}
+    {% assign site_discount = settings.sitewide_sale_discount | divided_by: 100.00 %}
+  {% else %}
+    {% assign site_discount = settings.flash_sale_discount | divided_by: 100.00 %}
+  {% endif %}
+{% elsif settings.sitewide_sale %}
+  {% assign site_discount = settings.sitewide_sale_discount | divided_by: 100.00 %}
+{% elsif flash_sale_live %}
+  {% assign site_discount = settings.flash_sale_discount | divided_by: 100.00 %}
+{% endif %}
+
+{% assign product_discount = price | times: site_discount | round %}
+
+<div class="tw-font-bold tw-flex {% if side_sale %} tw-flex-row-reverse tw-justify-end tw-items-start {% else %} tw-flex-col {% endif %} {% if stacked %} tw-gap-1 {% elsif side_sale %} tw-gap-3 {% else %} tw-gap-2 {% endif %} tw-text-navy md:tw-text-16 tw-text-14">
+  {% unless no_discount == true %}
+    {% if compare_price > price or settings.sitewide_sale or flash_sale_live %}
+      <div class="tw-px-4 tw-h-fit tw-rounded-full tw-text-12 tw-bg-rust tw-w-fit tw-font-normal tw-text-white">
+        Sale
+      </div>
+      <div class="tw-flex tw-w-fit tw-justify-center {% if stacked or side_sale %} tw-items-start tw-flex-col tw-gap-1 {% else %} tw-items-center tw-flex-row tw-gap-2 {% endif %}">
+        <div class="tw-text-navy tw-leading-tight tw-text-14">
+          {% unless settings.sitewide_sale or flash_sale_live %}
+            {{ price | money }}
+          {% else %}
+            {{ price | minus: product_discount | money }}
+          {% endunless %}
+        </div>
+        <div class="tw-text-blue-grey tw-line-through tw-text-12">
+          {% if compare_price %}
+            {{ compare_price | money }}
+          {% else %}
+            {{ price | money }}
+          {% endif %}
+        </div>
+      </div>
+    {% else %}
+      <div>{{ price | money }}</div>
+    {% endif %}
+  {% else %}
+    <div>{{ price | money }}</div>
+  {% endunless %}
+</div>

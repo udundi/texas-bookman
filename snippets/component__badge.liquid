@@ -1,0 +1,38 @@
+<!-- snippets/component__badge.liquid -->
+{% comment %}
+  Badge to display highlighted text.
+
+  Accepts:
+    - color: color to use for the badge, can be set to existing values
+    - icon: icon to display from component__icon.liquid
+    - content: content of the badge
+
+  Usage:
+    {% render 'component__badge',
+      container_class: 'class',
+      color: 'overlay-1',
+      icon: '',
+      content: taxes_included %}
+
+  Possible enhancements:
+    - Add option to show icon in beginning or end.
+
+  Pro tips:
+    - Badges are commonly used to highlight product details like "best sellers"
+    - Use product tags to add badges to product thumbnails. Learn more - https://intercom.help/brickspacelab/en/articles/8168124-adding-badges-to-product-thumbnails
+{% endcomment %}
+
+<div
+  id="pdp-badge"
+  class="
+    color__bg-{{ color }} color__{{ color }} border__button--radius inline-flex items-center px-2 py-1
+    {{ container_class }}
+  "
+>
+  {% capture icon_class %} mr-1 {{ icon__class }} {% endcapture %}
+
+  {% unless icon == blank %}
+    {% render 'component__icon', icon: icon, size: '16', class: icon_class %}
+  {% endunless %}
+  <span class="type--small !font-bold type__nav flex items-center gap-1 {{ text_class }}">{{ content }}</span>
+</div>

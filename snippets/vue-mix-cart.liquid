@@ -1,0 +1,842 @@
+<script>
+  var cart = {
+    data() {
+      return {
+        cartData: { items: [], total_price: 0 },
+        cartItems: [],
+        parsingCart: false,
+        disabledCart: false,
+        grabbingCart: false,
+        showCartSidebar: false,
+        longerLeadTime: false,
+        shorterLeadTime: false,
+        discountMessages: [], //Find and destroy
+        commercialTabs: false, //Find and destroy
+        upsells: [], //Find and destroy
+        shareUrl: '',
+        productDetails: {},
+        openedBreakdown: '',
+        openedBundleContains: '',
+        updates: {},
+        freeShipMinimum: 99,
+        storage: {},
+        totalCartItems: 0,
+        urlVar: new URL(window.location.href),
+        saleMessage: 
+          {%- if customer.tags contains 'Trade Program' -%}
+            {%- if settings.sitewide_sale_discount > 15 and settings.sitewide_sale -%}
+              'Sale'
+            {%- else -%}
+              'Trade Program'
+            {%- endif -%}
+          {%- else -%}
+            'Sale'
+          {%- endif -%},
+        sitewideDiscount: 
+          {%- if customer.tags contains 'Trade Program' -%}
+            {%- if settings.sitewide_sale_discount > 15 and settings.sitewide_sale -%}
+              {{ settings.sitewide_sale_discount | divided_by: 100.0 | default: 0 }}
+            {%- else -%}
+              {{ 15 | divided_by: 100.0 }}
+            {%- endif -%}
+          {%- else -%}
+            {{ settings.sitewide_sale_discount | divided_by: 100.0  | default: 0 }}
+          {%- endif -%},
+        sitewideSale: {%- if customer.tags contains 'Trade Program' or settings.sitewide_sale -%} true{%- else -%} false{%- endif -%},
+        flashSaleLive: {%- if settings.flash_sale -%} true{%- else -%} false{%- endif -%},
+        flashSaleProducts: 
+          [
+            {%- for flash_product in settings.flash_sale_products -%}
+              '{{ flash_product.handle }}'{% unless forloop.last %},{% endunless %}
+            {%- endfor -%}
+          ],
+        flashSaleDiscount: {{ settings.flash_sale_discount | divided_by: 100.0  | default: 0 }}
+        ,
+        // Debounce state for batching cart quantity updates
+        updateDebounceTimer: null,
+        updateDebounceDelay: 500,
+        // Flags to control UI during lightweight quantity updates
+        quantityUpdating: false,
+        suppressGlobalLoading: false
+      }; 
+    },
+    computed: {
+      itemsEligibleForCommercialTabs() {
+        return this.visibleCartItems.filter(item => this.isEligibleForCommercialTabs(item));
+      },
+      visibleCartItems() {
+        if (!this.cartData || !this.cartData.items || !Array.isArray(this.cartData.items)) {
+          return [];
+        }
+        return this.cartData.items.filter((item) => {
+          let showItem = true;
+  
+          let hiddenItems = window.adhesiveCalc ? window.adhesiveCalc.HIDDEN_TITLES : ['Adhesive Tab', 'Commercial Adhesive Tab', 'Mini Adhesive Tab', 'Freight Shipping'];
+  
+          if (item && item.title && (hiddenItems.includes(item.title) || item.title.includes('Permanent Adhesive Tape Strips'))) {
+            showItem = false;
+          }
+  
+          // Hide individual bundle items (they render as grouped bundles instead)
+          if (item && item.properties && item.properties._bundle) {
+            showItem = false;
+          }
+  
+          return showItem;
+        });
+      },
+      // Group bundle items by their _bundle property value
+      cartBundles() {
+        if (!this.cartData || !this.cartData.items || !Array.isArray(this.cartData.items)) {
+          return [];
+        }
+        const bundleMap = {};
+        this.cartData.items.forEach(item => {
+          if (item && item.properties && item.properties._bundle) {
+            const key = item.properties._bundle;
+            if (!bundleMap[key]) {
+              bundleMap[key] = {
+                key: key,
+                items: [],
+                totalPrice: 0,
+                originalPrice: 0,
+                bundleName: '',
+                hasDiscount: false,
+                discountLabel: this.saleMessage,
+              };
+            }
+            bundleMap[key].items.push(item);
+  
+            const qty = Number(item.quantity || 1);
+            const unitOriginalPrice = Number(item.original_price || item.price || item.final_price || 0);
+            const unitDiscountedPrice = Number((typeof item.discounted_price === 'number' && item.discounted_price > 0)
+              ? item.discounted_price
+              : (item.final_price || item.price || 0));
+            const originalLinePrice = Math.round(unitOriginalPrice * qty);
+            const discountedLinePrice = Math.round(unitDiscountedPrice * qty);
+  
+            bundleMap[key].originalPrice += originalLinePrice;
+            bundleMap[key].totalPrice += discountedLinePrice;
+            if (discountedLinePrice < originalLinePrice) {
+              bundleMap[key].hasDiscount = true;
+            }
+  
+            if (!bundleMap[key].bundleName && item.properties['_bundle-name']) {
+              bundleMap[key].bundleName = item.properties['_bundle-name'];
+            }
+          }
+        });
+        return Object.values(bundleMap);
+      },
+      tabsIncluded() {
+        if (!this.cartData || !this.cartData.items || !Array.isArray(this.cartData.items)) {
+          return [];
+        }
+        return this.cartData.items.filter((item) => {
+          let tabsExist = false;
+          let tabItems = ['Adhesive Tab', 'Commercial Adhesive Tab'];
+          if (item && item.title && tabItems.includes(item.title)) {
+            tabsExist = true;
+          }
+          return tabsExist;
+        });
+      },
+      cartStillLoading() {
+        if (this.parsingCart == true || this.disabledCart == true || this.grabbingCart == true) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      isGiftCardOnlyOrder() {
+        // Check if cart contains ONLY gift cards (no physical products)
+        if (!this.cartItems || this.cartItems.length === 0) {
+          return false;
+        }
+        return this.cartItems.every(item => item.gift_card === true);
+      },
+      leadTime() {
+        let largeShipMod = 0;
+        
+        // Ensure cartItems is an array
+        const items = Array.isArray(this.cartItems) ? this.cartItems : [];
+        
+        // Temp lead time section
+        let containsFLAT = false;
+        for (let item of items) {
+          if (item && item.variant_title && item.variant_title.includes('Flat')) {
+              containsFLAT = true;
+          }
+        }
+        let snoopyDelay = false;
+        for (let item of items) {
+          if (item && this.productDetails && this.productDetails[item.handle] && this.productDetails[item.handle].title && this.productDetails[item.handle].title.includes('Snoopy On A Hill')) {
+              snoopyDelay = true;
+          }
+        }
+        
+        // Check for 6-7 business days tags: Maps, 3D Blocks, Layered Engraved
+        let longerLeadTags = false;
+        for (let item of items) {
+          if (item && this.productDetails && this.productDetails[item.handle] && this.productDetails[item.handle].tags) {
+            const tags = this.productDetails[item.handle].tags;
+            if (tags.includes('maps') || tags.includes('Maps') || tags.includes('3D Blocks')  || tags.includes('Felt Beams') || tags.includes('Wood Grain Beams') || tags.includes('Full Felt Sheet') || tags.includes('blade') || tags.includes('Elizabeth Olwen') || tags.includes('Partitions') || tags.includes('Teresa Rego') || tags.includes('Apex') || tags.includes('Peak') || tags.includes('national parks') || tags.includes('Cloud Baffles') || tags.includes('Layered Engraved')) {
+              longerLeadTags = true;
+              break;
+            }
+          }
+        }
+        
+        // Check for 3-4 business days tags: 2 x 2 Printed Tiles, 3D Decor
+        let mediumLeadTags = false;
+        for (let item of items) {
+          if (item && this.productDetails && this.productDetails[item.handle] && this.productDetails[item.handle].tags) {
+            const tags = this.productDetails[item.handle].tags;
+            if (tags.includes('2 x 2 Printed Tiles') || tags.includes('3D Decor') || tags.includes('3D Tiles')) {
+              mediumLeadTags = true;
+              break;
+            }
+          }
+        }
+        // End Temp Section
+        if (this.cartData.total_price > 4000000) {
+          return '12-14';
+        } else if (containsFLAT == true) {
+          return '11-13';
+        } else if (this.cartData.total_price > 3500000) {
+          return '11-13';
+        } else if (this.cartData.total_price > 3000000) {
+          return '10-12';
+        } else if (this.cartData.total_price > 2500000) {
+          return '9-11';
+        } else if (this.cartData.total_price > 2000000) {
+          return '8-10';
+        } else if (this.cartData.total_price > 1500000) {
+          return '7-9';
+        } else if (this.cartData.total_price > 1000000) {
+          return '6-8';
+        } else if (longerLeadTags == true) {
+          return '6-7';
+        } else if (snoopyDelay == true) {
+          return '6-7';
+        } else if (this.cartData.total_price > 500000) {
+          return '5-7';
+        } else if (mediumLeadTags == true) {
+          return '3-4';
+        } else if (this.cartData.total_price < 500000) {
+          return this.shorterLeadTime ? '2-3' : '3-4';
+        } else {
+          return '5-7';
+        }
+      },
+      disableCartActions() {
+        // Disable actions during quantity debounce OR any cart loading state
+        return !!this.quantityUpdating || this.grabbingCart || this.disabledCart || this.parsingCart;
+      }
+    },
+    methods: {
+      async parseCart() {
+        // Getting Saved Cart Param
+        let savedCartString = this.urlVar.searchParams.get('saved_cart');
+        if (savedCartString) {
+          // Switching on Loader Animation
+          this.parsingCart = true;
+          // Getting Raw Cart String
+          const newCart = await this.parseCartString(savedCartString);
+          if (newCart) {
+            // Clearing Old Cart
+            await axios.post('/cart/clear.js');
+            // Adding New Cart (using /cart/add.js to support line item properties)
+            await axios
+              .post('/cart/add.js', {
+                items: newCart,
+              })
+              .then((response) => {
+                // Logging New Cart
+                if (response.data && Array.isArray(response.data.items)) {
+                  this.cartData = response.data;
+                  this.cartItems = response.data.items.filter(item => item != null);
+                  // Calculating Adhesives as a precaution
+                  this.calcAdhesives();
+                } else {
+                  console.error('Invalid cart response during parsing:', response.data);
+                }
+              });
+            // Removing Saved Cart Params
+            this.urlVar.searchParams.delete('saved_cart');
+            // Pushing New URL to history
+            window.history.pushState({}, '', this.urlVar);
+          }
+          // Turning off Loader
+          this.parsingCart = false;
+        }
+      },
+      parseCartString(string) {
+        const itemArray = string.split('_');
+        let error = '';
+        let items = [];
+        for (let index = 0; index < itemArray.length; index++) {
+          const item = itemArray[index];
+          const fields = item.split('-');
+          let id = null, quantity = null, properties = null;
+          for (let field of fields) {
+            if (field.startsWith('i~')) {
+              id = field.replace('i~', '');
+            } else if (field.startsWith('q~')) {
+              quantity = field.replace('q~', '');
+            } else if (field.startsWith('p~')) {
+              let encoded = field.replace('p~', '');
+              encoded = encoded.replace(/\./g, '+').replace(/!/g, '/');
+              while (encoded.length % 4) encoded += '=';
+              try {
+                properties = JSON.parse(atob(encoded));
+              } catch(e) {
+                console.error('Failed to decode properties:', e);
+              }
+            }
+          }
+          if (id && quantity) {
+            let entry = { id: Number(id), quantity: Number(quantity) };
+            if (properties) entry.properties = properties;
+            items.push(entry);
+          } else {
+            error = 'Broken Url Params';
+          }
+        }
+        if (error == '') {
+          return items;
+        } else {
+          console.error(error);
+          return false;
+        }
+      },
+      closeModal(event) {
+        const cartSidebar = document.querySelector('#cartSidebar').close();
+        const scrollY = document.body.style.top;
+        document.body.style.position = '';
+        document.body.style.top = '';
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      },
+      async removeItem(item) {
+        this.grabbingCart = true;
+        this.updates = {};
+        this.updates[item.variant_id] = 0;
+        await this.updateCart();
+        this.grabbingCart = false;
+      },
+      async removeBundle(bundle) {
+        this.grabbingCart = true;
+        try {
+          // Remove by line index (1-based) to avoid affecting duplicate variants in other bundles.
+          // Process from highest index to lowest so earlier indices stay valid.
+          const lineIndices = [];
+          bundle.items.forEach(bItem => {
+            const idx = this.cartData.items.indexOf(bItem);
+            if (idx !== -1) lineIndices.push(idx + 1); // Shopify lines are 1-based
+          });
+          lineIndices.sort((a, b) => b - a); // descending
+          for (const line of lineIndices) {
+            const resp = await axios.post('/cart/change.js', { line: line, quantity: 0 });
+            if (resp.data && Array.isArray(resp.data.items)) {
+              this.cartData = resp.data;
+              this.cartItems = resp.data.items.filter(item => item != null);
+            }
+          }
+          this.getCartLength({ data: this.cartData });
+          this.calcAdhesives();
+          try { this.bus && this.bus.$emit && this.bus.$emit('refreshCart'); } catch (e) {}
+        } catch (err) {
+          console.error('[Cart] Remove bundle failed:', err);
+        }
+        this.grabbingCart = false;
+      },
+      // Optimistically adjust quantity and debounce cart update
+      increaseItemQuantity(item) {
+        if (!item || !item.variant_id) return;
+        const newQuantity = parseFloat(item.quantity || 0) + 1;
+        // Optimistic UI update
+        item.quantity = newQuantity;
+        this.scheduleCartUpdate(item.variant_id, newQuantity);
+      },
+      decreaseItemQuantity(item) {
+        if (!item || !item.variant_id) return;
+        let newQuantity = parseFloat(item.quantity || 0) - 1;
+        if (newQuantity <= 0) newQuantity = 0;
+        item.quantity = newQuantity;
+        this.scheduleCartUpdate(item.variant_id, newQuantity);
+      },
+      // Debounced batching of cart updates
+      scheduleCartUpdate(variant_id, quantity) {
+        if (!variant_id) return;
+        if (!this.updates) this.updates = {};
+        this.updates[variant_id] = quantity;
+        // Clear previous timer
+        if (this.updateDebounceTimer) {
+          clearTimeout(this.updateDebounceTimer);
+        }
+        // Set new timer
+        this.updateDebounceTimer = setTimeout(() => {
+          this.updateDebounceTimer = null;
+          // Mark lightweight update (avoid full overlay)
+          this.suppressGlobalLoading = true;
+          this.quantityUpdating = true;
+          this.updateCart();
+        }, this.updateDebounceDelay);
+      },
+      getCartLength(response) {
+        this.totalCartItems = response.data.items.length;
+        for (let i = 0; i < response.data.items.length; i++) {
+          const element = response.data.items[i];
+          if (
+            element.title == 'Adhesive Tab' ||
+            element.title == 'Mini Adhesive Tab' ||
+            element.title == 'Commercial Adhesive Tab' ||
+            element.title == 'Freight Shipping' ||
+            element.title.includes('Permanent Adhesive Tape Strips') ||
+            element.title == 'Drywall Screws'
+          ) {
+            this.totalCartItems = this.totalCartItems - 1;
+          }
+        }
+      },
+      async checkToRemoveFreight(handle) {
+        // Finding Product Tags
+        await this.getProductDetails();
+        
+        // Ensure productDetails exists for this handle
+        if (!this.productDetails || !this.productDetails[handle]) {
+          return;
+        }
+        
+        // Checking if product is a freight item
+        const productTags = this.productDetails[handle].tags || [];
+        const productTitle = this.productDetails[handle].title || '';
+        
+        if (
+          productTags.includes('Full Felt Sheet') || 
+          (productTitle && productTitle.includes('Freight'))
+        ) {
+          let freight_items = 0;
+          // Finding total freight Items
+          for (let i = 0; i < this.cartItems.length; i++) {
+            const cartItem = this.cartItems[i];
+            const cartItemHandle = cartItem && cartItem.handle;
+            const cartItemTitle = cartItem && cartItem.title ? cartItem.title : '';
+            const cartItemDetails = cartItemHandle && this.productDetails[cartItemHandle];
+            const cartItemTags = cartItemDetails && cartItemDetails.tags ? cartItemDetails.tags : [];
+            
+            if (
+              cartItemTags.includes('Full Felt Sheet') ||
+              (cartItemTitle && cartItemTitle.includes('Freight')) ||
+              (cartItemTitle && cartItemTitle.includes('Partition'))
+            ) {
+              if (cartItemTitle != 'Freight Shipping') {
+                freight_items++;
+              }
+            }
+          }
+          // Removing if this is the LAST freight Item
+          if (freight_items == 1) {
+            for (let i = 0; i < this.cartItems.length; i++) {
+              if (this.cartItems[i].title == 'Freight Shipping') {
+                this.updates[this.cartItems[i].variant_id] = 0;
+              }
+            }
+          }
+        }
+      },
+      async getItemsForCart() {
+        this.grabbingCart = true;
+        axios.get('/cart.js').then(async (response) => {
+          if (response.data && Array.isArray(response.data.items)) {
+            this.cartItems = response.data.items.filter(item => item != null);
+            // console.log("Updated Cart Items from init: ", this.cartItems);
+            this.cartData = response.data;
+            this.longerLeadTime = false;
+            this.shorterLeadTime = true;
+            this.getCartLength(response);
+            await this.calcAdhesives();
+          } else {
+            console.error('Invalid cart response:', response.data);
+          }
+          this.grabbingCart = false;
+        }).catch((error) => {
+          console.error('Failed to get cart items:', error);
+          this.grabbingCart = false;
+        });
+      },
+      updateCart(loop) {
+        // console.log("Starting to Update");
+        axios
+          .post('/cart/update.js', {
+            updates: this.updates,
+          })
+          .then((response) => {
+            // Validate response data before assignment
+            if (response.data && Array.isArray(response.data.items)) {
+              this.cartData = response.data;
+              this.cartItems = response.data.items.filter(item => item != null);
+              // console.log("Updated Cart Items: ", this.cartItems);
+              this.getCartLength(response);
+              this.calcAdhesives();
+            } else {
+              console.error('Invalid cart update response:', response.data);
+            }
+            
+            // Emit global cart refresh so header badge updates total quantity after debounced changes
+            try {
+              this.bus && this.bus.$emit && this.bus.$emit('refreshCart');
+            } catch (e) {
+              console.warn('Cart refresh event bus unavailable:', e);
+            }
+          })
+          .catch((error) => {
+            console.error('Cart update failed:', error);
+          });
+      },
+      freeShipping() {
+        if (!this.cartData) return false;
+        let qualifies = false;
+        if (this.cartData.total_price / 100 >= this.freeShipMinimum) {
+          qualifies = true;
+        }
+        let freeShipItems = [
+          'adhesive-tab',
+          'balance-coaster-sample-pack',
+          'restore-coaster-sample-pack',
+          'focus-coaster-sample-pack',
+          'create-coaster-sample-pack',
+          'energize-coaster-sample-pack',
+          'calm-coaster-sample-pack',
+          'custom-coaster-pack',
+          'custom-sample-pack',
+          'sample-pack',
+        ];
+        let allFreeShip = true;
+        if (this.cartItems.length > 0) {
+          for (let item of this.cartItems) {
+            if (!item || !freeShipItems?.includes(item.handle)) {
+              allFreeShip = false;
+              break;
+            }
+          }
+          if (allFreeShip) qualifies = true;
+          for (let item of this.cartItems) {
+            if (
+              item?.handle?.includes('freight-shipping') ||
+              item?.handle?.includes('felt-sheet') ||
+              item?.handle?.includes('freight-shipped') ||
+              item?.handle?.includes('partition') ||
+              item?.handle?.includes('suspended-flat') ||
+              item?.handle?.includes('floor-to-ceiling')
+            ) {
+              qualifies = false;
+              break;
+            }
+          }
+        }
+        return qualifies;
+      },
+  
+      async getProductDetails() {
+        console.log("getting product details")
+        if (this.cartData.items) {
+          let i = 0;
+          for (let item of this.cartData.items) {
+            try {
+              // If the line item already has _tags, use it directly and skip the API call
+              const lineTags = item?.properties?._tags;
+              if (lineTags) {
+                let tags;
+                try {
+                  tags = typeof lineTags === 'string' ? JSON.parse(lineTags) : lineTags;
+                } catch (e) {
+                  tags = [];
+                }
+                // Merge into productDetails so downstream tag checks still work
+                if (!this.productDetails[item?.handle]) {
+                  this.productDetails[item?.handle] = {};
+                }
+                this.productDetails[item?.handle].tags = this.productDetails[item?.handle].tags || tags;
+  
+                if (
+                  tags.includes('Artist Series') ||
+                  tags.includes('National Parks') ||
+                  tags.includes('national parks') ||
+                  tags.includes('Cloud Baffles') ||
+                  tags.includes('Baffles') ||
+                  tags.includes('baffles') ||
+                  tags.includes('Blade') ||
+                  tags.includes('blade') ||
+                  tags.includes('Felt Beams') ||
+                  tags.includes('beams') ||
+                  tags.includes('Desk Divider') ||
+                  tags.includes('Partitions')
+                ) {
+                  this.longerLeadTime = true;
+                }
+                if (!tags.includes('Sample')) {
+                  this.shorterLeadTime = false;
+                }
+              } else {
+                await axios.get(`/products/${item?.handle}/?view=exposed-metafields`).then((response) => {
+                  // Parse JSON string if needed
+                  const productData = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
+                  this.productDetails[item?.handle] = productData;
+                  if (
+                    productData.tags?.includes('Artist Series') ||
+                    productData.tags?.includes('National Parks') ||
+                    productData.tags?.includes('national parks') ||
+                    productData.tags?.includes('Cloud Baffles') ||
+                    productData.tags?.includes('Baffles') ||
+                    productData.tags?.includes('baffles') ||
+                    productData.tags?.includes('Blade') ||
+                    productData.tags?.includes('blade') ||
+                    productData.tags?.includes('Felt Beams') ||
+                    productData.tags?.includes('beams') ||
+                    productData.tags?.includes('Desk Divider') ||
+                    productData.tags?.includes('Partitions')
+                  ) {
+                    this.longerLeadTime = true;
+                  }
+                  if (!productData.tags?.includes('Sample')) {
+                    this.shorterLeadTime = false;
+                  }
+                });
+              }
+            } catch (error) {
+              console.error(item, error.message, 'error getting product details');
+            }
+          }
+        } else {
+          console.error('No Cart Items were present');
+        }
+      },
+      async calcAdhesives(toggle) {
+        if (!this.suppressGlobalLoading) {
+          this.disabledCart = true;
+        }
+        await this.getProductDetails();
+  
+        // Handle commercial tab toggle
+        if (toggle) {
+          if (this.commercialTabs) {
+            for (let item of this.cartItems) {
+              if (item && item.id && !this.storage.semiPermanent?.includes(item.id) && !this.itemHasTag(item, '3D Blocks')) {
+                this.storage.semiPermanent?.push(item.id);
+              }
+            }
+          } else {
+            this.storage.semiPermanent = [];
+          }
+        }
+  
+        // Run shared calculation
+        let result = window.adhesiveCalc.calculate({
+          cartItems: this.cartItems,
+          productDetails: this.productDetails,
+          variantData: this.variantData,
+          semiPermanentIds: this.storage.semiPermanent || []
+        });
+  
+        // Store totals
+        this.totalAdhesiveSheets = result.totalSheets;
+        this.totalRegularSheets = result.totalRegular;
+        this.totalCommercialSheets = result.totalCommercial;
+        this.totalMiniAdhesives = result.totalMiniAdhesives;
+  
+        // Write mini-adhesive-tabs properties for Minecraft items
+        for (let update of result.propertyUpdates) {
+          if (update.properties['mini-adhesive-tabs']) {
+            await axios.post('/cart/change.js', {
+              line: update.index,
+              properties: update.properties,
+            });
+          }
+        }
+  
+        // Update cart with calculated tab quantities
+        axios
+          .post('/cart/update.js', {
+            updates: result.tabUpdates,
+          })
+          .then((response) => {
+            this.$forceUpdate();
+            if (!this.suppressGlobalLoading) {
+              this.disabledCart = false;
+            } else {
+              this.quantityUpdating = false;
+              this.suppressGlobalLoading = false;
+            }
+            this.cartData = response.data;
+            this.cartItems = response.data.items;
+          });
+      },
+      // Helper: determine if a cart item is part of the current flash sale
+      isFlashSale(item) {
+        const handle = item && item.handle ? String(item.handle).trim() : '';
+        return !!this.flashSaleLive && Array.isArray(this.flashSaleProducts) && this.flashSaleProducts.indexOf(handle) !== -1;
+      },
+      getProductDiscount(item, isFlashSaleItem, isTradeProgram) {
+        let discount = 0;
+        if (this.isFlashSale(item) && flashSaleLive) {
+          if (this.sitewideSale && this.sitewideDiscount > this.flashSaleDiscount) {
+  
+            discount = this.sitewideDiscount;
+          } else {
+            discount = this.flashSaleDiscount;
+          }
+          discount = Math.max(discount, this.flashSaleDiscount);
+        } else {
+          if (this.sitewideSale) {
+            discount = this.sitewideDiscount;
+          }
+        }
+        return discount;
+      },
+      // Helper: check if item has a specific tag
+      itemHasTag(item, tag) {
+        // For '3D Blocks', also check generic product _canvas_pattern property
+        if (tag === '3D Blocks' && (item?.properties?._p || item?.properties?._canvas_pattern) === '3d') return true;
+        return this.productDetails[item?.handle]?.tags?.includes(tag) || false;
+      },
+      // Single source of truth for commercial-tab eligibility. Used by the per-item
+      // "Adhesive Tabs Included!" block, the computed itemsEligibleForCommercialTabs,
+      // and the global "substitute for all" toggle.
+      isEligibleForCommercialTabs(item) {
+        if (!item || !item.properties) return false;
+        // 3D uses permanent strips / drywall screws — never offer the 2D commercial-tab swap on 3D.
+        // itemHasTag dual-reads _p / _canvas_pattern, so this catches 3D consolidated lines too.
+        if (this.itemHasTag(item, '3D Blocks')) return false;
+        // Legacy per-design products that came through a PDP ATC — property stamped client-side.
+        if (item.properties['adhesive-tabs']) return true;
+        // Consolidated Design Studio Generic Product — recognized by handle.
+        // Require non-zero 2D adhesive tab count; dual-read short (_at) + long (_adhesive_tab_count).
+        if (item.handle === 'custom-felt-right-design') {
+          return Number(item.properties._at || item.properties._adhesive_tab_count || 0) > 0;
+        }
+        // Per-design products created directly by studio (bypassing the PDP) don't carry
+        // the 'adhesive-tabs' line property — the tab count lives only on product metafield
+        // custom.adhesive_tab_count. Same source of truth the calc engine uses
+        // (adhesive-calc.liquid branch 1).
+        if (Number(this.productDetails[item.handle]?.adhesive_tab_count || 0) > 0) return true;
+        return false;
+      },
+      // Helper: clean cart item title for display (strips NRC data from 3D Boxes)
+      cartItemTitle(item) {
+        // Use custom title from Cart Transform properties if available
+        if (item && item.properties && (item.properties._t || item.properties._custom_title)) return item.properties._t || item.properties._custom_title;
+        if (!item || !item.title) return '';
+        var t = item.title;
+        if (this.itemHasTag(item, '3D Blocks')) {
+          t = t.replace(/\s*\([^)]*NRC[^)]*\)/g, '');
+        }
+        return t;
+      },
+      // Helper: get set label for 3D Boxes based on handle or title
+      get3DBoxesSetLabel(item) {
+        if (!item) return '';
+        var h = item.handle || '';
+        if (h === '3d-boxes') return 'Set of 2';
+        if (h === '3d-acoustic-boxes-screws') return 'Set of 4';
+        if (h === 'small-3d-acoustic-boxes') return 'Set of 8';
+        // Fallback: check product title or variant for size hints
+        var title = (item.title || '') + ' ' + (item.variant_title || '');
+        if (/\bsmall\b/i.test(title)) return 'Set of 8';
+        if (/\bmedium\b/i.test(title)) return 'Set of 4';
+        return 'Set of 2';
+      },
+      // Helper: get attachment type for a specific 3D box item (per-item, reads line item properties)
+      get3DBoxesAttachmentType(item) {
+        if (item && item.properties) {
+          if (item.properties['drywall-screws']) return 'screws';
+          if (item.properties['adhesive-tape']) return 'adhesive';
+        }
+        // Fallback for items without properties: check global cart
+        if (!this.cartItems) return 'adhesive';
+        for (var i = 0; i < this.cartItems.length; i++) {
+          if (this.cartItems[i].title && this.cartItems[i].title.includes('Drywall Screws')) return 'screws';
+          if (this.cartItems[i].title && this.cartItems[i].title.includes('Permanent Adhesive Tape Strips')) return 'adhesive';
+        }
+        return 'adhesive';
+      },
+      // Helper: get per-unit attachment count from a box item's properties
+      get3DBoxesAttachmentCount(item) {
+        if (!item || !item.properties) return 1;
+        return parseInt(item.properties['drywall-screws'] || item.properties['adhesive-tape']) || 1;
+      },
+      // Helper: recalculate total attachment quantities from all 3D box items' properties
+      recalc3DBoxesAttachments() {
+        var totalAdhesive = 0;
+        var totalScrews = 0;
+        for (var i = 0; i < this.cartItems.length; i++) {
+          var ci = this.cartItems[i];
+          if (!this.itemHasTag(ci, '3D Blocks')) continue;
+          var count = this.get3DBoxesAttachmentCount(ci);
+          var qty = ci.quantity || 1;
+          if (ci.properties && ci.properties['drywall-screws']) {
+            totalScrews += count * qty;
+          } else {
+            totalAdhesive += count * qty;
+          }
+        }
+        return { adhesive: totalAdhesive, screws: totalScrews };
+      },
+      // Helper: switch attachment type for a specific 3D box item
+      async switch3DBoxesAttachment(type, item) {
+        if (!item) return;
+        var currentType = this.get3DBoxesAttachmentType(item);
+        if (type === currentType) return;
+        this.grabbingCart = true;
+        var count = this.get3DBoxesAttachmentCount(item);
+        // Update the box item's properties: remove old key, add new key
+        var newProps = Object.assign({}, item.properties || {});
+        delete newProps['drywall-screws'];
+        delete newProps['adhesive-tape'];
+        newProps[type === 'screws' ? 'drywall-screws' : 'adhesive-tape'] = count;
+        try {
+          // Update box item properties
+          await axios.post('/cart/change.js', { id: item.key, properties: newProps });
+          // Recalculate totals from all box items
+          // Re-fetch cart first to get updated properties
+          var cartResp = await axios.get('/cart.js');
+          this.cartData = cartResp.data;
+          this.cartItems = cartResp.data.items.filter(function(i) { return i != null; });
+          var totals = this.recalc3DBoxesAttachments();
+          // Update attachment line items to match totals
+          this.updates = {};
+          this.updates[47890662195428] = totals.adhesive; // tape strips
+          this.updates[47890648563940] = totals.screws;    // drywall screws
+          await this.updateCart();
+        } catch (e) {
+          console.error('Failed to switch attachment:', e);
+        }
+        this.grabbingCart = false;
+      },
+      // Helper: determine if a cart item should not be editable/removable
+      uneditableInCart(item) {
+        if (!item) return true;
+        
+        // Items that should not be editable
+        const uneditableItems = [
+          'Freight Shipping',
+          'Adhesive Tab',
+          'Mini Adhesive Tab',
+          'Commercial Adhesive Tab'
+        ];
+        
+        // Check if item title matches uneditable items
+        if (item.title && uneditableItems.includes(item.title)) {
+          return true;
+        }
+        
+        // Items with no price should not be editable
+        if (!item.price || item.price <= 0) {
+          return true;
+        }
+        
+        return false;
+      },
+    },
+  };
+</script>

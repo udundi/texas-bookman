@@ -1,0 +1,338 @@
+<script>
+  var pdpdata = {
+    data() {
+      return {
+        discountPercentage: 0,
+        addingToCart: false,
+        openedBreakdown: [],
+        selectedDrawer: '',
+        shippingMethod: 'Standard',
+        ceilingRecomendationGood: 0,
+        ceilingRecomendationBetter: 0,
+        ceilingRecomendationBest: 0,
+        ceilingBaffleType: '',
+        ceilingMessages: {
+          A69: 'Felt Right ceiling products at this level should tame the upper end of the vocal range (1 kHz and above at a minimum) including consonant sounds, making speech easier to understand.',
+          A70: 'Felt Right ceiling products at this level should tame the mid to upper end of the vocal range (500 Hz and above at a minimum). You can expect great intelligibility and reduced reverberation.',
+          A71: "This space may have acceptable acoustics for your intended use. Felt Right ceiling products may still help if you think the room doesn't sound quite right, or to add visual appeal to the space.",
+        },
+        // Commercial calculator data
+        isCommercial: false,
+        commercialSolutions: null,
+        calculatorParams: null,
+        solutionType: null,
+        quantityMode: 'ideal',
+        // Calculator overlay
+        showCalculatorOverlay: false,
+        // Commercial calculator form data
+        calcHeight: null,
+        calcWidth: null,
+        totalArea: null,
+        calculatedTiles: null,
+        roundedTiles: null,
+        bundleExtraTiles: null,
+        selectedCalc: null,
+        // Quantity container shipping selection
+        selectedShipping: 'freight',
+        // Variant form state
+        openedVariantStep: null,
+        currentVariantData: {},
+      };
+    },
+    computed: {
+      commercialMultiplier() {
+        return this.quantityMode === 'ideal' ? 1 : 0.4;
+      },
+      totalPrice() {
+        let shippingCost = 0;
+        let dividedProductPrice = this.productPrice / 100;
+        if (this.shippingMethod == 'Freight') {
+          shippingCost = 400;
+        }
+        let basePrice = dividedProductPrice * this.quantity;
+        return basePrice;
+      },
+    },
+    methods: {
+      applyMultiplier(value) {
+        return Math.ceil((value || 0) * this.commercialMultiplier);
+      },
+      showCommercialCalculatorCards() {
+        const cardsSection = document.getElementById('commercial-calculator-cards');
+        if (cardsSection) {
+          cardsSection.style.display = 'block';
+
+          // Get the specific solution type from URL parameters
+          const urlParams = new URLSearchParams(window.location.search);
+          const solutionType = urlParams.get('solution_type');
+
+          // Debug logging
+          console.log('Showing commercial calculator cards:', {
+            solutionType,
+            commercialSolutions: this.commercialSolutions,
+          });
+
+          // Determine which cards to show based on solution type
+          const maxWallCard = document.getElementById('max-wall-card');
+          const balancedCard = document.getElementById('balanced-card');
+          const maxCeilingCard = document.getElementById('max-ceiling-card');
+          const maxWallLabel = document.getElementById('max-wall-label');
+          const maxWallDescription = document.getElementById('max-wall-description');
+
+          // Hide all cards initially
+          if (maxWallCard) maxWallCard.style.display = 'none';
+          if (balancedCard) balancedCard.style.display = 'none';
+          if (maxCeilingCard) maxCeilingCard.style.display = 'none';
+
+          if (solutionType === 'wall' || solutionType === 'walls_only') {
+            // Show only the wall solution
+            if (maxWallCard) maxWallCard.style.display = 'block';
+            if (maxWallLabel) maxWallLabel.textContent = 'Walls Only';
+            if (maxWallDescription) maxWallDescription.textContent = 'Wall-only solution for optimal acoustics.';
+
+            this.updateWallCard('walls_only');
+          } else if (solutionType === 'max_wall') {
+            // Show only max wall solution
+            if (maxWallCard) maxWallCard.style.display = 'block';
+            this.updateWallCard('max_wall');
+          } else if (solutionType === 'balanced') {
+            // Show only balanced solution
+            if (balancedCard) balancedCard.style.display = 'block';
+            this.updateBalancedCard();
+          } else if (solutionType === 'max_ceiling') {
+            // Show only max ceiling solution
+            if (maxCeilingCard) maxCeilingCard.style.display = 'block';
+            this.updateMaxCeilingCard();
+          } else {
+            // Show all three cards (default when no specific solution type)
+            if (maxWallCard) maxWallCard.style.display = 'block';
+            if (balancedCard) balancedCard.style.display = 'block';
+            if (maxCeilingCard) maxCeilingCard.style.display = 'block';
+            this.updateWallCard('max_wall');
+            this.updateBalancedCard();
+            this.updateMaxCeilingCard();
+          }
+        }
+      },
+      updateWallCard(type) {
+        const maxWallValue = document.getElementById('max-wall-value');
+        const maxWallUnits = document.getElementById('max-wall-units');
+        if (maxWallValue && this.commercialSolutions && this.commercialSolutions.maxWall) {
+          const wallTotal = this.commercialSolutions.maxWall.wallUnits + this.commercialSolutions.maxWall.ceilingUnits;
+          maxWallValue.textContent = wallTotal;
+        }
+        if (maxWallUnits) {
+          maxWallUnits.textContent = 'units';
+        }
+      },
+      updateBalancedCard() {
+        const balancedValue = document.getElementById('balanced-value');
+        const balancedUnits = document.getElementById('balanced-units');
+        if (balancedValue && this.commercialSolutions && this.commercialSolutions.balanced) {
+          const balancedTotal =
+            this.commercialSolutions.balanced.wallUnits + this.commercialSolutions.balanced.ceilingUnits;
+          balancedValue.textContent = balancedTotal;
+        }
+        if (balancedUnits) {
+          balancedUnits.textContent = 'units';
+        }
+      },
+      updateMaxCeilingCard() {
+        const maxCeilingValue = document.getElementById('max-ceiling-value');
+        const maxCeilingUnits = document.getElementById('max-ceiling-units');
+        if (maxCeilingValue && this.commercialSolutions && this.commercialSolutions.maxCeiling) {
+          const ceilingTotal =
+            this.commercialSolutions.maxCeiling.wallUnits + this.commercialSolutions.maxCeiling.ceilingUnits;
+          maxCeilingValue.textContent = ceilingTotal;
+        }
+        if (maxCeilingUnits) {
+          maxCeilingUnits.textContent = 'units';
+        }
+      },
+      showAcousticRecommendations() {
+        const recommendationsSection = document.getElementById('acoustic-recommendations');
+        if (recommendationsSection) {
+          recommendationsSection.style.display = 'block';
+
+          // Update the values in the cards
+          const goodElement = document.getElementById('recommendation-good');
+          const betterElement = document.getElementById('recommendation-better');
+          const bestElement = document.getElementById('recommendation-best');
+          const tooltipElement = document.getElementById('recommendation-tooltip');
+
+          // Update the unit labels
+          const unitsGoodElement = document.getElementById('units-good');
+          const unitsBetterElement = document.getElementById('units-better');
+          const unitsBestElement = document.getElementById('units-best');
+
+          // Determine the unit type from the baffle type
+          let unitType = 'units';
+          if (this.ceilingBaffleType) {
+            if (this.ceilingBaffleType.toLowerCase().includes('blade')) {
+              unitType = `Blade Baffles (8' x 8")`;
+            } else if (this.ceilingBaffleType.toLowerCase().includes('beam')) {
+              unitType = `Beams (8' x 7" x 3")`;
+            } else if (
+              this.ceilingBaffleType.toLowerCase().includes('cloud') ||
+              this.ceilingBaffleType.toLowerCase().includes('baffle')
+            ) {
+              unitType = `Cloud Baffles (4' x 4')`;
+            }
+          }
+
+          if (goodElement && this.ceilingRecomendationGood) {
+            goodElement.textContent = this.ceilingRecomendationGood;
+          }
+          if (betterElement && this.ceilingRecomendationBetter) {
+            betterElement.textContent = this.ceilingRecomendationBetter;
+          }
+          if (bestElement && this.ceilingRecomendationBest) {
+            bestElement.textContent = this.ceilingRecomendationBest;
+          }
+          if (tooltipElement && this.ceilingMessageId && this.ceilingMessages[this.ceilingMessageId]) {
+            tooltipElement.textContent = this.ceilingMessages[this.ceilingMessageId];
+          }
+
+          // Update unit labels for all cards
+          if (unitsGoodElement) {
+            unitsGoodElement.textContent = unitType;
+          }
+          if (unitsBetterElement) {
+            unitsBetterElement.textContent = unitType;
+          }
+          if (unitsBestElement) {
+            unitsBestElement.textContent = unitType;
+          }
+        }
+      },
+      navigateToMaxWall() {
+        if (!this.commercialSolutions || !this.commercialSolutions.maxWall || !this.calculatorParams) return;
+        const maxWallParams = new URLSearchParams({
+          calculatorType: 'commercial',
+          wallProduct: this.calculatorParams.wallProduct || '9mm_2x2',
+          wallQuantity: this.commercialSolutions.maxWall.wallUnits,
+          wallSqFt: this.commercialSolutions.maxWall.wallSqFt,
+          ceilingQuantity: this.commercialSolutions.maxWall.ceilingUnits,
+          ceilingSqFt: this.commercialSolutions.maxWall.ceilingSqFt,
+          solutionType: 'maxWall',
+          roomType: this.calculatorParams.roomType || 'commercial',
+        });
+        console.log('Navigating to Max Wall:', maxWallParams.toString());
+        window.location.href = `/pages/design-gallery?${maxWallParams.toString()}`;
+      },
+      navigateToBalanced() {
+        if (!this.commercialSolutions || !this.commercialSolutions.balanced || !this.calculatorParams) return;
+        const balancedParams = new URLSearchParams({
+          calculatorType: 'commercial',
+          wallProduct: this.calculatorParams.wallProduct || '9mm_2x2',
+          wallQuantity: this.commercialSolutions.balanced.wallUnits,
+          wallSqFt: this.commercialSolutions.balanced.wallSqFt,
+          ceilingQuantity: this.commercialSolutions.balanced.ceilingUnits,
+          ceilingSqFt: this.commercialSolutions.balanced.ceilingSqFt,
+          solutionType: 'balanced',
+          roomType: this.calculatorParams.roomType || 'commercial',
+        });
+        window.location.href = `/pages/design-gallery?${balancedParams.toString()}`;
+      },
+      navigateToMaxCeiling() {
+        if (!this.commercialSolutions || !this.commercialSolutions.maxCeiling || !this.calculatorParams) return;
+        const maxCeilingParams = new URLSearchParams({
+          calculatorType: 'commercial',
+          wallProduct: this.calculatorParams.wallProduct || '9mm_2x2',
+          wallQuantity: this.commercialSolutions.maxCeiling.wallUnits,
+          wallSqFt: this.commercialSolutions.maxCeiling.wallSqFt,
+          ceilingQuantity: this.commercialSolutions.maxCeiling.ceilingUnits,
+          ceilingSqFt: this.commercialSolutions.maxCeiling.ceilingSqFt,
+          solutionType: 'maxCeiling',
+          roomType: this.calculatorParams.roomType || 'commercial',
+        });
+        window.location.href = `/pages/design-gallery?${maxCeilingParams.toString()}`;
+      },
+      toggleBlock(block) {
+        console.log(this.openedBlocks);
+        if (this.openedBlocks.includes(block)) {
+          const index = this.openedBlocks.indexOf(block);
+          this.openedBlocks.splice(index, 1);
+        } else {
+          this.openedBlocks.push(block);
+        }
+      },
+      selectQuantityOption(quantity, discountPercentage) {
+        this.quantity = quantity;
+        this.discountPercentage = discountPercentage;
+      },
+
+      // Variant Form Methods - for dropdown accordion variant selector
+      toggleVariantDrawer(optionPosition) {
+        if (this.openedVariantStep === optionPosition) {
+          this.openedVariantStep = null;
+        } else {
+          this.openedVariantStep = optionPosition;
+        }
+      },
+
+      selectVariantValue(optionPosition, value, productUrl, variantId) {
+        // Update current variant data
+        this.$set(this.currentVariantData, `option-${optionPosition}`, value);
+
+        // Auto-close the current drawer
+        this.openedVariantStep = null;
+
+        // Navigate to the new variant
+        if (productUrl) {
+          window.location.href = productUrl;
+        }
+      },
+
+      addMaxWallToCart() {
+        if (this.commercialSolutions && this.commercialSolutions.maxWall) {
+          const mult = this.commercialMultiplier;
+          this.quantity = Math.ceil(
+            (this.commercialSolutions.maxWall.wallUnits + this.commercialSolutions.maxWall.ceilingUnits) * mult
+          );
+          this.addToCart();
+        }
+      },
+      addBalancedToCart() {
+        if (this.commercialSolutions && this.commercialSolutions.balanced) {
+          const mult = this.commercialMultiplier;
+          this.quantity = Math.ceil(
+            (this.commercialSolutions.balanced.wallUnits + this.commercialSolutions.balanced.ceilingUnits) * mult
+          );
+          this.addToCart();
+        }
+      },
+      addMaxCeilingToCart() {
+        if (this.commercialSolutions && this.commercialSolutions.maxCeiling) {
+          const mult = this.commercialMultiplier;
+          this.quantity = Math.ceil(
+            (this.commercialSolutions.maxCeiling.wallUnits + this.commercialSolutions.maxCeiling.ceilingUnits) * mult
+          );
+          this.addToCart();
+        }
+      },
+      calculateTiles() {
+        // Validate inputs
+        if (!this.calcHeight || !this.calcWidth || this.calcHeight <= 0 || this.calcWidth <= 0) {
+          alert('Please enter valid height and width values');
+          return;
+        }
+
+        // Calculate total area in square feet
+        this.totalArea = this.calcHeight * this.calcWidth;
+
+        // Calculate tiles needed using configurable product size
+        this.calculatedTiles = Math.ceil(this.totalArea / this.calculatorProductSize);
+
+        // Calculate rounded to nearest 8 (only if bundle is enabled)
+        if (this.calculatorEnableBundle) {
+          this.roundedTiles = Math.ceil(this.calculatedTiles / 8) * 8;
+          this.bundleExtraTiles = this.roundedTiles - this.calculatedTiles;
+        } else {
+          this.roundedTiles = null;
+          this.bundleExtraTiles = null;
+        }
+      },
+    },
+  };
+</script>

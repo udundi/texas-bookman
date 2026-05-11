@@ -1,0 +1,27 @@
+{% assign cleaned_image_class = image_class | remove: 'tw-border' | remove: 'tw-rounded-md' %}
+{% assign final_image_class = cleaned_image_class | append: ' tw-w-full tw-h-auto' %}
+
+<div class="tw-w-full">
+  {% if product_media.media_type == 'video' %}
+    <div class="tw-block tw-w-full tw-h-full js-bg-pane">
+      {{
+        product_media
+        | video_tag:
+          image_size: '400x',
+          class: final_image_class,
+          autoplay: true,
+          loop: true,
+          muted: true,
+          controls: true
+      }}
+    </div>
+  {% elsif product_media.media_type == 'image' %}
+    <div class="tw-block tw-w-full tw-h-full js-bg-pane" data-bg-pane>
+      {{ product_media | image_url: width: 1200 | image_tag: class: final_image_class }}
+    </div>
+  {% else %}
+    <div class="tw-block tw-w-full tw-h-full js-bg-pane" data-bg-pane>
+      {{ product_media | image_url: width: 1200 | image_tag: class: final_image_class }}
+    </div>
+  {% endif %}
+</div>

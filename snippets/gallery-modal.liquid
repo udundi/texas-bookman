@@ -1,0 +1,54 @@
+<!-- Image Modal -->
+<div
+  class="image-modal"
+  id="imageModal-{{ section.id }}"
+  data-pdp-modal
+>
+  <!-- Close Button -->
+  <div class="image-modal-close" onclick="closeImageModal()">
+    {% render 'icon-close' %}
+  </div>
+
+  <!-- Modal Swiper -->
+  <div class="swiper modal-swiper-container">
+    <div class="swiper-wrapper">
+      <!-- Variant Image -->
+      {% if product.has_only_default_variant == false
+        and product.selected_or_first_available_variant.featured_image != blank
+      %}
+        <div class="swiper-slide">
+          {{
+            product.selected_or_first_available_variant.featured_image
+            | image_url: width: 1600
+            | image_tag: loading: 'lazy'
+          }}
+        </div>
+      {% endif %}
+
+      <!-- All Normal Images, Videos & 3D Models -->
+      {% for media in product.media %}
+        <!-- Videos -->
+        {% if media.media_type == 'video' %}
+          <div class="swiper-slide">
+            {{ media | video_tag: image_size: '1600x', autoplay: false, loop: true, muted: false, controls: true }}
+          </div>
+        {% elsif media.media_type == 'image' %}
+          {% assign compare_media = media %}
+          {% for image in product.images %}
+            {% if image.position == compare_media.position %}
+              {% if image.attached_to_variant? != true %}
+                <div class="swiper-slide">
+                  {{ image | image_url: width: 1600 | image_tag: loading: 'lazy' }}
+                </div>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <!-- Navigation -->
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+</div>

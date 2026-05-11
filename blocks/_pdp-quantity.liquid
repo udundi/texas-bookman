@@ -1,0 +1,88 @@
+<!-- Quantity Selector -->
+<!-- Standard quantity selector -->
+<div
+  class="
+    {% if block.settings.visibility contains 'mobile' %}
+      tw-flex
+      md:tw-hidden
+    {% elsif block.settings.visibility contains "desktop" %}
+      tw-hidden
+      md:tw-flex
+    {% else %}
+      tw-flex
+    {% endif %} tw-flex-col tw-gap-1
+  "
+>
+  <label class="tw-font-montserrat tw-text-16 tw-font-semibold tw-text-offblack">Quantity:</label>
+  <div class="tw-flex tw-w-full tw-pb-2">
+    <div class="tw-relative tw-flex tw-max-w-28 tw-items-center tw-rounded-lg tw-border tw-border-offblack">
+      <button
+        type="button"
+        id="decrement-button"
+        @click="quantity > 1 ? quantity-- : quantity"
+        :disabled="quantity <= 1"
+        :class="quantity <= 1 ? 'tw-cursor-not-allowed' : ''"
+        class="tw-bg-brand-bg-dark tw-rounded-lg tw-pl-4 tw-pr-2"
+      >
+        {% render 'icon-minus' %}
+      </button>
+      <label class="tw-hidden" for="quantity-input">Quantity</label>
+      <input
+        type="integer"
+        id="quantity-input"
+        aria-label="quantity"
+        name="quantity"
+        min="1"
+        max="100"
+        @keydown="if (isNaN(parseInt(event.key)) && event.key != 'Backspace') { event.preventDefault(); }"
+        @input="quantity < 1 ? quantity = 1 : quantity = quantity"
+        max="{{ product.selected_or_first_available_variant.inventory_quantity }}"
+        v-model="quantity"
+        class="tw-text-sm tw-bg-brand-bg-light tw-block tw-h-10 tw-w-full tw-py-1 tw-text-center tw-text-offblack"
+        required
+      >
+      <button
+        type="button"
+        id="increment-button"
+        aria-label="increase quantity by 1"
+        @click="quantity++"
+        class="tw-bg-brand-bg-dark tw-rounded-lg tw-pl-2 tw-pr-4"
+      >
+        {% render 'icon-plus' %}
+      </button>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "PDP Quantity",
+  "class": "tw-contents",
+  "settings": [
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Visibility",
+      "options": [
+        {
+          "value": "both",
+          "label": "Mobile and Desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Mobile only"
+        },
+        {
+          "value": "desktop",
+          "label": "Desktop only"
+        }
+      ],
+      "default": "both"
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP Quantity"
+    }
+  ]
+}
+{% endschema %}

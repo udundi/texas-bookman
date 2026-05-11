@@ -1,0 +1,52 @@
+{% if block.settings.body != blank or block.settings.body_default != blank %}
+  {% assign button_id = 'block-' | append: block.id %}
+    <div class="tw-border-[#D2DADC] tw-border-0 tw-border-b tw-border-solid">
+    <!-- Drawer Header -->
+    <button @click="selectedDrawer == '{{ button_id }}' ? selectedDrawer = '' : selectedDrawer = '{{ button_id }}'" class="tw-text-offblack tw-py-4 tw-font-extrabold tw-w-full tw-flex tw-flex-row tw-justify-between tw-gap-4 tw-items-center">
+      <div class="tw-w-fit tw-text-16 tw-font-montserrat tw-font-semibold ">
+        {{ block.settings.header }}
+      </div>
+      <div class="tw-size-4 tw-stroke-navy tw-transition-transform tw-duration-300" :class="selectedDrawer == '{{ button_id }}' ? 'tw-rotate-45' : '-tw-rotate-90'">
+        {% render 'icon-plus' %}
+      </div>
+    </button>
+    <div class="tw-transition-all tw-h-full tw-overflow-hidden tw-text-14 ud-drawers" :class="selectedDrawer == '{{ button_id }}' ? 'tw-max-h-[500px] tw-duration-300' : 'tw-max-h-0 tw-delay-100 tw-duration-500'">
+
+      {% if block.settings.body != blank %}
+        {{ block.settings.body }}
+      {% else %}
+        {{ block.settings.body_default }}
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
+
+
+{% schema %}
+  {
+    "name": "Drawer",
+    "settings": [
+      {
+        "type": "text",
+        "id": "header",
+        "label": "Drawer Header"
+      },
+      {
+        "type": "richtext",
+        "id": "body",
+        "label": "Drawer Body",
+        "info": "If body text is empty then text will default to default text below. If default text is empty, drawer will not render."
+      },
+      {
+        "type": "richtext",
+        "id": "body_default",
+        "label": "Default Drawer Body"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Drawer"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,72 @@
+<div
+  class="
+    {% if block.settings.visibility contains 'mobile' %}
+      tw-contents
+      md:tw-hidden
+    {% elsif block.settings.visibility contains "desktop" %}
+      tw-hidden
+      md:tw-contents
+    {% else %}
+      tw-contents
+    {% endif %}
+  "
+>
+  <!-- Tax Exempt message -->
+  {% if block.settings.show_tax_exempt %}
+    <a
+      href="/pages/tax-exempt-application"
+      class="tw-m-0 tw-flex tw-w-full tw-justify-start tw-gap-2 tw-border-y tw-border-[#D2DADC] tw-py-4 tw-font-montserrat tw-text-16 tw-font-semibold tw-text-offblack"
+    >
+      <span>Tax Exempt?</span>
+      <span class="tw-underline">Click Here</span>
+    </a>
+  {% endif %}
+
+  {% content_for 'blocks' %}
+</div>
+
+{% schema %}
+{
+  "name": "Drawers Container",
+  "class": "tw-contents",
+  "settings": [
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Visibility",
+      "options": [
+        {
+          "value": "both",
+          "label": "Mobile and Desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Mobile only"
+        },
+        {
+          "value": "desktop",
+          "label": "Desktop only"
+        }
+      ],
+      "default": "both"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tax_exempt",
+      "label": "Show Tax Exempt Message",
+      "default": true,
+      "info": "Toggle to show/hide the tax exempt link above product drawers"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "_product-drawer"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Drawers Container"
+    }
+  ]
+}
+{% endschema %}

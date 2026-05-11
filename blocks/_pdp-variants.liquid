@@ -1,0 +1,94 @@
+<div data-pdp-variant-selectors id="variant-selectors-{{ section.id }}">
+  <!-- Normal Product Variant Selector -->
+  {%- unless product.has_only_default_variant -%}
+    <div class="tw-flex tw-flex-col tw-flex-wrap tw-gap-4">
+      {% assign product_form_id = 'product-form-' | append: section.id %}
+      {% for option in product.options_with_values %}
+        <div
+          id="variant-selects-{{ section.id }}"
+          data-section="{{ section.id }}"
+          class="tw-flex tw-flex-col tw-gap-4"
+        >
+          <legend>
+            <span class="tw-text-16 tw-font-bold tw-text-offblack">{{ option.name }}:</span>
+            <span data-selected-value>
+              {{- option.selected_value -}}
+            </span>
+          </legend>
+          <div class="tw-flex tw-flex-wrap tw-gap-4">
+            {% comment %} Getting Vars {% endcomment %}
+
+            {% for value in option.values %}
+              {%- capture input_id -%}
+                {{ section.id }}-{{ option.position }}-{{ forloop.index0 -}}
+                {%- endcapture -%}
+              {%- capture input_name -%}
+                  {{ option.name }}-{{ option.position }}
+                {%- endcapture -%}
+              {%- capture input_dataset -%}
+                  data-product-url="{{ value.product_url }}"
+                  data-option-value-id="{{ value.id }}"
+                {%- endcapture -%}
+              {% if value.variant != blank %}
+                <input
+                  type="radio"
+                  id="{{ input_id }}"
+                  name="{{ input_name | escape }}"
+                  value="{{ value | escape }}"
+                  form="{{ product_form_id }}"
+                  class="variant-radio"
+                  data-variant-id="{{ value.variant.id }}"
+                  {% if value.selected %}
+                    checked
+                  {% endif %}
+                  {{ input_dataset }}
+                >
+                <label
+                  class="tw-pointer tw-group tw-relative tw-flex tw-flex-col tw-items-center tw-justify-center tw-text-14"
+                  for="{{ input_id }}"
+                >
+                  <a
+                    id="{{ id }}"
+                    href="{{product.url}}?variant={{ value.variant.id }}"
+                    data-variant-id="{{ value.variant.id }}"
+                    class=" tw-rounded-md tw-border tw-p-2 tw-text-center !tw-text-offblack {% if value.variant.id == product.selected_or_first_available_variant.id %} tw-pointer-events-none tw-flex tw-items-end tw-justify-center tw-cursor-not-allowed tw-border-navy tw-border-2 {% endif %}"
+                    aria-label="{{ value | escape }}"
+                  >
+                    {{ value }}
+                  </a>
+                </label>
+              {% else %}
+                {% for variant in product.variants %}
+                  {% if variant.option1 == value %}
+                    <a
+                      id="{{ variant.id }}"
+                      href="{{product.url}}?variant={{ variant.id }}"
+                      data-variant-id="{{ variant.id }}"
+                      class=" tw-rounded-md tw-border tw-p-2 tw-text-center !tw-text-offblack"
+                      aria-label="{{ value | escape }}"
+                    >
+                      {{ value }}
+                    </a>
+                    {% break %}
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {%- endunless -%}
+</div>
+
+{% schema %}
+{
+  "name": "PDP Variants",
+  "settings": [],
+  "presets": [
+    {
+      "name": "PDP Variants"
+    }
+  ]
+}
+{% endschema %}
