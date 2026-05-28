@@ -11,7 +11,34 @@
   "sections": {
     "main": {
       "type": "ud-sortable-collection",
-      "settings": {}
+      "blocks": {
+        "collection-links": {
+          "type": "_collection-link-container",
+          "static": true,
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "settings": {
+        "title": "Lorum Ipsum",
+        "description": "<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit tenetur, rem in ab nobis autem suscipit. Excepturi officia maxime saepe, perspiciatis accusamus ducimus, nihil odio provident, doloribus omnis recusandae iure.</p>",
+        "padding_top": 2,
+        "padding_bottom": 2,
+        "mobile_padding_top": 2,
+        "mobile_padding_bottom": 2,
+        "enable_infinite_scroll": false,
+        "button_type": "quick-add",
+        "button_text": "",
+        "show_price": true,
+        "show_color_options": false,
+        "enable_cta": false,
+        "cta_background_color": "#f9f8f5",
+        "cta_header": "",
+        "cta_body": "",
+        "cta_button_text": "",
+        "cta_button_link": "",
+        "cta_image_direction": "right"
+      }
     }
   },
   "order": [
