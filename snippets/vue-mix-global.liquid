@@ -58,7 +58,11 @@
           updates[item.id] = 0;
         }
 
-        await axios.post('/cart/update.js', { updates: updates });
+        await fetch('/cart/update.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ updates: updates }),
+        });
 
         return true;
       },
@@ -99,7 +103,11 @@
           }
         }
         if (products.length) {
-          await axios.post('/cart/add.js', { items: products });
+          await fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ items: products }),
+          });
         }
 
         return true;
@@ -269,22 +277,26 @@
         return obj;
       },
       async grabCategories(parameters) {
-        axios.post('https://studio.feltright.com/grab-categories').then((response) => {
-          this.designCategories = response.data;
-        });
+        fetch('https://studio.feltright.com/grab-categories', { method: 'POST' })
+          .then((r) => r.json())
+          .then((data) => {
+            this.designCategories = data;
+          });
       },
 
       async grabVariations() {
         if (!grabbingVariations) {
           grabbingVariations = true;
           setTimeout(() => {
-            axios.post(`https://studio.feltright.com/grab-variations`).then((response) => {
-              let variations = response.data;
+            fetch('https://studio.feltright.com/grab-variations', { method: 'POST' })
+              .then((r) => r.json())
+              .then((data) => {
+                let variations = data;
 
-              this.bus.$emit('variationDetailsReady', variations);
+                this.bus.$emit('variationDetailsReady', variations);
 
-              grabbingVariations = false;
-            });
+                grabbingVariations = false;
+              });
           }, 100);
         }
       },

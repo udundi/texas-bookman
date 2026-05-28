@@ -51,7 +51,7 @@
                     id="{{ id }}"
                     href="{{product.url}}?variant={{ value.variant.id }}"
                     data-variant-id="{{ value.variant.id }}"
-                    class=" tw-rounded-md tw-border tw-p-2 tw-text-center !tw-text-offblack {% if value.variant.id == product.selected_or_first_available_variant.id %} tw-pointer-events-none tw-flex tw-items-end tw-justify-center tw-cursor-not-allowed tw-border-navy tw-border-2 {% endif %}"
+                    class=" tw-rounded-md tw-border tw-p-2 tw-text-center !tw-text-offblack {% if value.variant.id == product.selected_or_first_available_variant.id %} tw-pointer-events-none tw-flex tw-items-end tw-justify-center tw-cursor-not-allowed tw-border-black tw-border-2 {% endif %}"
                     aria-label="{{ value | escape }}"
                   >
                     {{ value }}

@@ -35,9 +35,12 @@
 {% if block.settings.muted %}
   {% assign allow_attributes = allow_attributes | append: 'mute; ' %}
 {% endif %}
-{% assign allow_attributes = allow_attributes | append: 'accelerometer; clipboard-write; gyroscope; picture-in-picture; web-share' %}
+{% assign allow_attributes = allow_attributes
+  | append: 'accelerometer; clipboard-write; gyroscope; picture-in-picture; web-share'
+%}
 
-<div class="
+<div
+  class="
     video-block-{{ block.id }}
     tw-relative
     tw-overflow-hidden
@@ -125,7 +128,8 @@
     {% else %}
       tw-rounded-none
     {% endif %}
-  ">
+  "
+>
   {% assign media_class = 'video-block-media-' | append: block.id | append: ' tw-h-full tw-w-full tw-object-cover' %}
   {% if block.settings.video_source == 'url' and block.settings.video_url != blank %}
     <iframe
@@ -135,428 +139,445 @@
       allow="{{ allow_attributes }}"
       referrerpolicy="strict-origin-when-cross-origin"
       allowfullscreen
-      class="tw-absolute tw-inset-0 tw-h-full tw-w-full tw-object-cover"></iframe>
+      class="tw-absolute tw-inset-0 tw-h-full tw-w-full tw-object-cover"
+    ></iframe>
   {% elsif block.settings.video_source == 'shopify_file' and block.settings.shopify_video != blank %}
-
-    {{ block.settings.shopify_video | video_tag: image_size: '2000x', class: media_class, autoplay: block.settings.autoplay, loop: block.settings.loop, muted: block.settings.muted, controls: block.settings.controls }}
+    {{
+      block.settings.shopify_video
+      | video_tag:
+        image_size: '2000x',
+        class: media_class,
+        autoplay: block.settings.autoplay,
+        loop: block.settings.loop,
+        muted: block.settings.muted,
+        controls: block.settings.controls
+    }}
   {% elsif block.settings.fallback_image != blank %}
-    {{ block.settings.fallback_image | image_url: width: 2000 | image_tag: class: media_class, loading: 'lazy', alt: block.settings.fallback_alt }}
+    {{
+      block.settings.fallback_image
+      | image_url: width: 2000
+      | image_tag: class: media_class, loading: 'lazy', alt: block.settings.fallback_alt
+    }}
   {% else %}
     <div class="tw-flex tw-h-full tw-w-full tw-items-center tw-justify-center tw-bg-offblack tw-text-white">
-      {{ 'product-1' | placeholder_svg_tag: 'tw-w-full tw-max-w-96 tw-aspect-square tw-h-full tw-object-contain tw-fill-white' }}
+      {{
+        'product-1'
+        | placeholder_svg_tag: 'tw-w-full tw-max-w-96 tw-aspect-square tw-h-full tw-object-contain tw-fill-white'
+      }}
     </div>
   {% endif %}
 </div>
 
 {% schema %}
-  {
-    "name": "Base Video",
-    "settings": [
-      {
-        "type": "select",
-        "id": "video_source",
-        "label": "Video Source",
-        "options": [
-          {
-            "value": "url",
-            "label": "URL"
-          },
-          {
-            "value": "shopify_file",
-            "label": "Shopify File"
-          }
-        ],
-        "default": "url"
-      },
-      {
-        "type": "url",
-        "id": "video_url",
-        "label": "Video URL",
-        "info": "Add the URL of the video. Only used if Video Source is set to URL."
-      },
-      {
-        "type": "video",
-        "id": "shopify_video",
-        "label": "Shopify File",
-        "info": "Upload a video file. Only used if Video Source is set to Shopify File."
-      },
-      {
-        "type": "text",
-        "id": "video_title",
-        "label": "Video Title",
-        "default": "Video player"
-      },
-      {
-        "type": "header",
-        "content": "Fallback Image"
-      },
-      {
-        "type": "image_picker",
-        "id": "fallback_image",
-        "label": "Fallback Image",
-        "info": "Shown when no video is selected. Useful while matching a static comp before a final video is ready."
-      },
-      {
-        "type": "text",
-        "id": "fallback_alt",
-        "label": "Fallback Image Alt Text"
-      },
-      {
-        "type": "header",
-        "content": "Media Position"
-      },
-      {
-        "type": "select",
-        "id": "object_position",
-        "label": "Desktop",
-        "options": [
-          {
-            "value": "center center",
-            "label": "Center"
-          },
-          {
-            "value": "top center",
-            "label": "Top"
-          },
-          {
-            "value": "bottom center",
-            "label": "Bottom"
-          },
-          {
-            "value": "center left",
-            "label": "Left"
-          },
-          {
-            "value": "center right",
-            "label": "Right"
-          },
-          {
-            "value": "top left",
-            "label": "Top Left"
-          },
-          {
-            "value": "top right",
-            "label": "Top Right"
-          },
-          {
-            "value": "bottom left",
-            "label": "Bottom Left"
-          },
-          {
-            "value": "bottom right",
-            "label": "Bottom Right"
-          }
-        ],
-        "default": "center center"
-      },
-      {
-        "type": "select",
-        "id": "mobile_object_position",
-        "label": "Mobile",
-        "options": [
-          {
-            "value": "center center",
-            "label": "Center"
-          },
-          {
-            "value": "top center",
-            "label": "Top"
-          },
-          {
-            "value": "bottom center",
-            "label": "Bottom"
-          },
-          {
-            "value": "center left",
-            "label": "Left"
-          },
-          {
-            "value": "center right",
-            "label": "Right"
-          },
-          {
-            "value": "top left",
-            "label": "Top Left"
-          },
-          {
-            "value": "top right",
-            "label": "Top Right"
-          },
-          {
-            "value": "bottom left",
-            "label": "Bottom Left"
-          },
-          {
-            "value": "bottom right",
-            "label": "Bottom Right"
-          }
-        ],
-        "default": "center center"
-      },
-      {
-        "type": "header",
-        "content": "Aspect Ratio"
-      },
-      {
-        "type": "select",
-        "id": "aspect_ratio",
-        "label": "Desktop",
-        "options": [
-          {
-            "value": "square",
-            "label": "Square (1 / 1)"
-          },
-          {
-            "value": "2/3",
-            "label": "Tall Photo (2 / 3)"
-          },
-          {
-            "value": "3/4",
-            "label": "Tall Photo (3 / 4)"
-          },
-          {
-            "value": "4/5",
-            "label": "Tall Photo (4 / 5)"
-          },
-          {
-            "value": "5/6",
-            "label": "Tall Photo (5 / 6)"
-          },
-          {
-            "value": "6/7",
-            "label": "Tall Photo (6 / 7)"
-          },
-          {
-            "value": "9/10",
-            "label": "Tall Photo (9 / 10)"
-          },
-          {
-            "value": "video",
-            "label": "Video (16 / 9)"
-          },
-          {
-            "value": "8/3",
-            "label": "Wide Banner (8 / 3)"
-          },
-          {
-            "value": "10/9",
-            "label": "Wide Photo (10 / 9)"
-          },
-          {
-            "value": "7/6",
-            "label": "Wide Photo (7 / 6)"
-          },
-          {
-            "value": "6/5",
-            "label": "Wide Photo (6 / 5)"
-          },
-          {
-            "value": "5/4",
-            "label": "Wide Photo (5 / 4)"
-          },
-          {
-            "value": "4/3",
-            "label": "Wide Photo (4 / 3)"
-          },
-          {
-            "value": "3/2",
-            "label": "Wide Photo (3 / 2)"
-          },
-          {
-            "value": "9/16",
-            "label": "Tall Banner (9 / 16)"
-          },
-          {
-            "value": "3/8",
-            "label": "Really Tall Banner (3 / 8)"
-          }
-        ],
-        "default": "video"
-      },
-      {
-        "type": "select",
-        "id": "mobile_aspect_ratio",
-        "label": "Mobile",
-        "options": [
-          {
-            "value": "square",
-            "label": "Square (1 / 1)"
-          },
-          {
-            "value": "2/3",
-            "label": "Tall Photo (2 / 3)"
-          },
-          {
-            "value": "3/4",
-            "label": "Tall Photo (3 / 4)"
-          },
-          {
-            "value": "4/5",
-            "label": "Tall Photo (4 / 5)"
-          },
-          {
-            "value": "5/6",
-            "label": "Tall Photo (5 / 6)"
-          },
-          {
-            "value": "6/7",
-            "label": "Tall Photo (6 / 7)"
-          },
-          {
-            "value": "9/10",
-            "label": "Tall Photo (9 / 10)"
-          },
-          {
-            "value": "video",
-            "label": "Video (16 / 9)"
-          },
-          {
-            "value": "8/3",
-            "label": "Wide Banner (8 / 3)"
-          },
-          {
-            "value": "10/9",
-            "label": "Wide Photo (10 / 9)"
-          },
-          {
-            "value": "7/6",
-            "label": "Wide Photo (7 / 6)"
-          },
-          {
-            "value": "6/5",
-            "label": "Wide Photo (6 / 5)"
-          },
-          {
-            "value": "5/4",
-            "label": "Wide Photo (5 / 4)"
-          },
-          {
-            "value": "4/3",
-            "label": "Wide Photo (4 / 3)"
-          },
-          {
-            "value": "3/2",
-            "label": "Wide Photo (3 / 2)"
-          },
-          {
-            "value": "9/16",
-            "label": "Tall Banner (9 / 16)"
-          },
-          {
-            "value": "3/8",
-            "label": "Really Tall Banner (3 / 8)"
-          }
-        ],
-        "default": "video"
-      },
-      {
-        "type": "header",
-        "content": "Rounded Corners / Video Shape"
-      },
-      {
-        "type": "select",
-        "id": "rounded",
-        "label": "Rounded Corners",
-        "options": [
-          {
-            "value": "none",
-            "label": "None"
-          },
-          {
-            "value": "sm",
-            "label": "Small"
-          },
-          {
-            "value": "md",
-            "label": "Medium"
-          },
-          {
-            "value": "lg",
-            "label": "Large"
-          },
-          {
-            "value": "full",
-            "label": "Full (Circle)"
-          }
-        ],
-        "default": "none"
-      },
-      {
-        "type": "header",
-        "content": "Max Width of Video"
-      },
-      {
-        "type": "range",
-        "min": 0,
-        "max": 1040,
-        "step": 16,
-        "unit": "px",
-        "id": "max_width",
-        "label": "Desktop",
-        "default": 320
-      },
-      {
-        "type": "range",
-        "min": 0,
-        "max": 1040,
-        "step": 16,
-        "unit": "px",
-        "id": "mobile_max_width",
-        "label": "Mobile",
-        "default": 320
-      },
-      {
-        "type": "header",
-        "content": "Video Border"
-      },
-      {
-        "type": "range",
-        "id": "border",
-        "min": 0,
-        "max": 8,
-        "step": 1,
-        "unit": "px",
-        "label": "Video Border",
-        "default": 0
-      },
-      {
-        "type": "color",
-        "id": "border_color",
-        "label": "Border Color"
-      },
-      {
-        "type": "header",
-        "content": "Playback"
-      },
-      {
-        "type": "checkbox",
-        "id": "autoplay",
-        "label": "Autoplay",
-        "default": false
-      },
-      {
-        "type": "checkbox",
-        "id": "loop",
-        "label": "Loop",
-        "default": false
-      },
-      {
-        "type": "checkbox",
-        "id": "muted",
-        "label": "Muted",
-        "default": false
-      },
-      {
-        "type": "checkbox",
-        "id": "controls",
-        "label": "Show Controls",
-        "default": true
-      }
-    ],
-    "presets": [
-      {
-        "name": "Base Video"
-      }
-    ]
-  }
+{
+  "name": "Base Video",
+  "settings": [
+    {
+      "type": "select",
+      "id": "video_source",
+      "label": "Video Source",
+      "options": [
+        {
+          "value": "url",
+          "label": "URL"
+        },
+        {
+          "value": "shopify_file",
+          "label": "Shopify File"
+        }
+      ],
+      "default": "url"
+    },
+    {
+      "type": "url",
+      "id": "video_url",
+      "label": "Video URL",
+      "info": "Add the URL of the video. Only used if Video Source is set to URL."
+    },
+    {
+      "type": "video",
+      "id": "shopify_video",
+      "label": "Shopify File",
+      "info": "Upload a video file. Only used if Video Source is set to Shopify File."
+    },
+    {
+      "type": "text",
+      "id": "video_title",
+      "label": "Video Title",
+      "default": "Video player"
+    },
+    {
+      "type": "header",
+      "content": "Fallback Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "fallback_image",
+      "label": "Fallback Image",
+      "info": "Shown when no video is selected. Useful while matching a static comp before a final video is ready."
+    },
+    {
+      "type": "text",
+      "id": "fallback_alt",
+      "label": "Fallback Image Alt Text"
+    },
+    {
+      "type": "header",
+      "content": "Media Position"
+    },
+    {
+      "type": "select",
+      "id": "object_position",
+      "label": "Desktop",
+      "options": [
+        {
+          "value": "center center",
+          "label": "Center"
+        },
+        {
+          "value": "top center",
+          "label": "Top"
+        },
+        {
+          "value": "bottom center",
+          "label": "Bottom"
+        },
+        {
+          "value": "center left",
+          "label": "Left"
+        },
+        {
+          "value": "center right",
+          "label": "Right"
+        },
+        {
+          "value": "top left",
+          "label": "Top Left"
+        },
+        {
+          "value": "top right",
+          "label": "Top Right"
+        },
+        {
+          "value": "bottom left",
+          "label": "Bottom Left"
+        },
+        {
+          "value": "bottom right",
+          "label": "Bottom Right"
+        }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "select",
+      "id": "mobile_object_position",
+      "label": "Mobile",
+      "options": [
+        {
+          "value": "center center",
+          "label": "Center"
+        },
+        {
+          "value": "top center",
+          "label": "Top"
+        },
+        {
+          "value": "bottom center",
+          "label": "Bottom"
+        },
+        {
+          "value": "center left",
+          "label": "Left"
+        },
+        {
+          "value": "center right",
+          "label": "Right"
+        },
+        {
+          "value": "top left",
+          "label": "Top Left"
+        },
+        {
+          "value": "top right",
+          "label": "Top Right"
+        },
+        {
+          "value": "bottom left",
+          "label": "Bottom Left"
+        },
+        {
+          "value": "bottom right",
+          "label": "Bottom Right"
+        }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "header",
+      "content": "Aspect Ratio"
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "Desktop",
+      "options": [
+        {
+          "value": "square",
+          "label": "Square (1 / 1)"
+        },
+        {
+          "value": "2/3",
+          "label": "Tall Photo (2 / 3)"
+        },
+        {
+          "value": "3/4",
+          "label": "Tall Photo (3 / 4)"
+        },
+        {
+          "value": "4/5",
+          "label": "Tall Photo (4 / 5)"
+        },
+        {
+          "value": "5/6",
+          "label": "Tall Photo (5 / 6)"
+        },
+        {
+          "value": "6/7",
+          "label": "Tall Photo (6 / 7)"
+        },
+        {
+          "value": "9/10",
+          "label": "Tall Photo (9 / 10)"
+        },
+        {
+          "value": "video",
+          "label": "Video (16 / 9)"
+        },
+        {
+          "value": "8/3",
+          "label": "Wide Banner (8 / 3)"
+        },
+        {
+          "value": "10/9",
+          "label": "Wide Photo (10 / 9)"
+        },
+        {
+          "value": "7/6",
+          "label": "Wide Photo (7 / 6)"
+        },
+        {
+          "value": "6/5",
+          "label": "Wide Photo (6 / 5)"
+        },
+        {
+          "value": "5/4",
+          "label": "Wide Photo (5 / 4)"
+        },
+        {
+          "value": "4/3",
+          "label": "Wide Photo (4 / 3)"
+        },
+        {
+          "value": "3/2",
+          "label": "Wide Photo (3 / 2)"
+        },
+        {
+          "value": "9/16",
+          "label": "Tall Banner (9 / 16)"
+        },
+        {
+          "value": "3/8",
+          "label": "Really Tall Banner (3 / 8)"
+        }
+      ],
+      "default": "video"
+    },
+    {
+      "type": "select",
+      "id": "mobile_aspect_ratio",
+      "label": "Mobile",
+      "options": [
+        {
+          "value": "square",
+          "label": "Square (1 / 1)"
+        },
+        {
+          "value": "2/3",
+          "label": "Tall Photo (2 / 3)"
+        },
+        {
+          "value": "3/4",
+          "label": "Tall Photo (3 / 4)"
+        },
+        {
+          "value": "4/5",
+          "label": "Tall Photo (4 / 5)"
+        },
+        {
+          "value": "5/6",
+          "label": "Tall Photo (5 / 6)"
+        },
+        {
+          "value": "6/7",
+          "label": "Tall Photo (6 / 7)"
+        },
+        {
+          "value": "9/10",
+          "label": "Tall Photo (9 / 10)"
+        },
+        {
+          "value": "video",
+          "label": "Video (16 / 9)"
+        },
+        {
+          "value": "8/3",
+          "label": "Wide Banner (8 / 3)"
+        },
+        {
+          "value": "10/9",
+          "label": "Wide Photo (10 / 9)"
+        },
+        {
+          "value": "7/6",
+          "label": "Wide Photo (7 / 6)"
+        },
+        {
+          "value": "6/5",
+          "label": "Wide Photo (6 / 5)"
+        },
+        {
+          "value": "5/4",
+          "label": "Wide Photo (5 / 4)"
+        },
+        {
+          "value": "4/3",
+          "label": "Wide Photo (4 / 3)"
+        },
+        {
+          "value": "3/2",
+          "label": "Wide Photo (3 / 2)"
+        },
+        {
+          "value": "9/16",
+          "label": "Tall Banner (9 / 16)"
+        },
+        {
+          "value": "3/8",
+          "label": "Really Tall Banner (3 / 8)"
+        }
+      ],
+      "default": "video"
+    },
+    {
+      "type": "header",
+      "content": "Rounded Corners / Video Shape"
+    },
+    {
+      "type": "select",
+      "id": "rounded",
+      "label": "Rounded Corners",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "sm",
+          "label": "Small"
+        },
+        {
+          "value": "md",
+          "label": "Medium"
+        },
+        {
+          "value": "lg",
+          "label": "Large"
+        },
+        {
+          "value": "full",
+          "label": "Full (Circle)"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "header",
+      "content": "Max Width of Video"
+    },
+    {
+      "type": "range",
+      "min": 0,
+      "max": 1040,
+      "step": 16,
+      "unit": "px",
+      "id": "max_width",
+      "label": "Desktop",
+      "default": 320
+    },
+    {
+      "type": "range",
+      "min": 0,
+      "max": 1040,
+      "step": 16,
+      "unit": "px",
+      "id": "mobile_max_width",
+      "label": "Mobile",
+      "default": 320
+    },
+    {
+      "type": "header",
+      "content": "Video Border"
+    },
+    {
+      "type": "range",
+      "id": "border",
+      "min": 0,
+      "max": 8,
+      "step": 1,
+      "unit": "px",
+      "label": "Video Border",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border Color"
+    },
+    {
+      "type": "header",
+      "content": "Playback"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "loop",
+      "label": "Loop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "muted",
+      "label": "Muted",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "controls",
+      "label": "Show Controls",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Base Video",
+      "category": "Image Blocks"
+    }
+  ]
+}
 {% endschema %}

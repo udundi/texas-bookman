@@ -4,18 +4,43 @@
   }
 </style>
 
-<ul class="tw-w-full tw-flex tw-flex-col tw-gap-4 tw-items-start tw-text-start column-padding-{{ block.id }} tw-list-disc">
+{% assign list_tag = 'ul' %}
+{% if block.settings['list-type'] == 'ordered' %}
+  {% assign list_tag = 'ol' %}
+{% endif %}
+
+{% assign list_class = 'tw-w-full tw-flex tw-flex-col tw-gap-4 tw-items-start tw-text-start column-padding-{{ block.id }}' %}
+{% if block.settings['list-type'] == 'unordered' %}
+  {% assign list_class = list_class | append: ' tw-list-disc' %}
+{% elsif block.settings['list-type'] == 'ordered' %}
+  {% assign list_class = list_class | append: ' tw-list-decimal' %}
+{% else %}
+  {% assign list_class = list_class | append: ' tw-list-none' %}
+{% endif %}
+
+<{{ list_tag }} class="{{ list_class }}">
   {% for block in block.blocks %}
     <li>
       {% render block %}
     </li>
   {% endfor %}
-</ul>
+</{{ list_tag }}>
 
 {% schema %}
 {
   "name": "List",
   "settings": [
+    {
+      "type": "select",
+      "id": "list-type",
+      "label": "List Type",
+      "options": [
+        { "value": "unordered", "label": "Unordered (bullet points)" },
+        { "value": "ordered", "label": "Ordered (numbered)" },
+        { "value": "none", "label": "None (no bullets)" }
+      ],
+      "default": "unordered"
+    },
     {
       "type": "checkbox",
       "id": "gap-border",
@@ -67,7 +92,21 @@
   "presets": [
     {
       "name": "List",
-      "blocks": []
+      "category": "Text Blocks",
+      "blocks": [
+        {
+          "type": "_list-item",
+          "settings": {
+            "text": "Lorem ipsum dolor sit amet."
+          }
+        },
+        {
+          "type": "_list-item",
+          "settings": {
+            "text": "Lorem ipsum dolor sit amet."
+          }
+        }
+      ]
     }
   ]
 }

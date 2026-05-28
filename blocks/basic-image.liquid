@@ -127,304 +127,306 @@
       {% endif %}
     "
     {% unless block.settings.lazy_load == false %}
-    loading="lazy"
+      loading="lazy"
     {% endunless %}
-    decoding="async">
+    decoding="async"
+  >
 {% else %}
   {{ 'product-1' | placeholder_svg_tag: 'tw-w-full tw-max-w-96 tw-aspect-square tw-h-full tw-object-contain' }}
 {% endif %}
 
 {% schema %}
-  {
-    "name": "Image",
-    "settings": [
-      {
-        "type": "image_picker",
-        "id": "image",
-        "label": "Image"
-      },
-      {
-        "type": "header",
-        "content": "Aspect Ratio"
-      },
-      {
-        "type": "select",
-        "id": "aspect_ratio",
-        "label": "Desktop",
-        "options": [
-          {
-            "value": "none",
-            "label": "None"
-          },
-          {
-            "value": "square",
-            "label": "Square (1 / 1)"
-          },
-          {
-            "value": "2/3",
-            "label": "Tall Photo (2 / 3)"
-          },
-          {
-            "value": "3/4",
-            "label": "Tall Photo (3 / 4)"
-          },
-          {
-            "value": "4/5",
-            "label": "Tall Photo (4 / 5)"
-          },
-          {
-            "value": "5/6",
-            "label": "Tall Photo (5 / 6)"
-          },
-          {
-            "value": "6/7",
-            "label": "Tall Photo (6 / 7)"
-          },
-          {
-            "value": "9/10",
-            "label": "Tall Photo (9 / 10)"
-          },
-          {
-            "value": "video",
-            "label": "Video (16 / 9)"
-          },
-          {
-            "value": "8/3",
-            "label": "Wide Banner (8 / 3)"
-          },
-          {
-            "value": "10/9",
-            "label": "Wide Photo (10 / 9)"
-          },
-          {
-            "value": "7/6",
-            "label": "Wide Photo (7 / 6)"
-          },
-          {
-            "value": "6/5",
-            "label": "Wide Photo (6 / 5)"
-          },
-          {
-            "value": "5/4",
-            "label": "Wide Photo (5 / 4)"
-          },
-          {
-            "value": "4/3",
-            "label": "Wide Photo (4 / 3)"
-          },
-          {
-            "value": "3/2",
-            "label": "Wide Photo (3 / 2)"
-          },
-          {
-            "value": "9/16",
-            "label": "Tall Banner (9 / 16)"
-          },
-          {
-            "value": "3/8",
-            "label": "Really Tall Banner (3 / 8)"
-          }
-        ],
-        "default": "square"
-      },
+{
+  "name": "Image",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Aspect Ratio"
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "Desktop",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "square",
+          "label": "Square (1 / 1)"
+        },
+        {
+          "value": "2/3",
+          "label": "Tall Photo (2 / 3)"
+        },
+        {
+          "value": "3/4",
+          "label": "Tall Photo (3 / 4)"
+        },
+        {
+          "value": "4/5",
+          "label": "Tall Photo (4 / 5)"
+        },
+        {
+          "value": "5/6",
+          "label": "Tall Photo (5 / 6)"
+        },
+        {
+          "value": "6/7",
+          "label": "Tall Photo (6 / 7)"
+        },
+        {
+          "value": "9/10",
+          "label": "Tall Photo (9 / 10)"
+        },
+        {
+          "value": "video",
+          "label": "Video (16 / 9)"
+        },
+        {
+          "value": "8/3",
+          "label": "Wide Banner (8 / 3)"
+        },
+        {
+          "value": "10/9",
+          "label": "Wide Photo (10 / 9)"
+        },
+        {
+          "value": "7/6",
+          "label": "Wide Photo (7 / 6)"
+        },
+        {
+          "value": "6/5",
+          "label": "Wide Photo (6 / 5)"
+        },
+        {
+          "value": "5/4",
+          "label": "Wide Photo (5 / 4)"
+        },
+        {
+          "value": "4/3",
+          "label": "Wide Photo (4 / 3)"
+        },
+        {
+          "value": "3/2",
+          "label": "Wide Photo (3 / 2)"
+        },
+        {
+          "value": "9/16",
+          "label": "Tall Banner (9 / 16)"
+        },
+        {
+          "value": "3/8",
+          "label": "Really Tall Banner (3 / 8)"
+        }
+      ],
+      "default": "square"
+    },
 
-      {
-        "type": "select",
-        "id": "mobile_aspect_ratio",
-        "label": "Mobile",
-        "options": [
-          {
-            "value": "none",
-            "label": "None"
-          },
-          {
-            "value": "square",
-            "label": "Square (1 / 1)"
-          },
-          {
-            "value": "2/3",
-            "label": "Tall Photo (2 / 3)"
-          },
-          {
-            "value": "3/4",
-            "label": "Tall Photo (3 / 4)"
-          },
-          {
-            "value": "4/5",
-            "label": "Tall Photo (4 / 5)"
-          },
-          {
-            "value": "5/6",
-            "label": "Tall Photo (5 / 6)"
-          },
-          {
-            "value": "6/7",
-            "label": "Tall Photo (6 / 7)"
-          },
-          {
-            "value": "9/10",
-            "label": "Tall Photo (9 / 10)"
-          },
-          {
-            "value": "video",
-            "label": "Video (16 / 9)"
-          },
-          {
-            "value": "8/3",
-            "label": "Wide Banner (8 / 3)"
-          },
-          {
-            "value": "10/9",
-            "label": "Wide Photo (10 / 9)"
-          },
-          {
-            "value": "7/6",
-            "label": "Wide Photo (7 / 6)"
-          },
-          {
-            "value": "6/5",
-            "label": "Wide Photo (6 / 5)"
-          },
-          {
-            "value": "5/4",
-            "label": "Wide Photo (5 / 4)"
-          },
-          {
-            "value": "4/3",
-            "label": "Wide Photo (4 / 3)"
-          },
-          {
-            "value": "3/2",
-            "label": "Wide Photo (3 / 2)"
-          },
-          {
-            "value": "9/16",
-            "label": "Tall Banner (9 / 16)"
-          },
-          {
-            "value": "3/8",
-            "label": "Really Tall Banner (3 / 8)"
-          }
-        ],
-        "default": "square"
-      },
-      {
-        "type": "header",
-        "content": "Image Fit"
-      },
-      {
-        "type": "select",
-        "id": "object_fit",
-        "label": "Object Fit",
-        "options": [
-          {
-            "value": "cover",
-            "label": "Cover"
-          },
-          {
-            "value": "contain",
-            "label": "Contain"
-          }
-        ],
-        "default": "cover"
-      },
-      {
-        "type": "header",
-        "content": "Rounded Corners / Image Shape"
-      },
-      {
-        "type": "select",
-        "id": "rounded",
-        "label": "Rounded Corners",
-        "options": [
-          {
-            "value": "none",
-            "label": "None"
-          },
-          {
-            "value": "sm",
-            "label": "Small"
-          },
-          {
-            "value": "md",
-            "label": "Medium"
-          },
-          {
-            "value": "lg",
-            "label": "Large"
-          },
-          {
-            "value": "full",
-            "label": "Full (Circle)"
-          }
-        ],
-        "default": "none",
-        "info": "This can turn the image into a circle if the aspect ratio is square (1 / 1)"
-      },
-      {
-        "type": "header",
-        "content": "Max Width of Image"
-      },
-      {
-        "type": "range",
-        "min": 0,
-        "max": 1040,
-        "step": 16,
-        "unit": "px",
-        "id": "max_width",
-        "label": "Desktop",
-        "default": 320
-      },
-      {
-        "type": "range",
-        "min": 0,
-        "max": 1040,
-        "step": 16,
-        "unit": "px",
-        "id": "mobile_max_width",
-        "label": "Mobile",
-        "default": 320
-      },
-      {
-        "type": "header",
-        "content": "Image Border"
-      },
-      {
-        "type": "range",
-        "id": "border",
-        "min": 0,
-        "max": 8,
-        "step": 1,
-        "unit": "px",
-        "label": "Image Border",
-        "default": 0
-      },
-      {
-        "type": "color",
-        "id": "border_color",
-        "label": "Border Color"
-      },
-      {
-        "type": "header",
-        "content": "Advanced Settings"
-      },
-      {
-        "type": "checkbox",
-        "id": "lazy_load",
-        "label": "Lazy Load Image",
-        "default": true,
-        "info": "Only Uncheck this if it is visible when the page loads"
-      },
-      {
-        "type": "text",
-        "id": "alt_text",
-        "label": "Image Alt Text"
-      }
-    ],
-    "presets": [
-      {
-        "name": "Base Image"
-      }
-    ]
-  }
+    {
+      "type": "select",
+      "id": "mobile_aspect_ratio",
+      "label": "Mobile",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "square",
+          "label": "Square (1 / 1)"
+        },
+        {
+          "value": "2/3",
+          "label": "Tall Photo (2 / 3)"
+        },
+        {
+          "value": "3/4",
+          "label": "Tall Photo (3 / 4)"
+        },
+        {
+          "value": "4/5",
+          "label": "Tall Photo (4 / 5)"
+        },
+        {
+          "value": "5/6",
+          "label": "Tall Photo (5 / 6)"
+        },
+        {
+          "value": "6/7",
+          "label": "Tall Photo (6 / 7)"
+        },
+        {
+          "value": "9/10",
+          "label": "Tall Photo (9 / 10)"
+        },
+        {
+          "value": "video",
+          "label": "Video (16 / 9)"
+        },
+        {
+          "value": "8/3",
+          "label": "Wide Banner (8 / 3)"
+        },
+        {
+          "value": "10/9",
+          "label": "Wide Photo (10 / 9)"
+        },
+        {
+          "value": "7/6",
+          "label": "Wide Photo (7 / 6)"
+        },
+        {
+          "value": "6/5",
+          "label": "Wide Photo (6 / 5)"
+        },
+        {
+          "value": "5/4",
+          "label": "Wide Photo (5 / 4)"
+        },
+        {
+          "value": "4/3",
+          "label": "Wide Photo (4 / 3)"
+        },
+        {
+          "value": "3/2",
+          "label": "Wide Photo (3 / 2)"
+        },
+        {
+          "value": "9/16",
+          "label": "Tall Banner (9 / 16)"
+        },
+        {
+          "value": "3/8",
+          "label": "Really Tall Banner (3 / 8)"
+        }
+      ],
+      "default": "square"
+    },
+    {
+      "type": "header",
+      "content": "Image Fit"
+    },
+    {
+      "type": "select",
+      "id": "object_fit",
+      "label": "Object Fit",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Cover"
+        },
+        {
+          "value": "contain",
+          "label": "Contain"
+        }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "header",
+      "content": "Rounded Corners / Image Shape"
+    },
+    {
+      "type": "select",
+      "id": "rounded",
+      "label": "Rounded Corners",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "sm",
+          "label": "Small"
+        },
+        {
+          "value": "md",
+          "label": "Medium"
+        },
+        {
+          "value": "lg",
+          "label": "Large"
+        },
+        {
+          "value": "full",
+          "label": "Full (Circle)"
+        }
+      ],
+      "default": "none",
+      "info": "This can turn the image into a circle if the aspect ratio is square (1 / 1)"
+    },
+    {
+      "type": "header",
+      "content": "Max Width of Image"
+    },
+    {
+      "type": "range",
+      "min": 0,
+      "max": 1040,
+      "step": 16,
+      "unit": "px",
+      "id": "max_width",
+      "label": "Desktop",
+      "default": 320
+    },
+    {
+      "type": "range",
+      "min": 0,
+      "max": 1040,
+      "step": 16,
+      "unit": "px",
+      "id": "mobile_max_width",
+      "label": "Mobile",
+      "default": 320
+    },
+    {
+      "type": "header",
+      "content": "Image Border"
+    },
+    {
+      "type": "range",
+      "id": "border",
+      "min": 0,
+      "max": 8,
+      "step": 1,
+      "unit": "px",
+      "label": "Image Border",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border Color"
+    },
+    {
+      "type": "header",
+      "content": "Advanced Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "lazy_load",
+      "label": "Lazy Load Image",
+      "default": true,
+      "info": "Only Uncheck this if it is visible when the page loads"
+    },
+    {
+      "type": "text",
+      "id": "alt_text",
+      "label": "Image Alt Text"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Base Image",
+      "category": "Image Blocks"
+    }
+  ]
+}
 {% endschema %}

@@ -1,0 +1,256 @@
+{% assign product_id = section.id | append: '-' | append: product.handle | append: '-atc' %}
+{% assign product_atc_id = product_id | append: '-atc' %}
+
+<div id="{{ product_id }}" class="{{ class }} tw-justify-between tw-flex tw-flex-col">
+  <a href="{% if product.metafields.custom.alt_gallery_link != blank %}{{ product.metafields.custom.alt_gallery_link.value.url }}{% else %}{{ product.url | default: "/" }}{% endif %}">
+    <div class="tw-w-full {% if video_aspect == true %} tw-aspect-video tw-border {% else %} xl:tw-h-[500px] lg:tw-h-[420px] md:tw-h-96 tw-h-64 {% endif %} md:tw-mb-3 tw-mb-2 tw-relative">
+      {% if product.featured_image != blank %}
+        {% if small_image == true %}
+          {{
+            product.featured_image
+            | image_url: width: 400
+            | image_tag: loading: 'lazy', class: 'tw-size-full tw-object-cover tw-aspect-video'
+          }}
+        {% else %}
+          {{
+            product.featured_image
+            | image_url: width: 800
+            | image_tag: loading: 'lazy', class: 'tw-size-full tw-object-cover tw-aspect-video'
+          }}
+        {% endif %}
+      {% else %}
+        <div class=" tw-size-full">
+          {{ 'product-1' | placeholder_svg_tag: 'tw-w-full tw-max-w-[450px] tw-mx-auto tw-object-cover' }}
+        </div>
+      {% endif %}
+      {% if product.tags contains 'New Product' %}
+        <div class="tw-absolute tw-top-2.5 tw-right-2 tw-text-12 tw-px-4 tw-py-1 tw-bg-black tw-rounded-full tw-text-white tw-font-semibold">
+          new
+        </div>
+      {% endif %}
+      {% if product.metafields.custom_fields.design_id != blank %}
+        <button
+          type="button"
+          onclick="event.preventDefault(); event.stopPropagation(); window.open('https://studiov2.feltright.com/?import={{ product.metafields.custom_fields.design_id }}', '_blank');"
+          aria-label="Customize {{ product.title }}"
+          class="tw-absolute tw-left-2 tw-top-2 tw-bg-white tw-rounded-full tw-p-1 tw-pr-2 tw-text-black tw-font-semibold tw-text-12 tw-flex tw-items-center tw-gap-1 tw-leading-tight hover:tw-scale-110 tw-transition-transform tw-border-none tw-cursor-pointer"
+        >
+          <div
+            class="tw-w-5 tw-h-5 tw-rounded-full tw-flex tw-items-center tw-justify-center"
+            style="background: conic-gradient(from 90deg, rgba(255, 0, 60, 1) 0deg, rgba(255, 0, 0, 1) 15.8083deg, rgba(246, 255, 0, 1) 101.575deg, rgba(0, 255, 17, 1) 163.447deg, rgba(0, 165, 255, 1) 207.692deg, rgba(131, 0, 255, 1) 270deg, rgba(255, 0, 212, 1) 320.474deg, rgba(255, 0, 60, 1) 360deg); opacity: 0.54;"
+          ></div>
+          <div>Customizable</div>
+        </button>
+      {% endif %}
+    </div>
+  </a>
+  <div class="tw-flex lg:tw-flex-row tw-flex-col tw-justify-between tw-h-full tw-w-full tw-gap-x-4 tw-gap-y-3 tw-items-start">
+    <div class="tw-w-full">
+      <!-- Title & Dimension Container -->
+      <div class="tw-flex tw-gap-x-4 tw-gap-y-1 tw-pb-2 tw-items-center tw-flex-wrap tw-w-full tw-justify-between">
+        <!-- Title -->
+        <div class="tw-flex tw-w-full tw-flex-row tw-gap-2 tw-items-start tw-justify-between">
+          <a class="tw-w-full tw-h-fit tw-max-w-96" href="{{ product.url | default: "/" }}">
+            <h3 class="tw-font-bold tw-text-14 tw-text-black tw-w-full tw-leading-tight tw-h-fit tw-m-0">
+              {{ product.title | default: 'Product title' }}
+            </h3>
+          </a>
+          <!-- Metafield Variant Selectors -->
+          {% if show_color_options == true %}
+            {% if product.metafields.custom.variant_products != blank %}
+              <div class="tw-flex tw-w-fit tw-gap-1 tw-pb-2 tw-items-center tw-justify-between">
+                {% assign var_size = product.metafields.custom.variant_products.value | size %}
+
+                {% for var_product in product.metafields.custom.variant_products.value %}
+                  {% if forloop.index > 4 %}
+                    {% break %}
+                  {% endif %}
+                  {% if forloop.index == 4 and var_size > 4 %}
+                    {% break %}
+                  {% endif %}
+                  {% if var_product.metafields.custom.swatch != blank %}
+                    <div class="tw-pointer tw-group tw-relative tw-flex tw-flex-col tw-items-center tw-justify-center tw-overflow-visible tw-text-14">
+                      {% comment %} Swatch Tooltip {% endcomment %}
+                      <div class="tw-pointer-events-none tw-absolute -tw-top-full tw-translate-y-[-50%] tw-left-1/2 tw-z-20 -tw-translate-x-1/2 tw-text-nowrap tw-rounded-md tw-bg-black tw-px-3 tw-py-1 tw-text-white tw-opacity-0 tw-transition-opacity tw-delay-100 tw-duration-200 group-hover:tw-opacity-100">
+                        <div class="tw-relative tw-z-10">
+                          {{ var_product.metafields.custom.swatch.value.text }}
+                        </div>
+                        <div
+                          class="tw-absolute tw-left-1/2 tw-top-1/2 -tw-z-10 tw-size-5 -tw-translate-x-1/2 tw-rotate-45 tw-bg-black "
+                        ></div>
+                      </div>
+                      {% comment %} Swatch Link {% endcomment %}
+                      <a
+                        id="{{ id }}"
+                        href="{{ var_product.url }}"
+                        class="tw-size-5 tw-rounded-full "
+                      >
+                        <div class="tw-flex tw-size-5 tw-overflow-hidden tw-rounded-full tw-border-solid {% if value.variant.id == product.selected_or_first_available_variant.id %} tw-pointer-events-none tw-cursor-not-allowed tw-border-black tw-border-2 {% else %} tw-border-black tw-border {% endif %}">
+                          <img
+                            src="{{ var_product.metafields.custom.swatch.value.url }}"
+                            alt="Health potion"
+                            width="200"
+                            height="200"
+                          >
+                        </div>
+                      </a>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+                {% if var_size > 4 %}
+                  <div class="tw-text-10 tw-text-black tw-whitespace-nowrap">+ {{ var_size | minus: 3 }} styles</div>
+                {% endif %}
+              </div>
+            {% elsif product.has_only_default_variant == false -%}
+              <div class="tw-flex tw-w-fit tw-gap-1 tw-pb-2 tw-items-center tw-justify-between">
+                {% for option in product.options_with_values %}
+                  {% unless option.name == 'Color'
+                    or option.name == 'Colors'
+                    or option.name == 'color'
+                    or option.name == 'colors'
+                  %}
+                    {% continue %}
+                  {% endunless %}
+                  {% assign var_size = option.values | size %}
+                  {% assign colors = metaobjects.all_colors['all-colors-8a7i4wln'].colors.value %}
+                  {% comment %} Getting Vars {% endcomment %}
+
+                  {% for value in option.values %}
+                    {% if forloop.index > 4 %}
+                      {% break %}
+                    {% endif %}
+                    {% if forloop.index == 4 and var_size > 4 %}
+                      {% break %}
+                    {% endif %}
+
+                    {% for color in colors %}
+                      {% if color.name == value %}
+                        {% assign var_name = color.name %}
+                        {% assign var_color = color.color %}
+                        {% assign var_bordered = color.bordered.value %}
+                      {% endif %}
+                    {% endfor %}
+                    {% assign var_id = value.variant.id %}
+                    <div class="tw-pointer tw-group tw-relative tw-flex tw-flex-col tw-items-center tw-justify-center tw-overflow-visible tw-text-14 ">
+                      {% comment %} Swatch Tooltip {% endcomment %}
+                      <div class="tw-pointer-events-none tw-absolute -tw-top-full tw-translate-y-[-50%] tw-left-1/2 tw-z-20 -tw-translate-x-1/2 tw-text-nowrap tw-rounded-md tw-bg-black tw-px-3 tw-py-1 tw-text-white tw-opacity-0 tw-transition-opacity tw-delay-100 tw-duration-200 group-hover:tw-opacity-100">
+                        <div class="tw-relative tw-z-10">
+                          {{ var_name }}
+                        </div>
+                        <div
+                          class="tw-absolute tw-left-1/2 tw-top-1/2 -tw-z-10 tw-size-5 -tw-translate-x-1/2 tw-rotate-45 tw-bg-black "
+                        ></div>
+                      </div>
+                      {% comment %} Swatch Link {% endcomment %}
+                      <a
+                        href="{{product.url}}?variant={{ var_id }}"
+                        class="
+                          tw-size-5 tw-rounded-full tw-border tw-text-center tw-text-white
+                          {% if var_bordered %} tw-border-black tw-border-solid {% endif %}
+                        "
+                        style="background-color: {{ var_color }};"
+                      ></a>
+                    </div>
+                  {% endfor %}
+                  {% if var_size > 4 %}
+                    <div class="tw-text-10 tw-text-black tw-whitespace-nowrap">+ {{ var_size | minus: 3 }} colors</div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+      <!-- Ratings & Price -->
+      {% if show_price != false %}
+        {% render 'ud-product-price',
+          price: product.selected_or_first_available_variant.price,
+          compare_price: product.selected_or_first_available_variant.compare_at_price,
+          side_sale: true,
+          product: product
+        %}
+      {% endif %}
+    </div>
+
+    {% if show_shop_now_button != false %}
+      {% if product.metafields.custom.alt_gallery_link.value != blank %}
+        <a
+          type="submit"
+          href="{{ product.metafields.custom.alt_gallery_link.value.url }}"
+          class="tw-bg-black tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-white tw-rounded-full tw-flex tw-justify-center tw-border-2 tw-py-1 tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap"
+        >
+          <span>{{ product.metafields.custom.alt_gallery_link.value.text | default: 'Shop Now' }}</span>
+        </a>
+      {% else %}
+        <a
+          type="submit"
+          href="{{ product.url }}"
+          class="tw-bg-black tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-white tw-rounded-full tw-flex tw-justify-center tw-border-2 tw-py-1 tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap"
+        >
+          <span>Shop Now</span>
+        </a>
+      {% endif %}
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  new Vue({
+    el: '#{{ product_id }}',
+    data() {
+      return {
+        addingToCart: false,
+        productPrice: '{{ product.price }}',
+      };
+    },
+    methods: {
+      addToCart() {
+        this.addingToCart = true;
+        let items = [
+          {
+            quantity: 1,
+            'properties': {
+              {% if product.metafields.custom.adhesive_tab_count > 0 %}
+                'adhesive-tabs': Math.round(Number('{{ product.metafields.custom.adhesive_tab_count }}')),
+              {% endif %}
+              '_tags': {{ product.tags | json }},
+            },
+            id: '{{ product.selected_or_first_available_variant.id }}',
+          },
+          {% if product.metafields.custom.adhesive_tab_count > 0 %}
+            {
+              quantity: Math.round(Number('{{ product.metafields.custom.adhesive_tab_count }}')),
+              id: '37500128919721',
+            },
+          {% endif %}
+        ];
+        console.log(items);
+
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items: items }),
+        }).then(async (r) => {
+          const data = await r.json();
+          if (!r.ok) throw data;
+          return data;
+        }).then((data) => {
+          console.log(data);
+          this.bus.$emit('showCart');
+          this.bus.$emit('refreshCart');
+          this.addingToCart = false;
+          this.$forceUpdate();
+        }).catch((error) => {
+          console.log(error, 'caught error');
+          Swal.fire({
+            icon: 'error',
+            text: error && error.description ? error.description : 'Unable to add item to cart.',
+          });
+          this.addingToCart = false;
+        }).finally(() => {
+          this.addingToCart = false;
+        });
+      },
+    },
+  });
+</script>

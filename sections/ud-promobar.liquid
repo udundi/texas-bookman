@@ -1,0 +1,63 @@
+{% if section.settings.url != blank %}
+  <div
+    role="region"
+    aria-label="Promo bar"
+    class="tw-w-full tw tw-py-2 md:tw-text-16 tw-text-14 tw-text-center tw-h-full"
+    style="background: {{ section.settings.promo_color }}; color: {{ section.settings.promo_text_color }};">
+    <a href="{{ section.settings.url }}" class="tw-w-full tw-h-full hover:tw-underline tw-underline-offset-2">
+
+      {{ section.settings.promo_text }}
+    </a>
+  </div>
+{% else %}
+  <div
+    role="region"
+    aria-label="Promo bar"
+    class="greyBar tw-py-2 md:tw-text-16 tw-text-14 tw-text-center"
+    style="background: {{ section.settings.promo_color }}; color: {{ section.settings.promo_text_color }};">
+    {{ section.settings.promo_text }}
+  </div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Promo Bar",
+    "tag": "section",
+    "class": "section ",
+    "settings": [
+      {
+        "type": "text",
+        "id": "promo_text",
+        "label": "Promo Text"
+      },
+      {
+        "type": "color",
+        "id": "promo_text_color",
+        "label": "Promo Bar Text Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "promo_color",
+        "label": "Promo Bar Background Color",
+        "default": "#000000"
+      },
+      {
+        "type": "url",
+        "id": "url",
+        "label": "Optional URL"
+      }
+    ],
+
+    "presets": [
+      {
+        "name": "Promo Bar",
+        "settings": {
+          "promo_text": "Free shipping on orders over $99 to 48 contiguous states",
+          "promo_color": "#000000",
+          "promo_text_color": "#FFFFFF"
+        }
+      }
+    ]
+  }
+{% endschema %}

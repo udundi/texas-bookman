@@ -31,68 +31,70 @@
     "
     loading="lazy"
     width="100%"
-    height="100%">
+    height="100%"
+  >
 {% else %}
   {{ 'product-1' | placeholder_svg_tag: 'tw-w-full tw-max-w-12 tw-aspect-square tw-h-full tw-object-contain' }}
 {% endif %}
 
 {% schema %}
-  {
-    "name": "Icon",
-    "settings": [
-      {
-        "type": "image_picker",
-        "id": "image",
-        "label": "Image"
-      },
-      {
-        "type": "header",
-        "content": "Max Width of Image"
-      },
-      {
-        "type": "range",
-        "min": 0,
-        "max": 400,
-        "step": 4,
-        "unit": "px",
-        "id": "max_width",
-        "label": "Desktop",
-        "default": 120
-      },
-      {
-        "type": "range",
-        "min": 0,
-        "max": 400,
-        "step": 4,
-        "unit": "px",
-        "id": "mobile_max_width",
-        "label": "Mobile",
-        "default": 120
-      },
-      {
-        "type": "header",
-        "content": "Image Border"
-      },
-      {
-        "type": "range",
-        "id": "border",
-        "min": 0,
-        "max": 8,
-        "step": 1,
-        "unit": "px",
-        "label": "Image Border",
-        "default": 0
-      },
-      {
-        "type": "color",
-        "id": "border_color",
-        "label": "Border Color"
-      }
-    ],
-    "presets": [
-      {
-        "name": "Icon"
-      }
-    ]
-  }
+{
+  "name": "Icon",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Max Width of Image"
+    },
+    {
+      "type": "range",
+      "min": 0,
+      "max": 400,
+      "step": 4,
+      "unit": "px",
+      "id": "max_width",
+      "label": "Desktop",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "min": 0,
+      "max": 400,
+      "step": 4,
+      "unit": "px",
+      "id": "mobile_max_width",
+      "label": "Mobile",
+      "default": 120
+    },
+    {
+      "type": "header",
+      "content": "Image Border"
+    },
+    {
+      "type": "range",
+      "id": "border",
+      "min": 0,
+      "max": 8,
+      "step": 1,
+      "unit": "px",
+      "label": "Image Border",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border Color"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Icon",
+      "category": "Image Blocks"
+    }
+  ]
+}
 {% endschema %}

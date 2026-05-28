@@ -1,0 +1,26 @@
+{% if block.blocks != blank %}
+  <div class="tw-w-full tw-relative tw-h-60 tw-max-w-7xl tw-mx-auto">
+    <div class="tw-absolute tw-flex tw-flex-row tw-justify-between tw-items-center tw-gap-2 tw-w-full tw-overflow-x-auto tw-pb-2 max-md:tw-px-4">
+      {% for block in block.blocks %}
+        {% render block %}
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Collection Card Box",
+  "class": "tw-contains",
+  "blocks": [
+    {
+      "type": "_collection-sortable-link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sortable Collection/Tag Container"
+    }
+  ]
+}
+{% endschema %}

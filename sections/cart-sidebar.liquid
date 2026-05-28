@@ -1,0 +1,273 @@
+<dialog id="cartSidebar" class="cartSidebar tw-pointer-events-auto">
+  <div @click="closeModal" class="bg tw-pointer-events-auto"></div>
+
+  <div class="tw-fixed tw-top-0 tw-right-0 md:tw-w-[570px] tw-w-full tw-max-w-[95vw] tw-bg-white tw-h-[100dvh] !tw-p-0 tw-flex tw-flex-col">
+    <div class="tw-animate-spin tw-size-6" v-if="cartStillLoading">
+      {% render 'icon-spin' %}
+    </div>
+
+    <!-- Close Button -->
+    <div class="tw-flex tw-items-center tw-p-4">
+      <!-- Cart Closing Button -->
+      <button class="tw-p-2" @click="closeModal">
+        {% render 'icon-close' %}
+      </button>
+    </div>
+
+    <div class="tw-w-full tw-flex tw-flex-col tw-justify-between tw-overflow-y-auto">
+      <div class="tw-text-center" v-if="visibleCartItems.length < 1 && cartBundles.length < 1 && !cartStillLoading">
+        {% content_for 'block', type: 'flex-box', id: 'empty-cart-container' %}
+      </div>
+      <div
+        v-if="(visibleCartItems.length > 0 || cartBundles.length > 0) && !cartStillLoading"
+        class="tw-w-full tw-grow tw-flex tw-flex-col tw-px-4"
+      >
+        <div v-if="!cartStillLoading" class="tw-grow">
+          {% render 'cart-items' %}
+        </div>
+        {% render 'cart-upsells' %}
+        {% render 'ud-cart-totals' %}
+      </div>
+    </div>
+    <div v-if="(visibleCartItems.length > 0 || cartBundles.length > 0) && !cartStillLoading" class="tw-px-4 tw-pb-8">
+      <div class="tw-w-full tw-block">
+        <div class="tw-bg-white tw-pt-4">
+          <div
+            :class="[disabledCart ? 'tw-cursor-wait' : '', disableCartActions ? 'tw-opacity-50 tw-pointer-events-none' : '']"
+            class="tw-w-full"
+          >
+            <div
+              :class="[disabledCart ? 'tw-pointer-events-none' : '', disableCartActions ? 'tw-pointer-events-none' : '']"
+              class="tw-w-full tw-px-2 tw-flex tw-flex-col tw-gap-2"
+            >
+              <a
+                :class="disableCartActions ? 'tw-opacity-50 tw-pointer-events-none' : ''"
+                class="md:tw-block tw-hidden tw-p-2 tw-text-navy tw-underline tw-text-16 tw-text-center tw-w-full tw-font-semibold"
+                href="/checkout"
+                >Checkout</a
+              >
+              <a
+                :class="disableCartActions ? 'tw-opacity-50 tw-pointer-events-none' : ''"
+                class="md:tw-block tw-hidden tw-p-2 tw-text-navy tw-underline tw-text-16 tw-text-center tw-w-full tw-font-semibold"
+                href="{{ routes.cart_url }}"
+                >Expand Cart</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  /* ── Dialog / overlay reset ─────────────────────────────────────────────────
+     Without these the browser renders a native dialog box (centred, with a
+     visible border and inert backdrop). These rules turn it into a
+     transparent full-screen container so our own .bg and slide-in panel
+     handle all the visual chrome.
+  ── */
+  dialog.cartSidebar {
+    background: transparent;
+    border: none;
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    max-width: 100vw;
+    max-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    z-index: 999999;
+  }
+
+  /* Hide the native ::backdrop so our .bg div controls the scrim */
+  dialog.cartSidebar::backdrop {
+    display: none;
+  }
+
+  /* ── Scrim / backdrop ────────────────────────────────────────────────────── */
+  .cartSidebar .bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.75);
+    cursor: pointer;
+  }
+
+  /* ── Upsells ─────────────────────────────────────────────────────────────── */
+  .upsellsv2 {
+    margin: 20px 0;
+    color: #707070;
+  }
+  .upsellsv2 .upsellHeader {
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .upsellsv2 .upsellTop {
+    display: flex;
+  }
+  .upsellsv2 .upsellContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -10px;
+  }
+  .upsellsv2 .upsellContainer .upsell {
+    flex: 0 0 auto;
+    margin: 10px;
+    width: calc(50% - 20px);
+    border: 1px solid #aaa;
+    padding: 5px;
+    display: block;
+    font-size: 12px;
+  }
+  @media (max-width: 500px) {
+    .upsellsv2 .upsellContainer .upsell {
+      width: 90%;
+    }
+  }
+  .upsellsv2 .upsellContainer .upsell .data {
+    flex: 1;
+  }
+  .upsellsv2 .upsellContainer .upsell .image {
+    flex: 0 0 auto;
+    width: 70px;
+    margin: 0 10px 0 0;
+  }
+  .upsellsv2 .upsellContainer .upsell .image img {
+    width: 100%;
+    display: block;
+  }
+  .upsellsv2 .upsellContainer .upsell .price {
+    font-weight: 700;
+    margin: 5px 0;
+  }
+  .upsellsv2 .upsellContainer .upsell .upsellTitle {
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .upsellsv2 .upsellContainer .upsell .adder {
+    margin-top: 5px;
+  }
+  .upsellsv2 .upsellContainer .upsell .primaryBTN {
+    border-radius: 0;
+    font-size: 11px;
+    padding: 5px;
+    width: 100%;
+  }
+
+  /* ── Primary button (base) ───────────────────────────────────────────────── */
+  .primaryBTN {
+    color: #fff;
+    text-align: center;
+    padding: 10px 20px;
+    font-weight: 600;
+    background: #313558;
+    border: none;
+    display: block;
+    cursor: pointer;
+    font-family: Montserrat, sans-serif;
+    letter-spacing: 1px;
+    transition: background 0.3s;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+  .primaryBTN:hover {
+    background: #212121;
+    color: #fff;
+  }
+
+  /* ── Tooltip (used by upsells) ───────────────────────────────────────────── */
+  .tooltip {
+    display: inline-block;
+    position: relative;
+    text-align: left;
+    z-index: 1;
+  }
+  .tooltip .top {
+    top: -5px;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    padding: 5px 20px;
+    color: #444;
+    background: #fff;
+    font-weight: 400;
+    font-size: 11px;
+    border-radius: 8px;
+    position: absolute;
+    z-index: 99999;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+    width: max-content;
+    max-width: 250px;
+    white-space: normal;
+  }
+  .tooltip:hover .top {
+    visibility: visible;
+    opacity: 1;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Cart Sidebar",
+  "tag": "section",
+  "class": "section",
+  "presets": [
+    {
+      "name": "Cart Sidebar"
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+  new Vue({
+    el: '.cartSidebar',
+    delimiters: ['[[', ']]'],
+    mixins: [global, cart],
+  
+    data() {
+      return {
+        cartItems: {{ cart.items | json }},
+        cartData: {{ cart | json  }},
+        testVariant: '',
+        productDetails: {
+          {% for item in cart.items %}'{{ item.product.handle }}': {
+            {%-  assign var_product = all_products[item.product.handle] -%}
+            "title": {{ var_product.title | json }},
+            "compare_at_price": {{ var_product.compare_at_price | json }},
+            "tags": {{ var_product.tags | json}} 
+          },{% endfor %}
+        }
+      };
+    },
+    mounted() {
+      //For If On Cart Page don't run parse Cart twice
+      {% unless canonical_url contains routes.cart_url %}  
+        this.parseCart();
+      {% endunless %}
+      
+      //On Show Cart
+      this.bus.$on("showCart", this.onShowCart);
+    },
+    methods: {
+      onShowCart() {
+        this.showCartSidebar = true;
+        this.getItemsForCart();
+        setTimeout(() => {
+          const cartSidebar = document.querySelector("#cartSidebar");
+          cartSidebar.showModal();
+          document.body.style.position = "fixed";
+          document.body.style.top = `-${window.scrollY}px`;
+        }, 100);
+      },
+    }
+  });
+</script>

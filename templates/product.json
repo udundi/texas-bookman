@@ -11,6 +11,10 @@
   "sections": {
     "main": {
       "type": "ud-pdp-details",
+      "blocks": {
+      },
+      "block_order": [
+      ],
       "settings": {}
     },
     "legacy-product": {

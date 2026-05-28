@@ -1,0 +1,450 @@
+<div id="nav-bar-{{ section.id }}">
+  <div class="tw-relative tw-z-[900] tw-mx-auto tw-flex tw-w-full tw-max-w-screen-2xl tw-items-center tw-justify-between tw-bg-white tw-px-4">
+    <div class="logo tw-flex tw-w-fit tw-gap-4 tw-p-2">
+      <a
+        href="/"
+        aria-label="Home"
+        class="tw-max-h-14"
+      >
+        {% if section.settings.site_logo != blank %}
+          {{
+            section.settings.site_logo
+            | image_url: width: 400
+            | image_tag: alt: 'Site Logo', class: 'tw-block tw-h-8 tw-w-auto'
+          }}
+        {% endif %}
+      </a>
+    </div>
+
+    <nav
+      v-cloak
+      @mouseleave="handleMouseLeave"
+      role="navigation"
+      aria-label="Main Menu"
+      class="tw-h-full md:tw-h-12"
+      :class="showMobile ? 'tw-block' : 'md:tw-flex tw-hidden'"
+    >
+      <!-- Nav Container -->
+      <div
+        class="tw-absolute tw-right-0 tw-top-[60px] tw-max-h-[600px] tw-min-w-[200px] tw-bg-white tw-p-0 max-md:tw-overflow-y-auto md:tw-static md:tw-z-auto md:tw-h-full"
+        :class="showMobile ? 'tw-z-[900]' : ''"
+      >
+        <!-- Nav Container -->
+        <div class="tw-flex tw-h-full tw-flex-col tw-text-12 max-md:tw-p-4 md:tw-flex-row md:tw-gap-2">
+          {% for block in block.blocks %}
+            {% render block %}
+          {% endfor %}
+        </div>
+      </div>
+    </nav>
+
+    <div class="mobileDivider mobileShow"></div>
+
+    <div class="tw-my-auto tw-flex tw-h-fit tw-items-end tw-gap-4 tw-pl-2 lg:tw-gap-6" role="search">
+      <!-- Search Icon -->
+      <button
+        aria-label="Search"
+        tabindex="0"
+        class="tw-my-auto"
+        @keydown.enter="openSearch()"
+        @click="openSearch(); searchCategory = null;"
+      >
+        {% render 'icon-search' %}
+      </button>
+      <!-- Account Icon -->
+      {% if customer.id == null -%}
+        <a
+          class="tw-my-auto"
+          aria-label="Log In"
+          href="{{ routes.account_login_url }}"
+        >
+          {% render 'icon-account' %}
+        </a>
+      {% else %}
+        <a
+          class="tw-my-auto"
+          aria-label="Log Out"
+          href="{{ routes.account_url }}"
+        >
+          {% render 'icon-account' %}
+        </a>
+      {%- endif %}
+
+      <!-- Cart Icon -->
+      <button
+        class=""
+        @click="showCart()"
+        aria-haspopup="true"
+        class="tw-mb-4"
+        aria-label="Cart"
+        tabindex="0"
+        v-on:keyup.enter="showCart()"
+        v-on:keyup.space="showCart()"
+      >
+        {% render 'icon-cart' %}
+        <div
+          v-cloak
+          class="tw-absolute tw-flex tw-items-center tw-justify-center tw-rounded-full tw-bg-offblack tw-text-center tw-text-12 tw-font-bold tw-text-white"
+          :class="[totalCartItems > 9 ? 'tw-w-6 tw-h-6 tw-top-1 md:tw-right-0 tw-right-12' : ' tw-w-5 tw-h-5 tw-top-2 md:tw-right-1 tw-right-14']"
+          v-if="totalCartItems"
+        >
+          [[totalCartItems]]
+        </div>
+      </button>
+
+      <!-- Mobile Menu Icon -->
+      <button
+        aria-haspopup="true"
+        aria-label="Menu"
+        @click="showMobile = !showMobile"
+        class="tw-block tw-justify-center tw-px-2 tw-align-middle md:tw-hidden"
+      >
+        <div :style="showMobile ? 'display: none;' : 'display: contents;'">
+          {% render 'icon-bars' %}
+        </div>
+        <div :style="!showMobile ? 'display: none;' : 'display: contents;'">
+          {% render 'icon-times' %}
+        </div>
+      </button>
+    </div>
+    <div
+      v-cloak
+      v-if="showSearch"
+      class="tw-fixed tw-inset-0 tw-z-[14] tw-h-screen tw-bg-black tw-bg-opacity-50"
+      @click="showSearch = false"
+    ></div>
+    <div
+      v-cloak
+      class="tw-fixed tw-left-1/2 tw-top-0 tw-z-[15] tw-mx-auto tw-h-[70px] tw-w-full tw-max-w-screen-3xl -tw-translate-x-1/2 tw-bg-white tw-p-0 tw-shadow-md"
+      v-if="showSearch"
+      @click.stop
+    >
+      {% render 'ud-search-v2' %}
+      <div class="tw-flex tw-items-center">
+        <div class="tw-absolute tw-left-[15px] tw-top-[15px] tw-z-[2] tw-text-[25px]">
+          <i class="fal fa-search"></i>
+        </div>
+        <div class="tw-absolute tw-left-1/2 tw-top-0 tw-z-[1] tw-h-full tw-w-full -tw-translate-x-1/2">
+          <input
+            type="text"
+            v-model="search"
+            class="searchInput tw-absolute tw-left-0 tw-top-0 tw-h-full tw-w-full tw-border-b tw-border-offblack tw-py-[15px] tw-pl-[60px] tw-pr-[15px] tw-font-montserrat tw-text-16"
+            @input="startSearch()"
+            placeholder="What are you looking for today?"
+          >
+        </div>
+
+        <button
+          v-if="search"
+          class="tw-absolute tw-right-[70px] tw-top-[15px] tw-z-[2] tw-flex tw-h-10 tw-cursor-pointer tw-items-center tw-justify-center tw-bg-white tw-p-[15px] tw-font-montserrat tw-text-16 tw-leading-none"
+          @click="
+            () => {
+              search = ''
+              startSearch()
+            }
+          "
+        >
+          clear
+        </button>
+        <button
+          class="tw-absolute tw-right-[30px] tw-top-[15px] tw-z-[2] tw-flex tw-h-10 tw-w-10 tw-cursor-pointer tw-items-center tw-justify-center tw-rounded-full tw-border tw-border-[rgb(230,126,55)] tw-p-[15px] tw-text-[25px] tw-leading-none tw-text-[rgb(230,126,55)]"
+          @click="showSearch = false"
+        >
+          <i class="fal fa-times"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu Backdrop -->
+  <div
+    v-cloak
+    v-if="showMobile"
+    class="tw-fixed tw-inset-0 tw-top-0 !tw-z-20 tw-h-screen tw-w-full tw-bg-black tw-bg-opacity-50 md:tw-hidden"
+    @click="showMobile = false"
+  ></div>
+</div>
+<script>
+  new Vue({
+    el: '#nav-bar-{{ section.id }}',
+    delimiters: ['[[', ']]'],
+    mixins: [],
+    data() {
+      return {
+        selectedTab: '',
+        selectedSubTab: '',
+        showMobile: false,
+        showMobileMenu: false,
+        showSearch: null,
+        search: null,
+        searching: false,
+        searchingDesigns: false,
+        searchResults: [],
+        searchObject: {
+          collections: [],
+          pages: [],
+          products: [],
+          articles: [],
+          queries: [],
+        },
+        totalSearchResults: 0,
+        searchTimeout: null,
+        mobileDropdown: null,
+        accountPopup: false,
+        searchCategory: null,
+        hideSearchResults: false,
+        totalCartItems: 0,
+        mobileSection: null,
+        mobileSubSection: null,
+        hoverTimer: null,
+        showSuggestions: true,
+      };
+    },
+
+    async mounted() {
+      const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+      const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+
+      if (vw < 900) {
+        this.hideSearchResults = true;
+      }
+      setTimeout(() => {
+        const el = document.getElementById('nav-bar-{{ section.id }}');
+        this.sectionHeight = el ? el.offsetHeight : 0;
+        const spacer = document.getElementById('header-spacer-{{ section.id }}');
+        if (spacer) {
+          spacer.style.height = `${this.sectionHeight}px`;
+        }
+        document.documentElement.style.setProperty('--site-header-height', `${this.sectionHeight}px`);
+      }, 10);
+      window.addEventListener('resize', this.resizeSpacer);
+      this.refreshCart();
+
+      this.bus.$on('refreshCart', () => {
+        this.refreshCart();
+      });
+    },
+    unmounted() {
+      window.removeEventListener('resize', this.resizeSpacer);
+    },
+
+    watch: {
+      showMobileMenu() {
+        this.$nextTick(() => {
+          // a/b test specific logic
+          const currentVariant = document.documentElement.dataset.testVariant || 'a';
+          if (this.showMobileMenu) {
+            this.$refs.mobileNavMenu?.querySelector(`[data-test-show='${currentVariant}'] :is(a, button)`)?.focus();
+          }
+        });
+      },
+    },
+
+    methods: {
+      handleMouseLeave() {
+        this.showMobile = false;
+        this.selectedTab = '';
+        this.selectedSubTab = '';
+      },
+
+      resizeSpacer(e) {
+        const el = document.getElementById('nav-bar-{{ section.id }}');
+        this.sectionHeight = el ? el.offsetHeight : 0;
+        const spacer = document.getElementById('header-spacer-{{ section.id }}');
+        const navContainer = document.getElementById('nav-container');
+        if (spacer) {
+          spacer.style.height = `${this.sectionHeight}px`;
+        }
+        if (navContainer) {
+          navContainer.style.height = `${this.sectionHeight}px`;
+        }
+        document.documentElement.style.setProperty('--site-header-height', `${this.sectionHeight}px`);
+      },
+
+      refocusMenu(event) {
+        this.$refs.mobileMenuButton.focus();
+        console.log(event, 'refocusing menu');
+      },
+
+      hoverSubTab(subTabClass) {
+        clearTimeout(this.hoverTimer);
+        this.hoverTimer = setTimeout(() => {
+          this.selectedSubTab = subTabClass;
+        }, 150);
+      },
+
+      clearHover() {
+        console.log('clearing timer');
+        clearTimeout(this.hoverTimer);
+      },
+
+      refreshCart() {
+        const EXCLUDE_TITLES = [
+          'Adhesive Tab',
+          'Mini Adhesive Tab',
+          'Commercial Adhesive Tab',
+          'Freight Shipping',
+          'Drywall Screws',
+        ];
+        fetch('/cart.js')
+          .then((r) => r.json())
+          .then((data) => {
+            let total = 0;
+            for (const item of data.items) {
+              if (!EXCLUDE_TITLES.includes(item.title) && !item.title.includes('Permanent Adhesive Tape Strips')) {
+                total += item.quantity || 0;
+              }
+            }
+            this.totalCartItems = total;
+            this.$forceUpdate();
+          });
+      },
+
+      searchFilter(filter) {
+        if (this.searchCategory != filter) this.searchCategory = filter;
+        else {
+          this.searchCategory = null;
+        }
+        this.startSearch();
+      },
+
+      openSearch() {
+        this.showSearch = true;
+        this.startSearch();
+        setTimeout(() => {
+          const searchInput = document.querySelector('.searchInput');
+          if (searchInput) {
+            searchInput.focus();
+          }
+        }, 100);
+      },
+
+      isDesktop() {
+        return window.innerWidth > 1130;
+      },
+
+      showCart() {
+        this.bus.$emit('showCart');
+      },
+
+      async startSearch() {
+        // Clear Debounce if it exists
+        this.searchingDesigns = true;
+        try {
+          clearTimeout(this.searchTimeout);
+        } catch (error) {}
+
+        this.searchTimeout = setTimeout(() => {
+          let searchQuery;
+
+          fetch(`/search/suggest.json?q={${this.search}}&resources[type]=page,collection,article,query,`)
+            .then((r) => r.json())
+            .then(async (data) => {
+              this.searchObject.pages = data.resources.results.pages;
+              this.searchObject.collections = data.resources.results.collections;
+              this.searchObject.articles = data.resources.results.articles || [];
+              this.searchObject.queries = data.resources.results.queries;
+              this.searchingDesigns = false;
+              this.$forceUpdate();
+            });
+
+          fetch(`/search/suggest.json?q={${this.search}}&resources[type]=product`)
+            .then((r) => r.json())
+            .then(async (data) => {
+              // Filter products to only include vendor "felt right"
+              this.searchObject.products = (data.resources.results.products || []).filter(
+                (product) => product.vendor && product.vendor.toLowerCase() === 'felt right'
+              );
+              this.searchingDesigns = false;
+              this.$forceUpdate();
+            });
+        }, 100);
+      },
+
+      searchQueryClicked(query) {
+        this.search = query;
+        this.showSuggestions = false;
+        this.startSearch();
+        // Optional: focus back on input after selecting
+        setTimeout(() => {
+          const searchInput = document.querySelector('.searchInput');
+          if (searchInput) {
+            searchInput.focus();
+          }
+        }, 100);
+      },
+    },
+  });
+</script>
+
+<style>
+  /* Prevent flash of uninitialized Vue content */
+  [v-cloak] {
+    display: none !important;
+    visibility: hidden !important;
+  }
+  {% assign spacing =  block.blocks | size | times: 42 | plus: 48 %}
+  .ud-mobileMenuV2 {
+    top: 48px;
+    height: calc(100vh - {{ spacing }}px);
+    z-index: 1000;
+  }
+
+  .mobileMenuBG {
+    top: {{ spacing }}
+    px !important;
+    z-index: -1000;
+  }
+
+  .ud-mobileMenuV2::backdrop {
+    height: 100%;
+    margin: 0;
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    padding: 0;
+  }
+</style>
+
+{% comment %} We are no longer using Simple or Lists Blocks {% endcomment %}
+{% schema %}
+{
+  "name": "Header Block",
+  "blocks": [
+    {
+      "type": "_header-tabbed-section"
+    },
+    {
+      "type": "_header-tabbed-1-row"
+    }
+  ],
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "trending_searches",
+      "label": "Trending Searches"
+    },
+    {
+      "type": "text",
+      "id": "featured_collection_title",
+      "label": "Featured Collection Title"
+    },
+    {
+      "type": "collection",
+      "id": "featured_collection",
+      "label": "Featured Collection"
+    },
+    {
+      "type": "image_picker",
+      "id": "site_logo",
+      "label": "Site Logo"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Header Block",
+      "settings": {},
+      "blocks": []
+    }
+  ]
+}
+{% endschema %}

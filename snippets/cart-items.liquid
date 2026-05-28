@@ -1,0 +1,254 @@
+<div class="tw-flex tw-flex-col tw-gap-4 tw-p-2 tw-pt-2">
+  <!-- Items -->
+  <div class="tw-flex tw-flex-col tw-gap-4">
+    <template v-for="(item, index) in cartItems">
+      <div
+        v-if="          item && item.title"
+        :key="item.id || index"
+        class="tw-flex tw-flex-col tw-gap-4 "
+        :class="index > 0 ? 'tw-border-t tw-pt-4 tw-border-solid tw-border-grey-dark' : ''"
+      >
+        <!-- Image & Item Details Container -->
+        <div class="tw-flex tw-gap-4">
+          <!-- Item Image -->
+          <div
+            class="tw-aspect-square tw-size-16 md:tw-size-40"
+            v-if="(item.properties && (item.properties._pi || item.properties._preview_image)) || item.image"
+          >
+            <img
+              height="100%"
+              width="100%"
+              loading="lazy"
+              class="tw-aspect-square tw-h-full tw-w-full tw-object-cover"
+              :src="(item.properties && (item.properties._pi || item.properties._preview_image)) || item.image"
+              @error="$event.target.src = item.image"
+            >
+          </div>
+          <!-- Item Details -->
+          <div class="tw-flex tw-h-full tw-w-full tw-flex-col">
+            <div class="tw-flex tw-items-start tw-justify-between">
+              <div class="">
+                <!-- Title -->
+                <span class="tw-font-playfair tw-text-18 tw-font-bold tw-leading-tight tw-text-black md:tw-text-24">
+                  [[cartItemTitle(item)]]
+                </span>
+
+                <!-- Properties -->
+                <div class="tw-flex tw-flex-col tw-gap-2" v-if="item.properties">
+                  <div class="tw-text-12" v-for="(values, label) in item.properties">
+                    <span v-if="label !== 'adhesive-tabs' && label !== 'mini-adhesive-tabs' && label !== 'adhesive-tape' && label !== 'drywall-screws' && !label.startsWith('_') && label !== '__shopify_send_gift_card_to_recipient'">
+                      <b>[[label]]:</b>
+                      [[values]]</span
+                    >
+                  </div>
+                </div>
+              </div>
+              <!-- Final Price -->
+              <div class="tw-flex tw-flex-col tw-items-end tw-gap-1 tw-pl-1 tw-text-14 tw-font-bold tw-text-navy md:tw-text-16">
+                <template v-if="flashSaleLive && isFlashSale(item)">
+                  <div class="tw-h-fit tw-w-fit tw-rounded-full tw-bg-rust tw-px-4 tw-text-12 tw-font-normal tw-text-white">
+                    Flash Sale
+                  </div>
+                  <div class="tw-flex tw-w-fit tw-flex-col tw-items-end tw-justify-center tw-gap-1 tw-pr-1">
+                    <div class="tw-font-bold tw-leading-tight tw-text-navy">
+                      [[ item.discounted_price * item.quantity / 100 | currency ]]
+                    </div>
+                    <div class="tw-text-12 tw-text-blue-grey tw-line-through">
+                      [[ item.price * item.quantity / 100 | currency ]]
+                    </div>
+                  </div>
+                </template>
+
+                <template v-else-if="sitewideSale">
+                  <div class="tw-h-fit tw-w-fit tw-rounded-full tw-bg-rust tw-px-4 tw-text-12 tw-font-normal tw-text-white">
+                    [[ saleMessage]]
+                  </div>
+                  <div class="tw-flex tw-w-fit tw-flex-col tw-items-end tw-justify-center tw-gap-1 tw-pr-1">
+                    <div class="tw-font-bold tw-leading-tight tw-text-navy">
+                      [[ item.discounted_price * item.quantity / 100 | currency ]]
+                    </div>
+                    <div class="tw-text-12 tw-text-blue-grey tw-line-through">
+                      [[ item.price * item.quantity / 100 | currency ]]
+                    </div>
+                  </div>
+                </template>
+
+                <template v-else-if="productDetails[item.handle] && productDetails[item.handle].compare_at_price > item.final_price">
+                  <div class="tw-h-fit tw-w-fit tw-rounded-full tw-bg-rust tw-px-4 tw-text-12 tw-font-normal tw-text-white">
+                    [[ saleMessage]]
+                  </div>
+                  <div class="tw-flex tw-w-fit tw-flex-col tw-items-start tw-justify-center tw-gap-1">
+                    <div class="tw-font-bold tw-leading-tight tw-text-navy">
+                      [[ item.final_price * item.quantity / 100 | currency ]]
+                    </div>
+                    <div
+                      v-if="productDetails[item.handle] && productDetails[item.handle].compare_at_price > 0"
+                      class="tw-text-12 tw-text-blue-grey tw-line-through"
+                    >
+                      [[ productDetails[item.handle].compare_at_price * item.quantity / 100 | currency ]]
+                    </div>
+                    <div v-else class="tw-text-12 tw-text-blue-grey tw-line-through">
+                      [[ item.price * item.quantity / 100 | currency ]]
+                    </div>
+                  </div>
+                </template>
+
+                <template v-else>
+                  <div>[[ item.price * item.quantity / 100 | currency ]]</div>
+                </template>
+              </div>
+            </div>
+
+            <!-- Quantity & Price Per Container -->
+            <div class="tw-flex tw-items-center tw-justify-start tw-gap-3 tw-py-2">
+              <!-- Quantity -->
+              <div
+                v-if="item && item.title && item.title != 'Freight Shipping'"
+                class="tw-flex tw-gap-4 tw-border tw-border-black tw-px-3 tw-py-1"
+                :class="disableCartActions ? 'tw-opacity-50' : ''"
+                v-if="!uneditableInCart(item) && item.price > 0"
+              >
+                <button
+                  @click="decreaseItemQuantity(item)"
+                  :disabled="disableCartActions"
+                  :class="disableCartActions ? 'tw-opacity-40 tw-pointer-events-none' : ''"
+                >
+                  <i class="fal fa-minus"></i>
+                </button>
+                <span>[[item.quantity]]</span>
+                <button
+                  @click="increaseItemQuantity(item)"
+                  :disabled="disableCartActions"
+                  :class="disableCartActions ? 'tw-opacity-40 tw-pointer-events-none' : ''"
+                >
+                  <i class="fal fa-plus"></i>
+                </button>
+              </div>
+              <span class="tw-hidden tw-text-20 tw-font-semibold tw-text-grey-dark md:tw-block">-</span>
+              <!-- Price Per Item -->
+              <div class="tw-hidden tw-text-14 sm:tw-block">
+                <div>
+                  [[item.price / 100 | currency]]
+                  <small>ea</small>
+                </div>
+              </div>
+            </div>
+
+            <!-- Remove Button -->
+            <div class="tw-flex tw-h-full tw-w-full tw-items-end tw-justify-end">
+              <button
+                v-if="!uneditableInCart(item)"
+                @click="removeItem(item)"
+                :disabled="disableCartActions"
+                :class="disableCartActions ? 'tw-opacity-50 tw-pointer-events-none tw-text-grey' : ''"
+                class="tw-w-full tw-justify-self-end tw-text-end tw-text-14 tw-text-grey-dark"
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+  </div>
+
+  <!-- Bundles -->
+  <template v-for="(bundle, bIndex) in cartBundles">
+    <div
+      :key="'bundle-' + bundle.key"
+      class="tw-flex tw-flex-col tw-gap-4 tw-border-t tw-pt-4 tw-border-solid tw-border-grey-dark"
+    >
+      <!-- Bundle Header -->
+      <div class="tw-flex tw-gap-4">
+        <!-- Bundle Image: use first item with an image -->
+        <template v-for="bundleImg in [bundle.items.find(i => (i.properties && (i.properties._pi || i.properties._preview_image)) || i.image)]">
+          <div class="tw-aspect-square tw-size-16 md:tw-size-40" v-if="bundleImg">
+            <img
+              height="100%"
+              width="100%"
+              loading="lazy"
+              class="tw-aspect-square tw-h-full tw-w-full tw-object-cover"
+              :src="(bundleImg.properties && (bundleImg.properties._pi || bundleImg.properties._preview_image)) || bundleImg.image"
+              @error="$event.target.src = bundleImg.image"
+            >
+          </div>
+        </template>
+        <!-- Bundle Details -->
+        <div class="tw-flex tw-h-full tw-w-full tw-flex-col">
+          <div class="tw-flex tw-items-start tw-justify-between">
+            <div>
+              <span class="tw-font-playfair tw-text-18 tw-font-bold tw-leading-tight tw-text-black md:tw-text-24">
+                [[ bundle.bundleName || 'Bundle' ]]
+              </span>
+            </div>
+            <!-- Combined Price -->
+            <div class="tw-flex tw-flex-col tw-items-end tw-gap-1 tw-pl-1 tw-text-14 tw-font-bold tw-text-navy md:tw-text-16">
+              <template v-if="bundle.hasDiscount">
+                <div class="tw-h-fit tw-w-fit tw-rounded-full tw-bg-rust tw-px-4 tw-text-12 tw-font-normal tw-text-white">
+                  [[ bundle.discountLabel ]]
+                </div>
+                <div class="tw-flex tw-w-fit tw-flex-col tw-items-end tw-justify-center tw-gap-1 tw-pr-1">
+                  <div class="tw-font-bold tw-leading-tight tw-text-navy">[[ bundle.totalPrice / 100 | currency ]]</div>
+                  <div class="tw-text-12 tw-text-blue-grey tw-line-through">
+                    [[ bundle.originalPrice / 100 | currency ]]
+                  </div>
+                </div>
+              </template>
+              <template v-else>
+                <div>[[ bundle.totalPrice / 100 | currency ]]</div>
+              </template>
+            </div>
+          </div>
+
+          <!-- Contains Section -->
+          <div class="tw-flex tw-flex-col tw-pt-3">
+            <button
+              type="button"
+              @click="openedBundleContains == bundle.key ? openedBundleContains = '' : openedBundleContains = bundle.key"
+              class="tw-flex tw-items-center tw-gap-1 tw-w-fit tw-border-none tw-bg-transparent tw-cursor-pointer tw-p-0 tw-font-montserrat tw-text-12 tw-font-semibold tw-text-offblack"
+            >
+              <span>Contains</span>
+              <i
+                class="fal tw-text-10 tw-transition-transform tw-duration-200"
+                :class="openedBundleContains == bundle.key ? 'fa-chevron-up' : 'fa-chevron-down'"
+              ></i>
+            </button>
+            <div v-if="openedBundleContains == bundle.key" class="tw-flex tw-flex-col tw-gap-1.5 tw-pl-2 tw-pt-2">
+              <div
+                v-for="(bItem, biIdx) in bundle.items"
+                :key="'bi-' + biIdx"
+                class="tw-flex tw-items-center tw-gap-2 tw-text-12 tw-text-offblack"
+              >
+                <img
+                  v-if="bItem.image"
+                  :src="bItem.image"
+                  :alt="bItem.title"
+                  class="tw-size-8 tw-rounded tw-object-cover tw-border tw-border-grey-dark"
+                  loading="lazy"
+                  width="32"
+                  height="32"
+                >
+                <div class="tw-flex tw-flex-col">
+                  <span class="tw-font-semibold">[[ bItem.title ]]</span>
+                </div>
+                <span class="tw-ml-auto tw-text-nowrap">x[[ bItem.quantity ]]</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Remove Bundle Button -->
+          <div class="tw-flex tw-h-full tw-w-full tw-items-end tw-justify-end tw-pt-2">
+            <button
+              @click="removeBundle(bundle)"
+              :disabled="disableCartActions"
+              :class="disableCartActions ? 'tw-opacity-50 tw-pointer-events-none tw-text-grey' : ''"
+              class="tw-w-full tw-justify-self-end tw-text-end tw-text-14 tw-text-grey-dark"
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+</div>

@@ -187,24 +187,6 @@
       };
     },
     methods: {
-      addCalculatorToCart() {
-        let quantity = 0;
-
-        // Determine quantity based on selected option
-        if (this.selectedCalc === 'calc') {
-          quantity = this.calculatedTiles;
-        } else if (this.selectedCalc === 'deal') {
-          quantity = this.roundedTiles;
-        } else {
-          alert('Please select a quantity option');
-          return;
-        }
-
-        // Set quantity and add to cart
-        this.quantity = quantity;
-        this.addingToCart = true;
-        this.addToCart();
-      },
       async addToCart() {
         this.addingToCart = true;
         const params = new URLSearchParams(window.location.search);
@@ -367,8 +349,8 @@
 
         if (this.shippingMethod == 'Freight') {
           this.bus.$emit('addFreight');
-          await axios.get('/cart.js').then(async (response) => {
-            let cartItems = response.data.items;
+          await fetch('/cart.js').then((r) => r.json()).then(async (data) => {
+            let cartItems = data.items;
             let addShipping = true;
           });
         }
@@ -391,217 +373,53 @@
 
         console.log('Adding to cart:', JSON.stringify(items, null, 2));
 
-        axios
-          .post('/cart/add.js', {
-            items: items,
-          })
-          .then((response) => {
-            console.log('Cart add success:', response.data);
-            console.log('Items actually added:', response.data.items?.map(item => ({
-              id: item.variant_id,
-              title: item.title,
-              quantity: item.quantity,
-              variant_title: item.variant_title
-            })));
-            this.showCart();
-            this.bus.$emit('refreshCart');
-            this.addingToCart = false;
-            this.$forceUpdate();
-          })
-          .catch((error) => {
-            console.error('Cart add error:', error);
-            console.error('Error response:', error.response);
-            const errorMessage = error.response && error.response.data && error.response.data.description
-              ? error.response.data.description
-              : 'Unable to add item to cart. Please try again.';
-            Swal.fire({
-              icon: 'error',
-              text: errorMessage,
-            });
-            this.addingToCart = false;
-          })
-          .finally(() => {
-            this.addingToCart = false;
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items: items }),
+        }).then(async (r) => {
+          const data = await r.json();
+          if (!r.ok) throw data;
+          return data;
+        }).then((data) => {
+          console.log('Cart add success:', data);
+          console.log('Items actually added:', data.items?.map(item => ({
+            id: item.variant_id,
+            title: item.title,
+            quantity: item.quantity,
+            variant_title: item.variant_title
+          })));
+          this.showCart();
+          this.bus.$emit('refreshCart');
+          this.addingToCart = false;
+          this.$forceUpdate();
+        }).catch((error) => {
+          console.error('Cart add error:', error);
+          const errorMessage = error && error.description
+            ? error.description
+            : 'Unable to add item to cart. Please try again.';
+          Swal.fire({
+            icon: 'error',
+            text: errorMessage,
           });
-      },
-      getProductTiles() {
-        if (typeof axios === 'undefined') {
-          // Axios not loaded yet (deferred), retry after a short delay
-          setTimeout(() => this.getProductTiles(), 100);
-          return;
-        }
-          // Axios POST request (converted from cURL)
-        axios.post(
-          'https://studiov2.feltright.com/api/update-shopify-product',
-          {
-            shopifyProductId: {{ product.id }}
-          },
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Basic ZmVsdHJpZ2h0OmZlbHRyaWdodDEyMw=='
-            }
-          }
-        )
-        .then(response => {
-          // handle success
-          console.log('Tiles Response', response.data);
-        })
-        .catch(error => {
-          // handle error
-          console.error('Tiles Error Response', error);
+          this.addingToCart = false;
+        }).finally(() => {
+          this.addingToCart = false;
         });
-      },
+      }
     },
     mounted() {
-      // Expose global function for 3D Boxes Installation Type selector
-      // This allows the native onclick handlers in the snippet to update Vue state
-      {% if product.handle == '3d-boxes' or product.handle == '3d-acoustic-boxes-screws' or product.handle == 'small-3d-acoustic-boxes' %}
-      const self = this;
-      window.set3DBoxesAttachment = function(type) {
-        self.selectedAttachment = type;
-      };
-      console.log('3D Boxes attachmentConfig:', this.attachmentConfig);
-      {% endif %}
 
       const params = new URLSearchParams(window.location.search);
       const urlVariant = params.get('variant');
       if (urlVariant) {
         this.currentVariantId = urlVariant;
       }
-      if ('{{ product.metafields.custom.special_shipping_options.value }}' == 'Freight Shipping Only') {
-        this.shippingMethod = 'Freight';
-      }
-      this.getProductTiles()
-      if (this.getParameter('ceilingRecomendationGood') || this.getParameter('ceilingRecomendationBetter') || this.getParameter('ceilingRecomendationBest')) {
-        this.ceilingRecomendationGood = this.getParameter('ceilingRecomendationGood');
-        this.ceilingRecomendationBetter = this.getParameter('ceilingRecomendationBetter');
-        this.ceilingRecomendationBest = this.getParameter('ceilingRecomendationBest');
-        this.ceilingMessageId = this.getParameter('ceilingMessageId');
-        this.ceilingBaffleType = this.getParameter('ceilingBaffleType');
-        this.showAcousticRecommendations();
-      }
-
-      // Check for commercial calculator parameters
-      const urlParams = new URLSearchParams(window.location.search);
-      const designType = urlParams.get('design_type');
-      const productId = urlParams.get('product_id');
-      const quantity = urlParams.get('quantity');
-      const coverage = urlParams.get('coverage');
-      const solutionType = urlParams.get('solution_type');
-      const productName = urlParams.get('product_name');
-
-      // Check for commercial calculator parameters (multiple solution types)
-      const wallQuantity = urlParams.get('wall_quantity');
-      const wallSqFt = urlParams.get('wall_sqft');
-      const ceilingQuantity = urlParams.get('ceiling_quantity');
-      const ceilingSqFt = urlParams.get('ceiling_sqft');
-      const wallProduct = urlParams.get('wall_product');
-      const roomType = urlParams.get('room_type');
-      const ceilingProductId = urlParams.get('ceiling_product_id');
-
-      // Map ceiling product ID to URL
-      const ceilingProductUrlMap = {
-        'cloud_baffles': '/products/drop-ceiling-cloud-baffle',
-        'blade_baffles': '/products/admiral-ceiling-blade',
-        'beams': '/products/4-foot-wood-acoustic-beams',
-        'wood_slat_ceiling': '/products/wood-slat-ceiling'
-      };
-      const ceilingProductUrl = ceilingProductId ? ceilingProductUrlMap[ceilingProductId] : null;
-
-      // Check for multiple solution results
-      const maxWallQuantity = urlParams.get('max_wall_quantity');
-      const balancedWallQuantity = urlParams.get('balanced_wall_quantity');
-      const maxCeilingWallQuantity = urlParams.get('max_ceiling_wall_quantity');
-
-      if (designType === 'Felt Right Design' && (quantity || maxWallQuantity)) {
-        this.isCommercial = true;
-        this.solutionType = solutionType;
-        this.quantityMode = urlParams.get('quantity_mode') || 'ideal';
-
-        // Debug logging for development
-        console.log('Commercial calculator activated:', {
-          designType,
-          quantity,
-          maxWallQuantity,
-          solutionType,
-          hasMultipleSolutions: !!maxWallQuantity
-        });
-
-        // Store calculator parameters
-        this.calculatorParams = {
-          wallProduct: wallProduct || productId,
-          roomType: roomType || 'commercial'
-        };
-        console.log('ceilingProductUrl', ceilingProductUrl)
-        if (maxWallQuantity) {
-          // Multiple solutions provided
-          this.commercialSolutions = {
-            maxWall: {
-              wallUnits: parseInt(urlParams.get('max_wall_quantity')) || 0,
-              wallSqFt: parseInt(urlParams.get('max_wall_sqft')) || 0,
-              ceilingUnits: parseInt(urlParams.get('max_wall_ceiling_quantity')) || 0,
-              ceilingSqFt: parseInt(urlParams.get('max_wall_ceiling_sqft')) || 0,
-              ceilingProductUrl: ceilingProductUrl || '/products/drop-ceiling-cloud-baffle'
-            },
-            balanced: {
-              wallUnits: parseInt(urlParams.get('balanced_wall_quantity')) || 0,
-              wallSqFt: parseInt(urlParams.get('balanced_wall_sqft')) || 0,
-              ceilingUnits: parseInt(urlParams.get('balanced_ceiling_quantity')) || 0,
-              ceilingSqFt: parseInt(urlParams.get('balanced_ceiling_sqft')) || 0,
-              ceilingProductUrl: ceilingProductUrl || '/products/drop-ceiling-cloud-baffle'
-            },
-            maxCeiling: {
-              wallUnits: parseInt(urlParams.get('max_ceiling_wall_quantity')) || 0,
-              wallSqFt: parseInt(urlParams.get('max_ceiling_wall_sqft')) || 0,
-              ceilingUnits: parseInt(urlParams.get('max_ceiling_quantity')) || 0,
-              ceilingSqFt: parseInt(urlParams.get('max_ceiling_sqft')) || 0,
-              ceilingProductUrl: ceilingProductUrl || '/products/drop-ceiling-cloud-baffle'
-            }
-          };
-        } else {
-          // Single solution - estimate other solutions
-          const baseQuantity = parseInt(quantity) || 0;
-          const baseCoverage = parseInt(coverage) || 0;
-
-          this.commercialSolutions = {
-            maxWall: {
-              wallUnits: Math.round(baseQuantity * 1.2),
-              wallSqFt: Math.round(baseCoverage * 1.2),
-              ceilingUnits: Math.round(baseQuantity * 0.1),
-              ceilingSqFt: Math.round(baseCoverage * 0.1),
-              ceilingProductUrl: ceilingProductUrl || '/products/drop-ceiling-cloud-baffle'
-            },
-            balanced: {
-              wallUnits: baseQuantity,
-              wallSqFt: baseCoverage,
-              ceilingUnits: Math.round(baseQuantity * 0.3),
-              ceilingSqFt: Math.round(baseCoverage * 0.3),
-              ceilingProductUrl: ceilingProductUrl || '/products/drop-ceiling-cloud-baffle'
-            },
-            maxCeiling: {
-              wallUnits: Math.round(baseQuantity * 0.6),
-              wallSqFt: Math.round(baseCoverage * 0.6),
-              ceilingUnits: Math.round(baseQuantity * 0.8),
-              ceilingSqFt: Math.round(baseCoverage * 0.8),
-              ceilingProductUrl: ceilingProductUrl || '/products/drop-ceiling-cloud-baffle'
-            }
-          };
-        }
-
-        this.showCommercialCalculatorCards();
-
-        // Scroll to top so calculator results are visible
-        this.$nextTick(() => {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-      }
     }
   });
 
   // Mount the Vue 3 application
   app.mount('.section-{{ section.id }}-props');
-
 
   function initMobileSwiper() {
     try {
@@ -769,8 +587,6 @@
   });
 </script>
 
-{% comment %} <script type="module" src="{{ 'product-details.js' | asset_url }}"></script> {% endcomment %}
-
 {% comment %} Liquid Template {% endcomment %}
 {% schema %}
 {
@@ -827,8 +643,8 @@
       "type": "_pdp-column"
     }
   ],
-  "disabled_on": {
-    "groups": ["custom.overlay"]
+  "enabled_on": {
+    "templates": ["product"]
   },
   "presets": [
     {

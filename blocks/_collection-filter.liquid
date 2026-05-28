@@ -1,0 +1,195 @@
+<div class="tw-p-1">
+  {%- liquid
+    # theme-check-disable
+    capture content_for_query_string
+      echo content_for_header
+    endcapture
+  -%}
+
+  {% assign get_full_url = content_for_query_string
+    | split: '"pageurl":"'
+    | last
+    | split: '"'
+    | first
+    | split: '.myshopify.com'
+    | last
+    | replace: '\/', '/'
+    | replace: '%20', ' '
+    | replace: '\u0026', '&'
+    | replace: collection.url, ''
+    | replace: 'feltright.com', ''
+    | replace: '%2F', '/'
+  %}
+  {% if block.settings.filter_type != 'color' %}
+    <a
+      {% assign filter_change = block.settings.filter_type | append: block.settings.tag | replace: ' ', '+' | escape %}
+      {% if get_full_url contains '?' %}
+        {% assign query_params = get_full_url
+          | replace: 'pb=0', ''
+          | replace: '_fd=0', ''
+          | replace: '&&', '&'
+          | replace: '?&', '?'
+          | replace: '?', ''
+          | split: '&'
+        %}
+        {% if query_params contains filter_change %}
+          {% assign new_params = '' %}
+          {% for param in query_params %}
+            {% if param contains 'tag' and filter_change contains 'tag' %}
+              {% continue %}
+            {% endif %}
+            {% unless forloop.last and param == filter_change %}
+              {% assign new_params = new_params | append: '&' %}
+            {% endunless %}
+            {% unless param == filter_change %}
+              {% assign new_params = new_params | append: param %}
+            {% endunless %}
+          {% endfor %}
+          {% if new_params != blank %}
+            href="{{ collection.url |  append: '?' |  append: new_params | replace: '&&', '&' | replace: '?&', '?' }}"
+          {% else %}
+            href="{{ collection.url }}"
+          {% endif %}
+        {% elsif filter_change contains 'filter.v.price' %}
+          {% assign new_params = '' %}
+          {% for param in query_params %}
+            {% unless forloop.last and param == filter_change %}
+              {% assign new_params = new_params | append: '&' %}
+            {% endunless %}
+            {% if param contains 'filter.v.price' and param != filter_change %}
+              {% continue %}
+            {% endif %}
+            {% assign new_params = new_params | append: param %}
+          {% endfor %}
+          href="{{ collection.url}}{{ new_params |  join: '&' |  prepend: '?' | append: '&' | append: filter_change | replace: '&&', '&' | replace: '?&', '?' }}"
+        {% elsif filter_change contains 'filter.p.tag' %}
+          {% assign new_params = '' %}
+          {% for param in query_params %}
+            {% unless forloop.last and param == filter_change %}
+              {% assign new_params = new_params | append: '&' %}
+            {% endunless %}
+            {% if param contains 'filter.p.tag' and param != filter_change %}
+              {% continue %}
+            {% endif %}
+            {% assign new_params = new_params | append: param %}
+          {% endfor %}
+          href="{{ collection.url}}{{ new_params |  join: '&' |  prepend: '?' | append: '&' | append: filter_change | replace: '&&', '&' | replace: '?&', '?' }}"
+        {% else %}
+          href="{{ collection.url}}{{ query_params |  join: '&' |  prepend: '?' | append: '&' | append: filter_change | replace: '&&', '&' | replace: '?&', '?' }}"
+        {% endif %}
+      {% else %}
+        href="{{ collection.url }}{%- if block.settings.tag != 'all' -%}?{{ block.settings.filter_type }}{{ block.settings.tag | replace: ' ', '+' | replace: '&&', '&' | replace: '?&', '?'}}{%- endif -%}"
+      {% endif %}
+      class="tw-flex tw-justify-center tw-w-full tw-items-middle tw-gap-2 tw-group"
+    >
+      <div class="tw-border group-hover:tw-border-black tw-rounded-sm tw-border-offblack tw-size-4 tw-aspect-square tw-p-0.5 tw-my-auto {% if get_full_url contains filter_change %} tw-bg-black {% endif %}">
+        <svg
+          class="tw-fill-white {% unless get_full_url contains filter_change %} tw-hidden {% endunless %}"
+          viewBox="0 0 448 512"
+        >
+          <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+        </svg>
+      </div>
+
+      <p
+        class="group-hover:tw-underline tw-text-offblack tw-text-14 tw-w-full !tw-m-0"
+      >
+        {{ block.settings.title }}
+      </p>
+    </a>
+  {% else %}
+    <div class="tw-flex tw-flex-wrap tw-gap-2 tw-w-full ">
+      {% for color in metaobjects.tile_colors.values %}
+        {% assign color_index = forloop.index %}
+        {% for ref in metaobjects.tile_colors.values %}
+          {% if color_index == ref.position %}
+            {% assign color_ref = ref %}
+          {% endif %}
+        {% endfor %}
+        {% assign filter_change = 'filter.p.tag=' | append: color_ref.name | replace: ' ', '+' %}
+        <a
+          {% assign query_params = get_full_url
+            | replace: 'pb=0', ''
+            | replace: '_fd=0', ''
+            | replace: '&&', '&'
+            | replace: '?&', '?'
+            | replace: '?', ''
+            | split: '&'
+          %}
+          {% if get_full_url contains color_ref.name %}
+            {% assign new_params = '' %}
+            {% for param in query_params %}
+              {% unless forloop.last and param == filter_change %}
+                {% assign new_params = new_params | append: '&' %}
+              {% endunless %}
+              {% if param != filter_change %}
+                {% assign new_params = new_params | append: param %}
+              {% endif %}
+            {% endfor %}
+            {% if new_params != blank %}
+              href="{{ collection.url |  append: '?' |  append: new_params | replace: '&&', '&' | replace: '?&', '?' }}"
+            {% else %}
+              href="{{ collection.url }}"
+            {% endif %}
+          {% else %}
+            href="{{ collection.url }}{{ query_params |  join: '&' | prepend: '?' | append: '&' | append: filter_change | replace: '&&', '&' | replace: '?&', '?' }}"
+          {% endif %}
+          class="tw-group tw-h-fit tw-w-fit"
+        >
+          {% assign filter_border_check = 'filter.p.tag=' | append: color_ref.name %}
+          <div
+            class="
+              tw-size-6 tw-border {% if color_ref.bordered %}tw-border-black/100{% else %}tw-border-black/0{% endif %}
+              {% if get_full_url contains filter_border_check %} tw-ring-4 tw-ring-black {% endif %}  tw-rounded-full
+            "
+            style="background-color: {{ color_ref.color }};"
+          ></div>
+        </a>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Collection Filter",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tag",
+      "label": "Collection Tag"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Link Title",
+      "default": "Filter Title"
+    },
+    {
+      "type": "select",
+      "id": "filter_type",
+      "label": "Filter Type",
+      "default": "filter.p.tag=",
+      "options": [
+        {
+          "value": "filter.p.tag=",
+          "label": "Product Tag"
+        },
+        {
+          "value": "filter.v.price.lte=",
+          "label": "Product Price (Less Than)"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Filter"
+    }
+  ]
+}
+{% endschema %}

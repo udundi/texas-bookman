@@ -26,152 +26,154 @@
     {% endif %}
     {% if block.settings.fullwidth %} tw-w-full {% else %} tw-w-fit {% endif %}
     tw-flex tw-justify-center tw-border-2 tw-py-2 tw-px-10 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[102%]
-  ">
+  "
+>
   {{ block.settings.text }}
 </a>
 
 {% schema %}
-  {
-    "name": "Button",
-    "settings": [
-      {
-        "type": "text",
-        "id": "text",
-        "label": "Button Text",
-        "default": "Click Me"
-      },
-      {
-        "type": "url",
-        "id": "url",
-        "label": "Button URL"
-      },
-      {
-        "type": "select",
-        "id": "type",
-        "label": "Button Style",
-        "options": [
-          {
-            "value": "black",
-            "label": "Black (default)"
-          },
-          {
-            "value": "navy",
-            "label": "Navy"
-          },
-          {
-            "value": "white",
-            "label": "White"
-          },
-          {
-            "value": "outlinedWhite",
-            "label": "Outlined White"
-          },
-          {
-            "value": "outlinedNavy",
-            "label": "Outlined Navy"
-          },
-          {
-            "value": "outlinedBlack",
-            "label": "Outlined Black"
-          }
-        ],
-        "default": "black"
-      },
-      {
-        "type": "select",
-        "id": "align",
-        "label": "Text Alignment",
-        "options": [
-          {
-            "value": "center",
-            "label": "Center (default)"
-          },
-          {
-            "value": "start",
-            "label": "Start"
-          },
-          {
-            "value": "end",
-            "label": "End"
-          }
-        ],
-        "default": "center"
-      },
-      {
-        "type": "checkbox",
-        "id": "fullwidth",
-        "label": "Full Width",
-        "default": false
-      },
-      {
-        "type": "select",
-        "id": "corner_style",
-        "label": "Corner Style",
-        "options": [
-          {
-            "value": "none",
-            "label": "Square"
-          },
-          {
-            "value": "md",
-            "label": "Rounded"
-          },
-          {
-            "value": "full",
-            "label": "Pill"
-          }
-        ],
-        "default": "none"
-      },
-      {
-        "type": "range",
-        "id": "margin-left",
-        "label": "margin left",
-        "min": 0,
-        "max": 10,
-        "step": 1,
-        "default": 0
-      },
-      {
-        "type": "range",
-        "id": "margin-right",
-        "label": "margin right",
-        "min": 0,
-        "max": 10,
-        "step": 1,
-        "default": 0
-      },
-      {
-        "type": "range",
-        "id": "margin-top",
-        "label": "margin top",
-        "min": 0,
-        "max": 10,
-        "step": 1,
-        "default": 0
-      },
-      {
-        "type": "range",
-        "id": "margin-bottom",
-        "label": "margin bottom",
-        "min": 0,
-        "max": 10,
-        "step": 1,
-        "default": 0
-      }
-    ],
-    "presets": [
-      {
-        "name": "Default Button",
-        "settings": {
-          "text": "Click Me",
-          "url": "#",
-          "type": "black",
-          "align": "center",
-          "fullwidth": false,
-          "corner_style": "none"
+{
+  "name": "Button",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Button Text",
+      "default": "Click Me"
+    },
+    {
+      "type": "url",
+      "id": "url",
+      "label": "Button URL"
+    },
+    {
+      "type": "select",
+      "id": "type",
+      "label": "Button Style",
+      "options": [
+        {
+          "value": "black",
+          "label": "Black (default)"
+        },
+        {
+          "value": "navy",
+          "label": "Navy"
+        },
+        {
+          "value": "white",
+          "label": "White"
+        },
+        {
+          "value": "outlinedWhite",
+          "label": "Outlined White"
+        },
+        {
+          "value": "outlinedNavy",
+          "label": "Outlined Navy"
+        },
+        {
+          "value": "outlinedBlack",
+          "label": "Outlined Black"
         }
+      ],
+      "default": "black"
+    },
+    {
+      "type": "select",
+      "id": "align",
+      "label": "Text Alignment",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center (default)"
+        },
+        {
+          "value": "start",
+          "label": "Start"
+        },
+        {
+          "value": "end",
+          "label": "End"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "checkbox",
+      "id": "fullwidth",
+      "label": "Full Width",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "corner_style",
+      "label": "Corner Style",
+      "options": [
+        {
+          "value": "none",
+          "label": "Square"
+        },
+        {
+          "value": "md",
+          "label": "Rounded"
+        },
+        {
+          "value": "full",
+          "label": "Pill"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "margin-left",
+      "label": "margin left",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin-right",
+      "label": "margin right",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin-top",
+      "label": "margin top",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin-bottom",
+      "label": "margin bottom",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Default Button",
+      "category": "Link Blocks",
+      "settings": {
+        "text": "Click Me",
+        "url": "#",
+        "type": "black",
+        "align": "center",
+        "fullwidth": false,
+        "corner_style": "none"
       }
-    ]
-  }
+    }
+  ]
+}
 {% endschema %}

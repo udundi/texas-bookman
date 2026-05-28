@@ -1,0 +1,87 @@
+{% capture blocks %}  
+  {% content_for 'blocks' %}
+{% endcapture %}
+<div class="block-{{ block.id }} tw-bg-white tw-py-4">
+  {% if block.settings.collapsible %}
+    <button
+      class="tw-flex tw-w-full tw-border-b tw-border-black tw-justify-between tw-items-middle tw-cursor-pointer tw-pb-3"
+      @click="
+        () => {
+          if (openFilters.includes('{{ block.id }}')) {
+            openFilters.splice(openFilters.indexOf('{{ block.id }}'), 1);
+          } else {
+            openFilters.push('{{ block.id }}')
+          }
+        }
+      "
+    >
+      <div class="tw-my-auto tw-font-montserrat tw-font-semibold tw-text-offblack tw-text-16 tw-leading-tight">
+        {{ block.settings.title | default: 'Filter Section' }}
+      </div>
+      <div
+        class="tw-fill-offblack tw-size-4"
+        v-cloak
+        v-if="{% if block.settings.collapsed == true %}openFilters.includes('{{ block.id }}'){% else %}!openFilters.includes('{{ block.id }}'){% endif %}"
+      >
+        {% render 'icon-arrow-up' %}
+      </div>
+      <div v-else class="tw-fill-offblack tw-size-4">{% render 'icon-arrow-down' %}</div>
+    </button>
+    <div
+      v-if="{% if block.settings.collapsed == true %}!openFilters.includes('{{ block.id }}'){% else %}openFilters.includes('{{ block.id }}'){% endif %}"
+      class="tw-flex tw-flex-col tw-justify-start tw-gap-[1px]"
+    >
+      {{ blocks }}
+    </div>
+  {% else %}
+    {% if block.settings.title != blank %}
+      <div class="tw-flex tw-w-full tw-border-b tw-border-black tw-justify-between tw-items-middle tw-pb-3">
+        <div class="tw-my-auto tw-font-montserrat tw-font-semibold tw-text-offblack tw-text-16 tw-leading-tight">
+          {{ block.settings.title }}
+        </div>
+      </div>
+    {% endif %}
+    <div class="tw-flex tw-flex-col tw-justify-start tw-gap-[1px]">
+      {{ blocks }}
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Collection Filter Box",
+  "settings": [
+    {
+      "type": "checkbox",
+      "label": "Collapsible?",
+      "id": "collapsible",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "label": "Default Collapsed?",
+      "id": "collapsed",
+      "default": true,
+      "visible_if": "{{ block.settings.collapsible == true }}"
+    },
+    {
+      "type": "text",
+      "label": "Title",
+      "id": "title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "_collection-filter"
+    },
+    {
+      "type": "_collection-gate"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Filter Box"
+    }
+  ]
+}
+{% endschema %}

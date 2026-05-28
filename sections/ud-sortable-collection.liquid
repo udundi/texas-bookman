@@ -1,0 +1,682 @@
+{%- liquid
+  # theme-check-disable
+  capture content_for_query_string
+    echo content_for_header
+  endcapture
+-%}
+{% assign get_full_url = content_for_query_string
+  | split: '"pageurl":"'
+  | last
+  | split: '"'
+  | first
+  | split: '.myshopify.com'
+  | last
+  | replace: '\/', '/'
+  | replace: '%20', ' '
+  | replace: '\u0026', '&'
+  | replace: collection.url, ''
+  | replace: 'feltright.com', ''
+%}
+{% comment %} {% assign get_full_url = content_for_query_string | split: '"pageurl":"' | last | split: '?' | last %} {% endcomment %}
+{% assign query_params = get_full_url
+  | replace: 'pb=0', ''
+  | replace: '_fd=0', ''
+  | replace: '&&', '&'
+  | replace: '?&', '?'
+  | replace: '?', ''
+  | split: '&'
+%}
+<style>
+  select {
+    /* for Firefox */
+    -moz-appearance: none;
+    /* for Chrome */
+    -webkit-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+  }
+
+  /* For IE10 */
+  select::-ms-expand {
+    display: none;
+  }
+</style>
+
+{% capture param_tags %}  
+  {% if query_params != blank %}
+    <div class="tw-flex tw-gap-4 max-md:tw-overflow-x-auto md:tw-flex-wrap">
+      {% for param in query_params %}
+        {% if param contains 'filter.p' or param contains 'filter.v' %}
+          <a
+            {% assign new_params = '' %}
+            {% for sub_param in query_params %}
+              {% unless forloop.last and sub_param == param %}
+                {% assign new_params = new_params | append: '&' %}
+              {% endunless %}
+              {% unless sub_param == param %}
+                {% assign new_params = new_params | append: sub_param %}
+              {% endunless %}
+            {% endfor %}
+            {% if new_params != blank %}
+              href="{{ collection.url |  append: '?' |  append: new_params | replace: '&&', '&' | replace: '?&', '?' }}"
+            {% else %}
+              href="{{ collection.url }}"
+            {% endif %}
+            class="tw-flex tw-items-center tw-gap-2 tw-rounded-full tw-bg-black tw-p-2 tw-px-4 tw-text-white"
+          >
+          {{
+            param
+            | replace: 'filter.v.price.lte=', '$'
+            | replace: 'filter.p.tag=', ''
+            | replace: '+', ' '
+            | replace: '%2F', '/'
+          }}
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9.05093 8.23891L4.59082 3.77881L3.82959 4.54004L8.28969 9.00014L3.82959 13.4602L4.59082 14.2215L9.05093 9.76138L13.511 14.2215L14.2723 13.4602L9.81216 9.00014L14.2723 4.54004L13.511 3.77881L9.05093 8.23891Z" fill="#fff"/>
+            </svg>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endcapture %}
+
+<style>
+  #filters-{{ block.id }} {
+    height: 100%;
+    background-color: {{ block.settings.background_color }};
+    max-height: 100px;
+    transition: max-height 0.25s ease
+  }
+
+  #filters-{{ block.id }}
+  .collapsed {
+    max-height: 0;
+  }
+</style>
+
+<div
+  id="sortable-collection"
+  class="tw-flex tw-w-full tw-items-center tw-justify-center tw-py-4   section-{{ section.id }}-props"
+>
+  <div class="tw-flex tw-w-full tw-max-w-screen-3xl tw-flex-col tw-gap-4 md:tw-flex-row md:tw-pr-8">
+    <!-- Filter Container -->
+    <!-- This Container is on the left on Desktop and full screen when open on mobile -->
+    <!-- This Container Gets Resized with Javascript via ud-filter-container class -->
+    <div
+      class="ud-filter-container tw-fixed tw-z-50 tw-w-full tw-flex-col tw-justify-start tw-bg-white tw-py-4 md:tw-sticky md:tw-mx-4 md:tw-w-96 md:tw-gap-2"
+      :class="mobileFiltersOpen ? 'tw-flex' : 'md:tw-flex tw-hidden'"
+    >
+      <div
+        :class="mobileFiltersOpen ? 'tw-static tw-top-0 tw-left-0 md:tw-w-full tw-w-[70vw] ' : 'md:tw-flex tw-hidden'"
+        class="tw-z-[500] tw-h-full tw-w-screen tw-overflow-y-auto tw-pb-8 md:tw-w-full  md:tw-px-4"
+      >
+        <div class="tw-w-full">
+          <!-- Filter Header -->
+          <div class="tw-flex tw-w-full tw-items-center tw-justify-between tw-p-4 md:tw-hidden md:tw-justify-center md:tw-p-2">
+            <h3 class="tw-w-fit tw-text-center tw-text-24 tw-font-bold md:tw-w-full">Filter Designs</h3>
+            <button @click="mobileFiltersOpen = false" class="">X</button>
+          </div>
+          <!-- Filter Container -->
+          <div class="tw-flex tw-h-fit tw-w-full tw-flex-col tw-justify-start tw-gap-4 tw-p-4 md:tw-p-0">
+            <div class="tw-hidden tw-font-montserrat tw-text-16 tw-font-semibold tw-leading-tight md:tw-block">
+              Sort By
+            </div>
+            <div class="tw-relative tw-mb-4 tw-hidden tw-w-full md:tw-block">
+              <div class="tw-absolute tw-right-3 tw-top-1/2 tw-size-3 -tw-translate-y-1/2">
+                {% render 'icon-arrow-down' %}
+              </div>
+              <select
+                aria-label="Sort By"
+                class="tw-w-full tw-rounded-full tw-border tw-border-solid tw-border-black tw-p-2 tw-text-14"
+                @change="sortByChange($event)"
+              >
+                <option
+                  {% unless get_full_url contains 'sort_by' %}
+                    selected
+                  {% endunless %}
+                  value="manual"
+                >
+                  Featured
+                </option>
+                <option
+                  {% if get_full_url contains 'best-selling' %}
+                    selected
+                  {% endif %}
+                  value="best-selling"
+                >
+                  Best Selling
+                </option>
+                <option
+                  {% if get_full_url contains 'created-descending' %}
+                    selected
+                  {% endif %}
+                  value="created-descending"
+                >
+                  New Arrivals
+                </option>
+                <option
+                  {% if get_full_url contains 'title-ascending' %}
+                    selected
+                  {% endif %}
+                  value="title-ascending"
+                >
+                  Alphabetically, A-Z
+                </option>
+                <option
+                  {% if get_full_url contains 'title-descending' %}
+                    selected
+                  {% endif %}
+                  value="title-descending"
+                >
+                  Alphabetically, Z-A
+                </option>
+                <option
+                  {% if get_full_url contains 'price-ascending' %}
+                    selected
+                  {% endif %}
+                  value="price-ascending"
+                >
+                  Price, low to high
+                </option>
+                <option
+                  {% if get_full_url contains 'price-descending' %}
+                    selected
+                  {% endif %}
+                  value="price-descending"
+                >
+                  Price, high to low
+                </option>
+              </select>
+            </div>
+            <div class="tw-flex tw-flex-col tw-justify-start tw-gap-[2px] tw-bg-grey-medium">
+              {% for block in section.blocks %}
+                {% render block %}
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side -->
+    <div class="tw-flex tw-grow tw-flex-col tw-justify-start">
+      <!-- Title and description Container -->
+      {% if section.settings.title != blank or section.settings.description != blank %}
+        <div class="tw-mx-auto tw-flex tw-w-full tw-max-w-7xl tw-flex-col tw-items-start tw-justify-start tw-gap-2 tw-text-center max-md:tw-px-4 md:tw-text-left">
+          {% if section.settings.title != blank %}
+            <!-- Title -->
+            <h1 class="tw-m-0 tw-font-playfair tw-text-36 tw-font-medium tw-leading-normal tw-text-offblack">
+              {{ section.settings.title }}
+            </h1>
+          {% endif %}
+          <!-- Description -->
+          {% if section.settings.description != blank %}
+            <div class="tw-max-w-4xl tw-font-montserrat tw-text-16 tw-leading-normal tw-text-offblack">
+              {{ section.settings.description }}
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+      <!-- Collection Carousel Container -->
+      <div class="ud-filter-carousel tw-flex tw-w-full tw-flex-col tw-justify-start tw-bg-white">
+        {% content_for 'block', type: '_collection-link-container', id: 'collection-links' %}
+        <!-- Filter Buttons Mobile -->
+        <div
+          id="filters-{{ block.id }}"
+          class="duration-300 ease-in-out tw-w-full tw-overflow-hidden tw-transition-all"
+        >
+          <div
+            class="tw-flex tw-w-full tw-flex-row tw-items-center tw-justify-between tw-gap-4 tw-bg-white tw-px-4 tw-py-4 md:tw-hidden"
+            :class="mobileFiltersOpen ? 'tw-hidden' : ''"
+          >
+            <button
+              @click="mobileFiltersOpen = !mobileFiltersOpen"
+              class="tw-h-16 tw-w-full tw-justify-center tw-rounded-md tw-border tw-border-solid tw-border-black tw-p-2 tw-text-center tw-text-16 tw-text-black"
+            >
+              Filters
+            </button>
+
+            <div class="tw-relative tw-h-16 tw-w-full">
+              <select class="tw-h-full tw-w-full " @change="sortByChange($event)">
+                <option value="manual">Featured</option>
+                <option value="best-selling">Best Selling</option>
+                <option value="created-descending">New Arrivals</option>
+                <option value="title-ascending">Alphabetically, A-Z</option>
+                <option value="title-descending">Alphabetically, Z-A</option>
+                <option value="price-ascending">Price, low to high</option>
+                <option value="price-descending">Price, high to low</option>
+              </select>
+              <div class="tw-pointer-events-none tw-absolute tw-left-0 tw-top-0 tw-z-10 tw-flex tw-h-16 tw-w-full tw-items-center tw-justify-center tw-rounded-md tw-border tw-border-solid tw-border-black tw-bg-white tw-p-2 tw-text-center tw-text-16 tw-text-black">
+                Sort by
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tw-flex md:tw-hidden">
+          <!-- Param Tags from above capture -->
+          {{ param_tags }}
+        </div>
+      </div>
+      <!-- Product Grid -->
+      <div class="tw-flex tw-w-full tw-flex-col tw-justify-start tw-gap-4 tw-pt-8">
+        <div class="tw-mx-auto tw-hidden tw-w-full tw-max-w-7xl md:tw-flex">
+          <!-- Param Tags from above capture -->
+          {{ param_tags }}
+        </div>
+        <div
+          id="product-grid-{{ section.id }}"
+          class="tw-mx-auto tw-grid tw-max-w-7xl tw-grid-cols-1 tw-gap-4 tw-gap-y-10 max-md:tw-px-4 sm:tw-gap-10 md:tw-grid-cols-2 lg:tw-gap-14 xl:tw-grid-cols-3"
+        >
+          {% paginate collection.products by 60 -%}
+            <span
+              data-current-page="{{ paginate.current_page }}"
+              data-total-pages="{{ paginate.pages }}"
+              data-infinite-scroll-meta
+              class="tw-hidden"
+            ></span>
+            {% for product in collection.products -%}
+              {% render 'ud-product-card',
+                product: product,
+                video_aspect: true,
+                small_card: true,
+                button_style: section.settings.button_style,
+                product_reviews: 5,
+                show_button_type: section.settings.button_type,
+                button_text: section.settings.button_text,
+                show_price: section.settings.show_price,
+                show_color_options: section.settings.show_color_options
+              %}
+              {% if forloop.index == 42 and section.settings.enable_cta == true %}
+                <!-- Midway CTA Slot -->
+                <div
+                  style="background-color: {{ section.settings.cta_background_color }};"
+                  class="tw-flex tw-items-center tw-bg-grey-light tw-p-8 {% if section.settings.cta_image_direction == 'right' %}tw-flex-row{% else %}tw-flex-row-reverse{% endif %} tw-gap-4 md:tw-col-span-2 xl:tw-col-span-3"
+                >
+                  <!-- CTA Text Box -->
+                  <div class="tw-flex tw-w-full tw-flex-col tw-items-start tw-justify-start tw-gap-4">
+                    <!-- CTA Header -->
+                    <h3 class="tw-m-0 tw-font-playfair tw-text-36 tw-font-bold tw-leading-tight tw-text-offblack">
+                      {{ section.settings.cta_header | default: 'Lorum Ipsem' }}
+                    </h3>
+                    <!-- CTA Body -->
+                    <p class="tw-m-0 tw-text-14 tw-text-offblack">
+                      {{
+                        section.settings.cta_body
+                        | default: '
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nulla minus temporibus autem harum veniam voluptas praesentium optio nesciunt vero nemo eius possimus earum molestias, architecto suscipit atque. Et, delectus! Expedita?'
+                      }}
+                    </p>
+                    <!-- CTA Button -->
+                    <a class="tw-rounded-full tw-bg-black tw-px-6 tw-py-0.5 tw-text-14 tw-text-white">
+                      {{- section.settings.cta_button_text | default: 'Click Me' -}}
+                    </a>
+                  </div>
+                  <!-- CTA Image -->
+                  <div class="tw-w-full max-md:tw-hidden">
+                    {% if section.settings.cta_image != blank %}
+                      {{
+                        section.settings.cta_image
+                        | image_url: width: 800
+                        | image_tag: class: 'tw-w-full tw-aspect-4/3 tw-object-cover'
+                      }}
+                    {% else %}
+                      {{
+                        'collection-1'
+                        | placeholder_svg_tag: 'tw-w-full tw-aspect-4/3 tw-h-full tw-object-contain tw-bg-offblack tw-fill-white'
+                      }}
+                    {% endif %}
+                  </div>
+                </div>
+              {% endif %}
+            {%- endfor %}
+            {% if section.settings.enable_infinite_scroll %}
+              {% if paginate.next %}
+                <div
+                  id="infinite-scroll-sentinel-{{ section.id }}"
+                  data-next-url="{{ paginate.next.url }}"
+                  class="md:tw-col-span-2 xl:tw-col-span-3 tw-h-4"
+                ></div>
+              {% endif %}
+            {% else %}
+              <div class="ud-pagination tw-flex tw-justify-center tw-gap-4 tw-font-bold md:tw-col-span-2">
+                {{- paginate | default_pagination }}
+              </div>
+            {% endif %}
+          {%- endpaginate %}
+        </div>
+        {% if section.settings.enable_infinite_scroll %}
+          <div
+            id="infinite-scroll-spinner-{{ section.id }}"
+            class="tw-w-full tw-flex tw-justify-center tw-animate-spin tw-items-center tw-py-10 md:tw-col-span-2 xl:tw-col-span-3"
+          >
+            <div
+              style="
+                width: 48px;
+                height: 48px;
+                border: 4px solid #e5e7eb;
+                border-top-color: #1e3a5f;
+                border-radius: 50%;
+                animation: ud-spin 0.75s linear infinite;
+              "
+            ></div>
+          </div>
+          <style>
+            @keyframes ud-spin {
+              to {
+                transform: rotate(360deg);
+              }
+            }
+          </style>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const filters = document.getElementById('filters-{{ block.id }}');
+    let lastKnownScrollPosition = 0;
+    let ticking = false;
+
+    function doSomething(scrollPos) {
+      if (window.scrollY > scrollPos) {
+        filters.classList.add('collapsed');
+      } else {
+        filters.classList.remove('collapsed');
+      }
+    }
+
+    document.addEventListener('scroll', (event) => {
+      lastKnownScrollPosition = window.scrollY;
+
+      if (!ticking) {
+        setTimeout(() => {
+          doSomething(lastKnownScrollPosition);
+          ticking = false;
+        }, 20);
+
+        ticking = true;
+      }
+    });
+  })();
+
+  new Vue({
+    el: '.section-{{ section.id }}-props',
+    delimiters: ['[[', ']]'],
+    data() {
+      return {
+        mobileFiltersOpen: false,
+        sectionHeight: 0,
+        openFilters: [],
+      };
+    },
+    mounted() {
+      // console.log('Mounted Sortable Collections')
+      setTimeout(() => {
+        this.getNavHeight();
+      }, 10);
+      window.addEventListener('resize', this.getNavHeight);
+    },
+    methods: {
+      getNavHeight() {
+        const newHeight = document.querySelector('.shopify-section-group-header-group').offsetHeight;
+        // If different then change and update Filter Container
+        if (newHeight != this.sectionHeight) {
+          this.sectionHeight = newHeight;
+          this.changeFilterSpace();
+        }
+      },
+      changeFilterSpace() {
+        const filterContainer = document.querySelector('.ud-filter-container');
+        const filterCarousel = document.querySelector('.ud-filter-carousel');
+        if (filterContainer) {
+          // console.log('got Filter Container')
+          const windowHeight = window.innerHeight;
+          const filterHeight = windowHeight - this.sectionHeight - 40;
+          filterContainer.style.top = `${this.sectionHeight}px`;
+          filterCarousel.style.top = `${this.sectionHeight}px`;
+          filterContainer.style.height = `${filterHeight}px`;
+          console.log('new Filter Height', windowHeight);
+          console.log('new Filter Height', filterHeight);
+        }
+      },
+      sortByChange(event) {
+        const sortValue = event.target.value;
+        const currentUrl = new URL(window.location.href);
+        currentUrl.searchParams.set('sort_by', sortValue);
+        // Reset to page 1 when sorting changes
+        currentUrl.searchParams.set('page', 1);
+        window.location.href = currentUrl.toString();
+      },
+    },
+  });
+
+  {% if section.settings.enable_infinite_scroll %}
+  (function () {
+    var sentinel = document.getElementById('infinite-scroll-sentinel-{{ section.id }}');
+    if (!sentinel) return;
+
+    var grid = document.getElementById('product-grid-{{ section.id }}');
+    var spinner = document.getElementById('infinite-scroll-spinner-{{ section.id }}');
+    var loading = false;
+    var sentinelId = 'infinite-scroll-sentinel-{{ section.id }}';
+
+    function showSpinner() { if (spinner) { spinner.classList.remove('tw-hidden'); spinner.classList.add('tw-flex'); } }
+    function hideSpinner() { if (spinner) { spinner.classList.add('tw-hidden'); spinner.classList.remove('tw-flex'); } }
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        if (!entries[0].isIntersecting || loading) return;
+        var nextUrl = sentinel.dataset.nextUrl;
+        if (!nextUrl) return;
+
+        loading = true;
+        showSpinner();
+        fetch(nextUrl)
+          .then(function (res) { return res.text(); })
+          .then(function (html) {
+            var parser = new DOMParser();
+            var doc = parser.parseFromString(html, 'text/html');
+            var newGrid = doc.getElementById('product-grid-{{ section.id }}');
+            if (!newGrid) { hideSpinner(); loading = false; return; }
+
+            var newItems = Array.prototype.filter.call(newGrid.children, function (el) {
+              return el.id !== sentinelId;
+            });
+            newItems.forEach(function (card) { grid.insertBefore(card, sentinel); });
+
+            var newSentinel = doc.getElementById(sentinelId);
+            if (newSentinel && newSentinel.dataset.nextUrl) {
+              sentinel.dataset.nextUrl = newSentinel.dataset.nextUrl;
+            } else {
+              observer.disconnect();
+              sentinel.remove();
+              hideSpinner();
+            }
+            hideSpinner();
+            loading = false;
+          })
+          .catch(function () { hideSpinner(); loading = false; });
+      },
+      { rootMargin: '1500px' }
+    );
+
+    observer.observe(sentinel);
+  })();
+  {% endif %}
+</script>
+
+{% schema %}
+{
+  "name": "Sortable Collection",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Collection Title",
+      "default": "Lorum Ipsum"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Collection Description",
+      "default": "<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit tenetur, rem in ab nobis autem suscipit. Excepturi officia maxime saepe, perspiciatis accusamus ducimus, nihil odio provident, doloribus omnis recusandae iure.</p>"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Desktop",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 2,
+      "unit": "rem"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Desktop",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 2,
+      "unit": "rem"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Padding Mobile",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 2,
+      "unit": "rem"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Padding Mobile",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 2,
+      "unit": "rem"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_infinite_scroll",
+      "label": "Enable Infinite Scroll",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "button_type",
+      "label": "Button Type",
+      "options": [
+        { "value": "product-link", "label": "Product Link" },
+        { "value": "quick-add", "label": "Quick Add" },
+        { "value": "none", "label": "No Button" }
+      ],
+      "default": "product-link"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text Override",
+      "placeholder": "e.g. Shop Now"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show Product Price",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_color_options",
+      "label": "Show Color Options",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_cta",
+      "label": "Enable Midway CTA?"
+    },
+    {
+      "type": "color",
+      "id": "cta_background_color",
+      "label": "CTA Background Color",
+      "default": "#F9F8F5",
+      "visible_if": "{{ section.settings.enable_cta == true }}"
+    },
+    {
+      "type": "text",
+      "id": "cta_header",
+      "label": "CTA Header",
+      "visible_if": "{{ section.settings.enable_cta == true }}"
+    },
+    {
+      "type": "text",
+      "id": "cta_body",
+      "label": "CTA Body",
+      "visible_if": "{{ section.settings.enable_cta == true }}"
+    },
+    {
+      "type": "text",
+      "id": "cta_button_text",
+      "label": "CTA Button Text",
+      "visible_if": "{{ section.settings.enable_cta == true }}"
+    },
+    {
+      "type": "url",
+      "id": "cta_button_link",
+      "label": "CTA Button Link",
+      "visible_if": "{{ section.settings.enable_cta == true }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "cta_image",
+      "label": "CTA Image",
+      "visible_if": "{{ section.settings.enable_cta == true }}"
+    },
+    {
+      "type": "select",
+      "id": "cta_image_direction",
+      "label": "CTA Image Direction",
+      "options": [
+        {
+          "value": "left",
+          "label": "Image Left"
+        },
+        {
+          "value": "right",
+          "label": "Image Right"
+        }
+      ],
+      "default": "right",
+      "visible_if": "{{ section.settings.enable_cta == true }}"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "_collection-filter-box-v2"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "presets": [
+    {
+      "name": "Sortable Collection V2",
+      "blocks": [
+        {
+          "type": "_collection-filter-box-v2"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

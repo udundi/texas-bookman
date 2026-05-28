@@ -1,0 +1,68 @@
+<div class="tw-p-1">
+  {%- liquid
+    # theme-check-disable
+    capture content_for_query_string
+      echo content_for_header
+    endcapture
+  -%}
+
+  {% assign get_full_url = content_for_query_string
+    | split: '"pageurl":"'
+    | last
+    | split: '"'
+    | first
+    | split: '.myshopify.com'
+    | last
+    | replace: '\/', '/'
+    | replace: '%20', ' '
+    | replace: '\u0026', '&'
+    | replace: collection.url, ''
+    | replace: 'feltright.com', ''
+  %}
+  <a
+    {% assign query_params = get_full_url | replace: '?', '' | replace: '_fd=0&pb=0&', '' | split: '&' %}
+    {% if query_params != blank %}
+      href="{{ block.settings.collection_gate.url }}?{{ query_params |  join: '&' }}"
+    {% else %}
+      href="{{ block.settings.collection_gate.url }}"
+    {% endif %}
+    class="tw-flex tw-justify-center tw-w-full tw-items-center tw-gap-2 tw-group"
+  >
+    <div class="tw-border group-hover:tw-border-black  tw-border-offblack tw-size-4 tw-aspect-square tw-rounded-sm tw-p-0.5 tw-my-auto{% if collection == block.settings.collection_gate %} tw-bg-black {% endif %}">
+      <svg
+        class=" tw-fill-white {% unless collection == block.settings.collection_gate %} tw-hidden  {% endunless %}"
+        viewBox="0 0 448 512"
+      >
+        <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
+      </svg>
+    </div>
+
+    <p class=" group-hover:tw-underline tw-text-offblack tw-text-14 tw-w-full !tw-m-0">
+      {{ block.settings.title }}
+    </p>
+  </a>
+</div>
+
+{% schema %}
+{
+  "name": "Collection Gate",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection_gate",
+      "label": "Linked Collection"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Link Title",
+      "default": "Filter Title"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Gate"
+    }
+  ]
+}
+{% endschema %}

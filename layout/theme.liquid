@@ -35,7 +35,9 @@
       {{ content_for_layout }}
     </main>
 
-    {% sections 'overlay-group' %}
+    <div class="tw-fixed tw-inset-0 tw-z-[500] tw-pointer-events-none">
+      {% sections 'overlay-group' %}
+    </div>
     {% sections 'footer-group' %}
     {% render 'script__external-body' %}
   </body>

@@ -1,0 +1,42 @@
+<div class="tw-my-4 sm:tw-text-16 tw-text-12 tw-text-offblack">
+
+  <!-- Order Summary -->
+  <div class="tw-font-playfair tw-text-24 tw-font-bold tw-py-4 tw-border-t tw-border-solid tw-border-grey-dark tw-text-offblack">
+    Order Summary ([[totalCartItems]])
+  </div>
+  <!-- Discounts -->
+  <div class="cartDiscounts" v-if="discountMessages && discountMessages.length">
+    <div class="discountMessages smallTotal" v-if="discountMessages && discountMessages.length">
+      <div class="message" v-for="message in discountMessages">[[message]]</div>
+    </div>
+
+    <div class="cartOldPrice smallTotal">
+      <div class="label"></div>
+      <div class="value">
+        <s>[[cartData.original_total_price / 100 | currency]]</s>
+      </div>
+    </div>
+
+    <div class="cartDiscount smallTotal">
+      <div class="label"></div>
+      <div class="value">-[[cartData.total_discount / 100 | currency]]</div>
+    </div>
+  </div>
+  <!-- Shipping Total -->
+  <div class="shipping tw-flex tw-font-bold tw-my-1.5">
+    <div class="label tw-flex-1">Shipping:</div>
+    <div class="value tw-flex-none" v-if="!freeShipping()">Calculated At Checkout</div>
+    <div class="tw-text-offblack tw-flex-none" v-if="freeShipping()">FREE</div>
+  </div>
+  <!-- Subtotal -->
+  <div class="subTotal tw-flex tw-font-bold tw-my-1.5">
+    <div class="label tw-flex-1">Subtotal:</div>
+    <div class="value tw-flex-none">[[cartData.total_price / 100 | currency]]</div>
+  </div>
+  <!-- Order Processing (hidden for gift card only orders) -->
+  <div class="tw-flex tw-font-bold tw-my-1.5" v-if="!isGiftCardOnlyOrder">
+    <div class="label tw-flex-1">Order Processing Time:</div>
+    <div class="value tw-flex-none">[[leadTime]] Business Days</div>
+  </div>
+
+</div>

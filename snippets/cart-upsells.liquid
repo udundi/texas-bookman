@@ -1,0 +1,53 @@
+<div class="upsellsv2" v-if="upsells && upsells.length">
+  <div class="upsellHeader">Don't Forget These</div>
+  <div class="upsellContainer">
+    <div class="upsell" v-for="upsell in upsells">
+      <div class="upsellTop">
+        <div class="image">
+          <img
+            :src="upsell.featured_image"
+            loading="lazy"
+            :alt="upsell.title || ''"
+          >
+        </div>
+        <div class="data">
+          <div class="upsellTitle">
+            [[upsell.title || '']]
+            <a class="tooltip" v-if="upsell && upsell.title && upsell.title.includes('Hex')">
+              <i class="fas fa-info-circle"></i>
+              <span class="top"
+                >This spacing tool is recommended for use when installing hex/diamond designs with negative space
+                between each tile. Each piece is made of the same felt material and each prong measures 1&quot; in
+                width.</span
+              >
+            </a>
+            <a class="tooltip" v-if="upsell && upsell.title && upsell.title.includes('90')">
+              <i class="fas fa-info-circle"></i>
+              <span class="top"
+                >This Spacing Tool is recommended for use when installing square / rectangle designs with negative space
+                between each tile, such as mosaic designs. Each prong measures 1&quot; in width.</span
+              >
+            </a>
+          </div>
+          <div class="price">[[upsell.variants[0].price / 100 | currency]]</div>
+        </div>
+      </div>
+      <div class="adder">
+        <button
+          @click="addUpsell(upsell)"
+          v-if="upsell && upsell.title && addingUpsell != upsell.title"
+          class="primaryBTN"
+        >
+          Add
+        </button>
+        <button
+          @click="addUpsell(upsell)"
+          v-if="upsell && upsell.title && addingUpsell == upsell.title"
+          class="primaryBTN"
+        >
+          <i class="fal fa-spin fa-spinner"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

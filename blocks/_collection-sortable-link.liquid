@@ -1,0 +1,96 @@
+<div class="block-{{ block.id }}">
+  <!-- Settings Vars -->
+  {% if block.settings.collection_override %}
+    {% assign link_title = block.settings.title %}
+    {% assign link_image = block.settings.image %}
+  {% elsif block.settings.collection != blank %}
+    {% assign link_title = block.settings.collection.title %}
+    {% assign link_image = block.settings.collection.featured_image %}
+  {% else %}
+    {% assign link_title = blank %}
+    {% assign link_image = blank %}
+  {% endif %}
+  {%- liquid
+    # theme-check-disable
+    capture content_for_query_string
+      echo content_for_header
+    endcapture
+  -%}
+  {% assign get_full_url = content_for_query_string
+ | split: '"pageurl":"'
+ | last
+ | split: '"'
+ | first
+ | split: '.myshopify.com'
+ | last
+ | replace: '\/', '/'
+ | replace: '%20', ' '
+ | replace: '\u0026', '&'
+ | replace: collection.url, ''
+ | replace: 'feltright.com', ''
+  %}
+  {% assign query_params = get_full_url | replace: '?', '' | replace: '_fd=0&pb=0&', '' | split: '&' %}
+    <a href="{% if block.settings.collection == collection %}/collections/main-designs{% else %}{{ block.settings.collection.url }}{% endif %}" class="tw-flex tw-flex-col tw-gap-2 tw-p-2 {% if block.settings.collection == collection %}!tw-border-2 !tw-border-blue-grey !tw-border-solid  tw-font-semibold {% else %}!tw-border-2 hover:tw-border-blue-grey tw-border-blue-grey/0 !tw-border-solid hover:tw-font-semibold{% endif %} tw-relative">
+    {% if block.settings.collection == collection %}
+      <div class="tw-absolute tw-rounded-full tw-w-7 tw-h-7 tw-z-30 tw-bg-grey-medium tw-flex tw-justify-center tw-items-center tw-right-4 tw-top-4">
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 18 18"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M9.05093 8.23891L4.59082 3.77881L3.82959 4.54004L8.28969 9.00014L3.82959 13.4602L4.59082 14.2215L9.05093 9.76138L13.511 14.2215L14.2723 13.4602L9.81216 9.00014L14.2723 4.54004L13.511 3.77881L9.05093 8.23891Z" fill="#333" />
+        </svg>
+      </div>
+    {% endif %}
+    <!-- Image -->
+    <div class="tw-w-48 tw-h-full tw-aspect-square tw-overflow-hidden">
+      {% if link_image != blank %}
+        {{ link_image | image_url: width: 288 | image_tag: class: 'tw-w-full tw-aspect-square tw-h-full tw-object-cover hover:tw-scale-105 tw-transition-transform tw-duration-500 tw-delay-50' }}
+      {% else %}
+        {{ 'collection-1' | placeholder_svg_tag: 'tw-w-full tw-aspect-square tw-h-full tw-object-contain tw-bg-offblack tw-fill-white' }}
+      {% endif %}
+    </div>
+    <!-- Title -->
+    <h2 class="tw-w-48 tw-text-center tw-font-montserrat tw-leading-tight tw-transition-transform">
+      {% if link_title != blank %}
+        {{ link_title }}
+      {% else %}
+        Lorem ipsum
+      {% endif %}
+    </h2>
+  </a>
+</div>
+
+{% schema %}
+  {
+    "name": "Collection Link",
+    "settings": [
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Linked Collection"
+      },
+      {
+        "type": "checkbox",
+        "id": "collection_override",
+        "label": "Override Collection Default title and Image?"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Link Title"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Link Image"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection link"
+      }
+    ]
+  }
+{% endschema %}
