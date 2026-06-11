@@ -35,11 +35,21 @@ module.exports = {
       64: "4rem",
     },
     extend: {
+      fontFamily: {
+        brand: {
+          header: ["Proxima Nova", "serif"],
+          body: ["PP Neue Montreal", "serif"],
+        },
+      },
       colors: {
         white: "#FFFFFF",
         black: "#000000",
         offblack: "#212121",
-        brand: {},
+        brand: {
+          primary: "#20448F",
+          secondary: "#F0BA3A",
+          sale: "#BD2026"
+        },
       },
       animation: {
         "fade-in": "fade 0.4s ease-in-out 1",

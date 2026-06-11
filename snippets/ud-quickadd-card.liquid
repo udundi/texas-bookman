@@ -1,0 +1,161 @@
+{% assign product_id = section.id | append: '-' | append: product.handle | append: '-atc' %}
+{% assign product_atc_id = product_id | append: '-atc' %}
+
+<div
+  id="{{ product_id }}"
+  class="{{ class }} tw-justify-between tw-flex tw-flex-col tw-border tw-p-4 tw-border-gray-400 tw-mr-[-1px] tw-mb-[-1px]"
+>
+  <a href="{% if product.metafields.custom.alt_gallery_link != blank %}{{ product.metafields.custom.alt_gallery_link.value.url }}{% else %}{{ product.url | default: "/" }}{% endif %}">
+    <div class=" tw-w-full tw-aspect-square tw-object-contain md:tw-mb-3 tw-mb-2 tw-relative">
+      {% if product.featured_image != blank %}
+        {% if small_image == true %}
+          {{
+            product.featured_image
+            | image_url: width: 400
+            | image_tag: loading: 'lazy', class: 'tw-size-full tw-aspect-square tw-object-contain'
+          }}
+        {% else %}
+          {{
+            product.featured_image
+            | image_url: width: 800
+            | image_tag: loading: 'lazy', class: 'tw-size-full tw-aspect-square tw-object-contain'
+          }}
+        {% endif %}
+      {% else %}
+        <div class=" tw-size-full">
+          {{ 'product-1' | placeholder_svg_tag: 'tw-w-full tw-max-w-[450px] tw-mx-auto tw-object-cover' }}
+        </div>
+      {% endif %}
+      {% if product.tags contains 'New Product' %}
+        <div class="tw-absolute tw-top-2.5 tw-right-2 tw-text-12 tw-px-4 tw-py-1 tw-bg-black tw-rounded-full tw-text-white tw-font-semibold">
+          New
+        </div>
+      {% endif %}
+    </div>
+  </a>
+  <div class="tw-flex tw-flex-col tw-justify-between tw-h-full tw-w-full tw-gap-x-4 tw-gap-y-3 tw-items-start">
+    <div class="tw-w-full">
+      <!-- Title Container -->
+      <div class="tw-flex tw-gap-x-4 tw-gap-y-1 tw-pb-2 tw-items-center tw-flex-wrap tw-w-full tw-justify-between">
+        <!-- Title -->
+        <div class="tw-flex tw-w-full tw-flex-row tw-gap-2 tw-items-start tw-justify-between">
+          <a class="tw-w-full tw-h-fit tw-max-w-96" href="{{ product.url | default: "/" }}">
+            <h3 class="tw-font-semibold tw-text-14 tw-text-brand-primary tw-w-full tw-leading-tight tw-h-fit tw-m-0">
+              {{ product.title | default: 'Product title' }}
+            </h3>
+          </a>
+        </div>
+        <!-- TB Code -->
+        {% comment %}
+          <h3 class="tw-font-semibold tw-text-14 tw-text-gray-600 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
+            TB Code: XXXXXXXX
+          </h3>
+        {% endcomment %}
+        <!-- ISBN -->
+        {% if product.metafields.custom.isbn != blank %}
+          <h3 class="tw-font-semibold tw-text-14 tw-text-gray-600 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
+            ISBN: XXXXXXXX
+          </h3>
+        {% endif %}
+        <h3 class="tw-font-semibold tw-text-14 tw-text-gray-600 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
+          QTY: {{ product.selected_or_first_available_variant.inventory_quantity }}
+        </h3>
+        {% if product.compare_at_price != blank %}
+          <h3 class="tw-font-semibold tw-text-14 tw-text-gray-600 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
+            List: {{ product.compare_at_price | money }}
+          </h3>
+        {% endif %}
+        <h3 class="tw-font-semibold tw-text-14 tw-text-brand-sale tw-w-full tw-leading-tight tw-h-fit tw-m-0">
+          Your Net Price: {{ product.price | money }}
+        </h3>
+      </div>
+    </div>
+
+    {% if show_button_type != 'none' %}
+      {% if show_button_type == 'quick-add' %}
+        <div class="tw-flex tw-gap-2 tw-items-stretch tw-w-full tw-h-full">
+          <div class="tw-flex tw-items-center tw-gap-2 tw-w-full tw-h-full">
+            <span>QTY:</span>
+            <input
+              type="number"
+              min="1"
+              placeholder="1"
+              v-model.number="quantity"
+              class="tw-w-full tw-text-center tw-leading-none tw-py-0.5 tw-border tw-border-gray-400 tw-rounded tw-h-full tw-text-12 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
+              :disabled="addingToCart"
+            >
+          </div>
+          <button
+            type="button"
+            id="{{ product_atc_id }}"
+            class="tw-bg-brand-secondary tw-w-full tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-black tw-rounded-md tw-flex tw-justify-center tw-leading-none tw-px-4  tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center"
+            @click="addToCart()"
+            :disabled="addingToCart"
+          >
+            [[ addingToCart ? 'Adding...' : '{{ button_text | default: 'Add to Cart' }}' ]]
+          </button>
+        </div>
+      {% else %}
+        <a
+          href="{{ product.url }}"
+          class="tw-bg-white tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-black tw-rounded-full tw-flex tw-justify-center tw-border-black tw-border-2 tw-py-1 tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap"
+        >
+          <span>{{ button_text | default: 'Shop Now' }}</span>
+        </a>
+      {% endif %}
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  new Vue({
+    el: '#{{ product_id }}',
+    data() {
+      return {
+        addingToCart: false,
+        productPrice: '{{ product.price }}',
+        quantity: 1,
+      };
+    },
+    methods: {
+      addToCart() {
+        this.addingToCart = true;
+        let items = [
+          {
+            quantity: this.quantity,
+            'properties': {
+              '_tags': {{ product.tags | json }},
+            },
+            id: '{{ product.selected_or_first_available_variant.id }}',
+          },
+        ];
+        console.log(items);
+
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items: items }),
+        }).then(async (r) => {
+          const data = await r.json();
+          if (!r.ok) throw data;
+          return data;
+        }).then((data) => {
+          console.log(data);
+          this.bus.$emit('showCart');
+          this.bus.$emit('refreshCart');
+          this.addingToCart = false;
+          this.$forceUpdate();
+        }).catch((error) => {
+          console.log(error, 'caught error');
+          Swal.fire({
+            icon: 'error',
+            text: error && error.description ? error.description : 'Unable to add item to cart.',
+          });
+          this.addingToCart = false;
+        }).finally(() => {
+          this.addingToCart = false;
+        });
+      },
+    },
+  });
+</script>

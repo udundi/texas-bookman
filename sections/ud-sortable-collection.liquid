@@ -41,334 +41,263 @@
     display: none;
   }
 </style>
+<div class="section-{{ section.id }}-props">
+  <style>
+    #filters-{{ block.id }} {
+      height: 100%;
+      background-color: {{ block.settings.background_color }};
+      max-height: 100px;
+      transition: max-height 0.25s ease
+    }
 
-{% capture param_tags %}  
-  {% if query_params != blank %}
-    <div class="tw-flex tw-gap-4 max-md:tw-overflow-x-auto md:tw-flex-wrap">
-      {% for param in query_params %}
-        {% if param contains 'filter.p' or param contains 'filter.v' %}
-          <a
-            {% assign new_params = '' %}
-            {% for sub_param in query_params %}
-              {% unless forloop.last and sub_param == param %}
-                {% assign new_params = new_params | append: '&' %}
-              {% endunless %}
-              {% unless sub_param == param %}
-                {% assign new_params = new_params | append: sub_param %}
-              {% endunless %}
-            {% endfor %}
-            {% if new_params != blank %}
-              href="{{ collection.url |  append: '?' |  append: new_params | replace: '&&', '&' | replace: '?&', '?' }}"
-            {% else %}
-              href="{{ collection.url }}"
-            {% endif %}
-            class="tw-flex tw-items-center tw-gap-2 tw-rounded-full tw-bg-black tw-p-2 tw-px-4 tw-text-white"
-          >
-          {{
-            param
-            | replace: 'filter.v.price.lte=', '$'
-            | replace: 'filter.p.tag=', ''
-            | replace: '+', ' '
-            | replace: '%2F', '/'
-          }}
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9.05093 8.23891L4.59082 3.77881L3.82959 4.54004L8.28969 9.00014L3.82959 13.4602L4.59082 14.2215L9.05093 9.76138L13.511 14.2215L14.2723 13.4602L9.81216 9.00014L14.2723 4.54004L13.511 3.77881L9.05093 8.23891Z" fill="#fff"/>
-            </svg>
-          </a>
-        {% endif %}
-      {% endfor %}
+    #filters-{{ block.id }}
+    .collapsed {
+      max-height: 0;
+    }
+  </style>
+  <div class="tw-w-full tw-flex tw-gap-2 tw-justify-between tw-items-center tw-border-y tw-border-gray-400 tw-border-solid tw-p-2 tw-my-[-1px]">
+    <!-- Title and description Container -->
+    <div class=" tw-flex tw-flex-col tw-items-start tw-justify-start tw-gap-2 tw-text-center max-md:tw-px-4 md:tw-text-left">
+      <!-- Title -->
+      <h1 class="tw-m-0 tw-font-brand-primary tw-text-24 tw-font-semibold tw-capitalize tw-leading-normal tw-text-offblack">
+        {{ collection.title }} ({{ collection.all_products_count }})
+      </h1>
+      <span class="tw-text-14">Home / {{ collection.title }}</span>
     </div>
-  {% endif %}
-{% endcapture %}
-
-<style>
-  #filters-{{ block.id }} {
-    height: 100%;
-    background-color: {{ block.settings.background_color }};
-    max-height: 100px;
-    transition: max-height 0.25s ease
-  }
-
-  #filters-{{ block.id }}
-  .collapsed {
-    max-height: 0;
-  }
-</style>
-
-<div
-  id="sortable-collection"
-  class="tw-flex tw-w-full tw-items-center tw-justify-center tw-py-4   section-{{ section.id }}-props"
->
-  <div class="tw-flex tw-w-full tw-max-w-screen-3xl tw-flex-col tw-gap-4 md:tw-flex-row md:tw-pr-8">
-    <!-- Filter Container -->
-    <!-- This Container is on the left on Desktop and full screen when open on mobile -->
-    <!-- This Container Gets Resized with Javascript via ud-filter-container class -->
-    <div
-      class="ud-filter-container tw-fixed tw-z-50 tw-w-full tw-flex-col tw-justify-start tw-bg-white tw-py-4 md:tw-sticky md:tw-mx-4 md:tw-w-96 md:tw-gap-2"
-      :class="mobileFiltersOpen ? 'tw-flex' : 'md:tw-flex tw-hidden'"
-    >
-      <div
-        :class="mobileFiltersOpen ? 'tw-static tw-top-0 tw-left-0 md:tw-w-full tw-w-[70vw] ' : 'md:tw-flex tw-hidden'"
-        class="tw-z-[500] tw-h-full tw-w-screen tw-overflow-y-auto tw-pb-8 md:tw-w-full  md:tw-px-4"
-      >
-        <div class="tw-w-full">
-          <!-- Filter Header -->
-          <div class="tw-flex tw-w-full tw-items-center tw-justify-between tw-p-4 md:tw-hidden md:tw-justify-center md:tw-p-2">
-            <h3 class="tw-w-fit tw-text-center tw-text-24 tw-font-bold md:tw-w-full">Filter Designs</h3>
-            <button @click="mobileFiltersOpen = false" class="">X</button>
-          </div>
-          <!-- Filter Container -->
-          <div class="tw-flex tw-h-fit tw-w-full tw-flex-col tw-justify-start tw-gap-4 tw-p-4 md:tw-p-0">
-            <div class="tw-hidden tw-font-montserrat tw-text-16 tw-font-semibold tw-leading-tight md:tw-block">
-              Sort By
-            </div>
-            <div class="tw-relative tw-mb-4 tw-hidden tw-w-full md:tw-block">
-              <div class="tw-absolute tw-right-3 tw-top-1/2 tw-size-3 -tw-translate-y-1/2">
-                {% render 'icon-arrow-down' %}
-              </div>
-              <select
-                aria-label="Sort By"
-                class="tw-w-full tw-rounded-full tw-border tw-border-solid tw-border-black tw-p-2 tw-text-14"
-                @change="sortByChange($event)"
-              >
-                <option
-                  {% unless get_full_url contains 'sort_by' %}
-                    selected
-                  {% endunless %}
-                  value="manual"
-                >
-                  Featured
-                </option>
-                <option
-                  {% if get_full_url contains 'best-selling' %}
-                    selected
-                  {% endif %}
-                  value="best-selling"
-                >
-                  Best Selling
-                </option>
-                <option
-                  {% if get_full_url contains 'created-descending' %}
-                    selected
-                  {% endif %}
-                  value="created-descending"
-                >
-                  New Arrivals
-                </option>
-                <option
-                  {% if get_full_url contains 'title-ascending' %}
-                    selected
-                  {% endif %}
-                  value="title-ascending"
-                >
-                  Alphabetically, A-Z
-                </option>
-                <option
-                  {% if get_full_url contains 'title-descending' %}
-                    selected
-                  {% endif %}
-                  value="title-descending"
-                >
-                  Alphabetically, Z-A
-                </option>
-                <option
-                  {% if get_full_url contains 'price-ascending' %}
-                    selected
-                  {% endif %}
-                  value="price-ascending"
-                >
-                  Price, low to high
-                </option>
-                <option
-                  {% if get_full_url contains 'price-descending' %}
-                    selected
-                  {% endif %}
-                  value="price-descending"
-                >
-                  Price, high to low
-                </option>
-              </select>
-            </div>
-            <div class="tw-flex tw-flex-col tw-justify-start tw-gap-[2px] tw-bg-grey-medium">
-              {% for block in section.blocks %}
-                {% render block %}
-              {% endfor %}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Right Side -->
-    <div class="tw-flex tw-grow tw-flex-col tw-justify-start">
-      <!-- Title and description Container -->
-      {% if section.settings.title != blank or section.settings.description != blank %}
-        <div class="tw-mx-auto tw-flex tw-w-full tw-max-w-7xl tw-flex-col tw-items-start tw-justify-start tw-gap-2 tw-text-center max-md:tw-px-4 md:tw-text-left">
-          {% if section.settings.title != blank %}
-            <!-- Title -->
-            <h1 class="tw-m-0 tw-font-playfair tw-text-36 tw-font-medium tw-leading-normal tw-text-offblack">
-              {{ section.settings.title }}
-            </h1>
-          {% endif %}
-          <!-- Description -->
-          {% if section.settings.description != blank %}
-            <div class="tw-max-w-4xl tw-font-montserrat tw-text-16 tw-leading-normal tw-text-offblack">
-              {{ section.settings.description }}
-            </div>
-          {% endif %}
-        </div>
-      {% endif %}
-      <!-- Collection Carousel Container -->
-      <div class="ud-filter-carousel tw-flex tw-w-full tw-flex-col tw-justify-start tw-bg-white">
-        {% content_for 'block', type: '_collection-link-container', id: 'collection-links' %}
-        <!-- Filter Buttons Mobile -->
-        <div
-          id="filters-{{ block.id }}"
-          class="duration-300 ease-in-out tw-w-full tw-overflow-hidden tw-transition-all"
-        >
-          <div
-            class="tw-flex tw-w-full tw-flex-row tw-items-center tw-justify-between tw-gap-4 tw-bg-white tw-px-4 tw-py-4 md:tw-hidden"
-            :class="mobileFiltersOpen ? 'tw-hidden' : ''"
+    <div>
+      <!-- Sort By Selector -->
+      <div class="tw-flex tw-items-center tw-justify-start tw-gap-4 tw-p-4 md:tw-p-0">
+        <!-- View Toggle Buttons -->
+        <div class="tw-hidden md:tw-flex tw-items-center tw-gap-2">
+          <button
+            type="button"
+            @click="toggleViewMode('grid')"
+            :class="viewMode === 'grid' ? '  tw-border-gray-600' : '  tw-border-gray-400'"
+            class="duration-200 tw-p-2 tw-size-10 tw-rounded tw-transition-colors tw-flex tw-text-black tw-items-center tw-justify-center tw-border tw-bg-white hover:tw-bg-gray-100"
+            title="Grid View"
           >
-            <button
-              @click="mobileFiltersOpen = !mobileFiltersOpen"
-              class="tw-h-16 tw-w-full tw-justify-center tw-rounded-md tw-border tw-border-solid tw-border-black tw-p-2 tw-text-center tw-text-16 tw-text-black"
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 19 19"
+              fill="none"
+              style="width: 20px; height: 20px;"
             >
-              Filters
-            </button>
-
-            <div class="tw-relative tw-h-16 tw-w-full">
-              <select class="tw-h-full tw-w-full " @change="sortByChange($event)">
-                <option value="manual">Featured</option>
-                <option value="best-selling">Best Selling</option>
-                <option value="created-descending">New Arrivals</option>
-                <option value="title-ascending">Alphabetically, A-Z</option>
-                <option value="title-descending">Alphabetically, Z-A</option>
-                <option value="price-ascending">Price, low to high</option>
-                <option value="price-descending">Price, high to low</option>
-              </select>
-              <div class="tw-pointer-events-none tw-absolute tw-left-0 tw-top-0 tw-z-10 tw-flex tw-h-16 tw-w-full tw-items-center tw-justify-center tw-rounded-md tw-border tw-border-solid tw-border-black tw-bg-white tw-p-2 tw-text-center tw-text-16 tw-text-black">
-                Sort by
-              </div>
-            </div>
-          </div>
+              <path d="M7.46388 1.7561H2.48808C2.08396 1.7561 1.75635 2.08371 1.75635 2.48784V7.46364C1.75635 7.86776 2.08396 8.19537 2.48808 8.19537H7.46388C7.86801 8.19537 8.19562 7.86776 8.19562 7.46364V2.48784C8.19562 2.08371 7.86801 1.7561 7.46388 1.7561Z" stroke="currentColor" stroke-width="1.17078" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16.2446 1.7561H11.2688C10.8647 1.7561 10.5371 2.08371 10.5371 2.48784V7.46364C10.5371 7.86776 10.8647 8.19537 11.2688 8.19537H16.2446C16.6488 8.19537 16.9764 7.86776 16.9764 7.46364V2.48784C16.9764 2.08371 16.6488 1.7561 16.2446 1.7561Z" stroke="currentColor" stroke-width="1.17078" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M7.46388 10.5371H2.48808C2.08396 10.5371 1.75635 10.8647 1.75635 11.2688V16.2446C1.75635 16.6488 2.08396 16.9764 2.48808 16.9764H7.46388C7.86801 16.9764 8.19562 16.6488 8.19562 16.2446V11.2688C8.19562 10.8647 7.86801 10.5371 7.46388 10.5371Z" stroke="currentColor" stroke-width="1.17078" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16.2446 10.5371H11.2688C10.8647 10.5371 10.5371 10.8647 10.5371 11.2688V16.2446C10.5371 16.6488 10.8647 16.9764 11.2688 16.9764H16.2446C16.6488 16.9764 16.9764 16.6488 16.9764 16.2446V11.2688C16.9764 10.8647 16.6488 10.5371 16.2446 10.5371Z" stroke="currentColor" stroke-width="1.17078" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button
+            type="button"
+            @click="toggleViewMode('list')"
+            :class="viewMode === 'list' ? ' tw-border-gray-600' : ' tw-border-gray-400'"
+            class="duration-200 tw-p-2 tw-size-10 tw-rounded tw-text-black tw-transition-colors tw-flex tw-items-center tw-justify-center tw-border tw-bg-white hover:tw-bg-gray-100"
+            title="List View"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 27 27"
+              fill="none"
+              style="width: 20px; height: 20px;"
+            >
+              <path d="M19.5335 13.2323H10.7119M19.5335 18.2733H10.7119M19.5335 8.19141H10.7119" stroke="currentColor" stroke-width="1.26023" stroke-linecap="round" stroke-linejoin="round"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M6.92987 9.45161C7.55998 9.45161 8.1901 8.8215 8.1901 8.19138C8.1901 7.56127 7.55998 6.93115 6.92987 6.93115C6.29975 6.93115 5.6709 7.56127 5.6709 8.19138C5.6709 8.8215 6.29975 9.45161 6.92987 9.45161ZM6.92987 14.4925C7.55998 14.4925 8.1901 13.8624 8.1901 13.2323C8.1901 12.6022 7.55998 11.9721 6.92987 11.9721C6.29975 11.9721 5.6709 12.6022 5.6709 13.2323C5.6709 13.8624 6.29975 14.4925 6.92987 14.4925ZM6.92987 19.5335C7.55998 19.5335 8.1901 18.9033 8.1901 18.2732C8.1901 17.6431 7.55998 17.013 6.92987 17.013C6.29975 17.013 5.6709 17.6431 5.6709 18.2732C5.6709 18.9033 6.29975 19.5335 6.92987 19.5335Z" fill="currentColor"/>
+            </svg>
+          </button>
         </div>
-        <div class="tw-flex md:tw-hidden">
-          <!-- Param Tags from above capture -->
-          {{ param_tags }}
+        <div class="tw-hidden tw-whitespace-nowrap tw-font-brand-primary tw-text-16 tw-font-semibold tw-text-offblack tw-leading-tight md:tw-block">
+          Sort By:
+        </div>
+        <div class="tw-relative tw-hidden tw-w-full md:tw-flex tw-items-center">
+          <div class="tw-absolute tw-right-3 tw-top-1/2 tw-size-3 -tw-translate-y-1/2">
+            {% render 'icon-arrow-down' %}
+          </div>
+          <select
+            aria-label="Sort By"
+            class="tw-w-full tw-rounded-md tw-border tw-border-solid tw-border-gray-400 tw-p-2 tw-pr-8 tw-text-14"
+            @change="sortByChange($event)"
+          >
+            <option
+              {% unless get_full_url contains 'sort_by' %}
+                selected
+              {% endunless %}
+              value="manual"
+            >
+              Featured
+            </option>
+            <option
+              {% if get_full_url contains 'best-selling' %}
+                selected
+              {% endif %}
+              value="best-selling"
+            >
+              Best Selling
+            </option>
+            <option
+              {% if get_full_url contains 'created-descending' %}
+                selected
+              {% endif %}
+              value="created-descending"
+            >
+              New Arrivals
+            </option>
+            <option
+              {% if get_full_url contains 'title-ascending' %}
+                selected
+              {% endif %}
+              value="title-ascending"
+            >
+              Alphabetically, A-Z
+            </option>
+            <option
+              {% if get_full_url contains 'title-descending' %}
+                selected
+              {% endif %}
+              value="title-descending"
+            >
+              Alphabetically, Z-A
+            </option>
+            <option
+              {% if get_full_url contains 'price-ascending' %}
+                selected
+              {% endif %}
+              value="price-ascending"
+            >
+              Price, low to high
+            </option>
+            <option
+              {% if get_full_url contains 'price-descending' %}
+                selected
+              {% endif %}
+              value="price-descending"
+            >
+              Price, high to low
+            </option>
+          </select>
         </div>
       </div>
-      <!-- Product Grid -->
-      <div class="tw-flex tw-w-full tw-flex-col tw-justify-start tw-gap-4 tw-pt-8">
-        <div class="tw-mx-auto tw-hidden tw-w-full tw-max-w-7xl md:tw-flex">
-          <!-- Param Tags from above capture -->
-          {{ param_tags }}
-        </div>
+    </div>
+  </div>
+  <div
+    id="sortable-collection"
+    class="tw-flex tw-w-full tw-items-center tw-justify-center"
+  >
+    <div class="tw-flex tw-flex-col tw-gap-4 md:tw-flex-row md:tw-pr-8">
+      <!-- Filter Container -->
+      <div
+        class="ud-filter-container tw-fixed tw-my-2 tw-z-50 tw-w-full tw-flex-col tw-justify-start tw-bg-white tw-py-4 md:tw-sticky md:tw-mx-4 md:tw-w-96 md:tw-gap-2"
+        :class="mobileFiltersOpen ? 'tw-flex' : 'md:tw-flex tw-hidden'"
+      >
+        Test
         <div
-          id="product-grid-{{ section.id }}"
-          class="tw-mx-auto tw-grid tw-max-w-7xl tw-grid-cols-1 tw-gap-4 tw-gap-y-10 max-md:tw-px-4 sm:tw-gap-10 md:tw-grid-cols-2 lg:tw-gap-14 xl:tw-grid-cols-3"
+          :class="mobileFiltersOpen ? 'tw-static tw-top-0 tw-left-0 md:tw-w-full tw-w-[70vw] ' : 'md:tw-flex tw-hidden'"
+          class="tw-z-[500] tw-h-full tw-w-screen tw-overflow-y-auto tw-pb-8 md:tw-w-full  md:tw-px-4"
         >
-          {% paginate collection.products by 60 -%}
-            <span
-              data-current-page="{{ paginate.current_page }}"
-              data-total-pages="{{ paginate.pages }}"
-              data-infinite-scroll-meta
-              class="tw-hidden"
-            ></span>
-            {% for product in collection.products -%}
-              {% render 'ud-product-card',
-                product: product,
-                video_aspect: true,
-                small_card: true,
-                button_style: section.settings.button_style,
-                product_reviews: 5,
-                show_button_type: section.settings.button_type,
-                button_text: section.settings.button_text,
-                show_price: section.settings.show_price,
-                show_color_options: section.settings.show_color_options
-              %}
-              {% if forloop.index == 42 and section.settings.enable_cta == true %}
-                <!-- Midway CTA Slot -->
+          <div class="tw-w-full">
+            <!-- Filter Header -->
+            <div class="tw-flex tw-w-full tw-items-center tw-justify-between tw-p-4 md:tw-hidden md:tw-justify-center md:tw-p-2">
+              <h3 class="tw-w-fit tw-text-black tw-text-center tw-text-24 tw-font-bold md:tw-w-full">Filter Designs</h3>
+              <button @click="mobileFiltersOpen = false" class="">X</button>
+            </div>
+          </div>
+          <div class="tw-flex tw-flex-col tw-justify-start tw-gap-[2px] tw-bg-grey-medium">
+            {% for block in section.blocks %}
+              {% render block %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Side -->
+      <div class="tw-flex tw-w-full tw-grow tw-flex-col tw-justify-start">
+        <!-- Product Grid -->
+        <div class="tw-flex tw-w-full tw-flex-col tw-justify-start tw-gap-4">
+          <div
+            id="product-grid-{{ section.id }}"
+            :class="viewMode === 'list' ? 'tw-flex tw-flex-col tw-w-full' : 'tw-mx-auto tw-grid tw-max-w-7xl tw-grid-cols-1 max-md:tw-px-4 tw-gap-[-1px] md:tw-grid-cols-2 xl:tw-grid-cols-3'"
+            class="tw-mx-auto tw-max-w-7xl max-md:tw-px-4"
+          >
+            {% paginate collection.products by 60 -%}
+              <span
+                data-current-page="{{ paginate.current_page }}"
+                data-total-pages="{{ paginate.pages }}"
+                data-infinite-scroll-meta
+                class="tw-hidden"
+              ></span>
+              {% for product in collection.products -%}
                 <div
-                  style="background-color: {{ section.settings.cta_background_color }};"
-                  class="tw-flex tw-items-center tw-bg-grey-light tw-p-8 {% if section.settings.cta_image_direction == 'right' %}tw-flex-row{% else %}tw-flex-row-reverse{% endif %} tw-gap-4 md:tw-col-span-2 xl:tw-col-span-3"
+                  data-product-grid-item
+                  class="product-grid-card"
+                  :style="{ display: viewMode === 'grid' ? 'block' : 'none' }"
                 >
-                  <!-- CTA Text Box -->
-                  <div class="tw-flex tw-w-full tw-flex-col tw-items-start tw-justify-start tw-gap-4">
-                    <!-- CTA Header -->
-                    <h3 class="tw-m-0 tw-font-playfair tw-text-36 tw-font-bold tw-leading-tight tw-text-offblack">
-                      {{ section.settings.cta_header | default: 'Lorum Ipsem' }}
-                    </h3>
-                    <!-- CTA Body -->
-                    <p class="tw-m-0 tw-text-14 tw-text-offblack">
-                      {{
-                        section.settings.cta_body
-                        | default: '
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nulla minus temporibus autem harum veniam voluptas praesentium optio nesciunt vero nemo eius possimus earum molestias, architecto suscipit atque. Et, delectus! Expedita?'
-                      }}
-                    </p>
-                    <!-- CTA Button -->
-                    <a class="tw-rounded-full tw-bg-black tw-px-6 tw-py-0.5 tw-text-14 tw-text-white">
-                      {{- section.settings.cta_button_text | default: 'Click Me' -}}
-                    </a>
-                  </div>
-                  <!-- CTA Image -->
-                  <div class="tw-w-full max-md:tw-hidden">
-                    {% if section.settings.cta_image != blank %}
-                      {{
-                        section.settings.cta_image
-                        | image_url: width: 800
-                        | image_tag: class: 'tw-w-full tw-aspect-4/3 tw-object-cover'
-                      }}
-                    {% else %}
-                      {{
-                        'collection-1'
-                        | placeholder_svg_tag: 'tw-w-full tw-aspect-4/3 tw-h-full tw-object-contain tw-bg-offblack tw-fill-white'
-                      }}
-                    {% endif %}
-                  </div>
+                  {% render 'ud-quickadd-card',
+                    product: product,
+                    video_aspect: true,
+                    small_card: true,
+                    button_style: section.settings.button_style,
+                    product_reviews: 5,
+                    show_button_type: section.settings.button_type,
+                    button_text: section.settings.button_text,
+                    show_price: section.settings.show_price,
+                    show_color_options: section.settings.show_color_options
+                  %}
+                </div>
+                <div
+                  data-product-list-item
+                  class="product-grid-list"
+                  :style="{ display: viewMode === 'list' ? 'block' : 'none' }"
+                >
+                  {% render 'ud-quickadd-list-item',
+                    product: product,
+                    button_style: section.settings.button_style,
+                    show_button_type: section.settings.button_type,
+                    button_text: section.settings.button_text,
+                    show_price: section.settings.show_price,
+                    show_color_options: section.settings.show_color_options
+                  %}
+                </div>
+              {%- endfor %}
+              {% if section.settings.enable_infinite_scroll %}
+                {% if paginate.next %}
+                  <div
+                    id="infinite-scroll-sentinel-{{ section.id }}"
+                    data-next-url="{{ paginate.next.url }}"
+                    class="md:tw-col-span-2 xl:tw-col-span-3 tw-h-4"
+                  ></div>
+                {% endif %}
+              {% else %}
+                <div class="ud-pagination tw-flex tw-justify-center tw-gap-4 tw-font-bold md:tw-col-span-2">
+                  {{- paginate | default_pagination }}
                 </div>
               {% endif %}
-            {%- endfor %}
-            {% if section.settings.enable_infinite_scroll %}
-              {% if paginate.next %}
-                <div
-                  id="infinite-scroll-sentinel-{{ section.id }}"
-                  data-next-url="{{ paginate.next.url }}"
-                  class="md:tw-col-span-2 xl:tw-col-span-3 tw-h-4"
-                ></div>
-              {% endif %}
-            {% else %}
-              <div class="ud-pagination tw-flex tw-justify-center tw-gap-4 tw-font-bold md:tw-col-span-2">
-                {{- paginate | default_pagination }}
-              </div>
-            {% endif %}
-          {%- endpaginate %}
-        </div>
-        {% if section.settings.enable_infinite_scroll %}
-          <div
-            id="infinite-scroll-spinner-{{ section.id }}"
-            class="tw-w-full tw-flex tw-justify-center tw-animate-spin tw-items-center tw-py-10 md:tw-col-span-2 xl:tw-col-span-3"
-          >
-            <div
-              style="
-                width: 48px;
-                height: 48px;
-                border: 4px solid #e5e7eb;
-                border-top-color: #1e3a5f;
-                border-radius: 50%;
-                animation: ud-spin 0.75s linear infinite;
-              "
-            ></div>
+            {%- endpaginate %}
           </div>
-          <style>
-            @keyframes ud-spin {
-              to {
-                transform: rotate(360deg);
+          {% if section.settings.enable_infinite_scroll %}
+            <div
+              id="infinite-scroll-spinner-{{ section.id }}"
+              class="tw-w-full tw-flex tw-justify-center tw-animate-spin tw-items-center tw-py-10 md:tw-col-span-2 xl:tw-col-span-3"
+            >
+              <div
+                style="
+                  width: 48px;
+                  height: 48px;
+                  border: 4px solid #e5e7eb;
+                  border-top-color: #1e3a5f;
+                  border-radius: 50%;
+                  animation: ud-spin 0.75s linear infinite;
+                "
+              ></div>
+            </div>
+            <style>
+              @keyframes ud-spin {
+                to {
+                  transform: rotate(360deg);
+                }
               }
-            }
-          </style>
-        {% endif %}
+            </style>
+          {% endif %}
+        </div>
       </div>
     </div>
   </div>
@@ -410,10 +339,16 @@
         mobileFiltersOpen: false,
         sectionHeight: 0,
         openFilters: [],
+        viewMode: 'grid',
       };
     },
     mounted() {
-      // console.log('Mounted Sortable Collections')
+      console.log('Mounted Sortable Collections')
+      // Restore view mode preference from localStorage
+      const savedViewMode = localStorage.getItem('productViewMode');
+      if (savedViewMode) {
+        this.viewMode = savedViewMode;
+      }
       setTimeout(() => {
         this.getNavHeight();
       }, 10);
@@ -436,7 +371,10 @@
           const windowHeight = window.innerHeight;
           const filterHeight = windowHeight - this.sectionHeight - 40;
           filterContainer.style.top = `${this.sectionHeight}px`;
-          filterCarousel.style.top = `${this.sectionHeight}px`;
+          if (filterCarousel) {
+            filterCarousel.style.top = `${this.sectionHeight}px`;
+            filterCarousel.style.height = `${filterHeight}px`;
+          }
           filterContainer.style.height = `${filterHeight}px`;
           console.log('new Filter Height', windowHeight);
           console.log('new Filter Height', filterHeight);
@@ -449,6 +387,13 @@
         // Reset to page 1 when sorting changes
         currentUrl.searchParams.set('page', 1);
         window.location.href = currentUrl.toString();
+      },
+      toggleViewMode(mode) {
+        this.viewMode = mode;
+        console.log('working')
+        console.log(this.viewMode, 'view')
+        // Store preference in localStorage
+        localStorage.setItem('productViewMode', mode);
       },
     },
   });

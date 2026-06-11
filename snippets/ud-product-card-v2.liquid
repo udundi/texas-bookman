@@ -1,7 +1,7 @@
 {% assign product_id = section.id | append: '-' | append: product.handle | append: '-atc' %}
 {% assign product_atc_id = product_id | append: '-atc' %}
 
-<div id="{{ product_id }}" class="{{ class }} tw-justify-between tw-flex tw-flex-col">
+<div id="{{ product_id }}" class="{{ class }} tw-justify-between tw-flex tw-flex-col tw-bg-white tw-mr-[-10px]">
   <a href="{% if product.metafields.custom.alt_gallery_link != blank %}{{ product.metafields.custom.alt_gallery_link.value.url }}{% else %}{{ product.url | default: "/" }}{% endif %}">
     <div class="tw-w-full {% if video_aspect == true %} tw-aspect-video tw-border {% else %} xl:tw-h-[500px] lg:tw-h-[420px] md:tw-h-96 tw-h-64 {% endif %} md:tw-mb-3 tw-mb-2 tw-relative">
       {% if product.featured_image != blank %}
