@@ -13,10 +13,25 @@
   "sections": {
     "header": {
       "type": "header",
-      "settings": {}
+      "disabled": true,
+      "settings": {
+        "menu": "",
+        "customer_account_menu": "customer-account-main-menu"
+      }
+    },
+    "ud_header_n8BdXW": {
+      "type": "ud-header",
+      "name": "Header Block",
+      "settings": {
+        "trending_searches": "",
+        "featured_collection_title": "",
+        "featured_collection": "",
+        "site_logo": "shopify://shop_images/logo-TexasBookman.png"
+      }
     }
   },
   "order": [
-    "header"
-  ],
+    "header",
+    "ud_header_n8BdXW"
+  ]
 }
