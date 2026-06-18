@@ -175,23 +175,11 @@
                 "column_layout": "1-col"
               },
               "blocks": {}
-            },
-            "header_menu_links_fXfXHA": {
-              "type": "_header-menu-links",
-              "name": "Menu Links",
-              "settings": {
-                "menu_title": "Featured Collections",
-                "header_url": "",
-                "menu": "featured-collections",
-                "column_layout": "1-col"
-              },
-              "blocks": {}
             }
           },
           "block_order": [
             "header_menu_links_BAR6zW",
-            "header_menu_links_ij94yU",
-            "header_menu_links_fXfXHA"
+            "header_menu_links_ij94yU"
           ]
         },
         "header_tabbed_section_XfCQm6": {
@@ -239,10 +227,10 @@
               "type": "_header-menu-links",
               "name": "Menu Links",
               "settings": {
-                "menu_title": "All Adult",
+                "menu_title": "All Gifts",
                 "header_url": "shopify://collections",
-                "menu": "adult-books",
-                "column_layout": "2-col"
+                "menu": "all-gifts",
+                "column_layout": "1-col"
               },
               "blocks": {}
             },
@@ -250,20 +238,9 @@
               "type": "_header-menu-links",
               "name": "Menu Links",
               "settings": {
-                "menu_title": "All Children’s",
+                "menu_title": "All Stationery",
                 "header_url": "shopify://collections/frontpage",
-                "menu": "childrens-books",
-                "column_layout": "1-col"
-              },
-              "blocks": {}
-            },
-            "header_menu_links_7mGrVJ": {
-              "type": "_header-menu-links",
-              "name": "Menu Links",
-              "settings": {
-                "menu_title": "Featured Collections",
-                "header_url": "",
-                "menu": "featured-collections",
+                "menu": "stationery",
                 "column_layout": "1-col"
               },
               "blocks": {}
@@ -271,8 +248,7 @@
           },
           "block_order": [
             "header_menu_links_JFpran",
-            "header_menu_links_TLYPCQ",
-            "header_menu_links_7mGrVJ"
+            "header_menu_links_TLYPCQ"
           ]
         },
         "header_tabbed_section_jRctFE": {
@@ -316,44 +292,20 @@
             "product_4": ""
           },
           "blocks": {
-            "header_menu_links_p7eJma": {
-              "type": "_header-menu-links",
-              "name": "Menu Links",
-              "settings": {
-                "menu_title": "All Adult",
-                "header_url": "shopify://collections",
-                "menu": "adult-books",
-                "column_layout": "2-col"
-              },
-              "blocks": {}
-            },
             "header_menu_links_PRUqYW": {
               "type": "_header-menu-links",
               "name": "Menu Links",
               "settings": {
-                "menu_title": "All Children’s",
+                "menu_title": "All Games & Media",
                 "header_url": "shopify://collections/frontpage",
-                "menu": "childrens-books",
-                "column_layout": "1-col"
-              },
-              "blocks": {}
-            },
-            "header_menu_links_nUY3Pi": {
-              "type": "_header-menu-links",
-              "name": "Menu Links",
-              "settings": {
-                "menu_title": "Featured Collections",
-                "header_url": "",
-                "menu": "featured-collections",
+                "menu": "games-media",
                 "column_layout": "1-col"
               },
               "blocks": {}
             }
           },
           "block_order": [
-            "header_menu_links_p7eJma",
-            "header_menu_links_PRUqYW",
-            "header_menu_links_nUY3Pi"
+            "header_menu_links_PRUqYW"
           ]
         },
         "header_tabbed_section_LqcKG6": {
