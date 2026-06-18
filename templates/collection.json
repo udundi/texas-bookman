@@ -188,7 +188,7 @@
               "name": "Collection Filter",
               "settings": {
                 "tag": "",
-                "title": "Literary Criticism (482)",
+                "title": "Literary Criticism",
                 "filter_type": "filter.p.tag="
               },
               "blocks": {}
@@ -198,7 +198,7 @@
               "name": "Collection Filter",
               "settings": {
                 "tag": "",
-                "title": "Science Fiction (400)",
+                "title": "Historical Fiction (827)",
                 "filter_type": "filter.p.tag="
               },
               "blocks": {}
