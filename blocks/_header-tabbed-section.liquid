@@ -19,8 +19,8 @@
     </span>
   </button>
   <!-- Dropdown -->
-  {% comment %} v-show="selectedTab === '{{ block.id }}'" {% endcomment %}
   <div
+    v-show="selectedTab === '{{ block.id }}'"
     class="md:tw-absolute tw-flex tw-w-full tw-flex-col md:tw-flex-row md:tw-left-1/2 tw-top-full tw-max-w-screen-2xl md:-tw-translate-x-1/2 md:tw-z-50 tw-min-h-0 tw-text-black"
   >
     <div
