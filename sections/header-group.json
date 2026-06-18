@@ -94,11 +94,23 @@
                 "column_layout": "1-col"
               },
               "blocks": {}
+            },
+            "header_menu_links_fVTrLj": {
+              "type": "_header-menu-links",
+              "name": "Menu Links",
+              "settings": {
+                "menu_title": "Featured Collections",
+                "header_url": "",
+                "menu": "featured-collections",
+                "column_layout": "1-col"
+              },
+              "blocks": {}
             }
           },
           "block_order": [
             "header_menu_links_QBfLDT",
-            "header_menu_links_M3mh4x"
+            "header_menu_links_M3mh4x",
+            "header_menu_links_fVTrLj"
           ]
         },
         "header_tabbed_section_MJLePC": {
