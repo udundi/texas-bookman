@@ -28,10 +28,67 @@
         "featured_collection": "",
         "site_logo": "shopify://shop_images/logo-TexasBookman.png"
       }
+    },
+    "ud_nav_bar_9mCcb3": {
+      "type": "ud-nav-bar",
+      "blocks": {
+        "header_tabbed_section_aGReCA": {
+          "type": "_header-tabbed-section",
+          "name": "Tabbed Header Container",
+          "settings": {
+            "header": "BOOKS",
+            "full_width": false,
+            "display_header": true,
+            "header_url": "",
+            "alt_image_style": true,
+            "sec_1_title": "BOOKS",
+            "s1t": "single_link",
+            "products_enabled_1": false,
+            "link_1_title": "",
+            "link_1_subtitle": "",
+            "link_1_url": "",
+            "sec_2_title": "",
+            "products_enabled_2": false,
+            "link_2_title": "",
+            "link_2_subtitle": "",
+            "link_2_url": "",
+            "products_enabled_3": false,
+            "link_3_title": "",
+            "link_3_subtitle": "",
+            "link_3_url": "",
+            "sec_2_title_alt": "",
+            "products_enabled_4": false,
+            "link_4_title": "",
+            "link_4_subtitle": "",
+            "link_4_url": "",
+            "sec_1_button_enabled": false,
+            "sec_1_button_text": "",
+            "sec_1_button_link": "",
+            "sec_2_button_enabled": false,
+            "sec_2_button_text": "",
+            "sec_2_button_link": "",
+            "product_1": "",
+            "product_2": "",
+            "product_3": "",
+            "product_4": ""
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "header_tabbed_section_aGReCA"
+      ],
+      "name": "Navigation Bar",
+      "settings": {
+        "trending_searches": "",
+        "featured_collection_title": "",
+        "featured_collection": ""
+      }
     }
   },
   "order": [
     "header",
-    "ud_header_n8BdXW"
+    "ud_header_n8BdXW",
+    "ud_nav_bar_9mCcb3"
   ]
 }
