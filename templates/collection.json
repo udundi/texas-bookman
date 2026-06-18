@@ -18,7 +18,8 @@
           "settings": {
             "collapsible": true,
             "collapsed": true,
-            "title": "Publisher"
+            "title": "Publisher",
+            "nested": false
           },
           "blocks": {
             "collection_filter_hjf7pc": {
@@ -26,7 +27,7 @@
               "name": "Collection Filter",
               "settings": {
                 "tag": "",
-                "title": "Arcturus (573)",
+                "title": "Arcturus",
                 "filter_type": "filter.p.tag="
               },
               "blocks": {}
@@ -36,7 +37,7 @@
               "name": "Collection Filter",
               "settings": {
                 "tag": "",
-                "title": "Flame Tree (431)",
+                "title": "Flame Tree",
                 "filter_type": "filter.p.tag="
               },
               "blocks": {}
@@ -46,7 +47,7 @@
               "name": "Collection Filter",
               "settings": {
                 "tag": "",
-                "title": "Yale University Press (943)",
+                "title": "Yale University Press",
                 "filter_type": "filter.p.tag="
               },
               "blocks": {}
@@ -64,7 +65,8 @@
           "settings": {
             "collapsible": true,
             "collapsed": true,
-            "title": "Audience"
+            "title": "Audience",
+            "nested": false
           },
           "blocks": {
             "collection_filter_AAkJkg": {
@@ -110,7 +112,8 @@
           "settings": {
             "collapsible": true,
             "collapsed": true,
-            "title": "Genre"
+            "title": "Genre",
+            "nested": false
           },
           "blocks": {
             "collection_filter_JFYMRU": {
@@ -118,7 +121,7 @@
               "name": "Collection Filter",
               "settings": {
                 "tag": "",
-                "title": "Classic & General Fiction (27)",
+                "title": "Classic & General Fiction",
                 "filter_type": "filter.p.tag="
               },
               "blocks": {}
@@ -128,7 +131,7 @@
               "name": "Collection Filter",
               "settings": {
                 "tag": "",
-                "title": "Romance & Erotica (882)",
+                "title": "Romance & Erotica",
                 "filter_type": "filter.p.tag="
               },
               "blocks": {}
@@ -138,7 +141,7 @@
               "name": "Collection Filter",
               "settings": {
                 "tag": "",
-                "title": "Mystery & Thriller (350)",
+                "title": "Mystery & Thriller",
                 "filter_type": "filter.p.tag="
               },
               "blocks": {}
@@ -148,7 +151,7 @@
               "name": "Collection Filter",
               "settings": {
                 "tag": "",
-                "title": "Science Fiction (400)",
+                "title": "Science Fiction",
                 "filter_type": "filter.p.tag="
               },
               "blocks": {}
@@ -198,7 +201,7 @@
               "name": "Collection Filter",
               "settings": {
                 "tag": "",
-                "title": "Historical Fiction (827)",
+                "title": "Historical Fiction",
                 "filter_type": "filter.p.tag="
               },
               "blocks": {}
