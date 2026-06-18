@@ -11,6 +11,7 @@ body {
   flex-direction: column;
   margin: 0;
   min-height: 100svh;
+  font-family: "proxima-nova", sans-serif;
 }
 
 html:has(dialog[scroll-lock][open], details[scroll-lock][open]) {

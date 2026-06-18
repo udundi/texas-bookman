@@ -91,8 +91,13 @@ module.exports = {
         "container-sm": "min(43.125rem, 90%)",
       },
       fontFamily: {
-        'brand-header': ["Proxima Nova", "sans"],
-        'brand-body': ["PP Neue Montreal", "serif"],
+        'brand-header': ['"proxima-nova"', 'sans-serif'],
+        'brand-body': ['"proxima-nova"', 'sans-serif'],
+        montserrat: ['"proxima-nova"', 'sans-serif'],
+        playfair: ['"proxima-nova"', 'sans-serif'],
+        interstate: ['"proxima-nova"', 'sans-serif'],
+        cadet: ['"proxima-nova"', 'sans-serif'],
+        cadet_bold: ['"proxima-nova"', 'sans-serif'],
       },
       aspectRatio: {
         "1/2": "1 / 2",

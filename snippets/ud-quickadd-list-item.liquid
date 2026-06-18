@@ -10,7 +10,7 @@
     href="{% if product.metafields.custom.alt_gallery_link != blank %}{{ product.metafields.custom.alt_gallery_link.value.url }}{% else %}{{ product.url | default: "/" }}{% endif %}"
     class="tw-flex-shrink-0"
   >
-    <div class="tw-h-32 tw-object-cover tw-aspect-5/6 tw-relative">
+    <div class="tw-h-36 tw-object-cover tw-aspect-5/6 tw-relative">
       {% if product.featured_image != blank %}
         {{
           product.featured_image
@@ -31,7 +31,7 @@
   </a>
 
   <!-- Product Info -->
-  <div class="tw-h-32 tw-py-1 tw-w-full tw-flex tw-flex-col tw-justify-between tw-gap-2 tw-min-w-0 tw-grow">
+  <div class=" tw-py-1 tw-w-full tw-flex tw-flex-col tw-justify-between tw-gap-2 tw-min-w-0 tw-grow">
     <!-- Title and Product Details -->
     <div class="tw-flex tw-grow tw-flex-col tw-justify-between tw-gap-1">
       <div class="tw-flex tw-w-full tw-flex-row tw-justify-between tw-gap-x-3 tw-gap-y-0.5 tw-text-12">
@@ -40,24 +40,24 @@
             {{ product.title | default: 'Product title' }}
           </h3>
         </a>
-        <div class="tw-text-gray-700 tw-text-14 tw-font-semibold">
+        <div class="tw-text-gray-500 tw-text-14 tw-font-normal">
           List: <span class="tw-font-normal">{{ product.compare_at_price | default: product.price | money }}</span>
         </div>
       </div>
       <!-- Author Netprice Row -->
       <div class="tw-flex tw-w-full tw-flex-wrap tw-justify-between tw-gap-x-3 tw-gap-y-0.5 tw-text-14">
         <div>
-          <span class="tw-text-gray-500">by</span>
-          <a class="tw-text-blue-500 tw-font-normal tw-capitalize">
+          <span class="tw-font-medium">by</span>
+          <a class="tw-font-medium tw-capitalize">
             {{- product.metafields.custom.author.value | default: 'Author Name' -}}
           </a>
         </div>
-        <div class="tw-font-semibold tw-text-brand-sale">
-          Your Net Price: <span class="tw-font-normal">{{ product.price | money }}</span>
+        <div class="tw-font-semibold ">
+          Your Net Price: <span class="tw-font-semibold">{{ product.price | money }}</span>
         </div>
       </div>
       <!-- Product Description Row -->
-      <div class="tw-grow tw-text-gray-500">
+      <div class="tw-grow tw-text-14 tw-text-gray-500">
         {{
           product.description
           | default: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.'
@@ -69,11 +69,13 @@
         <!-- Product Details Section -->
         <div class="tw-flex tw-w-full tw-flex-wrap tw-text-gray-700 tw-font-semibold tw-gap-x-3 tw-gap-y-0.5 tw-text-14">
           <div>
-            ISBN: <span class="tw-font-normal">{{ product.metafields.custom.isbn.value | default: 'XXXXXXXX' }}</span>
+            ISBN: <span class="tw-font-normal">{{ product.metafields.facts.isbn | default: 'XXXXXXXX' }}</span>
           </div>
-          <div>
-            TB CODE: <span class="tw-font-normal">{{ product.metafields.custom.tb.value | default: 'XXXXXXXX' }}</span>
-          </div>
+          {% comment %}
+            <div>
+              TB CODE: <span class="tw-font-normal">{{ product.metafields.custom.tb.value | default: 'XXXXXXXX' }}</span>
+            </div>
+          {% endcomment %}
           <div>
             QTY:
             <span class="tw-font-normal">{{ product.selected_or_first_available_variant.inventory_quantity }}</span>

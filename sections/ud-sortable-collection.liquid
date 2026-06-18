@@ -26,6 +26,14 @@
   | replace: '?', ''
   | split: '&'
 %}
+{%- assign items_per_page = 20 -%}
+{%- for param in query_params -%}
+  {%- assign param_parts = param | split: '=' -%}
+  {%- if param_parts[0] == 'limit' -%}
+    {%- assign items_per_page = param_parts[1] | plus: 0 -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- if items_per_page == 0 -%}{%- assign items_per_page = 20 -%}{%- endif -%}
 <style>
   select {
     /* for Firefox */
@@ -41,7 +49,7 @@
     display: none;
   }
 </style>
-<div class="section-{{ section.id }}-props tw-border-gray-400 tw-border-b">
+<div v-cloak class="section-{{ section.id }}-props tw-border-gray-400 tw-border-b">
   <style>
     #filters-{{ block.id }} {
       height: 100%;
@@ -215,13 +223,13 @@
       <!-- Right Side -->
       <div class="tw-flex tw-w-full tw-grow tw-flex-col tw-justify-start">
         <!-- Product Grid -->
-        <div class="tw-flex tw-w-full tw-flex-col tw-justify-start">
+        <div class="tw-flex tw-w-full tw-h-full tw-flex-col tw-justify-between">
           <div
             id="product-grid-{{ section.id }}"
             :class="viewMode === 'list' ? 'tw-flex tw-flex-col tw-w-full' : 'tw-mx-auto tw-grid tw-max-w-7xl tw-grid-cols-1 max-md:tw-px-4 tw-gap-[-1px] md:tw-grid-cols-2 lg:tw-grid-cols-3 xl:tw-grid-cols-4'"
             class="tw-mx-auto tw-max-w-7xl max-md:tw-px-4"
           >
-            {% paginate collection.products by 60 -%}
+            {% paginate collection.products by items_per_page -%}
               <span
                 data-current-page="{{ paginate.current_page }}"
                 data-total-pages="{{ paginate.pages }}"
@@ -269,10 +277,6 @@
                     class="md:tw-col-span-2 xl:tw-col-span-3 tw-h-4"
                   ></div>
                 {% endif %}
-              {% else %}
-                <div class="ud-pagination tw-flex tw-justify-center tw-gap-4 tw-font-bold md:tw-col-span-2">
-                  {{- paginate | default_pagination }}
-                </div>
               {% endif %}
             {%- endpaginate %}
           </div>
@@ -299,6 +303,8 @@
                 }
               }
             </style>
+          {% else %}
+            {% render 'collection-pagination', paginate: paginate, items_per_page: items_per_page %}
           {% endif %}
         </div>
       </div>
@@ -352,6 +358,19 @@
       if (savedViewMode) {
         this.viewMode = savedViewMode;
       }
+      // Fade in the product grid on page load
+      this.$nextTick(() => {
+        const grid = document.getElementById('product-grid-{{ section.id }}');
+        if (grid) {
+          grid.style.opacity = '0';
+          grid.style.transition = 'opacity 0.5s ease';
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              grid.style.opacity = '1';
+            });
+          });
+        }
+      });
       setTimeout(() => {
         this.getNavHeight();
       }, 10);
@@ -389,7 +408,17 @@
         currentUrl.searchParams.set('sort_by', sortValue);
         // Reset to page 1 when sorting changes
         currentUrl.searchParams.set('page', 1);
-        window.location.href = currentUrl.toString();
+        this.navigateWithFade(currentUrl.toString());
+      },
+      navigateWithFade(url) {
+        const grid = document.getElementById('product-grid-{{ section.id }}');
+        if (grid) {
+          grid.style.transition = 'opacity 0.3s ease';
+          grid.style.opacity = '0';
+          setTimeout(() => { window.location.href = url; }, 300);
+        } else {
+          window.location.href = url;
+        }
       },
       toggleViewMode(mode) {
         this.viewMode = mode;

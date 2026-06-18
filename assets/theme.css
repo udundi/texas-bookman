@@ -1335,6 +1335,10 @@ video {
   margin-top: 0.25rem;
 }
 
+.tw-mt-\[-1px\] {
+  margin-top: -1px;
+}
+
 .tw-block {
   display: block;
 }
@@ -1501,8 +1505,8 @@ video {
   height: 0.75rem;
 }
 
-.tw-h-32 {
-  height: 8rem;
+.tw-h-36 {
+  height: 9rem;
 }
 
 .tw-h-4 {
@@ -1527,6 +1531,10 @@ video {
 
 .tw-h-7 {
   height: 1.75rem;
+}
+
+.tw-h-8 {
+  height: 2rem;
 }
 
 .tw-h-\[100dvh\] {
@@ -1612,6 +1620,10 @@ video {
 
 .tw-w-7 {
   width: 1.75rem;
+}
+
+.tw-w-8 {
+  width: 2rem;
 }
 
 .tw-w-\[70vw\] {
@@ -1773,6 +1785,12 @@ video {
 
 .tw-list-none {
   list-style-type: none;
+}
+
+.tw-appearance-none {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
 }
 
 .tw-grid-cols-1 {
@@ -2010,16 +2028,16 @@ video {
   border-left-width: 1px;
 }
 
+.tw-border-l-2 {
+  border-left-width: 2px;
+}
+
 .tw-border-r {
   border-right-width: 1px;
 }
 
 .tw-border-t {
   border-top-width: 1px;
-}
-
-.tw-border-l-2 {
-  border-left-width: 2px;
 }
 
 .\!tw-border-solid {
@@ -2052,9 +2070,19 @@ video {
   border-color: rgb(0 0 0 / 1);
 }
 
+.tw-border-brand-primary {
+  --tw-border-opacity: 1;
+  border-color: rgb(32 68 143 / var(--tw-border-opacity, 1));
+}
+
 .tw-border-gray-200 {
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity, 1));
+}
+
+.tw-border-gray-300 {
+  --tw-border-opacity: 1;
+  border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
 }
 
 .tw-border-gray-400 {
@@ -2091,6 +2119,11 @@ video {
   background-color: rgb(253 251 248 / var(--tw-bg-opacity, 1));
 }
 
+.tw-bg-brand-primary {
+  --tw-bg-opacity: 1;
+  background-color: rgb(32 68 143 / var(--tw-bg-opacity, 1));
+}
+
 .tw-bg-brand-secondary {
   --tw-bg-opacity: 1;
   background-color: rgb(240 186 58 / var(--tw-bg-opacity, 1));
@@ -2104,11 +2137,6 @@ video {
 .tw-bg-offblack {
   --tw-bg-opacity: 1;
   background-color: rgb(33 33 33 / var(--tw-bg-opacity, 1));
-}
-
-.tw-bg-red-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(254 202 202 / var(--tw-bg-opacity, 1));
 }
 
 .tw-bg-transparent {
@@ -2259,12 +2287,12 @@ video {
   padding-bottom: 1rem;
 }
 
-.tw-pb-2 {
-  padding-bottom: 0.5rem;
+.tw-pb-1 {
+  padding-bottom: 0.25rem;
 }
 
-.tw-pb-3 {
-  padding-bottom: 0.75rem;
+.tw-pb-2 {
+  padding-bottom: 0.5rem;
 }
 
 .tw-pb-4 {
@@ -2285,6 +2313,10 @@ video {
 
 .tw-pl-2 {
   padding-left: 0.5rem;
+}
+
+.tw-pl-3 {
+  padding-left: 0.75rem;
 }
 
 .tw-pl-4 {
@@ -2323,14 +2355,6 @@ video {
   padding-top: 2rem;
 }
 
-.tw-pb-6 {
-  padding-bottom: 1.5rem;
-}
-
-.tw-pb-1 {
-  padding-bottom: 0.25rem;
-}
-
 .tw-text-left {
   text-align: left;
 }
@@ -2351,12 +2375,24 @@ video {
   vertical-align: middle;
 }
 
+.\!tw-font-playfair {
+  font-family: "proxima-nova", sans-serif !important;
+}
+
 .tw-font-brand-body {
-  font-family: PP Neue Montreal, serif;
+  font-family: "proxima-nova", sans-serif;
 }
 
 .tw-font-brand-header {
-  font-family: Proxima Nova, sans;
+  font-family: "proxima-nova", sans-serif;
+}
+
+.tw-font-montserrat {
+  font-family: "proxima-nova", sans-serif;
+}
+
+.tw-font-playfair {
+  font-family: "proxima-nova", sans-serif;
 }
 
 .tw-font-sans {
@@ -2415,6 +2451,10 @@ video {
   font-weight: 800;
 }
 
+.tw-font-medium {
+  font-weight: 500;
+}
+
 .tw-font-normal {
   font-weight: 400;
 }
@@ -2458,19 +2498,14 @@ video {
   color: rgb(0 0 0 / var(--tw-text-opacity, 1));
 }
 
-.tw-text-blue-500 {
-  --tw-text-opacity: 1;
-  color: rgb(59 130 246 / var(--tw-text-opacity, 1));
-}
-
 .tw-text-brand-primary {
   --tw-text-opacity: 1;
   color: rgb(32 68 143 / var(--tw-text-opacity, 1));
 }
 
-.tw-text-brand-sale {
+.tw-text-gray-300 {
   --tw-text-opacity: 1;
-  color: rgb(189 32 38 / var(--tw-text-opacity, 1));
+  color: rgb(209 213 219 / var(--tw-text-opacity, 1));
 }
 
 .tw-text-gray-400 {
@@ -2649,6 +2684,11 @@ video {
 .hover\:tw-border-black:hover {
   --tw-border-opacity: 1;
   border-color: rgb(0 0 0 / var(--tw-border-opacity, 1));
+}
+
+.hover\:tw-border-gray-400:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(156 163 175 / var(--tw-border-opacity, 1));
 }
 
 .hover\:tw-border-offblack:hover {
