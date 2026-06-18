@@ -113,11 +113,11 @@
             "header_menu_links_fVTrLj"
           ]
         },
-        "header_tabbed_section_MJLePC": {
+        "header_tabbed_section_QRFm4Y": {
           "type": "_header-tabbed-section",
           "name": "Tabbed Header Container",
           "settings": {
-            "header": "BOOKS",
+            "header": "MIND/BODY/SPIRIT",
             "full_width": false,
             "display_header": true,
             "header_url": "",
@@ -153,12 +153,461 @@
             "product_3": "",
             "product_4": ""
           },
-          "blocks": {}
+          "blocks": {
+            "header_menu_links_BAR6zW": {
+              "type": "_header-menu-links",
+              "name": "Menu Links",
+              "settings": {
+                "menu_title": "All Adult",
+                "header_url": "shopify://collections",
+                "menu": "adult-books",
+                "column_layout": "2-col"
+              },
+              "blocks": {}
+            },
+            "header_menu_links_ij94yU": {
+              "type": "_header-menu-links",
+              "name": "Menu Links",
+              "settings": {
+                "menu_title": "All Children’s",
+                "header_url": "shopify://collections/frontpage",
+                "menu": "childrens-books",
+                "column_layout": "1-col"
+              },
+              "blocks": {}
+            },
+            "header_menu_links_fXfXHA": {
+              "type": "_header-menu-links",
+              "name": "Menu Links",
+              "settings": {
+                "menu_title": "Featured Collections",
+                "header_url": "",
+                "menu": "featured-collections",
+                "column_layout": "1-col"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "header_menu_links_BAR6zW",
+            "header_menu_links_ij94yU",
+            "header_menu_links_fXfXHA"
+          ]
+        },
+        "header_tabbed_section_XfCQm6": {
+          "type": "_header-tabbed-section",
+          "name": "Tabbed Header Container",
+          "settings": {
+            "header": "GIFTS/STATIONERY",
+            "full_width": false,
+            "display_header": true,
+            "header_url": "",
+            "alt_image_style": true,
+            "sec_1_title": "BOOKS",
+            "s1t": "single_link",
+            "products_enabled_1": false,
+            "link_1_title": "",
+            "link_1_subtitle": "",
+            "link_1_url": "",
+            "sec_2_title": "",
+            "products_enabled_2": false,
+            "link_2_title": "",
+            "link_2_subtitle": "",
+            "link_2_url": "",
+            "products_enabled_3": false,
+            "link_3_title": "",
+            "link_3_subtitle": "",
+            "link_3_url": "",
+            "sec_2_title_alt": "",
+            "products_enabled_4": false,
+            "link_4_title": "",
+            "link_4_subtitle": "",
+            "link_4_url": "",
+            "sec_1_button_enabled": false,
+            "sec_1_button_text": "",
+            "sec_1_button_link": "",
+            "sec_2_button_enabled": false,
+            "sec_2_button_text": "",
+            "sec_2_button_link": "",
+            "product_1": "",
+            "product_2": "",
+            "product_3": "",
+            "product_4": ""
+          },
+          "blocks": {
+            "header_menu_links_JFpran": {
+              "type": "_header-menu-links",
+              "name": "Menu Links",
+              "settings": {
+                "menu_title": "All Adult",
+                "header_url": "shopify://collections",
+                "menu": "adult-books",
+                "column_layout": "2-col"
+              },
+              "blocks": {}
+            },
+            "header_menu_links_TLYPCQ": {
+              "type": "_header-menu-links",
+              "name": "Menu Links",
+              "settings": {
+                "menu_title": "All Children’s",
+                "header_url": "shopify://collections/frontpage",
+                "menu": "childrens-books",
+                "column_layout": "1-col"
+              },
+              "blocks": {}
+            },
+            "header_menu_links_7mGrVJ": {
+              "type": "_header-menu-links",
+              "name": "Menu Links",
+              "settings": {
+                "menu_title": "Featured Collections",
+                "header_url": "",
+                "menu": "featured-collections",
+                "column_layout": "1-col"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "header_menu_links_JFpran",
+            "header_menu_links_TLYPCQ",
+            "header_menu_links_7mGrVJ"
+          ]
+        },
+        "header_tabbed_section_jRctFE": {
+          "type": "_header-tabbed-section",
+          "name": "Tabbed Header Container",
+          "settings": {
+            "header": "GAMES/MEDIA",
+            "full_width": false,
+            "display_header": true,
+            "header_url": "",
+            "alt_image_style": true,
+            "sec_1_title": "BOOKS",
+            "s1t": "single_link",
+            "products_enabled_1": false,
+            "link_1_title": "",
+            "link_1_subtitle": "",
+            "link_1_url": "",
+            "sec_2_title": "",
+            "products_enabled_2": false,
+            "link_2_title": "",
+            "link_2_subtitle": "",
+            "link_2_url": "",
+            "products_enabled_3": false,
+            "link_3_title": "",
+            "link_3_subtitle": "",
+            "link_3_url": "",
+            "sec_2_title_alt": "",
+            "products_enabled_4": false,
+            "link_4_title": "",
+            "link_4_subtitle": "",
+            "link_4_url": "",
+            "sec_1_button_enabled": false,
+            "sec_1_button_text": "",
+            "sec_1_button_link": "",
+            "sec_2_button_enabled": false,
+            "sec_2_button_text": "",
+            "sec_2_button_link": "",
+            "product_1": "",
+            "product_2": "",
+            "product_3": "",
+            "product_4": ""
+          },
+          "blocks": {
+            "header_menu_links_p7eJma": {
+              "type": "_header-menu-links",
+              "name": "Menu Links",
+              "settings": {
+                "menu_title": "All Adult",
+                "header_url": "shopify://collections",
+                "menu": "adult-books",
+                "column_layout": "2-col"
+              },
+              "blocks": {}
+            },
+            "header_menu_links_PRUqYW": {
+              "type": "_header-menu-links",
+              "name": "Menu Links",
+              "settings": {
+                "menu_title": "All Children’s",
+                "header_url": "shopify://collections/frontpage",
+                "menu": "childrens-books",
+                "column_layout": "1-col"
+              },
+              "blocks": {}
+            },
+            "header_menu_links_nUY3Pi": {
+              "type": "_header-menu-links",
+              "name": "Menu Links",
+              "settings": {
+                "menu_title": "Featured Collections",
+                "header_url": "",
+                "menu": "featured-collections",
+                "column_layout": "1-col"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "header_menu_links_p7eJma",
+            "header_menu_links_PRUqYW",
+            "header_menu_links_nUY3Pi"
+          ]
+        },
+        "header_tabbed_section_LqcKG6": {
+          "type": "_header-tabbed-section",
+          "name": "Tabbed Header Container",
+          "settings": {
+            "header": "MARKDOWNS",
+            "full_width": false,
+            "display_header": true,
+            "header_url": "",
+            "alt_image_style": true,
+            "sec_1_title": "BOOKS",
+            "s1t": "single_link",
+            "products_enabled_1": false,
+            "link_1_title": "",
+            "link_1_subtitle": "",
+            "link_1_url": "",
+            "sec_2_title": "",
+            "products_enabled_2": false,
+            "link_2_title": "",
+            "link_2_subtitle": "",
+            "link_2_url": "",
+            "products_enabled_3": false,
+            "link_3_title": "",
+            "link_3_subtitle": "",
+            "link_3_url": "",
+            "sec_2_title_alt": "",
+            "products_enabled_4": false,
+            "link_4_title": "",
+            "link_4_subtitle": "",
+            "link_4_url": "",
+            "sec_1_button_enabled": false,
+            "sec_1_button_text": "",
+            "sec_1_button_link": "",
+            "sec_2_button_enabled": false,
+            "sec_2_button_text": "",
+            "sec_2_button_link": "",
+            "product_1": "",
+            "product_2": "",
+            "product_3": "",
+            "product_4": ""
+          },
+          "blocks": {
+            "header_menu_links_VMQWk4": {
+              "type": "_header-menu-links",
+              "name": "Menu Links",
+              "settings": {
+                "menu_title": "All Adult",
+                "header_url": "shopify://collections",
+                "menu": "adult-books",
+                "column_layout": "2-col"
+              },
+              "blocks": {}
+            },
+            "header_menu_links_8dYrGF": {
+              "type": "_header-menu-links",
+              "name": "Menu Links",
+              "settings": {
+                "menu_title": "All Children’s",
+                "header_url": "shopify://collections/frontpage",
+                "menu": "childrens-books",
+                "column_layout": "1-col"
+              },
+              "blocks": {}
+            },
+            "header_menu_links_6FLcr7": {
+              "type": "_header-menu-links",
+              "name": "Menu Links",
+              "settings": {
+                "menu_title": "Featured Collections",
+                "header_url": "",
+                "menu": "featured-collections",
+                "column_layout": "1-col"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "header_menu_links_VMQWk4",
+            "header_menu_links_8dYrGF",
+            "header_menu_links_6FLcr7"
+          ]
+        },
+        "header_tabbed_section_qQGM46": {
+          "type": "_header-tabbed-section",
+          "name": "Tabbed Header Container",
+          "settings": {
+            "header": "NEW ARRIVALS",
+            "full_width": false,
+            "display_header": true,
+            "header_url": "",
+            "alt_image_style": true,
+            "sec_1_title": "BOOKS",
+            "s1t": "single_link",
+            "products_enabled_1": false,
+            "link_1_title": "",
+            "link_1_subtitle": "",
+            "link_1_url": "",
+            "sec_2_title": "",
+            "products_enabled_2": false,
+            "link_2_title": "",
+            "link_2_subtitle": "",
+            "link_2_url": "",
+            "products_enabled_3": false,
+            "link_3_title": "",
+            "link_3_subtitle": "",
+            "link_3_url": "",
+            "sec_2_title_alt": "",
+            "products_enabled_4": false,
+            "link_4_title": "",
+            "link_4_subtitle": "",
+            "link_4_url": "",
+            "sec_1_button_enabled": false,
+            "sec_1_button_text": "",
+            "sec_1_button_link": "",
+            "sec_2_button_enabled": false,
+            "sec_2_button_text": "",
+            "sec_2_button_link": "",
+            "product_1": "",
+            "product_2": "",
+            "product_3": "",
+            "product_4": ""
+          },
+          "blocks": {
+            "header_menu_links_4Je6Aw": {
+              "type": "_header-menu-links",
+              "name": "Menu Links",
+              "settings": {
+                "menu_title": "All Adult",
+                "header_url": "shopify://collections",
+                "menu": "adult-books",
+                "column_layout": "2-col"
+              },
+              "blocks": {}
+            },
+            "header_menu_links_77gLQV": {
+              "type": "_header-menu-links",
+              "name": "Menu Links",
+              "settings": {
+                "menu_title": "All Children’s",
+                "header_url": "shopify://collections/frontpage",
+                "menu": "childrens-books",
+                "column_layout": "1-col"
+              },
+              "blocks": {}
+            },
+            "header_menu_links_9wUVHz": {
+              "type": "_header-menu-links",
+              "name": "Menu Links",
+              "settings": {
+                "menu_title": "Featured Collections",
+                "header_url": "",
+                "menu": "featured-collections",
+                "column_layout": "1-col"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "header_menu_links_4Je6Aw",
+            "header_menu_links_77gLQV",
+            "header_menu_links_9wUVHz"
+          ]
+        },
+        "header_tabbed_section_pPqVxC": {
+          "type": "_header-tabbed-section",
+          "name": "Tabbed Header Container",
+          "settings": {
+            "header": "RESOURCES",
+            "full_width": false,
+            "display_header": true,
+            "header_url": "",
+            "alt_image_style": true,
+            "sec_1_title": "BOOKS",
+            "s1t": "single_link",
+            "products_enabled_1": false,
+            "link_1_title": "",
+            "link_1_subtitle": "",
+            "link_1_url": "",
+            "sec_2_title": "",
+            "products_enabled_2": false,
+            "link_2_title": "",
+            "link_2_subtitle": "",
+            "link_2_url": "",
+            "products_enabled_3": false,
+            "link_3_title": "",
+            "link_3_subtitle": "",
+            "link_3_url": "",
+            "sec_2_title_alt": "",
+            "products_enabled_4": false,
+            "link_4_title": "",
+            "link_4_subtitle": "",
+            "link_4_url": "",
+            "sec_1_button_enabled": false,
+            "sec_1_button_text": "",
+            "sec_1_button_link": "",
+            "sec_2_button_enabled": false,
+            "sec_2_button_text": "",
+            "sec_2_button_link": "",
+            "product_1": "",
+            "product_2": "",
+            "product_3": "",
+            "product_4": ""
+          },
+          "blocks": {
+            "header_menu_links_LcLCky": {
+              "type": "_header-menu-links",
+              "name": "Menu Links",
+              "settings": {
+                "menu_title": "All Adult",
+                "header_url": "shopify://collections",
+                "menu": "adult-books",
+                "column_layout": "2-col"
+              },
+              "blocks": {}
+            },
+            "header_menu_links_qtb3YQ": {
+              "type": "_header-menu-links",
+              "name": "Menu Links",
+              "settings": {
+                "menu_title": "All Children’s",
+                "header_url": "shopify://collections/frontpage",
+                "menu": "childrens-books",
+                "column_layout": "1-col"
+              },
+              "blocks": {}
+            },
+            "header_menu_links_q69jgi": {
+              "type": "_header-menu-links",
+              "name": "Menu Links",
+              "settings": {
+                "menu_title": "Featured Collections",
+                "header_url": "",
+                "menu": "featured-collections",
+                "column_layout": "1-col"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "header_menu_links_LcLCky",
+            "header_menu_links_qtb3YQ",
+            "header_menu_links_q69jgi"
+          ]
         }
       },
       "block_order": [
         "header_tabbed_section_aGReCA",
-        "header_tabbed_section_MJLePC"
+        "header_tabbed_section_QRFm4Y",
+        "header_tabbed_section_XfCQm6",
+        "header_tabbed_section_jRctFE",
+        "header_tabbed_section_LqcKG6",
+        "header_tabbed_section_qQGM46",
+        "header_tabbed_section_pPqVxC"
       ],
       "name": "Navigation Bar",
       "settings": {
