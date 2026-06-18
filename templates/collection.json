@@ -254,7 +254,7 @@
               "name": "Collection Filter",
               "settings": {
                 "tag": "",
-                "title": "Mystery & Thriller",
+                "title": "Artists",
                 "filter_type": "filter.p.tag="
               },
               "blocks": {}
@@ -264,7 +264,7 @@
               "name": "Collection Filter",
               "settings": {
                 "tag": "",
-                "title": "Science Fiction",
+                "title": "History/Criticism",
                 "filter_type": "filter.p.tag="
               },
               "blocks": {}
@@ -274,7 +274,7 @@
               "name": "Collection Filter",
               "settings": {
                 "tag": "",
-                "title": "Fantasy",
+                "title": "Instruction",
                 "filter_type": "filter.p.tag="
               },
               "blocks": {}
