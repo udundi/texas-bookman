@@ -158,10 +158,10 @@
               "type": "_header-menu-links",
               "name": "Menu Links",
               "settings": {
-                "menu_title": "All Adult",
+                "menu_title": "Books",
                 "header_url": "shopify://collections",
-                "menu": "adult-books",
-                "column_layout": "2-col"
+                "menu": "mind-body-spirit-books",
+                "column_layout": "1-col"
               },
               "blocks": {}
             },
@@ -169,9 +169,9 @@
               "type": "_header-menu-links",
               "name": "Menu Links",
               "settings": {
-                "menu_title": "All Children’s",
+                "menu_title": "Other",
                 "header_url": "shopify://collections/frontpage",
-                "menu": "childrens-books",
+                "menu": "mind-body-spirit-other",
                 "column_layout": "1-col"
               },
               "blocks": {}
