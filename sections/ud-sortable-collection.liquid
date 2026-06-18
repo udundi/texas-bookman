@@ -41,7 +41,7 @@
     display: none;
   }
 </style>
-<div class="section-{{ section.id }}-props">
+<div class="section-{{ section.id }}-props tw-border-gray-400 tw-border-b">
   <style>
     #filters-{{ block.id }} {
       height: 100%;
@@ -55,141 +55,143 @@
       max-height: 0;
     }
   </style>
-  <div class="tw-w-full tw-flex tw-gap-2 tw-justify-between tw-items-center tw-border-y tw-border-gray-400 tw-border-solid tw-p-2 tw-my-[-1px]">
-    <!-- Title and description Container -->
-    <div class=" tw-flex tw-flex-col tw-items-start tw-justify-start tw-gap-2 tw-text-center max-md:tw-px-4 md:tw-text-left">
-      <!-- Title -->
-      <h1 class="tw-m-0 tw-font-brand-primary tw-text-24 tw-font-semibold tw-capitalize tw-leading-normal tw-text-offblack">
-        {{ collection.title }} ({{ collection.all_products_count }})
-      </h1>
-      <span class="tw-text-14">Home / {{ collection.title }}</span>
-    </div>
-    <div>
-      <!-- Sort By Selector -->
-      <div class="tw-flex tw-items-center tw-justify-start tw-gap-4 tw-p-4 md:tw-p-0">
-        <!-- View Toggle Buttons -->
-        <div class="tw-hidden md:tw-flex tw-items-center tw-gap-2">
-          <button
-            type="button"
-            @click="toggleViewMode('grid')"
-            :class="viewMode === 'grid' ? '  tw-border-gray-600' : '  tw-border-gray-400'"
-            class="duration-200 tw-p-2 tw-size-10 tw-rounded tw-transition-colors tw-flex tw-text-black tw-items-center tw-justify-center tw-border tw-bg-white hover:tw-bg-gray-100"
-            title="Grid View"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 19 19"
-              fill="none"
-              style="width: 20px; height: 20px;"
+  <div class="tw-w-full tw-flex tw-justify-center tw-border-y tw-border-gray-400 tw-border-solid tw-p-2 tw-my-[-1px]">
+    <div class="tw-flex tw-gap-2 tw-w-full tw-max-w-screen-2xl tw-justify-between tw-items-center">
+      <!-- Title and description Container -->
+      <div class=" tw-flex tw-flex-col tw-items-start tw-justify-start tw-gap-2 tw-text-center max-md:tw-px-4 md:tw-text-left">
+        <!-- Title -->
+        <h1 class="tw-m-0 tw-font-brand-primary tw-text-24 tw-font-semibold tw-capitalize tw-leading-normal tw-text-offblack">
+          {{ collection.title }} ({{ collection.all_products_count }})
+        </h1>
+        <span class="tw-text-14">Home / {{ collection.title }}</span>
+      </div>
+      <div>
+        <!-- Sort By Selector -->
+        <div class="tw-flex tw-items-center tw-justify-start tw-gap-4 tw-p-4 md:tw-p-0">
+          <!-- View Toggle Buttons -->
+          <div class="tw-hidden md:tw-flex tw-items-center tw-gap-2">
+            <button
+              type="button"
+              @click="toggleViewMode('grid')"
+              :class="viewMode === 'grid' ? '  tw-border-gray-600' : '  tw-border-gray-400'"
+              class="duration-200 tw-p-2 tw-size-10 tw-rounded tw-transition-colors tw-flex tw-text-black tw-items-center tw-justify-center tw-border tw-bg-white hover:tw-bg-gray-100"
+              title="Grid View"
             >
-              <path d="M7.46388 1.7561H2.48808C2.08396 1.7561 1.75635 2.08371 1.75635 2.48784V7.46364C1.75635 7.86776 2.08396 8.19537 2.48808 8.19537H7.46388C7.86801 8.19537 8.19562 7.86776 8.19562 7.46364V2.48784C8.19562 2.08371 7.86801 1.7561 7.46388 1.7561Z" stroke="currentColor" stroke-width="1.17078" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M16.2446 1.7561H11.2688C10.8647 1.7561 10.5371 2.08371 10.5371 2.48784V7.46364C10.5371 7.86776 10.8647 8.19537 11.2688 8.19537H16.2446C16.6488 8.19537 16.9764 7.86776 16.9764 7.46364V2.48784C16.9764 2.08371 16.6488 1.7561 16.2446 1.7561Z" stroke="currentColor" stroke-width="1.17078" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M7.46388 10.5371H2.48808C2.08396 10.5371 1.75635 10.8647 1.75635 11.2688V16.2446C1.75635 16.6488 2.08396 16.9764 2.48808 16.9764H7.46388C7.86801 16.9764 8.19562 16.6488 8.19562 16.2446V11.2688C8.19562 10.8647 7.86801 10.5371 7.46388 10.5371Z" stroke="currentColor" stroke-width="1.17078" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M16.2446 10.5371H11.2688C10.8647 10.5371 10.5371 10.8647 10.5371 11.2688V16.2446C10.5371 16.6488 10.8647 16.9764 11.2688 16.9764H16.2446C16.6488 16.9764 16.9764 16.6488 16.9764 16.2446V11.2688C16.9764 10.8647 16.6488 10.5371 16.2446 10.5371Z" stroke="currentColor" stroke-width="1.17078" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-          <button
-            type="button"
-            @click="toggleViewMode('list')"
-            :class="viewMode === 'list' ? ' tw-border-gray-600' : ' tw-border-gray-400'"
-            class="duration-200 tw-p-2 tw-size-10 tw-rounded tw-text-black tw-transition-colors tw-flex tw-items-center tw-justify-center tw-border tw-bg-white hover:tw-bg-gray-100"
-            title="List View"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 27 27"
-              fill="none"
-              style="width: 20px; height: 20px;"
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 19 19"
+                fill="none"
+                style="width: 20px; height: 20px;"
+              >
+                <path d="M7.46388 1.7561H2.48808C2.08396 1.7561 1.75635 2.08371 1.75635 2.48784V7.46364C1.75635 7.86776 2.08396 8.19537 2.48808 8.19537H7.46388C7.86801 8.19537 8.19562 7.86776 8.19562 7.46364V2.48784C8.19562 2.08371 7.86801 1.7561 7.46388 1.7561Z" stroke="currentColor" stroke-width="1.17078" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M16.2446 1.7561H11.2688C10.8647 1.7561 10.5371 2.08371 10.5371 2.48784V7.46364C10.5371 7.86776 10.8647 8.19537 11.2688 8.19537H16.2446C16.6488 8.19537 16.9764 7.86776 16.9764 7.46364V2.48784C16.9764 2.08371 16.6488 1.7561 16.2446 1.7561Z" stroke="currentColor" stroke-width="1.17078" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M7.46388 10.5371H2.48808C2.08396 10.5371 1.75635 10.8647 1.75635 11.2688V16.2446C1.75635 16.6488 2.08396 16.9764 2.48808 16.9764H7.46388C7.86801 16.9764 8.19562 16.6488 8.19562 16.2446V11.2688C8.19562 10.8647 7.86801 10.5371 7.46388 10.5371Z" stroke="currentColor" stroke-width="1.17078" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M16.2446 10.5371H11.2688C10.8647 10.5371 10.5371 10.8647 10.5371 11.2688V16.2446C10.5371 16.6488 10.8647 16.9764 11.2688 16.9764H16.2446C16.6488 16.9764 16.9764 16.6488 16.9764 16.2446V11.2688C16.9764 10.8647 16.6488 10.5371 16.2446 10.5371Z" stroke="currentColor" stroke-width="1.17078" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <button
+              type="button"
+              @click="toggleViewMode('list')"
+              :class="viewMode === 'list' ? ' tw-border-gray-600' : ' tw-border-gray-400'"
+              class="duration-200 tw-p-2 tw-size-10 tw-rounded tw-text-black tw-transition-colors tw-flex tw-items-center tw-justify-center tw-border tw-bg-white hover:tw-bg-gray-100"
+              title="List View"
             >
-              <path d="M19.5335 13.2323H10.7119M19.5335 18.2733H10.7119M19.5335 8.19141H10.7119" stroke="currentColor" stroke-width="1.26023" stroke-linecap="round" stroke-linejoin="round"/>
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M6.92987 9.45161C7.55998 9.45161 8.1901 8.8215 8.1901 8.19138C8.1901 7.56127 7.55998 6.93115 6.92987 6.93115C6.29975 6.93115 5.6709 7.56127 5.6709 8.19138C5.6709 8.8215 6.29975 9.45161 6.92987 9.45161ZM6.92987 14.4925C7.55998 14.4925 8.1901 13.8624 8.1901 13.2323C8.1901 12.6022 7.55998 11.9721 6.92987 11.9721C6.29975 11.9721 5.6709 12.6022 5.6709 13.2323C5.6709 13.8624 6.29975 14.4925 6.92987 14.4925ZM6.92987 19.5335C7.55998 19.5335 8.1901 18.9033 8.1901 18.2732C8.1901 17.6431 7.55998 17.013 6.92987 17.013C6.29975 17.013 5.6709 17.6431 5.6709 18.2732C5.6709 18.9033 6.29975 19.5335 6.92987 19.5335Z" fill="currentColor"/>
-            </svg>
-          </button>
-        </div>
-        <div class="tw-hidden tw-whitespace-nowrap tw-font-brand-primary tw-text-16 tw-font-semibold tw-text-offblack tw-leading-tight md:tw-block">
-          Sort By:
-        </div>
-        <div class="tw-relative tw-hidden tw-w-full md:tw-flex tw-items-center">
-          <div class="tw-absolute tw-right-3 tw-top-1/2 tw-size-3 -tw-translate-y-1/2">
-            {% render 'icon-arrow-down' %}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 27 27"
+                fill="none"
+                style="width: 20px; height: 20px;"
+              >
+                <path d="M19.5335 13.2323H10.7119M19.5335 18.2733H10.7119M19.5335 8.19141H10.7119" stroke="currentColor" stroke-width="1.26023" stroke-linecap="round" stroke-linejoin="round"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M6.92987 9.45161C7.55998 9.45161 8.1901 8.8215 8.1901 8.19138C8.1901 7.56127 7.55998 6.93115 6.92987 6.93115C6.29975 6.93115 5.6709 7.56127 5.6709 8.19138C5.6709 8.8215 6.29975 9.45161 6.92987 9.45161ZM6.92987 14.4925C7.55998 14.4925 8.1901 13.8624 8.1901 13.2323C8.1901 12.6022 7.55998 11.9721 6.92987 11.9721C6.29975 11.9721 5.6709 12.6022 5.6709 13.2323C5.6709 13.8624 6.29975 14.4925 6.92987 14.4925ZM6.92987 19.5335C7.55998 19.5335 8.1901 18.9033 8.1901 18.2732C8.1901 17.6431 7.55998 17.013 6.92987 17.013C6.29975 17.013 5.6709 17.6431 5.6709 18.2732C5.6709 18.9033 6.29975 19.5335 6.92987 19.5335Z" fill="currentColor"/>
+              </svg>
+            </button>
           </div>
-          <select
-            aria-label="Sort By"
-            class="tw-w-full tw-rounded-md tw-border tw-border-solid tw-border-gray-400 tw-p-2 tw-pr-8 tw-text-14"
-            @change="sortByChange($event)"
-          >
-            <option
-              {% unless get_full_url contains 'sort_by' %}
-                selected
-              {% endunless %}
-              value="manual"
+          <div class="tw-hidden tw-whitespace-nowrap tw-font-brand-primary tw-text-16 tw-font-semibold tw-text-offblack tw-leading-tight md:tw-block">
+            Sort By:
+          </div>
+          <div class="tw-relative tw-hidden tw-w-full md:tw-flex tw-items-center">
+            <div class="tw-absolute tw-right-3 tw-top-1/2 tw-size-3 -tw-translate-y-1/2">
+              {% render 'icon-arrow-down' %}
+            </div>
+            <select
+              aria-label="Sort By"
+              class="tw-w-full tw-rounded-md tw-border tw-border-solid tw-border-gray-400 tw-p-2 tw-pr-8 tw-text-14"
+              @change="sortByChange($event)"
             >
-              Featured
-            </option>
-            <option
-              {% if get_full_url contains 'best-selling' %}
-                selected
-              {% endif %}
-              value="best-selling"
-            >
-              Best Selling
-            </option>
-            <option
-              {% if get_full_url contains 'created-descending' %}
-                selected
-              {% endif %}
-              value="created-descending"
-            >
-              New Arrivals
-            </option>
-            <option
-              {% if get_full_url contains 'title-ascending' %}
-                selected
-              {% endif %}
-              value="title-ascending"
-            >
-              Alphabetically, A-Z
-            </option>
-            <option
-              {% if get_full_url contains 'title-descending' %}
-                selected
-              {% endif %}
-              value="title-descending"
-            >
-              Alphabetically, Z-A
-            </option>
-            <option
-              {% if get_full_url contains 'price-ascending' %}
-                selected
-              {% endif %}
-              value="price-ascending"
-            >
-              Price, low to high
-            </option>
-            <option
-              {% if get_full_url contains 'price-descending' %}
-                selected
-              {% endif %}
-              value="price-descending"
-            >
-              Price, high to low
-            </option>
-          </select>
+              <option
+                {% unless get_full_url contains 'sort_by' %}
+                  selected
+                {% endunless %}
+                value="manual"
+              >
+                Featured
+              </option>
+              <option
+                {% if get_full_url contains 'best-selling' %}
+                  selected
+                {% endif %}
+                value="best-selling"
+              >
+                Best Selling
+              </option>
+              <option
+                {% if get_full_url contains 'created-descending' %}
+                  selected
+                {% endif %}
+                value="created-descending"
+              >
+                New Arrivals
+              </option>
+              <option
+                {% if get_full_url contains 'title-ascending' %}
+                  selected
+                {% endif %}
+                value="title-ascending"
+              >
+                Alphabetically, A-Z
+              </option>
+              <option
+                {% if get_full_url contains 'title-descending' %}
+                  selected
+                {% endif %}
+                value="title-descending"
+              >
+                Alphabetically, Z-A
+              </option>
+              <option
+                {% if get_full_url contains 'price-ascending' %}
+                  selected
+                {% endif %}
+                value="price-ascending"
+              >
+                Price, low to high
+              </option>
+              <option
+                {% if get_full_url contains 'price-descending' %}
+                  selected
+                {% endif %}
+                value="price-descending"
+              >
+                Price, high to low
+              </option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
   </div>
   <div
     id="sortable-collection"
-    class="tw-flex tw-w-full tw-items-center tw-justify-center"
+    class="tw-flex tw-w-full tw-items-center tw-justify-center tw-max-w-screen-2xl tw-mx-auto "
   >
-    <div class="tw-flex tw-flex-col tw-gap-4 md:tw-flex-row md:tw-pr-8">
+    <div class="tw-flex tw-w-full tw-flex-col md:tw-flex-row">
       <!-- Filter Container -->
       <div
-        class="ud-filter-container tw-fixed tw-my-2 tw-z-50 tw-w-full tw-flex-col tw-justify-start tw-bg-white tw-py-4 md:tw-sticky md:tw-mx-4 md:tw-w-96 md:tw-gap-2"
+        class="ud-filter-container tw-fixed tw-z-50 tw-w-full tw-flex-col tw-justify-start tw-px-2 tw-py-4 md:tw-sticky md:tw-w-96 md:tw-gap-2 tw-border-r tw-border-gray-400 tw-mr-[-1px] tw-my-[-1px]"
         :class="mobileFiltersOpen ? 'tw-flex' : 'md:tw-flex tw-hidden'"
       >
-        Test
+        Filter Container
         <div
           :class="mobileFiltersOpen ? 'tw-static tw-top-0 tw-left-0 md:tw-w-full tw-w-[70vw] ' : 'md:tw-flex tw-hidden'"
           class="tw-z-[500] tw-h-full tw-w-screen tw-overflow-y-auto tw-pb-8 md:tw-w-full  md:tw-px-4"
@@ -212,10 +214,10 @@
       <!-- Right Side -->
       <div class="tw-flex tw-w-full tw-grow tw-flex-col tw-justify-start">
         <!-- Product Grid -->
-        <div class="tw-flex tw-w-full tw-flex-col tw-justify-start tw-gap-4">
+        <div class="tw-flex tw-w-full tw-flex-col tw-justify-start">
           <div
             id="product-grid-{{ section.id }}"
-            :class="viewMode === 'list' ? 'tw-flex tw-flex-col tw-w-full' : 'tw-mx-auto tw-grid tw-max-w-7xl tw-grid-cols-1 max-md:tw-px-4 tw-gap-[-1px] md:tw-grid-cols-2 xl:tw-grid-cols-3'"
+            :class="viewMode === 'list' ? 'tw-flex tw-flex-col tw-w-full' : 'tw-mx-auto tw-grid tw-max-w-7xl tw-grid-cols-1 max-md:tw-px-4 tw-gap-[-1px] md:tw-grid-cols-2 lg:tw-grid-cols-3 xl:tw-grid-cols-4'"
             class="tw-mx-auto tw-max-w-7xl max-md:tw-px-4"
           >
             {% paginate collection.products by 60 -%}

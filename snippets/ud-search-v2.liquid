@@ -1,111 +1,20 @@
 <div
-  class="tw-fixed tw-z-[10000] tw-bg-white"
+  class=" tw-bg-white"
   v-if="showSearch"
   v-cloak
   @click.stop
 >
-  <div class="tw-w-full tw-max-w-screen-3xl tw-bg-white tw-h-fit tw-fixed tw-top-[60px] tw-left-1/2 -tw-translate-x-1/2  tw-shadow-2xl">
-    <div class="tw-overflow-y-auto tw-flex tw-h-fit tw-max-h-[calc(100vh-70px)] tw-w-full tw-mx-auto tw-max-w-container-xl tw-pb-8 md:tw-flex-row tw-flex-col tw-relative tw-z-[99999]">
-      {% comment %} Left Side {% endcomment %}
-      <div class="tw-bg-white tw-hidden md:tw-flex tw-gap-4 tw-flex-col tw-items-center tw-justify-start tw-flex-shrink-0 tw-w-full md:tw-w-80 lg:tw-w-96 tw-overflow-y-hidden tw-p-4 tw-relative md:tw-h-fit md:tw-max-h-[80vh] md:tw-items-start md:tw-pb-0 tw-z-[99999]">
-        <div class="tw-flex tw-flex-col tw-w-full">
-          <div class="tw-flex tw-justify-start tw-gap-4 tw-w-full">
-            <h2 class="tw-font-playfair tw-text-offblack tw-text-24 tw-pb-4 tw-font-semibold tw-p-0 tw-m-0 tw-sticky tw-top-0 tw-bg-white">
-              {% comment %} [[ searchObject.queries.length >= 1 ? 'Related Searches' : 'Trending Searches']] {% endcomment %}
-              <span v-if="search == '' || !search">Trending Searches</span>
-              <span v-else-if="searchObject.queries && searchObject.queries.length > 0">Search Suggestions</span>
-              <span v-else>Related Pages</span>
-            </h2>
-          </div>
-          <div class="tw-flex tw-flex-col tw-gap-3" v-if="search == '' || !search">
-            {% for link in block.settings.trending_searches.links %}
-              <a href="{{ link.url }}" class="tw-capitalize tw-text-grey-dark tw-font-montserrat">
-                {{- link.title | escape -}}
-              </a>
-            {% endfor %}
-          </div>
-          <div
-            v-else-if="searchObject.queries && searchObject.queries.length > 0"
-            class="tw-flex tw-flex-col tw-gap-3 tw-items-start tw-justify-start"
-          >
-            <template v-for="query in searchObject.queries">
-              <button
-                v-if="query && query.text && !query.text.toLowerCase().includes('design')"
-                :key="query.text"
-                @click="searchQueryClicked(query.text)"
-                class="tw-text-left tw-capitalize tw-text-grey-dark tw-font-montserrat hover:tw-text-offblack tw-transition-colors"
-              >
-                <i class="fal fa-search tw-mr-2 tw-text-gray-400"></i>
-                [[ query.text ]]
-              </button>
-            </template>
-          </div>
-          <div v-else class="tw-flex tw-flex-col tw-gap-3 tw-items-start tw-justify-start">
-            <template v-for="collection in searchObject.collections">
-              <a
-                v-if="collection && collection.title && collection.tags && !collection.tags.includes('NOSEARCH')"
-                :href="collection.url"
-                class="tw-capitalize tw-text-grey-dark tw-font-montserrat tw-flex tw-gap-2 tw-justify-center tw-items-center"
-              >
-                <span>[[ collection.title ]]</span>
-              </a>
-            </template>
-            <template v-for="page in searchObject.pages">
-              <a
-                v-if="page && page.title && page.url"
-                :href="page.url"
-                class="tw-capitalize tw-text-grey-dark tw-font-montserrat tw-flex tw-gap-2 tw-justify-center tw-items-center"
-              >
-                <span>[[ page.title ]]</span>
-              </a>
-            </template>
-          </div>
-        </div>
-      </div>
+  <div class="tw-w-full tw-max-w-screen-3xl tw-py-4 tw-bg-white tw-h-fit tw-shadow-2xl">
+    <div class="tw-overflow-y-auto tw-flex tw-h-fit tw-max-h-[calc(100vh-70px)] tw-w-full tw-mx-auto tw-max-w-container-xl md:tw-flex-row tw-flex-col tw-relative tw-z-[99999]">
       {% comment %} Right Side {% endcomment %}
-      <div class="tw-p-4 tw-w-full">
+      <div class="tw-w-full">
         {% comment %} Results {% endcomment %}
         <div v-if="!searchingDesigns" class="tw-flex tw-flex-col">
-          <div class="tw-flex tw-items-center tw-justify-between">
-            <h2
-              v-if="search == ''  || !search"
-              class="tw-font-playfair tw-text-32 tw-text-offblack tw-pb-4 tw-font-semibold tw-capitalize"
-            >
-              {{ block.settings.featured_collection_title | default: block.settings.featured_collection.title }}
-            </h2>
-            <h2 v-else class="tw-font-playfair tw-text-32 tw-text-offblack tw-pb-4 tw-font-semibold tw-capitalize">
-              Results
-            </h2>
-          </div>
-          {% comment %} Featured Collection {% endcomment %}
-          <div
-            class="tw-grid tw-grid-cols-2 sm:tw-grid-cols-3 md:tw-grid-cols-4 tw-gap-y-2 tw-gap-x-4"
-            v-if="search == '' || !search"
-          >
-            {% for product in block.settings.featured_collection.products %}
-              {% if forloop.index < 9 %}
-                <div class="tw-justify-start tw-flex tw-flex-col tw-gap-2">
-                  <a href="{{ product.url }}">
-                    <div class="tw-w-full tw-aspect-video tw-border tw-rounded-lg">
-                      {{
-                        product.featured_image
-                        | image_url: width: 400
-                        | image_tag: class: 'tw-size-full tw-object-cover tw-rounded-lg'
-                      }}
-                    </div>
-                  </a>
-                  <a class="tw-font-montserrat tw-text-14 tw-font-semibold tw-text-offblack" href="{{ product.url }}">
-                    {{- product.title -}}
-                  </a>
-                </div>
-              {% endif %}
-            {% endfor %}
-          </div>
           <!-- New Results Container -->
-          <div v-else class="tw-flex tw-flex-col tw-gap-6">
+          <div class="tw-flex tw-flex-col tw-gap-6">
             <!-- Products Section -->
             <div
-              v-if="(searchObject.products || []).filter(p => p && p.title && p.tags && !p.title.includes('Design') && !p.tags.includes('NOSEARCH')).length > 0"
+              v-if="(searchObject.products || []).filter(p => p && p.title && p.tags && !p.tags.includes('NOSEARCH')).length > 0"
               class="tw-flex tw-flex-col tw-gap-2"
             >
               <h3 class="tw-font-playfair tw-text-18 tw-text-offblack tw-font-semibold tw-leading-tight">Products</h3>
@@ -131,24 +40,6 @@
               </div>
             </div>
 
-            <!-- Pages + Articles Section -->
-            <div
-              v-if="((searchObject.pages || []).concat(searchObject.articles || [])).filter(item => item && item.title && item.url && !(item.tags || []).includes('NOSEARCH')).length > 0"
-              class="tw-flex tw-flex-col tw-gap-3"
-            >
-              <h3 class="tw-font-playfair tw-text-18 tw-font-semibold tw-leading-tight">Pages</h3>
-              <div class="tw-flex tw-flex-col tw-gap-2">
-                <template v-for="item in ((searchObject.pages || []).concat(searchObject.articles || [])).filter(item => item && item.title && item.url && !(item.tags || []).includes('NOSEARCH'))">
-                  <a
-                    :href="item.url"
-                    class="tw-text-grey-dark tw-font-montserrat hover:tw-text-offblack tw-transition-colors tw-text-16"
-                  >
-                    [[ item.title ]]
-                  </a>
-                </template>
-              </div>
-            </div>
-
             <!-- Collections Section -->
             <div
               v-if="(searchObject.collections || []).filter(c => c && c.title && c.tags && !c.tags.includes('NOSEARCH')).length > 0"
@@ -170,7 +61,7 @@
             </div>
           </div>
         </div>
-        <div class="tw-text-64 tw-animate-spin tw-m-4" v-show="search && searchingDesigns">
+        <div class="tw-text-64 tw-animate-spin tw-m-4 tw-h-10 tw-w-10" v-show="search && searchingDesigns">
           {% render 'icon-spin' %}
         </div>
       </div>

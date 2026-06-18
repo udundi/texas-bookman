@@ -36,10 +36,8 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        brand: {
-          header: ["Proxima Nova", "serif"],
-          body: ["PP Neue Montreal", "serif"],
-        },
+        'brand-header': ["Proxima Nova", "serif"],
+        'brand-body': ["PP Neue Montreal", "serif"],
       },
       colors: {
         white: "#FFFFFF",
@@ -47,6 +45,8 @@ module.exports = {
         offblack: "#212121",
         brand: {
           primary: "#20448F",
+          link: "#20448F",
+          author: "#6F8BC5",
           secondary: "#F0BA3A",
           sale: "#BD2026"
         },

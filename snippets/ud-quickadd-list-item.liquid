@@ -10,12 +10,12 @@
     href="{% if product.metafields.custom.alt_gallery_link != blank %}{{ product.metafields.custom.alt_gallery_link.value.url }}{% else %}{{ product.url | default: "/" }}{% endif %}"
     class="tw-flex-shrink-0"
   >
-    <div class="tw-w-24 tw-h-24 tw-aspect-square tw-object-contain tw-relative">
+    <div class="tw-h-32 tw-object-cover tw-aspect-5/6 tw-relative">
       {% if product.featured_image != blank %}
         {{
           product.featured_image
           | image_url: width: 200
-          | image_tag: loading: 'lazy', class: 'tw-size-full tw-aspect-square tw-object-contain'
+          | image_tag: loading: 'lazy', class: 'tw-size-full tw-aspect-5/6 tw-object-cover'
         }}
       {% else %}
         <div class="tw-size-full">
@@ -31,72 +31,94 @@
   </a>
 
   <!-- Product Info -->
-  <div class="tw-flex-1 tw-flex tw-flex-col tw-justify-start tw-gap-2 tw-min-w-0">
+  <div class="tw-h-32 tw-py-1 tw-w-full tw-flex tw-flex-col tw-justify-between tw-gap-2 tw-min-w-0 tw-grow">
     <!-- Title and Product Details -->
-    <div class="tw-flex tw-flex-col tw-gap-1">
-      <a href="{{ product.url | default: "/" }}" class="tw-max-w-xs">
-        <h3 class="tw-font-semibold tw-text-13 tw-text-brand-primary tw-leading-tight tw-m-0 tw-truncate">
-          {{ product.title | default: 'Product title' }}
-        </h3>
-      </a>
+    <div class="tw-flex tw-grow tw-flex-col tw-justify-between tw-gap-1">
+      <div class="tw-flex tw-w-full tw-flex-row tw-justify-between tw-gap-x-3 tw-gap-y-0.5 tw-text-12">
+        <a href="{{ product.url | default: "/" }}" class="">
+          <h3 class="tw-font-semibold tw-text-13 tw-text-brand-primary tw-text-14 tw-leading-tight tw-m-0 tw-truncate">
+            {{ product.title | default: 'Product title' }} Product Title Will Be Placed Here Lorem Ipsum Dolor Lorem
+            Ipsum
+          </h3>
+        </a>
+        <div class="tw-text-gray-700 tw-text-14 tw-font-semibold">
+          List: <span class="tw-font-normal">{{ product.compare_at_price | default: product.price | money }}</span>
+        </div>
+      </div>
+      <!-- Author Netprice Row -->
+      <div class="tw-flex tw-w-full tw-flex-wrap tw-justify-between tw-gap-x-3 tw-gap-y-0.5 tw-text-14">
+        <div>
+          <span class="tw-text-gray-500">by</span>
+          <a class="tw-text-blue-500 tw-font-normal tw-capitalize">
+            {{- product.metafields.custom.author.value | default: 'Author Name' -}}
+          </a>
+        </div>
+        <div class="tw-font-semibold tw-text-brand-sale">
+          Your Net Price: <span class="tw-font-normal">{{ product.price | money }}</span>
+        </div>
+      </div>
+      <!-- Product Description Row -->
+      <div class="tw-grow tw-text-gray-500">
+        {{
+          product.description
+          | default: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.'
+        }}
+      </div>
 
-      <!-- Product Details Row -->
-      <div class="tw-flex tw-flex-wrap tw-gap-x-3 tw-gap-y-0.5 tw-text-12">
-        st
-        {% if product.metafields.custom.isbn != blank %}
-          <span class="tw-text-gray-600"> ISBN: {{ product.metafields.custom.isbn.value }} </span>
-        {% endif %}
-        <span class="tw-text-gray-600">
-          QTY: {{ product.selected_or_first_available_variant.inventory_quantity }}
-        </span>
+      <!-- Product Details and Action Row -->
+      <div class="tw-flex tw-w-full tw-justify-between tw-items-end tw-gap-x-3 tw-gap-y-0.5 tw-text-14">
+        <!-- Product Details Section -->
+        <div class="tw-flex tw-w-full tw-flex-wrap tw-text-gray-700 tw-font-semibold tw-gap-x-3 tw-gap-y-0.5 tw-text-14">
+          <div>
+            ISBN: <span class="tw-font-normal">{{ product.metafields.custom.isbn.value | default: 'XXXXXXXX' }}</span>
+          </div>
+          <div>
+            TB CODE: <span class="tw-font-normal">{{ product.metafields.custom.tb.value | default: 'XXXXXXXX' }}</span>
+          </div>
+          <div>
+            QTY:
+            <span class="tw-font-normal">{{ product.selected_or_first_available_variant.inventory_quantity }}</span>
+          </div>
+        </div>
+        <!-- Action Section -->
+        <div class="tw-flex-shrink-0">
+          {% if show_button_type != 'none' %}
+            {% if show_button_type == 'quick-add' %}
+              <div class="tw-flex tw-items-center tw-gap-2 tw-h-full">
+                <div class="tw-flex tw-items-center tw-gap-1">
+                  <label for="{{ product_id }}-qty" class="tw-text-14 tw-font-semibold">QTY:</label>
+                  <input
+                    id="{{ product_id }}-qty"
+                    type="number"
+                    min="1"
+                    placeholder="1"
+                    v-model.number="quantity"
+                    class="tw-w-14 tw-text-center tw-leading-none tw-py-0.5 tw-px-1 tw-border tw-border-gray-400 tw-rounded tw-text-14 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
+                    :disabled="addingToCart"
+                  >
+                </div>
+                <button
+                  type="button"
+                  id="{{ product_atc_id }}"
+                  class="tw-bg-brand-secondary tw-cursor-pointer tw-pointer-events-auto tw-text-10 tw-text-black tw-rounded-md tw-flex tw-justify-center tw-leading-none tw-px-6 tw-py-1.5 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-sans hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center"
+                  @click="addToCart()"
+                  :disabled="addingToCart"
+                >
+                  [[ addingToCart ? 'Adding...' : '{{ button_text | default: 'QUICK ADD' }}' ]]
+                </button>
+              </div>
+            {% else %}
+              <a
+                href="{{ product.url }}"
+                class="tw-bg-white tw-cursor-pointer tw-pointer-events-auto tw-text-11 tw-text-black tw-rounded-full tw-flex tw-justify-center tw-border-black tw-border tw-py-1 tw-px-3 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap"
+              >
+                <span>{{ button_text | default: 'View' }}</span>
+              </a>
+            {% endif %}
+          {% endif %}
+        </div>
       </div>
     </div>
-
-    <!-- Pricing Info -->
-    <div class="tw-flex tw-flex-wrap tw-gap-x-4 tw-gap-y-0.5 tw-text-12">
-      {% if product.compare_at_price != blank %}
-        <span class="tw-text-gray-600"> List: {{ product.compare_at_price | money }} </span>
-      {% endif %}
-      <span class="tw-font-semibold tw-text-brand-sale"> Your Net Price: {{ product.price | money }} </span>
-    </div>
-  </div>
-
-  <!-- Action Section -->
-  <div class="tw-flex-shrink-0">
-    {% if show_button_type != 'none' %}
-      {% if show_button_type == 'quick-add' %}
-        <div class="tw-flex tw-items-center tw-gap-2 tw-h-full">
-          <div class="tw-flex tw-items-center tw-gap-1">
-            <label for="{{ product_id }}-qty" class="tw-text-12 tw-font-semibold">QTY:</label>
-            <input
-              id="{{ product_id }}-qty"
-              type="number"
-              min="1"
-              placeholder="1"
-              v-model.number="quantity"
-              class="tw-w-14 tw-text-center tw-leading-none tw-py-1 tw-px-1 tw-border tw-border-gray-400 tw-rounded tw-text-12 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
-              :disabled="addingToCart"
-            >
-          </div>
-          <button
-            type="button"
-            id="{{ product_atc_id }}"
-            class="tw-bg-brand-secondary tw-cursor-pointer tw-pointer-events-auto tw-text-11 tw-text-black tw-rounded-md tw-flex tw-justify-center tw-leading-none tw-px-3 tw-py-1 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center"
-            @click="addToCart()"
-            :disabled="addingToCart"
-          >
-            [[ addingToCart ? 'Adding...' : '{{ button_text | default: 'Add' }}' ]]
-          </button>
-        </div>
-      {% else %}
-        <a
-          href="{{ product.url }}"
-          class="tw-bg-white tw-cursor-pointer tw-pointer-events-auto tw-text-11 tw-text-black tw-rounded-full tw-flex tw-justify-center tw-border-black tw-border tw-py-1 tw-px-3 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap"
-        >
-          <span>{{ button_text | default: 'View' }}</span>
-        </a>
-      {% endif %}
-    {% endif %}
   </div>
 </div>
 

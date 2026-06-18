@@ -1,158 +1,223 @@
-<div id="nav-bar-{{ section.id }}">
-  <div class="tw-relative tw-z-[900] tw-mx-auto tw-flex tw-w-full tw-max-w-screen-2xl tw-items-center tw-justify-between tw-bg-white tw-px-4">
-    <div class="logo tw-flex tw-w-fit tw-gap-4 tw-p-2">
+<div id="nav-bar-{{ section.id }}" class="tw-border-b tw-border-gray-400">
+  <div class="tw-relative tw-z-[900] tw-mx-auto tw-flex tw-w-full tw-max-w-screen-2xl tw-items-center tw-justify-between tw-bg-white ">
+    <div class="logo tw-flex tw-gap-4 tw-py-2">
       <a
         href="/"
         aria-label="Home"
-        class="tw-max-h-14"
+        class="tw-h-16 tw-w-24"
       >
         {% if section.settings.site_logo != blank %}
           {{
             section.settings.site_logo
             | image_url: width: 400
-            | image_tag: alt: 'Site Logo', class: 'tw-block tw-h-8 tw-w-auto'
+            | image_tag: alt: 'Site Logo', class: 'tw-block tw-h-16 tw-w-full tw-object-contain'
           }}
         {% endif %}
       </a>
     </div>
-
-    <nav
-      v-cloak
-      @mouseleave="handleMouseLeave"
-      role="navigation"
-      aria-label="Main Menu"
-      class="tw-h-full md:tw-h-12"
-      :class="showMobile ? 'tw-block' : 'md:tw-flex tw-hidden'"
-    >
-      <!-- Nav Container -->
-      <div
-        class="tw-absolute tw-right-0 tw-top-[60px] tw-max-h-[600px] tw-min-w-[200px] tw-bg-white tw-p-0 max-md:tw-overflow-y-auto md:tw-static md:tw-z-auto md:tw-h-full"
-        :class="showMobile ? 'tw-z-[900]' : ''"
-      >
-        <!-- Nav Container -->
-        <div class="tw-flex tw-h-full tw-flex-col tw-text-12 max-md:tw-p-4 md:tw-flex-row md:tw-gap-2">
-          {% for block in block.blocks %}
-            {% render block %}
-          {% endfor %}
-        </div>
-      </div>
-    </nav>
-
-    <div class="mobileDivider mobileShow"></div>
-
-    <div class="tw-my-auto tw-flex tw-h-fit tw-items-end tw-gap-4 tw-pl-2 lg:tw-gap-6" role="search">
-      <!-- Search Icon -->
-      <button
-        aria-label="Search"
-        tabindex="0"
-        class="tw-my-auto"
-        @keydown.enter="openSearch()"
-        @click="openSearch(); searchCategory = null;"
-      >
+    <div class="tw-w-full tw-max-w-2xl tw-relative">
+      <!-- Search Input Icon -->
+      <div class="tw-absolute tw-left-3 tw-top-2.5">
         {% render 'icon-search' %}
-      </button>
-      <!-- Account Icon -->
-      {% if customer.id == null -%}
-        <a
-          class="tw-my-auto"
-          aria-label="Log In"
-          href="{{ routes.account_login_url }}"
-        >
-          {% render 'icon-account' %}
-        </a>
-      {% else %}
-        <a
-          class="tw-my-auto"
-          aria-label="Log Out"
-          href="{{ routes.account_url }}"
-        >
-          {% render 'icon-account' %}
-        </a>
-      {%- endif %}
-
-      <!-- Cart Icon -->
-      <button
-        class=""
-        @click="showCart()"
-        aria-haspopup="true"
-        class="tw-mb-4"
-        aria-label="Cart"
-        tabindex="0"
-        v-on:keyup.enter="showCart()"
-        v-on:keyup.space="showCart()"
+      </div>
+      <!-- Search Input -->
+      <input
+        type="text"
+        v-model="search"
+        class="searchInput tw-h-full tw-w-full tw-border tw-border-offblack tw-pl-10 tw-p-3 tw-font-montserrat tw-text-16"
+        @input="startSearch()"
+        placeholder="Search for anything..."
       >
-        {% render 'icon-cart' %}
+      <!-- Clear Search Icon -->
+      <button
+        v-if="search"
+        class="tw-absolute tw-right-0.5 tw-top-2.5 tw-z-[2] tw-flex tw-h-6 tw-cursor-pointer tw-items-center tw-justify-center tw-bg-white tw-p-2 tw-font-montserrat tw-text-16 tw-leading-none"
+        @click="
+          () => {
+            search = ''
+            showSearch = false
+          }
+        "
+      >
+        {% render 'icon-times' %}
+      </button>
+      <!-- Search Results -->
+      <div
+        v-cloak
+        class="tw-absolute tw-left-1/2 tw-top-full tw-z-[15] tw-h-20 tw-mx-auto tw-w-full tw-max-w-screen-3xl -tw-translate-x-1/2 tw-bg-white tw-p-0 tw-shadow-md"
+        {% comment %} {% render 'ud-search-v2' %} {% endcomment %}
+        v-if="showSearch"
+        @click.stop
+      >
+        {% render 'ud-search-v2' %}
+      </div>
+    </div>
+    <div>
+      {% comment %}
+        <nav
+          v-cloak
+          @mouseleave="handleMouseLeave"
+          role="navigation"
+          aria-label="Main Menu"
+          class="tw-h-full md:tw-h-12"
+          :class="showMobile ? 'tw-block' : 'md:tw-flex tw-hidden'"
+        >
+          <!-- Nav Container -->
+          <div
+            class="tw-absolute tw-right-0 tw-top-[60px] tw-max-h-[600px] tw-min-w-[200px] tw-bg-white tw-p-0 max-md:tw-overflow-y-auto md:tw-static md:tw-z-auto md:tw-h-full"
+            :class="showMobile ? 'tw-z-[900]' : ''"
+          >
+            <!-- Nav Container -->
+            <div class="tw-flex tw-h-full tw-flex-col tw-text-12 max-md:tw-p-4 md:tw-flex-row md:tw-gap-2">
+              {% for block in block.blocks %}
+                {% render block %}
+              {% endfor %}
+            </div>
+          </div>
+        </nav>
+      {% endcomment %}
+
+      <div class="mobileDivider mobileShow"></div>
+
+      <div class="tw-my-auto tw-flex tw-h-fit tw-items-end md:tw-gap-4 tw-gap-2 tw-pl-2 lg:tw-gap-6" role="search">
+        <!-- Region / Market Selector -->
+        <div class="tw-relative tw-my-auto">
+          <button
+            type="button"
+            class="tw-flex tw-items-center tw-gap-1.5 tw-cursor-pointer"
+            @click="showCountryDropdown = !showCountryDropdown"
+            :aria-expanded="showCountryDropdown.toString()"
+            aria-haspopup="listbox"
+            aria-label="Change country. Current: {{ localization.country.name }}"
+          >
+            <img
+              src="https://flagcdn.com/w40/{{ localization.country.iso_code | downcase }}.png"
+              width="40"
+              height="40"
+              alt="{{ localization.country.name }}"
+              class="tw-rounded-full tw-object-cover tw-object-left-top tw-h-5 tw-w-5 tw-flex-shrink-0"
+              loading="eager"
+            >
+            <span class="tw-hidden lg:tw-inline tw-font-montserrat tw-text-14 tw-text-offblack tw-whitespace-nowrap">
+              {{- localization.country.name -}}
+            </span>
+            <svg class="tw-w-3 tw-h-3 tw-flex-shrink-0" viewBox="0 0 512 512" aria-hidden="true" fill="currentColor">
+              <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/>
+            </svg>
+          </button>
+
+          <!-- Country Dropdown -->
+          <div
+            v-cloak
+            v-if="showCountryDropdown"
+            role="listbox"
+            aria-label="Select country"
+            class="tw-absolute tw-right-0 tw-top-full tw-z-[20] tw-mt-1 tw-max-h-72 tw-overflow-y-auto tw-bg-white tw-border tw-border-gray-200 tw-shadow-lg tw-min-w-[210px]"
+            @click.stop
+          >
+            {% form 'localization', id: 'CountryForm-{{ section.id }}' %}
+              {% for country in localization.available_countries %}
+                <button
+                  type="submit"
+                  name="country_code"
+                  value="{{ country.iso_code }}"
+                  role="option"
+                  {% if country.iso_code == localization.country.iso_code %}
+                    aria-selected="true"
+                  {% else %}
+                    aria-selected="false"
+                  {% endif %}
+                  class="tw-flex tw-w-full tw-items-center tw-gap-2.5 tw-px-4 tw-py-2.5 tw-text-left tw-font-montserrat tw-text-14 tw-transition-colors hover:tw-bg-gray-50{% if country.iso_code == localization.country.iso_code %} tw-font-semibold tw-bg-gray-50{% endif %}"
+                >
+                  <img
+                    src="https://flagcdn.com/w40/{{ country.iso_code | downcase }}.png"
+                    width="20"
+                    height="20"
+                    alt=""
+                    aria-hidden="true"
+                    class="tw-rounded-full tw-object-cover tw-object-left-top tw-h-5 tw-w-5 tw-flex-shrink-0"
+                    loading="lazy"
+                  >
+                  <span>{{ country.name }}</span>
+                  <span class="tw-ml-auto tw-pl-2 tw-text-12 tw-text-gray-400">{{ country.currency.iso_code }}</span>
+                </button>
+              {% endfor %}
+            {% endform %}
+          </div>
+
+          <!-- Backdrop to close dropdown -->
+          <div
+            v-if="showCountryDropdown"
+            class="tw-fixed tw-inset-0 tw-z-[19]"
+            @click="showCountryDropdown = false"
+            aria-hidden="true"
+          ></div>
+        </div>
+
+        <!-- Account Icon -->
+        {% if customer.id == null -%}
+          <a
+            class="tw-my-auto tw-w-6"
+            aria-label="Log In"
+            href="{{ routes.account_login_url }}"
+          >
+            {% render 'icon-account' %}
+          </a>
+        {% else %}
+          <a
+            class="tw-my-auto tw-w-6"
+            aria-label="Log Out"
+            href="{{ routes.account_url }}"
+          >
+            {% render 'icon-account' %}
+          </a>
+        {%- endif %}
+
+        <!-- Cart Icon -->
+        <button
+          class="tw-w-6"
+          @click="showCart()"
+          aria-haspopup="true"
+          class="tw-mb-4"
+          aria-label="Cart"
+          tabindex="0"
+          v-on:keyup.enter="showCart()"
+          v-on:keyup.space="showCart()"
+        >
+          {% render 'icon-cart' %}
+          <div
+            v-cloak
+            class="tw-absolute tw-flex tw-items-center tw-justify-center tw-rounded-full tw-bg-offblack tw-text-center tw-text-12 tw-font-bold tw-text-white"
+            :class="[totalCartItems > 9 ? 'tw-w-6 tw-h-6 tw-top-1 md:tw-right-0 tw-right-12' : ' tw-w-5 tw-h-5 tw-top-2 md:tw-right-1 tw-right-14']"
+            v-if="totalCartItems"
+          >
+            [[totalCartItems]]
+          </div>
+        </button>
+
+        <!-- Mobile Menu Icon -->
+        <button
+          aria-haspopup="true"
+          aria-label="Menu"
+          @click="showMobile = !showMobile"
+          class="tw-block tw-justify-center tw-px-2 tw-align-middle md:tw-hidden"
+        >
+          <div :style="showMobile ? 'display: none;' : 'display: contents;'">
+            {% render 'icon-bars' %}
+          </div>
+          <div :style="!showMobile ? 'display: none;' : 'display: contents;'">
+            {% render 'icon-times' %}
+          </div>
+        </button>
+      </div>
+      {% comment %}
         <div
           v-cloak
-          class="tw-absolute tw-flex tw-items-center tw-justify-center tw-rounded-full tw-bg-offblack tw-text-center tw-text-12 tw-font-bold tw-text-white"
-          :class="[totalCartItems > 9 ? 'tw-w-6 tw-h-6 tw-top-1 md:tw-right-0 tw-right-12' : ' tw-w-5 tw-h-5 tw-top-2 md:tw-right-1 tw-right-14']"
-          v-if="totalCartItems"
-        >
-          [[totalCartItems]]
-        </div>
-      </button>
-
-      <!-- Mobile Menu Icon -->
-      <button
-        aria-haspopup="true"
-        aria-label="Menu"
-        @click="showMobile = !showMobile"
-        class="tw-block tw-justify-center tw-px-2 tw-align-middle md:tw-hidden"
-      >
-        <div :style="showMobile ? 'display: none;' : 'display: contents;'">
-          {% render 'icon-bars' %}
-        </div>
-        <div :style="!showMobile ? 'display: none;' : 'display: contents;'">
-          {% render 'icon-times' %}
-        </div>
-      </button>
-    </div>
-    <div
-      v-cloak
-      v-if="showSearch"
-      class="tw-fixed tw-inset-0 tw-z-[14] tw-h-screen tw-bg-black tw-bg-opacity-50"
-      @click="showSearch = false"
-    ></div>
-    <div
-      v-cloak
-      class="tw-fixed tw-left-1/2 tw-top-0 tw-z-[15] tw-mx-auto tw-h-[70px] tw-w-full tw-max-w-screen-3xl -tw-translate-x-1/2 tw-bg-white tw-p-0 tw-shadow-md"
-      v-if="showSearch"
-      @click.stop
-    >
-      {% render 'ud-search-v2' %}
-      <div class="tw-flex tw-items-center">
-        <div class="tw-absolute tw-left-[15px] tw-top-[15px] tw-z-[2] tw-text-[25px]">
-          <i class="fal fa-search"></i>
-        </div>
-        <div class="tw-absolute tw-left-1/2 tw-top-0 tw-z-[1] tw-h-full tw-w-full -tw-translate-x-1/2">
-          <input
-            type="text"
-            v-model="search"
-            class="searchInput tw-absolute tw-left-0 tw-top-0 tw-h-full tw-w-full tw-border-b tw-border-offblack tw-py-[15px] tw-pl-[60px] tw-pr-[15px] tw-font-montserrat tw-text-16"
-            @input="startSearch()"
-            placeholder="What are you looking for today?"
-          >
-        </div>
-
-        <button
-          v-if="search"
-          class="tw-absolute tw-right-[70px] tw-top-[15px] tw-z-[2] tw-flex tw-h-10 tw-cursor-pointer tw-items-center tw-justify-center tw-bg-white tw-p-[15px] tw-font-montserrat tw-text-16 tw-leading-none"
-          @click="
-            () => {
-              search = ''
-              startSearch()
-            }
-          "
-        >
-          clear
-        </button>
-        <button
-          class="tw-absolute tw-right-[30px] tw-top-[15px] tw-z-[2] tw-flex tw-h-10 tw-w-10 tw-cursor-pointer tw-items-center tw-justify-center tw-rounded-full tw-border tw-border-[rgb(230,126,55)] tw-p-[15px] tw-text-[25px] tw-leading-none tw-text-[rgb(230,126,55)]"
+          v-if="showSearch"
+          class="tw-fixed tw-inset-0 tw-z-[14] tw-h-screen tw-bg-black tw-bg-opacity-50"
           @click="showSearch = false"
-        >
-          <i class="fal fa-times"></i>
-        </button>
-      </div>
+        ></div>
+      {% endcomment %}
     </div>
   </div>
 
@@ -198,6 +263,7 @@
         mobileSubSection: null,
         hoverTimer: null,
         showSuggestions: true,
+        showCountryDropdown: false,
       };
     },
 
@@ -329,6 +395,7 @@
 
       async startSearch() {
         // Clear Debounce if it exists
+        this.showSearch = true;
         this.searchingDesigns = true;
         try {
           clearTimeout(this.searchTimeout);
@@ -352,9 +419,7 @@
             .then((r) => r.json())
             .then(async (data) => {
               // Filter products to only include vendor "felt right"
-              this.searchObject.products = (data.resources.results.products || []).filter(
-                (product) => product.vendor && product.vendor.toLowerCase() === 'felt right'
-              );
+              this.searchObject.products = data.resources.results.products;
               this.searchingDesigns = false;
               this.$forceUpdate();
             });
