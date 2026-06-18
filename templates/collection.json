@@ -218,12 +218,126 @@
             "collection_filter_68xEyN",
             "collection_filter_XA8bkj"
           ]
+        },
+        "collection_filter_box_v2_YMiUtx": {
+          "type": "_collection-filter-box-v2",
+          "name": "Collection Filter Box",
+          "settings": {
+            "collapsible": true,
+            "collapsed": true,
+            "title": "Subject",
+            "nested": false
+          },
+          "blocks": {
+            "collection_filter_99c3CU": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "",
+                "title": "Art",
+                "filter_type": "filter.p.tag="
+              },
+              "blocks": {}
+            },
+            "collection_filter_y4KQPC": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "",
+                "title": "Architecture",
+                "filter_type": "filter.p.tag="
+              },
+              "blocks": {}
+            },
+            "collection_filter_kdWzgK": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "",
+                "title": "Mystery & Thriller",
+                "filter_type": "filter.p.tag="
+              },
+              "blocks": {}
+            },
+            "collection_filter_NLV7KA": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "",
+                "title": "Science Fiction",
+                "filter_type": "filter.p.tag="
+              },
+              "blocks": {}
+            },
+            "collection_filter_Pz96Fw": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "",
+                "title": "Fantasy",
+                "filter_type": "filter.p.tag="
+              },
+              "blocks": {}
+            },
+            "collection_filter_xbmzBt": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "",
+                "title": "Horror",
+                "filter_type": "filter.p.tag="
+              },
+              "blocks": {}
+            },
+            "collection_filter_tpbaGw": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "",
+                "title": "Drama & Poetry",
+                "filter_type": "filter.p.tag="
+              },
+              "blocks": {}
+            },
+            "collection_filter_Q6P6Kp": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "",
+                "title": "Literary Criticism",
+                "filter_type": "filter.p.tag="
+              },
+              "blocks": {}
+            },
+            "collection_filter_CFqdge": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "",
+                "title": "Historical Fiction",
+                "filter_type": "filter.p.tag="
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "collection_filter_99c3CU",
+            "collection_filter_y4KQPC",
+            "collection_filter_kdWzgK",
+            "collection_filter_NLV7KA",
+            "collection_filter_Pz96Fw",
+            "collection_filter_xbmzBt",
+            "collection_filter_tpbaGw",
+            "collection_filter_Q6P6Kp",
+            "collection_filter_CFqdge"
+          ]
         }
       },
       "block_order": [
         "collection_filter_box_v2_nz8K4p",
         "collection_filter_box_v2_8paAqE",
-        "collection_filter_box_v2_YdNKP9"
+        "collection_filter_box_v2_YdNKP9",
+        "collection_filter_box_v2_YMiUtx"
       ],
       "settings": {
         "title": "Lorum Ipsum",
