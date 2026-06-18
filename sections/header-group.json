@@ -72,7 +72,34 @@
             "product_3": "",
             "product_4": ""
           },
-          "blocks": {}
+          "blocks": {
+            "header_menu_links_QBfLDT": {
+              "type": "_header-menu-links",
+              "name": "Menu Links",
+              "settings": {
+                "menu_title": "All Adult",
+                "header_url": "shopify://collections",
+                "menu": "adult-books",
+                "column_layout": "2-col"
+              },
+              "blocks": {}
+            },
+            "header_menu_links_M3mh4x": {
+              "type": "_header-menu-links",
+              "name": "Menu Links",
+              "settings": {
+                "menu_title": "All Children’s",
+                "header_url": "shopify://collections/frontpage",
+                "menu": "childrens-books",
+                "column_layout": "1-col"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "header_menu_links_QBfLDT",
+            "header_menu_links_M3mh4x"
+          ]
         },
         "header_tabbed_section_MJLePC": {
           "type": "_header-tabbed-section",
