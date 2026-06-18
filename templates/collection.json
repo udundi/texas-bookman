@@ -12,13 +12,216 @@
     "main": {
       "type": "ud-sortable-collection",
       "blocks": {
-        "collection-links": {
-          "type": "_collection-link-container",
-          "static": true,
-          "settings": {},
-          "blocks": {}
+        "collection_filter_box_v2_nz8K4p": {
+          "type": "_collection-filter-box-v2",
+          "name": "Collection Filter Box",
+          "settings": {
+            "collapsible": true,
+            "collapsed": true,
+            "title": "Publisher"
+          },
+          "blocks": {
+            "collection_filter_hjf7pc": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "",
+                "title": "Arcturus (573)",
+                "filter_type": "filter.p.tag="
+              },
+              "blocks": {}
+            },
+            "collection_filter_njxfRV": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "",
+                "title": "Flame Tree (431)",
+                "filter_type": "filter.p.tag="
+              },
+              "blocks": {}
+            },
+            "collection_filter_7z4XAQ": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "",
+                "title": "Yale University Press (943)",
+                "filter_type": "filter.p.tag="
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "collection_filter_hjf7pc",
+            "collection_filter_njxfRV",
+            "collection_filter_7z4XAQ"
+          ]
+        },
+        "collection_filter_box_v2_8paAqE": {
+          "type": "_collection-filter-box-v2",
+          "name": "Collection Filter Box",
+          "settings": {
+            "collapsible": true,
+            "collapsed": true,
+            "title": "Audience"
+          },
+          "blocks": {
+            "collection_filter_AAkJkg": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "",
+                "title": "Children’s",
+                "filter_type": "filter.p.tag="
+              },
+              "blocks": {}
+            },
+            "collection_filter_mUeTTH": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "",
+                "title": "Teen & Young Adult",
+                "filter_type": "filter.p.tag="
+              },
+              "blocks": {}
+            },
+            "collection_filter_fyjCdz": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "",
+                "title": "Adult",
+                "filter_type": "filter.p.tag="
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "collection_filter_AAkJkg",
+            "collection_filter_mUeTTH",
+            "collection_filter_fyjCdz"
+          ]
+        },
+        "collection_filter_box_v2_YdNKP9": {
+          "type": "_collection-filter-box-v2",
+          "name": "Collection Filter Box",
+          "settings": {
+            "collapsible": true,
+            "collapsed": true,
+            "title": "Genre"
+          },
+          "blocks": {
+            "collection_filter_JFYMRU": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "",
+                "title": "Classic & General Fiction (27)",
+                "filter_type": "filter.p.tag="
+              },
+              "blocks": {}
+            },
+            "collection_filter_thyNyh": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "",
+                "title": "Romance & Erotica (882)",
+                "filter_type": "filter.p.tag="
+              },
+              "blocks": {}
+            },
+            "collection_filter_TiK9AY": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "",
+                "title": "Mystery & Thriller (350)",
+                "filter_type": "filter.p.tag="
+              },
+              "blocks": {}
+            },
+            "collection_filter_LN4FwC": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "",
+                "title": "Science Fiction (400)",
+                "filter_type": "filter.p.tag="
+              },
+              "blocks": {}
+            },
+            "collection_filter_Jgamzq": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "",
+                "title": "Fantasy",
+                "filter_type": "filter.p.tag="
+              },
+              "blocks": {}
+            },
+            "collection_filter_Hp3Pk6": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "",
+                "title": "Horror",
+                "filter_type": "filter.p.tag="
+              },
+              "blocks": {}
+            },
+            "collection_filter_aHt6Xd": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "",
+                "title": "Drama & Poetry",
+                "filter_type": "filter.p.tag="
+              },
+              "blocks": {}
+            },
+            "collection_filter_68xEyN": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "",
+                "title": "Literary Criticism (482)",
+                "filter_type": "filter.p.tag="
+              },
+              "blocks": {}
+            },
+            "collection_filter_XA8bkj": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "",
+                "title": "Science Fiction (400)",
+                "filter_type": "filter.p.tag="
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "collection_filter_JFYMRU",
+            "collection_filter_thyNyh",
+            "collection_filter_TiK9AY",
+            "collection_filter_LN4FwC",
+            "collection_filter_Jgamzq",
+            "collection_filter_Hp3Pk6",
+            "collection_filter_aHt6Xd",
+            "collection_filter_68xEyN",
+            "collection_filter_XA8bkj"
+          ]
         }
       },
+      "block_order": [
+        "collection_filter_box_v2_nz8K4p",
+        "collection_filter_box_v2_8paAqE",
+        "collection_filter_box_v2_YdNKP9"
+      ],
       "settings": {
         "title": "Lorum Ipsum",
         "description": "<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit tenetur, rem in ab nobis autem suscipit. Excepturi officia maxime saepe, perspiciatis accusamus ducimus, nihil odio provident, doloribus omnis recusandae iure.</p>",
