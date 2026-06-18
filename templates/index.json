@@ -11,10 +11,38 @@
   "sections": {
     "main": {
       "type": "hello-world",
+      "disabled": true,
       "settings": {}
+    },
+    "ud_flexbox_BCC4jh": {
+      "type": "ud-flexbox",
+      "name": "Base Flexbox",
+      "settings": {
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0,
+        "padding_left": 0,
+        "padding_right": 0,
+        "background_color": "#ffffff",
+        "flex_direction": "column",
+        "tablet_flex_direction": "column",
+        "mobile_flex_direction": "column",
+        "x_gap": 0,
+        "y_gap": 0,
+        "mobile_gap": false,
+        "mobile_x_gap": 0,
+        "mobile_y_gap": 0,
+        "justify_content": "center",
+        "align_items": "center",
+        "container_width": "full_width",
+        "content_overflow": "fit",
+        "custom_id": ""
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "ud_flexbox_BCC4jh"
   ]
 }
