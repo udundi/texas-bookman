@@ -91,7 +91,7 @@ module.exports = {
         "container-sm": "min(43.125rem, 90%)",
       },
       fontFamily: {
-        'brand-header': ["Proxima Nova", "serif"],
+        'brand-header': ["Proxima Nova", "sans"],
         'brand-body': ["PP Neue Montreal", "serif"],
       },
       aspectRatio: {

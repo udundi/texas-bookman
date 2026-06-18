@@ -1,10 +1,10 @@
 {% capture blocks %}  
   {% content_for 'blocks' %}
 {% endcapture %}
-<div class="block-{{ block.id }} tw-bg-white tw-py-4">
+<div class="block-{{ block.id }} tw-pb-1{% if block.settings.nested %} tw-pl-4 tw-border-l-2 tw-border-gray-200{% endif %}">
   {% if block.settings.collapsible %}
     <button
-      class="tw-flex tw-w-full tw-border-b tw-border-black tw-justify-between tw-items-middle tw-cursor-pointer tw-pb-3"
+      class="tw-flex tw-w-full tw-justify-between tw-items-middle tw-cursor-pointer tw-pb-2"
       @click="
         () => {
           if (openFilters.includes('{{ block.id }}')) {
@@ -15,33 +15,33 @@
         }
       "
     >
-      <div class="tw-my-auto tw-font-montserrat tw-font-semibold tw-text-offblack tw-text-16 tw-leading-tight">
+      <div class="tw-my-auto tw-font-brand-header tw-font-semibold tw-text-offblack tw-text-14 tw-leading-tight">
         {{ block.settings.title | default: 'Filter Section' }}
       </div>
       <div
-        class="tw-fill-offblack tw-size-4"
+        class="tw-fill-offblack tw-size-3"
         v-cloak
         v-if="{% if block.settings.collapsed == true %}openFilters.includes('{{ block.id }}'){% else %}!openFilters.includes('{{ block.id }}'){% endif %}"
       >
         {% render 'icon-arrow-up' %}
       </div>
-      <div v-else class="tw-fill-offblack tw-size-4">{% render 'icon-arrow-down' %}</div>
+      <div v-else class="tw-fill-offblack tw-size-3">{% render 'icon-arrow-down' %}</div>
     </button>
     <div
       v-if="{% if block.settings.collapsed == true %}!openFilters.includes('{{ block.id }}'){% else %}openFilters.includes('{{ block.id }}'){% endif %}"
-      class="tw-flex tw-flex-col tw-justify-start tw-gap-[1px]"
+      class="tw-flex tw-flex-col tw-justify-start tw-pb-4 tw-gap-[1px]"
     >
       {{ blocks }}
     </div>
   {% else %}
     {% if block.settings.title != blank %}
-      <div class="tw-flex tw-w-full tw-border-b tw-border-black tw-justify-between tw-items-middle tw-pb-3">
+      <div class="tw-flex tw-w-full tw-border-b tw-border-black tw-justify-between tw-items-middle ">
         <div class="tw-my-auto tw-font-montserrat tw-font-semibold tw-text-offblack tw-text-16 tw-leading-tight">
           {{ block.settings.title }}
         </div>
       </div>
     {% endif %}
-    <div class="tw-flex tw-flex-col tw-justify-start tw-gap-[1px]">
+    <div class="tw-flex tw-flex-col tw-justify-start tw-gap-[1px] tw-pb-4">
       {{ blocks }}
     </div>
   {% endif %}
@@ -68,6 +68,12 @@
       "type": "text",
       "label": "Title",
       "id": "title"
+    },
+    {
+      "type": "checkbox",
+      "label": "Nested (tabbed indent)?",
+      "id": "nested",
+      "default": false
     }
   ],
   "blocks": [
@@ -76,6 +82,9 @@
     },
     {
       "type": "_collection-gate"
+    },
+    {
+      "type": "_collection-filter-box-v2"
     }
   ],
   "presets": [

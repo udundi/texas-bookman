@@ -191,19 +191,20 @@
         class="ud-filter-container tw-fixed tw-z-50 tw-w-full tw-flex-col tw-justify-start tw-px-2 tw-py-4 md:tw-sticky md:tw-w-96 md:tw-gap-2 tw-border-r tw-border-gray-400 tw-mr-[-1px] tw-my-[-1px]"
         :class="mobileFiltersOpen ? 'tw-flex' : 'md:tw-flex tw-hidden'"
       >
-        Filter Container
         <div
-          :class="mobileFiltersOpen ? 'tw-static tw-top-0 tw-left-0 md:tw-w-full tw-w-[70vw] ' : 'md:tw-flex tw-hidden'"
+          :class="mobileFiltersOpen ? 'tw-static tw-top-0 tw-left-0 tw-w-full ' : 'md:tw-flex tw-hidden'"
           class="tw-z-[500] tw-h-full tw-w-screen tw-overflow-y-auto tw-pb-8 md:tw-w-full  md:tw-px-4"
         >
-          <div class="tw-w-full">
-            <!-- Filter Header -->
-            <div class="tw-flex tw-w-full tw-items-center tw-justify-between tw-p-4 md:tw-hidden md:tw-justify-center md:tw-p-2">
-              <h3 class="tw-w-fit tw-text-black tw-text-center tw-text-24 tw-font-bold md:tw-w-full">Filter Designs</h3>
-              <button @click="mobileFiltersOpen = false" class="">X</button>
+          {% comment %}
+            <div class="tw-w-full">
+              <!-- Filter Header -->
+              <div class="tw-flex tw-w-full tw-items-center tw-justify-between tw-p-4 md:tw-hidden md:tw-justify-center md:tw-p-2">
+                <h3 class="tw-w-fit tw-text-black tw-text-center tw-text-24 tw-font-bold md:tw-w-full">Filter Designs</h3>
+                <button @click="mobileFiltersOpen = false" class="">X</button>
+              </div>
             </div>
-          </div>
-          <div class="tw-flex tw-flex-col tw-justify-start tw-gap-[2px] tw-bg-grey-medium">
+          {% endcomment %}
+          <div class="tw-flex tw-flex-col tw-w-full  tw-justify-start tw-gap-[2px] tw-bg-grey-medium">
             {% for block in section.blocks %}
               {% render block %}
             {% endfor %}
