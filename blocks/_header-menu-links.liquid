@@ -1,0 +1,83 @@
+<!-- Menu Links Block -->
+<div class="tw-flex tw-flex-col tw-px-8 tw-border-l tw-border-gray-400 tw-ml-[-1px]">
+  <!-- Header with Blue Background -->
+  {% if block.settings.header_url != blank and block.settings.menu_title != blank %}
+    <a
+      href="{{ block.settings.header_url | default: '#' }}"
+      class="tw-flex tw-gap-2 tw-items-center tw-px-4 tw-py-3 hover:tw-animate-pulse tw-text-brand-primary tw-font-semibold tw-text-14 tw-group"
+    >
+      <span>{{ block.settings.menu_title }}</span>
+      <svg
+        class="tw-w-4 tw-h-4 tw-flex-shrink-0 group-hover:tw-translate-x-1 tw-transition-transform "
+        viewBox="0 0 512 512"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/>
+      </svg>
+    </a>
+  {% elsif block.settings.menu_title != blank %}
+    <div
+      class="tw-flex tw-gap-2 tw-pt-8 tw-items-center tw-px-4 tw-py-3 tw-font-semibold tw-text-14 tw-group"
+    >
+      <span>{{ block.settings.menu_title }}</span>
+    </div>
+  {% endif %}
+
+  <!-- Menu Links List -->
+  {% if block.settings.menu != blank %}
+    <ul class="tw-list-none tw-max-w-screen-sm tw-w-full tw-pb-4 tw-m-0{% if block.settings.column_layout == '2-col' %} tw-grid tw-grid-cols-2{% endif %}">
+      {% for link in linklists[block.settings.menu].links %}
+        <li>
+          <a
+            href="{{ link.url }}"
+            class="tw-block tw-px-4 hover:tw-text-brand-primary hover:tw-underline tw-underline-offset-2 tw-py-2 tw-text-14 tw-text-offblack hover:tw-bg-gray-50 tw-transition-colors{% if link.active %} tw-font-semibold tw-text-brand-primary{% endif %}"
+          >
+            {{ link.title }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Menu Links",
+  "class": "tw-contents",
+  "settings": [
+    {
+      "type": "text",
+      "id": "menu_title",
+      "label": "Header Title",
+      "default": "Menu"
+    },
+    {
+      "type": "url",
+      "id": "header_url",
+      "label": "Header URL"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu"
+    },
+    {
+      "type": "select",
+      "id": "column_layout",
+      "label": "Menu Layout",
+      "default": "1-col",
+      "options": [
+        {
+          "value": "1-col",
+          "label": "1 Column"
+        },
+        {
+          "value": "2-col",
+          "label": "2 Columns"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

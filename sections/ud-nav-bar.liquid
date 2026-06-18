@@ -1,0 +1,189 @@
+<div id="nav-bar-{{ section.id }}" class="tw-border-b tw-bg-brand-eggshell tw-border-gray-400">
+  <div class="tw-relative tw-z-[900] tw-mx-auto tw-flex tw-w-full tw-max-w-screen-2xl tw-items-center tw-justify-between ">
+    <nav
+      v-cloak
+      @mouseleave="handleMouseLeave"
+      role="navigation"
+      aria-label="Main Menu"
+      class="tw-h-full tw-w-full"
+      :class="showMobile ? 'tw-block' : 'md:tw-flex tw-hidden'"
+    >
+      <!-- Nav Container -->
+      <div
+        class=" tw-p-0 max-md:tw-overflow-y-auto tw-w-full"
+      >
+        <!-- Nav Container -->
+        <div class="tw-flex tw-h-full tw-w-full tw-justify-center tw-gap-4 tw-text-12 md:tw-flex-row md:tw-gap-2">
+          {% for block in section.blocks %}
+            {% render block %}
+          {% endfor %}
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Mobile Menu Backdrop -->
+  <div
+    v-cloak
+    v-if="showMobile"
+    class="tw-fixed tw-inset-0 tw-top-0 !tw-z-20 tw-h-screen tw-w-full tw-bg-black tw-bg-opacity-50 md:tw-hidden"
+    @click="showMobile = false"
+  ></div>
+</div>
+<script>
+  new Vue({
+    el: '#nav-bar-{{ section.id }}',
+    delimiters: ['[[', ']]'],
+    mixins: [],
+    data() {
+      return {
+        selectedTab: '',
+        selectedSubTab: '',
+        showMobile: false,
+        showMobileMenu: false,
+        mobileDropdown: null,
+        mobileSection: null,
+        mobileSubSection: null,
+        hoverTimer: null,
+      };
+    },
+
+    async mounted() {
+      const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+      const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+
+      setTimeout(() => {
+        const el = document.getElementById('nav-bar-{{ section.id }}');
+        this.sectionHeight = el ? el.offsetHeight : 0;
+        const spacer = document.getElementById('header-spacer-{{ section.id }}');
+        if (spacer) {
+          spacer.style.height = `${this.sectionHeight}px`;
+        }
+        document.documentElement.style.setProperty('--site-header-height', `${this.sectionHeight}px`);
+      }, 10);
+      window.addEventListener('resize', this.resizeSpacer);
+    },
+    unmounted() {
+      window.removeEventListener('resize', this.resizeSpacer);
+    },
+
+    watch: {
+      showMobileMenu() {
+        this.$nextTick(() => {
+          // a/b test specific logic
+          const currentVariant = document.documentElement.dataset.testVariant || 'a';
+          if (this.showMobileMenu) {
+            this.$refs.mobileNavMenu?.querySelector(`[data-test-show='${currentVariant}'] :is(a, button)`)?.focus();
+          }
+        });
+      },
+    },
+
+    methods: {
+      handleMouseLeave() {
+        this.showMobile = false;
+        this.selectedTab = '';
+        this.selectedSubTab = '';
+      },
+
+      resizeSpacer(e) {
+        const el = document.getElementById('nav-bar-{{ section.id }}');
+        this.sectionHeight = el ? el.offsetHeight : 0;
+        const spacer = document.getElementById('header-spacer-{{ section.id }}');
+        const navContainer = document.getElementById('nav-container');
+        if (spacer) {
+          spacer.style.height = `${this.sectionHeight}px`;
+        }
+        if (navContainer) {
+          navContainer.style.height = `${this.sectionHeight}px`;
+        }
+        document.documentElement.style.setProperty('--site-header-height', `${this.sectionHeight}px`);
+      },
+
+      refocusMenu(event) {
+        this.$refs.mobileMenuButton.focus();
+        console.log(event, 'refocusing menu');
+      },
+
+      hoverSubTab(subTabClass) {
+        clearTimeout(this.hoverTimer);
+        this.hoverTimer = setTimeout(() => {
+          this.selectedSubTab = subTabClass;
+        }, 150);
+      },
+
+      showCart() {
+        this.bus.$emit('showCart');
+      },
+    },
+  });
+</script>
+
+<style>
+  /* Prevent flash of uninitialized Vue content */
+  [v-cloak] {
+    display: none !important;
+    visibility: hidden !important;
+  }
+  {% assign spacing =  block.blocks | size | times: 42 | plus: 48 %}
+  .ud-mobileMenuV2 {
+    top: 48px;
+    height: calc(100vh - {{ spacing }}px);
+    z-index: 1000;
+  }
+
+  .mobileMenuBG {
+    top: {{ spacing }}
+    px !important;
+    z-index: -1000;
+  }
+
+  .ud-mobileMenuV2::backdrop {
+    height: 100%;
+    margin: 0;
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    padding: 0;
+  }
+</style>
+
+{% comment %} We are no longer using Simple or Lists Blocks {% endcomment %}
+{% schema %}
+{
+  "name": "Navigation Bar",
+  "blocks": [
+    {
+      "type": "_header-tabbed-section"
+    }
+  ],
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "trending_searches",
+      "label": "Trending Searches"
+    },
+    {
+      "type": "text",
+      "id": "featured_collection_title",
+      "label": "Featured Collection Title"
+    },
+    {
+      "type": "collection",
+      "id": "featured_collection",
+      "label": "Featured Collection"
+    },
+    {
+      "type": "image_picker",
+      "id": "site_logo",
+      "label": "Site Logo"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Navigation Bar",
+      "settings": {},
+      "blocks": []
+    }
+  ]
+}
+{% endschema %}

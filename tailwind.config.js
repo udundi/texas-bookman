@@ -35,10 +35,6 @@ module.exports = {
       64: "4rem",
     },
     extend: {
-      fontFamily: {
-        'brand-header': ["Proxima Nova", "serif"],
-        'brand-body': ["PP Neue Montreal", "serif"],
-      },
       colors: {
         white: "#FFFFFF",
         black: "#000000",
@@ -48,7 +44,8 @@ module.exports = {
           link: "#20448F",
           author: "#6F8BC5",
           secondary: "#F0BA3A",
-          sale: "#BD2026"
+          sale: "#BD2026",
+          eggshell: "#FDFBF8",
         },
       },
       animation: {
@@ -94,11 +91,8 @@ module.exports = {
         "container-sm": "min(43.125rem, 90%)",
       },
       fontFamily: {
-        montserrat: ["Montserrat", "serif"],
-        playfair: ["Playfair Display", "serif"],
-        interstate: ['"Interstate"', "sans-serif"],
-        cadet: ["Cadet", "sans-serif"],
-        cadet_bold: ["Cadet Bold", "sans-serif"],
+        'brand-header': ["Proxima Nova", "serif"],
+        'brand-body': ["PP Neue Montreal", "serif"],
       },
       aspectRatio: {
         "1/2": "1 / 2",

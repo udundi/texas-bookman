@@ -264,6 +264,7 @@
         hoverTimer: null,
         showSuggestions: true,
         showCountryDropdown: false,
+        openMenuSection: null,
       };
     },
 
@@ -391,6 +392,10 @@
 
       showCart() {
         this.bus.$emit('showCart');
+      },
+
+      toggleMenuSection(sectionId) {
+        this.openMenuSection = this.openMenuSection === sectionId ? null : sectionId;
       },
 
       async startSearch() {
