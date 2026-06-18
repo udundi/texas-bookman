@@ -3,7 +3,7 @@
   <!-- Header with Blue Background -->
   {% if block.settings.header_url != blank and block.settings.menu_title != blank %}
     <a
-      href="{{ block.settings.header_url | default: '#' }}"
+      href="{{ block.settings.header_url | default: '/' }}"
       class="tw-flex tw-gap-2 tw-items-center tw-px-4 tw-py-3 hover:tw-animate-pulse tw-text-brand-primary tw-font-semibold tw-text-14 tw-group"
     >
       <span>{{ block.settings.menu_title }}</span>

@@ -2722,6 +2722,11 @@ video {
   border-bottom-color: rgb(32 68 143 / var(--tw-border-opacity, 1));
 }
 
+.tw-group:hover .group-hover\:tw-text-brand-primary {
+  --tw-text-opacity: 1;
+  color: rgb(32 68 143 / var(--tw-text-opacity, 1));
+}
+
 .tw-group:hover .group-hover\:tw-underline {
   text-decoration-line: underline;
 }
