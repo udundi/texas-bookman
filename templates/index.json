@@ -64,7 +64,7 @@
             "mobile_x_gap": 4,
             "mobile_y_gap": 4,
             "justify_content": "center",
-            "align_items": "center",
+            "align_items": "flex-start",
             "container_width": "full_width",
             "content_overflow": "fit",
             "display": "both"
