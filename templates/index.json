@@ -170,8 +170,8 @@
       "settings": {
         "section_title": "Test",
         "tab_titles": "",
-        "padding_top": 4,
-        "padding_bottom": 4,
+        "padding_top": 0,
+        "padding_bottom": 0,
         "mobile_padding_top": 4,
         "mobile_padding_bottom": 4,
         "padding_left": 2,
