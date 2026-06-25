@@ -182,7 +182,7 @@
         "mobile_padding_left": 2,
         "mobile_padding_right": 2,
         "background_color": "#ffffff",
-        "container_width": "full_width"
+        "container_width": "md_desktop"
       }
     }
   },
