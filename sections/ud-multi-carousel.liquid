@@ -1,8 +1,11 @@
 {% style %}
-  .section-{{ section.id }} {
+  .section-outer-{{ section.id }} {
     background-color: {{ section.settings.background_color }};
     padding-top: {{ section.settings.padding_top }}rem;
     padding-bottom: {{ section.settings.padding_bottom }}rem;
+  }
+
+  .section-{{ section.id }} {
     padding-left: {{ section.settings.padding_left }}rem;
     padding-right: {{ section.settings.padding_right }}rem;
     {% if section.settings.container_width == 'full_width' %}
@@ -18,52 +21,58 @@
     {% else section.settings.container_width == 'mobile' %}
       max-width: var(--container-width, 448px);
     {% endif %}
-
   }
 
   @media screen and (max-width: 749px) {
-    .section-{{ section.id }} {
-
-      padding-left: {{ section.settings.mobile_padding_left }}rem;
-      padding-right: {{ section.settings.mobile_padding_right }}rem;
+    .section-outer-{{ section.id }} {
       padding-top: {{ section.settings.mobile_padding_top }}rem;
       padding-bottom: {{ section.settings.mobile_padding_bottom }}rem;
+    }
+  }
+  @media screen and (max-width: 749px) {
+    .section-{{ section.id }} {
+      padding-left: {{ section.settings.mobile_padding_left }}rem;
+      padding-right: {{ section.settings.mobile_padding_right }}rem;
     }
   }
 {% endstyle %}
 
 {% assign selected_block = '' %}
-<div class="section-{{ section.id }}">
-  <div class="vue-controler-{{ section.id }}">
-    {% if section.settings.section_title != blank %}
-      <div class="tw-font-playfair tw-font-normal tw-text-36 tw-leading-tight tw-text-offblack tw-w-full tw-text-center">
-        {{ section.settings.section_title }}
-      </div>
-    {% endif %}
-    {% if section.blocks[1] != blank %}
-      <div class="tw-flex tw-justify-between tw-overflow-x-auto">
-        {% assign tab_titles = section.settings.tab_titles | append: '-' | split: '-' %}
-        {% for block in section.blocks %}
-          <button
-            @click="clickingTab('{{ block.id }}')"
-            class=" tw-w-full tw-border-b-2 tw-border-0 tw-border-solid tw-text-16 tw-font-semibold tw-font-montserrat tw-leading-tight tw-my-4 tw-p-4 tw-capitalize tw-text-offblack"
-            :class="
-              [
-                clickedTab == '{{ block.id }}' ? 'tw-border-offblack' : ' tw-border-grey-darker'
-              ]
-            "
-          >
-            {{ tab_titles[forloop.index0] | default: 'Default Tab' }}
-          </button>
-        {% endfor %}
-      </div>
-    {% endif %}
-  </div>
-  {% for block in section.blocks %}
-    <div class="tw-overflow-hidden carousel-{{ block.id }} {% unless forloop.first %}tw-max-h-0 {% endunless %}">
-      {% render block %}
+<div class="section-outer-{{ section.id }} tw-border-b tw-border-gray-400">
+  {% if section.settings.section_title != blank %}
+    <div class="tw-font-playfair width-control-{{ section.id }} tw-font-normal tw-text-36 tw-leading-tight tw-text-offblack tw-w-full tw-text-center tw-border-y tw-border-gray-400 tw-py-4">
+      {{ section.settings.section_title }}
     </div>
-  {% endfor %}
+  {% endif %}
+  <div class="section-{{ section.id }} tw-mx-auto tw-py-6">
+    <div class="vue-controler-{{ section.id }}">
+      {% if section.blocks[1] != blank %}
+        <div class="">
+          <div class="tw-flex tw-justify-between tw-overflow-x-auto">
+            {% assign tab_titles = section.settings.tab_titles | append: '-' | split: '-' %}
+            {% for block in section.blocks %}
+              <button
+                @click="clickingTab('{{ block.id }}')"
+                class=" tw-w-full tw-border-b-2 tw-border-0 tw-border-solid tw-text-16 tw-font-semibold tw-font-montserrat tw-leading-tight tw-my-4 tw-p-4 tw-capitalize tw-text-offblack"
+                :class="
+                  [
+                    clickedTab == '{{ block.id }}' ? 'tw-border-offblack' : ' tw-border-grey-darker'
+                  ]
+                "
+              >
+                {{ tab_titles[forloop.index0] | default: 'Default Tab' }}
+              </button>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+    {% for block in section.blocks %}
+      <div class="tw-overflow-hidden carousel-{{ block.id }} {% unless forloop.first %}tw-max-h-0 {% endunless %}">
+        {% render block %}
+      </div>
+    {% endfor %}
+  </div>
 </div>
 
 {% if section.blocks[0] != blank %}
