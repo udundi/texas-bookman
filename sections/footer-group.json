@@ -20,16 +20,23 @@
             "menu": "childrens-books"
           }
         },
-        "menu_T7g3wx": {
+        "menu_9JkbV7": {
           "type": "menu",
           "settings": {
-            "menu": "adult-books"
+            "menu": "childrens-books"
+          }
+        },
+        "menu_HJbCbE": {
+          "type": "menu",
+          "settings": {
+            "menu": "childrens-books"
           }
         }
       },
       "block_order": [
         "menu_bezynk",
-        "menu_T7g3wx"
+        "menu_9JkbV7",
+        "menu_HJbCbE"
       ],
       "name": "Main Footer",
       "settings": {
