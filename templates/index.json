@@ -16,6 +16,102 @@
     },
     "ud_flexbox_BCC4jh": {
       "type": "ud-flexbox",
+      "blocks": {
+        "basic_image_PNVGVw": {
+          "type": "basic-image",
+          "name": "Base Image",
+          "settings": {
+            "image": "shopify://shop_images/classic-book-with-detailed-cover.jpg",
+            "aspect_ratio": "4/3",
+            "mobile_aspect_ratio": "square",
+            "object_fit": "cover",
+            "rounded": "none",
+            "max_width": 544,
+            "mobile_max_width": 320,
+            "border": 0,
+            "border_color": "",
+            "lazy_load": true,
+            "alt_text": ""
+          },
+          "blocks": {}
+        },
+        "flex_box_VKGgji": {
+          "type": "flex-box",
+          "name": "Flexbox",
+          "settings": {
+            "optional_link": "",
+            "padding_top": 4,
+            "padding_bottom": 4,
+            "padding_left": 2,
+            "padding_right": 2,
+            "mobile_top_bottom": true,
+            "mobile_padding_top": 4,
+            "mobile_padding_bottom": 4,
+            "mobile_sides": false,
+            "mobile_padding_left": 2,
+            "mobile_padding_right": 2,
+            "add_border": false,
+            "border_width": 1,
+            "border_color": "#000000",
+            "border_radius": 10,
+            "background_color": "#ffffff",
+            "flex_direction": "column",
+            "tablet_flex_direction": "column",
+            "mobile_flex_direction": "column",
+            "x_gap": 4,
+            "y_gap": 1,
+            "mobile_gap": false,
+            "mobile_x_gap": 4,
+            "mobile_y_gap": 4,
+            "justify_content": "center",
+            "align_items": "center",
+            "container_width": "full_width",
+            "content_overflow": "fit",
+            "display": "both"
+          },
+          "blocks": {
+            "text_3gzL9m": {
+              "type": "text",
+              "name": "Main Header",
+              "settings": {
+                "text": "Texas Bookman Homepage",
+                "type": "h2",
+                "align": "center",
+                "font": "primary",
+                "weight": "700",
+                "font_size": 42,
+                "mobile_font_size": 42,
+                "max_width": 600,
+                "mobile_max_width": 600,
+                "color": "#212121",
+                "list": false,
+                "gap-border": false,
+                "display": "both"
+              },
+              "blocks": {}
+            },
+            "rich_text_YHEkXC": {
+              "type": "rich-text",
+              "name": "Rich Text",
+              "settings": {
+                "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>",
+                "align": "start",
+                "color": "#000000",
+                "max_width": 600
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_3gzL9m",
+            "rich_text_YHEkXC"
+          ]
+        }
+      },
+      "block_order": [
+        "basic_image_PNVGVw",
+        "flex_box_VKGgji"
+      ],
       "name": "Base Flexbox",
       "settings": {
         "padding_top": 0,
@@ -25,10 +121,10 @@
         "padding_left": 0,
         "padding_right": 0,
         "background_color": "#ffffff",
-        "flex_direction": "column",
-        "tablet_flex_direction": "column",
+        "flex_direction": "row",
+        "tablet_flex_direction": "row",
         "mobile_flex_direction": "column",
-        "x_gap": 0,
+        "x_gap": 3,
         "y_gap": 0,
         "mobile_gap": false,
         "mobile_x_gap": 0,
