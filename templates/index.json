@@ -143,8 +143,8 @@
           "type": "_multipurpose-carousel",
           "name": "Collection Carousel",
           "settings": {
-            "carousel_type": "categories",
-            "product_source": "collection",
+            "carousel_type": "collection",
+            "product_source": "product_list",
             "collection": "",
             "product_list": [
               "test-product",
