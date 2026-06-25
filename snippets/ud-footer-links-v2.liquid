@@ -1,0 +1,49 @@
+<div class="max-sm:tw-hidden tw-leading-6 tw-text-navy">
+  <h3 class="tw-text-12 tw-font-bold tw-mb-1">{{ title }}</h3>
+  <ul>
+    {% for link in links %}
+      <li>
+        <a href="{{ link.url }}" class="tw-text-12 tw-leading-3 hover:tw-underline tw-font-medium">{{ link.title }}</a>
+      </li>
+      {% if link.title == "Data Subject Request" %}
+        <li>
+          <a
+            style="cursor: pointer"
+            onClick="showPopup()"
+            class="tw-text-12 hover:tw-underline tw-font-medium">Do Not Sell or Share</a>
+        </li>
+        <li>
+          <a style="cursor: pointer" class="pieeye-cookie-setting tw-text-12 hover:tw-underline tw-font-medium">Cookie Settings</a>
+        </li>
+      {% endif %}
+    {% endfor %}
+
+  </ul>
+</div>
+<details class="tw-group {%  unless is_last %} tw-border-b-2 {% endunless %} tw-border-grey-darker sm:tw-hidden tw-w-full">
+  <summary class=" tw-w-full tw-cursor-pointer tw-list-none  tw-py-2 tw-text-16 tw-font-bold group-open:tw-pb-3 [&::-webkit-details-marker]:tw-hidden">
+    <div class=" tw-w-full tw-flex tw-items-center tw-justify-between tw-px-4 tw-relative">
+      <div class="tw-block tw-pl-2 tw-w-full tw-text-navy tw-text-center">{{ title }}</div>
+      <div class="tw-absolute tw-right-4 tw-transition-all group-open:tw-rotate-180">{% render 'icon-caret' %}</div>
+    </div>
+
+  </summary>
+  <ul class="tw-pb-4 tw-w-full tw-flex tw-flex-col tw-gap-2 tw-justify-center tw-items-center tw-text-offblack">
+    {% for link in links %}
+      <li>
+        <a href="{{ link.url }}" class="md:tw-text-12 tw-text-14 hover:tw-underline tw-text-center tw-leading-3">{{ link.title }}</a>
+      </li>
+      {% if link.title == "Data Subject Request" %}
+        <li>
+          <a
+            style="cursor: pointer"
+            onClick="showPopup()"
+            class="md:tw-text-12 tw-text-14 hover:tw-underline">Do Not Sell or Share</a>
+        </li>
+        <li>
+          <a style="cursor: pointer" class="pieeye-cookie-setting md:tw-text-12 tw-text-14 hover:tw-underline">Cookie Settings</a>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+</details>
