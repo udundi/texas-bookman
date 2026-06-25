@@ -11,6 +11,35 @@
   "type": "footer",
   "name": "t:general.footer",
   "sections": {
+    "ud_footer_v2_pwKrAi": {
+      "type": "ud-footer-v2",
+      "blocks": {
+        "menu_bezynk": {
+          "type": "menu",
+          "settings": {
+            "menu": "childrens-books"
+          }
+        },
+        "menu_T7g3wx": {
+          "type": "menu",
+          "settings": {
+            "menu": "adult-books"
+          }
+        }
+      },
+      "block_order": [
+        "menu_bezynk",
+        "menu_T7g3wx"
+      ],
+      "name": "Main Footer",
+      "settings": {
+        "legal_menu": "",
+        "logo": "shopify://shop_images/logo-TexasBookman.png",
+        "phone": "",
+        "email": "",
+        "hours": ""
+      }
+    },
     "footer": {
       "type": "footer",
       "settings": {
@@ -20,6 +49,7 @@
     }
   },
   "order": [
+    "ud_footer_v2_pwKrAi",
     "footer"
   ]
 }
