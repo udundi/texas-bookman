@@ -23,7 +23,7 @@
 
   @media screen and (max-width: 749px) {
     .section-{{ section.id }} {
-      
+
       padding-left: {{ section.settings.mobile_padding_left }}rem;
       padding-right: {{ section.settings.mobile_padding_right }}rem;
       padding-top: {{ section.settings.mobile_padding_top }}rem;
@@ -41,31 +41,33 @@
       </div>
     {% endif %}
     {% if section.blocks[1] != blank %}
-    <div class="tw-flex tw-justify-between tw-overflow-x-auto">
-      {% assign tab_titles = section.settings.tab_titles |  append: '-' |  split: '-' %}
-      {% for block in section.blocks %}
-        <button 
-          @click="clickingTab('{{ block.id }}')" 
-          class=" tw-w-full tw-border-b-2 tw-border-0 tw-border-solid tw-text-16 tw-font-semibold tw-font-montserrat tw-leading-tight tw-my-4 tw-p-4 tw-capitalize tw-text-offblack" 
-          :class="[
-            clickedTab == '{{ block.id }}' ? 'tw-border-offblack' : ' tw-border-grey-darker'
-          ]"
-        > 
-          {{ tab_titles[forloop.index0] |  default: 'Default Tab'}}
-        </button>      
-      {% endfor %}
-    </div>
+      <div class="tw-flex tw-justify-between tw-overflow-x-auto">
+        {% assign tab_titles = section.settings.tab_titles | append: '-' | split: '-' %}
+        {% for block in section.blocks %}
+          <button
+            @click="clickingTab('{{ block.id }}')"
+            class=" tw-w-full tw-border-b-2 tw-border-0 tw-border-solid tw-text-16 tw-font-semibold tw-font-montserrat tw-leading-tight tw-my-4 tw-p-4 tw-capitalize tw-text-offblack"
+            :class="
+              [
+                clickedTab == '{{ block.id }}' ? 'tw-border-offblack' : ' tw-border-grey-darker'
+              ]
+            "
+          >
+            {{ tab_titles[forloop.index0] | default: 'Default Tab' }}
+          </button>
+        {% endfor %}
+      </div>
     {% endif %}
   </div>
   {% for block in section.blocks %}
     <div class="tw-overflow-hidden carousel-{{ block.id }} {% unless forloop.first %}tw-max-h-0 {% endunless %}">
-      {% render block %}     
+      {% render block %}
     </div>
   {% endfor %}
 </div>
-        
+
 {% if section.blocks[0] != blank %}
-  {% assign selected_block = section.blocks[0].id |  remove: '-1'  %}
+  {% assign selected_block = section.blocks[0].id | remove: '-1' %}
 {% endif %}
 <script>
   new Vue({
@@ -79,164 +81,160 @@
     methods: {
       clickingTab(id) {
         if (this.clickedTab != id) {
-          const oldTab = document.querySelector(`.carousel-${this.clickedTab}`)
-          const selectedTab = document.querySelector(`.carousel-${id}`)
-          this.clickedTab = id
-          oldTab.classList.add('tw-max-h-0')
-          selectedTab.classList.remove('tw-max-h-0')
+          const oldTab = document.querySelector(`.carousel-${this.clickedTab}`);
+          const selectedTab = document.querySelector(`.carousel-${id}`);
+          this.clickedTab = id;
+          oldTab.classList.add('tw-max-h-0');
+          selectedTab.classList.remove('tw-max-h-0');
         }
-        
-      }
-    },  
+      },
+    },
   });
 </script>
 
 {% schema %}
-  {
-    "name": "Multi Carousel",
-    "settings": [
-      {
-        "type": "text",
-        "label": "Section Title",
-        "id": "section_title"
-      },
-      {
-        "type": "text",
-        "label": "Tab Titles",
-        "id": "tab_titles",
-        "info": "Separate titles with hyphens => '-'"
-      },
-      {
-        "type": "range",
-        "id": "padding_top",
-        "min": 0,
-        "max": 40,
-        "step": 0.5,
-        "unit": "rem",
-        "label": "Desktop Padding Top",
-        "default": 4
-      },
-      {
-        "type": "range",
-        "min": 0,
-        "max": 40,
-        "step": 0.5,
-        "unit": "rem",
-        "id": "padding_bottom",
-        "label": "Desktop Padding Bottom",
-        "default": 4
-      },
-      {
-        "type": "range",
-        "id": "mobile_padding_top",
-        "min": 0,
-        "max": 40,
-        "step": 0.5,
-        "unit": "rem",
-        "label": "Mobile Padding Top",
-        "default": 4
-      },
-      {
-        "type": "range",
-        "min": 0,
-        "max": 40,
-        "step": 0.5,
-        "unit": "rem",
-        "id": "mobile_padding_bottom",
-        "label": "Mobile Padding Bottom",
-        "default": 4
-      },
-      {
-        "type": "range",
-        "min": 0,
-        "max": 40,
-        "step": 0.5,
-        "unit": "rem",
-        "id": "padding_left",
-        "label": "Padding Left",
-        "default": 2
-      },
-      {
-        "type": "range",
-        "min": 0,
-        "max": 40,
-        "step": 0.5,
-        "unit": "rem",
-        "id": "padding_right",
-        "label": "Padding Right",
-        "default": 2
-      },
-      {
-        "type": "range",
-        "min": 0,
-        "max": 40,
-        "step": 0.5,
-        "unit": "rem",
-        "id": "mobile_padding_left",
-        "label": "Mobile Padding Left",
-        "default": 2
-      },
-      {
-        "type": "range",
-        "min": 0,
-        "max": 40,
-        "step": 0.5,
-        "unit": "rem",
-        "id": "mobile_padding_right",
-        "label": "Mobile Padding Right",
-        "default": 2
-      },
-      {
-        "type": "color",
-        "id": "background_color",
-        "label": "Background Color",
-        "default": "#ffffff"
-      },
-      {
-        "type": "select",
-        "id": "container_width",
-        "label": "Max Width Of Section",
-        "options": [
-          {
-            "value": "mobile",
-            "label": "448px (Mobile)"
-          },
-          {
-            "value": "tablet",
-            "label": "768px (Tablet)"
-          },
-          {
-            "value": "sm_desktop",
-            "label": "1024px (Sm Desktop)"
-          },
-          {
-            "value": "md_desktop",
-            "label": "1280px (Md Desktop)"
-          },
-          {
-            "value": "lg_desktop",
-            "label": "1440px (Lg Desktop)"
-          },
-          {
-            "value": "full_width",
-            "label": "Full Width"
-          }
-        ],
-        "default": "full_width"
-      }
-    ],
-    "blocks": [
-      {
-        "type": "_multipurpose-carousel"
-      },
-      {
-        "type": "room-divider-carousel"
-      }
-    ],
-    "presets": [
-      {
-        "name": "Multi Carousel"
-      }
-    ]
-  }
+{
+  "name": "Multi Carousel",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Section Title",
+      "id": "section_title"
+    },
+    {
+      "type": "text",
+      "label": "Tab Titles",
+      "id": "tab_titles",
+      "info": "Separate titles with hyphens => '-'"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 40,
+      "step": 0.5,
+      "unit": "rem",
+      "label": "Desktop Padding Top",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "min": 0,
+      "max": 40,
+      "step": 0.5,
+      "unit": "rem",
+      "id": "padding_bottom",
+      "label": "Desktop Padding Bottom",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "min": 0,
+      "max": 40,
+      "step": 0.5,
+      "unit": "rem",
+      "label": "Mobile Padding Top",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "min": 0,
+      "max": 40,
+      "step": 0.5,
+      "unit": "rem",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile Padding Bottom",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "min": 0,
+      "max": 40,
+      "step": 0.5,
+      "unit": "rem",
+      "id": "padding_left",
+      "label": "Padding Left",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "min": 0,
+      "max": 40,
+      "step": 0.5,
+      "unit": "rem",
+      "id": "padding_right",
+      "label": "Padding Right",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "min": 0,
+      "max": 40,
+      "step": 0.5,
+      "unit": "rem",
+      "id": "mobile_padding_left",
+      "label": "Mobile Padding Left",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "min": 0,
+      "max": 40,
+      "step": 0.5,
+      "unit": "rem",
+      "id": "mobile_padding_right",
+      "label": "Mobile Padding Right",
+      "default": 2
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Max Width Of Section",
+      "options": [
+        {
+          "value": "mobile",
+          "label": "448px (Mobile)"
+        },
+        {
+          "value": "tablet",
+          "label": "768px (Tablet)"
+        },
+        {
+          "value": "sm_desktop",
+          "label": "1024px (Sm Desktop)"
+        },
+        {
+          "value": "md_desktop",
+          "label": "1280px (Md Desktop)"
+        },
+        {
+          "value": "lg_desktop",
+          "label": "1440px (Lg Desktop)"
+        },
+        {
+          "value": "full_width",
+          "label": "Full Width"
+        }
+      ],
+      "default": "full_width"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "_multipurpose-carousel"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Multi Carousel"
+    }
+  ]
+}
 {% endschema %}
