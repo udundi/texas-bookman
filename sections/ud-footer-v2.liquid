@@ -9,7 +9,6 @@
 {% endcapture %}
 
 <div class="tw-w-full tw-flex tw-flex-col tw-overflow-hidden tw-relative tw-z-[100] tw-bg-white tw-pt-4">
-
   <!-- Main Grid Container -->
   <div class="md:tw-px-4 tw-mx-auto tw-w-full tw-flex tw-items-center lg:tw-justify-between tw-justify-center tw-max-w-screen-2xl tw-gap-x-12 max-lg:tw-flex-col md:tw-gap-y-16 sm:tw-pb-12">
     <!-- Left Info Container -->
@@ -17,13 +16,15 @@
       <!-- Logo Container -->
       <div class="tw-flex tw-gap-4 md:tw-flex-col tw-flex-row tw-items-start">
         <!-- Logo -->
-        <a
-          class="tw-size-20"
-          href="/"
-          rel="home">
-          {{ section.settings.logo | image_url: width: '150' | image_tag: alt: 'Felt Right Logo' }}
-        </a>
-
+        {% if section.settings.logo != blank %}
+          <a
+            class="tw-size-20"
+            href="/"
+            rel="home"
+          >
+            {{ section.settings.logo | image_url: width: '150' | image_tag: alt: 'Felt Right Logo' }}
+          </a>
+        {% endif %}
 
         <!-- Slogan -->
         <div class="tw-text-navy tw-font-playfair md:tw-text-24 tw-text-20 md:tw-w-48 tw-w-40 tw-font-medium tw-leading-6">
@@ -38,7 +39,6 @@
       <div class="md:tw-pt-8 tw-pt-4 max-md:tw-pb-4 tw-font-semibold max-md:tw-text-center tw-w-full max-sm:tw-border-t-2 max-sm:tw-border-b-2 tw-border-solid tw-border-grey-darker">
         {{ contact_block }}
       </div>
-
     </div>
 
     <!-- Right Menu Container -->
@@ -46,76 +46,75 @@
       <!-- Footer Link Lists -->
       {% for block in section.blocks %}
         <div class="tw-w-full tw-flex tw-justify-center">
-          {% render 'ud-footer-links-v2'
-            , title: block.settings.menu.title
-            , links: block.settings.menu.links
-            , is_first: forloop.first
-            , is_last: forloop.last
+          {% render 'ud-footer-links-v2',
+            title: block.settings.menu.title,
+            links: block.settings.menu.links,
+            is_first: forloop.first,
+            is_last: forloop.last
           %}
         </div>
       {% endfor %}
     </div>
   </div>
-
 </div>
 
 {% schema %}
-  {
-    "name": "Main Footer",
-    "tag": "footer",
-    "blocks": [
-      {
-        "name": "Footer Menu",
-        "type": "menu",
-        "settings": [
-          {
-            "type": "link_list",
-            "id": "menu",
-            "label": "Menu"
-          }
-        ]
-      }
-    ],
-    "settings": [
-      {
-        "type": "link_list",
-        "id": "legal_menu",
-        "label": "Legal Pages Menu"
-      },
-      {
-        "type": "image_picker",
-        "id": "logo",
-        "label": "Logo"
-      },
-      {
-        "type": "header",
-        "content": "Social"
-      },
-      {
-        "type": "header",
-        "content": "Contact"
-      },
-      {
-        "type": "text",
-        "id": "phone",
-        "label": "Phone",
-        "info": "Pattern: (123) 456-7890"
-      },
-      {
-        "type": "text",
-        "id": "email",
-        "label": "Email"
-      },
-      {
-        "type": "text",
-        "id": "hours",
-        "label": "Hours"
-      }
-    ],
-    "presets": [
-      {
-        "name": "Main Footer"
-      }
-    ]
-  }
+{
+  "name": "Main Footer",
+  "tag": "footer",
+  "blocks": [
+    {
+      "name": "Footer Menu",
+      "type": "menu",
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "legal_menu",
+      "label": "Legal Pages Menu"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "header",
+      "content": "Social"
+    },
+    {
+      "type": "header",
+      "content": "Contact"
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone",
+      "info": "Pattern: (123) 456-7890"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email"
+    },
+    {
+      "type": "text",
+      "id": "hours",
+      "label": "Hours"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Main Footer"
+    }
+  ]
+}
 {% endschema %}
