@@ -8,9 +8,9 @@
   <span class='tw-mt-2 tw-text-12 tw-block'>Hours: 8am-4pm MST M-F</span>
 {% endcapture %}
 
-<div class="tw-w-full tw-flex tw-flex-col tw-overflow-hidden tw-relative tw-z-[100] tw-bg-white tw-pt-4">
+<div class="tw-w-full tw-flex lg:tw-flex-row tw-flex-col tw-overflow-hidden tw-relative tw-z-[100] tw-bg-white tw-border-t tw-border-gray-400 ">
   <!-- Main Grid Container -->
-  <div class="md:tw-px-4 tw-mx-auto tw-w-full tw-flex tw-items-center lg:tw-justify-between tw-justify-center tw-max-w-screen-2xl tw-gap-x-12 max-lg:tw-flex-col md:tw-gap-y-16 sm:tw-pb-12">
+  <div class="md:tw-px-4 tw-mx-auto tw-w-full tw-flex tw-items-center lg:tw-justify-between tw-justify-center tw-max-w-screen-2xl tw-gap-x-12 max-md:tw-flex-col md:tw-gap-y-16 sm:tw-pb-12 tw-pt-4">
     <!-- Left Info Container -->
     <div class="tw-flex tw-flex-col tw-items-center md:tw-justify-between tw-justify-center max-sm:tw-gap-x-7 md:tw-gap-y-4 tw-text-navy sm:tw-w-fit tw-w-full">
       <!-- Logo Container -->
@@ -25,14 +25,6 @@
             {{ section.settings.logo | image_url: width: '150' | image_tag: alt: 'Felt Right Logo' }}
           </a>
         {% endif %}
-
-        <!-- Slogan -->
-        <div class="tw-text-navy tw-font-playfair md:tw-text-24 tw-text-20 md:tw-w-48 tw-w-40 tw-font-medium tw-leading-6">
-          <!-- Slogan Top Line -->
-          <div class="tw-w-full tw-text-start">Feel better in</div>
-          <!-- Slogan Bottom Line -->
-          <div class="tw-italic tw-w-full tw-text-end">your own space</div>
-        </div>
       </div>
 
       <!-- Contact Info -->
@@ -56,12 +48,21 @@
       {% endfor %}
     </div>
   </div>
+  <!-- Email Signup Container -->
+  <div class="tw-border-l tw-border-gray-400 tw-p-6 lg:tw-text-16 tw-text-14">
+    <div>Don't Miss Our New Arrivals! Sign Up for our Bookman Bulletin.</div>
+    <div>input</div>
+    <div>Submit Button</div>
+  </div>
 </div>
 
 {% schema %}
 {
   "name": "Main Footer",
   "tag": "footer",
+  "enabled_on": {
+    "groups": ["footer"]
+  },
   "blocks": [
     {
       "name": "Footer Menu",
