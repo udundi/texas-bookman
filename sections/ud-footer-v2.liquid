@@ -8,51 +8,88 @@
   <span class='tw-mt-2 tw-text-12 tw-block'>Hours: 8am-4pm MST M-F</span>
 {% endcapture %}
 
-<div class="tw-w-full tw-flex lg:tw-flex-row tw-flex-col tw-overflow-hidden tw-relative tw-z-[100] tw-bg-white tw-border-t tw-border-gray-400 ">
-  <!-- Main Grid Container -->
-  <div class="md:tw-px-4 tw-mx-auto tw-w-full tw-flex tw-items-center lg:tw-justify-between tw-justify-center tw-max-w-screen-2xl tw-gap-x-12 max-md:tw-flex-col md:tw-gap-y-16 sm:tw-pb-12 tw-pt-4">
-    <!-- Left Info Container -->
-    <div class="tw-flex tw-flex-col tw-items-center md:tw-justify-between tw-justify-center max-sm:tw-gap-x-7 md:tw-gap-y-4 tw-text-navy sm:tw-w-fit tw-w-full">
-      <!-- Logo Container -->
-      <div class="tw-flex tw-gap-4 md:tw-flex-col tw-flex-row tw-items-start">
-        <!-- Logo -->
-        {% if section.settings.logo != blank %}
-          <a
-            class="tw-size-20"
-            href="/"
-            rel="home"
-          >
-            {{ section.settings.logo | image_url: width: '150' | image_tag: alt: 'Felt Right Logo' }}
-          </a>
-        {% endif %}
-      </div>
-
-      <!-- Contact Info -->
-      <div class="md:tw-pt-8 tw-pt-4 max-md:tw-pb-4 tw-font-semibold max-md:tw-text-center tw-w-full max-sm:tw-border-t-2 max-sm:tw-border-b-2 tw-border-solid tw-border-grey-darker">
-        {{ contact_block }}
-      </div>
-    </div>
-
-    <!-- Right Menu Container -->
-    <div class="md:tw-flex sm:tw-grid tw-grid-cols-3 tw-flex md:tw-flex-row tw-flex-col max-md:tw-w-full tw-gap-x-6 sm:tw-gap-y-4 md:tw-justify-evenly sm:tw-justify-start tw-justify-center sm:tw-items-start tw-items-center">
-      <!-- Footer Link Lists -->
-      {% for block in section.blocks %}
-        <div class="tw-w-full tw-flex tw-justify-center">
-          {% render 'ud-footer-links-v2',
-            title: block.settings.menu.title,
-            links: block.settings.menu.links,
-            is_first: forloop.first,
-            is_last: forloop.last
-          %}
+<!-- Border Container -->
+<div class="tw-w-full tw-bg-white tw-border-t tw-border-gray-400 ">
+  <!-- Size Limiter Container -->
+  <div class="tw-max-w-screen-2xl tw-mx-auto tw-w-full tw-flex  tw-justify-center lg:tw-flex-row tw-flex-col tw-overflow-hidden tw-relative tw-z-[100]">
+    <!-- Main Grid Container -->
+    <div class="md:tw-px-4 tw-mx-auto tw-w-full tw-flex tw-items-center lg:tw-justify-between tw-justify-center tw-gap-x-12 lg:tw-border-b-0 tw-border-b tw-border-gray-400 max-md:tw-flex-col md:tw-gap-y-16 sm:tw-pb-12 tw-pt-4">
+      <!-- Left Info Container -->
+      <div class="tw-flex tw-flex-col tw-items-center md:tw-justify-between tw-justify-center max-sm:tw-gap-x-7 md:tw-gap-y-4 tw-text-navy sm:tw-w-fit tw-w-full max-md:tw-pb-4">
+        <!-- Logo Container -->
+        <div class="tw-flex tw-gap-4 md:tw-flex-col tw-flex-row tw-items-start">
+          <!-- Logo -->
+          {% if section.settings.logo != blank %}
+            <a
+              class="tw-w-full"
+              href="/"
+              rel="home"
+            >
+              {{ section.settings.logo | image_url: width: '150' | image_tag: alt: 'Felt Right Logo' }}
+            </a>
+          {% endif %}
         </div>
-      {% endfor %}
+
+        <!-- Social Links Container -->
+        <div class="tw-flex tw-gap-3 tw-w-full tw-justify-center">
+          <!-- X Logo -->
+          <a href="/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M17.6873 3.06299L12.6913 8.77399L8.3713 3.06299H2.1123L9.5893 12.839L2.5033 20.938H5.5373L11.0063 14.688L15.7863 20.938H21.8883L14.0943 10.634L20.7193 3.06299H17.6873ZM16.6233 19.123L5.6543 4.78199H7.4573L18.3033 19.122L16.6233 19.123Z" fill="#312F30"/>
+            </svg>
+          </a>
+          <!-- Facebook Logo -->
+          <a href="/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <g clip-path="url(#clip0_242_1580)">
+              <path d="M22.0028 11.0673C22.0028 4.95404 17.0775 -0.00146484 11.0027 -0.00146484C4.92525 -8.98436e-05 0 4.95404 0 11.0687C0 16.592 4.02325 21.1708 9.28125 22.0013V14.2669H6.49V11.0687H9.284V8.62804C9.284 5.85466 10.9271 4.32291 13.4392 4.32291C14.6438 4.32291 15.9019 4.53878 15.9019 4.53878V7.26129H14.5145C13.1491 7.26129 12.7229 8.11516 12.7229 8.99104V11.0673H15.7726L15.2859 14.2655H12.7215V21.9999C17.9795 21.1694 22.0028 16.5907 22.0028 11.0673Z" fill="#312F30"/>
+              </g>
+              <defs>
+              <clipPath id="clip0_242_1580">
+              <rect width="22" height="22" fill="white"/>
+              </clipPath>
+              </defs>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Contact Info -->
+        {% comment %}
+          <div class="md:tw-pt-8 tw-pt-4 max-md:tw-pb-4 tw-font-semibold max-md:tw-text-center tw-w-full max-sm:tw-border-t-2 max-sm:tw-border-b-2 tw-border-solid tw-border-grey-darker">
+            {{ contact_block }}
+          </div>
+        {% endcomment %}
+      </div>
+
+      <!-- Right Menu Container -->
+      <div class="md:tw-flex tw-w-full sm:tw-grid tw-grid-cols-3 tw-flex md:tw-flex-row tw-flex-col max-md:tw-w-full tw-gap-x-6 sm:tw-gap-y-4 md:tw-justify-evenly sm:tw-justify-start tw-justify-center sm:tw-items-start tw-items-center">
+        <!-- Footer Link Lists -->
+        {% for block in section.blocks %}
+          <div class="tw-w-full tw-flex tw-justify-center">
+            {% render 'ud-footer-links-v2',
+              title: block.settings.menu.title,
+              links: block.settings.menu.links,
+              is_first: forloop.first,
+              is_last: forloop.last
+            %}
+          </div>
+        {% endfor %}
+      </div>
     </div>
-  </div>
-  <!-- Email Signup Container -->
-  <div class="tw-border-l tw-border-gray-400 tw-p-6 lg:tw-text-16 tw-text-14">
-    <div>Don't Miss Our New Arrivals! Sign Up for our Bookman Bulletin.</div>
-    <div>input</div>
-    <div>Submit Button</div>
+    <!-- Email Signup Container -->
+    <div class="lg:tw-border-l tw-max-w-screen-sm tw-w-full tw-border-gray-400 tw-flex tw-flex-col tw-gap-4 tw-p-6 lg:tw-text-16 tw-text-14 tw-tracking-tight tw-mx-auto">
+      <div class="tw-font-semibold">Don't Miss Our New Arrivals! Sign Up for our Bookman Bulletin.</div>
+      <input
+        class="rounded-lg tw-w-full tw-p-2 tw-text-gray-900 focus:tw-shadow-outline tw-outline-brand-primary focus:tw-outline-none tw-border tw-border-gray-400 focus:tw-border-brand-primary tw-rounded-md"
+        :class="{ 'border-2 border-red-500': validationErrors.email }"
+        type="email"
+        name="user_email"
+        placeholder="Email"
+        v-model="formData.email"
+        required
+      >
+      <button class="tw-text-white tw-bg-brand-primary tw-w-full tw-p-2 tw-uppercase tw-rounded-md">Submit</button>
+    </div>
   </div>
 </div>
 

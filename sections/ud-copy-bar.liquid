@@ -1,17 +1,14 @@
+<div class="tw-flex tw-w-full tw-justify-center tw-items-center tw-bg-brand-primary tw-text-white tw-p-2 tw-text-12">
+  {% assign currentYear = 'now' | date: '%Y' %}
+  Copyright © {{ currentYear }} Texas Bookman. All rights reserved
+</div>
 {% schema %}
 {
   "name": "Copyright Bar",
-  "tag": "footer",
+  "class": "tw-w-full",
   "enabled_on": {
     "groups": ["footer"]
   },
-  "settings": [
-    {
-      "type": "text",
-      "id": "copy_text",
-      "label": "Copyright Text"
-    }
-  ],
   "presets": [
     {
       "name": "Copyright Bar"
