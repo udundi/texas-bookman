@@ -150,7 +150,8 @@
               "test-product",
               "test-product-2",
               "test-product-3",
-              "test-product-4"
+              "test-product-4",
+              "test-product-5"
             ],
             "button_url": "",
             "button_text": "",
@@ -168,7 +169,7 @@
       ],
       "name": "Multi Carousel",
       "settings": {
-        "section_title": "Test",
+        "section_title": "Featured Products",
         "tab_titles": "",
         "padding_top": 0,
         "padding_bottom": 0,
