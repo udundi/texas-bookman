@@ -2082,6 +2082,11 @@ video {
   border-bottom-width: 2px;
 }
 
+.tw-border-x {
+  border-left-width: 1px;
+  border-right-width: 1px;
+}
+
 .tw-border-b {
   border-bottom-width: 1px;
 }

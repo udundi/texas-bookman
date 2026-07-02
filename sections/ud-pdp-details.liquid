@@ -184,9 +184,19 @@
         openedBlocks: {% if section.blocks.size > 0 %}[String('block-{{ section.blocks[0].id }}').slice(0, -2)]{% else %}[]{% endif %},
         sitewideDiscount: {{ settings.sitewide_sale_discount | divided_by: 100.0 }},
         sitewideSale: {{ sitewide_discount }},
+        clickedTab: '',
       };
     },
     methods: {
+      clickingTab(id) {
+        if (this.clickedTab != id) {
+          const oldTab = document.querySelector(`.info-tab-${this.clickedTab}`);
+          const selectedTab = document.querySelector(`.info-tab-${id}`);
+          this.clickedTab = id;
+          oldTab.classList.add('tw-max-h-0');
+          selectedTab.classList.remove('tw-max-h-0');
+        }
+      },
       async addToCart() {
         this.addingToCart = true;
         const params = new URLSearchParams(window.location.search);
@@ -420,6 +430,11 @@
 
   // Mount the Vue 3 application
   app.mount('.section-{{ section.id }}-props');
+
+  // Prevent native form submission — all cart adds are handled via fetch
+  document.getElementById('product_form').addEventListener('submit', function(e) {
+    e.preventDefault();
+  });
 
   function initMobileSwiper() {
     try {

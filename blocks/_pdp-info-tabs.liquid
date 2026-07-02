@@ -18,24 +18,18 @@
   }
 {% endstyle %}
 
-{% assign selected_block = '' %}
-<div class="section-{{ section.id }} tw-mx-auto">
-  <div class="vue-controler-{{ section.id }} tw-mx-auto">
-    {% if section.settings.section_title != blank %}
-      <div class="tw-font-playfair tw-font-normal tw-text-36 tw-leading-tight tw-text-offblack tw-w-full tw-text-center">
-        {{ section.settings.section_title }}
-      </div>
-    {% endif %}
-    {% if section.blocks[1] != blank %}
-      <div class="tw-flex tw-justify-between tw-overflow-x-auto">
-        {% assign tab_titles = section.settings.tab_titles | append: '-' | split: '-' %}
-        {% for block in section.blocks %}
+<div class="section-{{ block.id }} tw-mx-auto tw-py-4">
+  <div class="vue-controler-{{ block.id }} tw-mx-auto">
+    {% if block.blocks[1] != blank %}
+      <div class="tw-flex tw-justify-start tw-gap-4">
+        {% assign tab_titles = block.settings.tab_titles | append: '-' | split: '-' %}
+        {% for block in block.blocks %}
           <button
             @click="clickingTab('{{ block.id }}')"
-            class=" tw-w-full tw-text-16 tw-font-montserrat tw-leading-tight tw-my-4 tw-p-4 tw-capitalize tw-text-offblack"
+            class="tw-mb-[-1px] tw-text-16 tw-font-montserrat tw-leading-tight tw-p-4 tw-capitalize tw-text-offblack"
             :class="
               [
-                clickedTab == '{{ block.id }}' ? 'tw-font-semibold' : 'tw-font-normal'
+                clickedTab == '{{ block.id }}' ? 'tw-font-semibold tw-border-t tw-border-grey-400 tw-border-x tw-bg-brand-eggshell' : 'tw-font-normal'
               ]
             "
           >
@@ -45,49 +39,19 @@
       </div>
     {% endif %}
   </div>
-  {% for block in section.blocks %}
-    <div class="tw-overflow-hidden carousel-{{ block.id }} {% unless forloop.first %}tw-max-h-0 {% endunless %}">
+  {% for block in block.blocks %}
+    <div class="tw-overflow-hidden tw-border tw-border-grey-400 tw-mt-[-1px] tw-bg-brand-eggshell info-tab-{{ block.id }} {% unless forloop.first %}tw-max-h-0 {% endunless %}">
       {% render block %}
     </div>
   {% endfor %}
 </div>
 
-{% if section.blocks[0] != blank %}
-  {% assign selected_block = section.blocks[0].id | remove: '-1' %}
-{% endif %}
-<script>
-  new Vue({
-    el: '.vue-controler-{{ section.id }}',
-    delimiters: ['[[', ']]'],
-    data() {
-      return {
-        clickedTab: '{{ selected_block }}',
-      };
-    },
-    methods: {
-      clickingTab(id) {
-        if (this.clickedTab != id) {
-          const oldTab = document.querySelector(`.carousel-${this.clickedTab}`);
-          const selectedTab = document.querySelector(`.carousel-${id}`);
-          this.clickedTab = id;
-          oldTab.classList.add('tw-max-h-0');
-          selectedTab.classList.remove('tw-max-h-0');
-        }
-      },
-    },
-  });
-</script>
 
 {% schema %}
 {
   "name": "Tabbed Info Section",
   "class": "tw-w-full",
   "settings": [
-    {
-      "type": "text",
-      "label": "Section Title",
-      "id": "section_title"
-    },
     {
       "type": "text",
       "label": "Tab Titles",
