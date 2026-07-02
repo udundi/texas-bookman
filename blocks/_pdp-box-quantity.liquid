@@ -1,0 +1,55 @@
+<div
+  class="
+    {% if block.settings.visibility contains 'mobile' %}
+      tw-contents
+      md:tw-hidden
+    {% elsif block.settings.visibility contains "desktop" %}
+      tw-hidden
+      md:tw-contents
+    {% else %}
+      tw-contents
+    {% endif %}
+  "
+>
+  {% assign case_size = 8 %}
+  {% assign cases_available = 12 %}
+  {% assign case_size_discount = 8 %}
+  <div class="tw-flex tw-flex-col tw-py-2 tw-px-3 tw-border tw-border-grey-400 tw-items-center tw-gap-1">
+    <div>Cases Available: {{ cases_available |  default: 0 }} | Cases Include: {{ case_size |  default: 0 }} books</div>
+    <div>Order in Multiples of {{ case_size |  default: 0 }} for {{ case_size_discount |  default: 0 }}% Off</div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "PDP Box Quantity",
+  "class": "tw-contents",
+  "settings": [
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Visibility",
+      "options": [
+        {
+          "value": "both",
+          "label": "Mobile and Desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Mobile only"
+        },
+        {
+          "value": "desktop",
+          "label": "Desktop only"
+        }
+      ],
+      "default": "both"
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP Box Quantity"
+    }
+  ]
+}
+{% endschema %}
