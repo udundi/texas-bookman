@@ -18,8 +18,10 @@
     Usage:
     {% render 'ud-pdp-price', product: product %}
   {% endcomment %}
-
-  <div class="tw-flex tw-items-center tw-gap-1">
+  
+  <div class="tw-flex tw-flex-col tw-items-start tw-gap-1">
+    Availability: 495 in stock
+    
     {% render 'ud-product-price',
       price: product.selected_or_first_available_variant.price,
       compare_price: product.selected_or_first_available_variant.compare_at_price,

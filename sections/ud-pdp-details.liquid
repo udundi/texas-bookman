@@ -142,7 +142,7 @@
 {% comment %} Main HTML Container {% endcomment %}
 <div
   id="MainProduct-{{ section.id }}"
-  class="tw-flex tw-w-full tw-items-center tw-px-4 tw-justify-center section-{{ section.id }}-props tw-flex-col"
+  class="tw-flex tw-w-full tw-items-center tw-px-4 tw-pb-8 tw-justify-center section-{{ section.id }}-props tw-flex-col"
   data-section="{{ section.id }}"
   data-product-id="{{ product.id }}"
   data-vue-product-details
@@ -158,7 +158,7 @@
       :value="defaultVariantId"
     >
     <div
-      class="tw-flex tw-w-full tw-max-w-screen-2xl tw-mx-auto tw-flex-col tw-justify-between tw-gap-4 tw-gap-x-10 tw-pt-4 md:tw-flex-row md:tw-items-start"
+      class="tw-flex tw-w-full tw-max-w-screen-xl tw-mx-auto tw-flex-col tw-justify-between tw-gap-4 tw-gap-x-10 tw-pt-4 md:tw-flex-row md:tw-items-start"
     >
       {% content_for 'blocks' %}
     </div> 

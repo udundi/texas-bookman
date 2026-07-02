@@ -13,7 +13,7 @@
       {% elsif block.settings.image_aspect == 'square' %}
         {% assign size_classes = 'tw-aspect-square md:tw-max-h-[30rem] tw-max-h-[20rem] tw-h-fit tw-w-fit ' %}
       {% else %}
-        {% assign size_classes = 'tw-w-full ' %}
+        {% assign size_classes = 'tw-w-full tw-aspect-3/4' %}
       {% endif %}
       {% if block.settings.contain %}
         {% assign contain_classes = ' tw-object-contain tw-p-2 tw-border tw-rounded-md' %}
@@ -69,12 +69,12 @@
       {% endfor %}
     </div>
     <!-- Navigation Buttons -->
-    {% render 'component__icon',
+    {% comment %} {% render 'component__icon',
       icon: 'arrow-left',
       size: '132',
-      class: 'swiper-button-prev !tw-text-black tw-size-12'
-    %}
-    {% render 'component__icon', icon: 'arrow-right', size: '14', class: 'swiper-button-next' %}
+      class: 'ct-swiper-button-prev !tw-text-black tw-size-12'
+    %} {% endcomment %}
+    {% comment %} {% render 'component__icon', icon: 'arrow-right', size: '14', class: 'swiper-button-next' %} {% endcomment %}
   </div>
   <!-- Thumbs for Main Image Carousel -->
   <div

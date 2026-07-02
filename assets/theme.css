@@ -1359,6 +1359,10 @@ video {
   margin-top: -1px;
 }
 
+.tw-ml-2 {
+  margin-left: 0.5rem;
+}
+
 .tw-block {
   display: block;
 }
@@ -1441,10 +1445,6 @@ video {
 
 .tw-aspect-9\/16 {
   aspect-ratio: 9 / 16;
-}
-
-.tw-aspect-\[5\/3\] {
-  aspect-ratio: 5/3;
 }
 
 .tw-aspect-square {
@@ -1741,6 +1741,10 @@ video {
 
 .tw-max-w-screen-sm {
   max-width: 640px;
+}
+
+.tw-max-w-screen-xl {
+  max-width: 1280px;
 }
 
 .tw-flex-1 {
@@ -2526,6 +2530,10 @@ video {
   font-size: 4rem;
 }
 
+.tw-text-26 {
+  font-size: 1.625rem;
+}
+
 .tw-font-bold {
   font-weight: 700;
 }
@@ -2648,6 +2656,11 @@ video {
 .tw-text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+
+.tw-text-brand-eggshell {
+  --tw-text-opacity: 1;
+  color: rgb(253 251 248 / var(--tw-text-opacity, 1));
 }
 
 .tw-underline {

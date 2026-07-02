@@ -15,14 +15,14 @@
 >
   <label class="tw-font-montserrat tw-text-16 tw-font-semibold tw-text-offblack">Quantity:</label>
   <div class="tw-flex tw-w-full tw-pb-2">
-    <div class="tw-relative tw-flex tw-max-w-28 tw-items-center tw-rounded-lg tw-border tw-border-offblack">
+    <div class="tw-relative tw-flex tw-max-w-28 tw-items-center tw-rounded-sm tw-border tw-border-offblack">
       <button
         type="button"
         id="decrement-button"
         @click="quantity > 1 ? quantity-- : quantity"
         :disabled="quantity <= 1"
         :class="quantity <= 1 ? 'tw-cursor-not-allowed' : ''"
-        class="tw-bg-brand-bg-dark tw-rounded-lg tw-pl-4 tw-pr-2"
+        class="tw-bg-brand-bg-dark tw-rounded-sm tw-pl-4 tw-pr-2"
       >
         {% render 'icon-minus' %}
       </button>
@@ -46,11 +46,19 @@
         id="increment-button"
         aria-label="increase quantity by 1"
         @click="quantity++"
-        class="tw-bg-brand-bg-dark tw-rounded-lg tw-pl-2 tw-pr-4"
+        class="tw-bg-brand-bg-dark tw-rounded-sm tw-pl-2 tw-pr-4"
       >
         {% render 'icon-plus' %}
       </button>
     </div>
+    <!-- Add to Cart Button -->
+    <button
+      type="submit"
+      @click="addToCart(product.selected_or_first_available_variant.id, quantity)"
+      class="tw-ml-2 tw-w-full tw-rounded-sm tw-bg-brand-primary tw-py-2 tw-text-sm tw-font-semibold tw-text-brand-eggshell"
+    >
+      Add to Cart
+    </button>
   </div>
 </div>
 {% schema %}

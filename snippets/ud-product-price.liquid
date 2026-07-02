@@ -53,32 +53,34 @@
 
 {% assign product_discount = price | times: site_discount | round %}
 
-<div class="tw-font-bold tw-flex {% if side_sale %} tw-flex-row-reverse tw-justify-end tw-items-start {% else %} tw-flex-col {% endif %} {% if stacked %} tw-gap-1 {% elsif side_sale %} tw-gap-3 {% else %} tw-gap-2 {% endif %} tw-text-black md:tw-text-16 tw-text-14">
+<div class="tw-font-bold tw-flex tw-flex-col tw-text-black md:tw-text-16 tw-text-16">
   {% unless no_discount == true %}
     {% if compare_price > price or settings.sitewide_sale or flash_sale_live %}
-      <div class="tw-px-4 tw-h-fit tw-rounded-full tw-text-12 tw-bg-rust tw-w-fit tw-font-normal tw-text-white">
-        Sale
-      </div>
-      <div class="tw-flex tw-w-fit tw-justify-center {% if stacked or side_sale %} tw-items-start tw-flex-col tw-gap-1 {% else %} tw-items-center tw-flex-row tw-gap-2 {% endif %}">
-        <div class="tw-text-black tw-leading-tight tw-text-14">
-          {% unless settings.sitewide_sale or flash_sale_live %}
-            {{ price | money }}
-          {% else %}
-            {{ price | minus: product_discount | money }}
-          {% endunless %}
+      {% if settings.sitewide_sale or flash_sale_live %}
+        <div class="tw-px-4 tw-h-fit tw-rounded-full tw-text-12 tw-bg-brand-primary tw-w-fit tw-font-normal tw-text-white">
+          Sale
         </div>
-        <div class="tw-text-blue-grey tw-line-through tw-text-12">
+      {% endif %}
+      <div class="tw-flex tw-flex-col tw-w-fit tw-justify-start tw-items-start tw-flex-col tw-gap-1">
+        <div class="tw-text-blue-grey tw-font-normal tw-text-16">
           {% if compare_price %}
-            {{ compare_price | money }}
+            List Price: {{ compare_price | money }}
           {% else %}
-            {{ price | money }}
+            Your Net Price: {{ price | money }}
           {% endif %}
+        </div>
+        <div class="tw-text-black tw-leading-tight tw-text-16">
+          {% unless settings.sitewide_sale or flash_sale_live %}
+            Your Net Price: {{ price | money }}
+          {% else %}
+            Your Net Price: {{ price | minus: product_discount | money }}
+          {% endunless %}
         </div>
       </div>
     {% else %}
-      <div>{{ price | money }}</div>
+      <div>Your Net Price: {{ price | money }}</div>
     {% endif %}
   {% else %}
-    <div>{{ price | money }}</div>
+    <div>Your Net Price: {{ price | money }}</div>
   {% endunless %}
 </div>

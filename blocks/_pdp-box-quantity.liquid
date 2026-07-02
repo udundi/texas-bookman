@@ -14,9 +14,9 @@
   {% assign case_size = 8 %}
   {% assign cases_available = 12 %}
   {% assign case_size_discount = 8 %}
-  <div class="tw-flex tw-flex-col tw-py-2 tw-px-3 tw-border tw-border-grey-400 tw-items-center tw-gap-1">
-    <div>Cases Available: {{ cases_available |  default: 0 }} | Cases Include: {{ case_size |  default: 0 }} books</div>
-    <div>Order in Multiples of {{ case_size |  default: 0 }} for {{ case_size_discount |  default: 0 }}% Off</div>
+  <div class="tw-flex tw-flex-col tw-py-2 tw-px-3 tw-rounded-sm tw-border tw-border-grey-500 tw-items-start tw-gap-1">
+    <div><span class="tw-font-bold">Cases Available:</span> {{ cases_available |  default: 0 }} | <span class="tw-font-bold">Cases Include:</span> {{ case_size |  default: 0 }} books</div>
+    <div class="tw-font-bold">Order in Multiples of {{ case_size |  default: 0 }} for {{ case_size_discount |  default: 0 }}% Off</div>
   </div>
 </div>
 
