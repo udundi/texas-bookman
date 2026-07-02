@@ -84,6 +84,11 @@ module.exports = {
         "container-sm": "min(43.125rem, 90%)",
         "screen-3xl": "1920px",
       },
+      width: {
+        "2/5": "40%",
+        "3/5": "60%",
+        "4/5": "80%",
+      },
       maxHeight: {
         "container-xl": "min(87.5rem, 90%)",
         "container-lg": "min(72.75rem, 90%)",
