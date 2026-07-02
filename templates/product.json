@@ -11,7 +11,87 @@
   "sections": {
     "main": {
       "type": "ud-pdp-details",
-      "settings": {}
+      "blocks": {
+        "pdp_column_kbqTYQ": {
+          "type": "_pdp-column",
+          "name": "Main Details Column",
+          "settings": {
+            "visibility": "both",
+            "desktop": "66%"
+          },
+          "blocks": {
+            "pdp_image_gallery_8eyDQJ": {
+              "type": "_pdp-image-gallery",
+              "name": "PDP Image Gallery",
+              "settings": {},
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "pdp_image_gallery_8eyDQJ"
+          ]
+        },
+        "pdp_column_6panjT": {
+          "type": "_pdp-column",
+          "name": "Main Details Column",
+          "settings": {
+            "visibility": "both",
+            "desktop": "33%"
+          },
+          "blocks": {
+            "pdp_title_rating_NGTraH": {
+              "type": "_pdp-title-rating",
+              "name": "PDP Title & Ratings",
+              "settings": {
+                "title_override": "",
+                "visibility": "both"
+              },
+              "blocks": {}
+            },
+            "pdp_description_GiPLFD": {
+              "type": "_pdp-description",
+              "name": "PDP Description",
+              "settings": {
+                "visibility": "both",
+                "body": "",
+                "body_default": ""
+              },
+              "blocks": {}
+            },
+            "pdp_price_L3riXr": {
+              "type": "_pdp-price",
+              "name": "PDP Price",
+              "settings": {
+                "visibility": "both"
+              },
+              "blocks": {}
+            },
+            "pdp_quantity_rj4mc7": {
+              "type": "_pdp-quantity",
+              "name": "PDP Quantity",
+              "settings": {
+                "visibility": "both"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "pdp_title_rating_NGTraH",
+            "pdp_description_GiPLFD",
+            "pdp_price_L3riXr",
+            "pdp_quantity_rj4mc7"
+          ]
+        }
+      },
+      "block_order": [
+        "pdp_column_kbqTYQ",
+        "pdp_column_6panjT"
+      ],
+      "settings": {
+        "spacing_top": 0,
+        "spacing_bottom": 0,
+        "layout_gallery_size": "w-full md:w-2/3"
+      }
     },
     "legacy-product": {
       "type": "product",
