@@ -55,7 +55,7 @@
               "name": "Author",
               "settings": {
                 "visibility": "both",
-                "font_size": "14",
+                "font_size": "16",
                 "text_align": "left",
                 "body": "<p><strong>By: </strong>Author</p>",
                 "body_default": ""
@@ -102,7 +102,6 @@
               "type": "_pdp-info-tabs",
               "name": "Tabbed Info Section",
               "settings": {
-                "section_title": "Test",
                 "tab_titles": "Test - Test",
                 "padding_top": 4,
                 "padding_bottom": 4,
