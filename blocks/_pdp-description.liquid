@@ -12,7 +12,7 @@
       {% endif %}
     "
   >
-    <div class="ud-rich-text tw-py-2 {% if block.settings.font_size == '12' %} tw-text-12 {% elsif block.settings.font_size == '14' %} tw-text-14 {% elsif block.settings.font_size == '16' %} tw-text-16 {% elsif block.settings.font_size == '18' %} tw-text-18 {% elsif block.settings.font_size == '20' %} tw-text-20 {% else %} tw-text-14 {% endif %} {% if block.settings.text_align == 'center' %} tw-text-center {% elsif block.settings.text_align == 'right' %} tw-text-right {% elsif block.settings.text_align == 'justify' %} tw-text-justify {% else %} tw-text-left {% endif %} tw-font-montserrat tw-text-offblack max-md:tw-items-start max-md:tw-text-start">
+    <div class="ud-rich-text {% if block.settings.font_size == '12' %} tw-text-12 {% elsif block.settings.font_size == '14' %} tw-text-14 {% elsif block.settings.font_size == '16' %} tw-text-16 {% elsif block.settings.font_size == '18' %} tw-text-18 {% elsif block.settings.font_size == '20' %} tw-text-20 {% else %} tw-text-14 {% endif %} {% if block.settings.text_align == 'center' %} tw-text-center {% elsif block.settings.text_align == 'right' %} tw-text-right {% elsif block.settings.text_align == 'justify' %} tw-text-justify {% else %} tw-text-left {% endif %} tw-font-montserrat tw-text-offblack max-md:tw-items-start max-md:tw-text-start">
       {% if block.settings.body != blank %}
         {{ block.settings.body }}
       {% else %}
