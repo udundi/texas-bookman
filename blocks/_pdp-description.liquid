@@ -12,7 +12,7 @@
       {% endif %}
     "
   >
-    <div class="ud-rich-text tw-py-2 tw-text-14 tw-font-montserrat tw-text-offblack max-md:tw-items-start max-md:tw-text-start">
+    <div class="ud-rich-text tw-py-2 {% if block.settings.font_size == '12' %} tw-text-12 {% elsif block.settings.font_size == '14' %} tw-text-14 {% elsif block.settings.font_size == '16' %} tw-text-16 {% elsif block.settings.font_size == '18' %} tw-text-18 {% elsif block.settings.font_size == '20' %} tw-text-20 {% else %} tw-text-14 {% endif %} {% if block.settings.text_align == 'center' %} tw-text-center {% elsif block.settings.text_align == 'right' %} tw-text-right {% elsif block.settings.text_align == 'justify' %} tw-text-justify {% else %} tw-text-left {% endif %} tw-font-montserrat tw-text-offblack max-md:tw-items-start max-md:tw-text-start">
       {% if block.settings.body != blank %}
         {{ block.settings.body }}
       {% else %}
@@ -46,6 +46,58 @@
         }
       ],
       "default": "both"
+    },
+    {
+      "type": "select",
+      "id": "font_size",
+      "label": "Font Size",
+      "options": [
+        {
+          "value": "12",
+          "label": "12px"
+        },
+        {
+          "value": "14",
+          "label": "14px"
+        },
+        {
+          "value": "16",
+          "label": "16px"
+        },
+        {
+          "value": "18",
+          "label": "18px"
+        },
+        {
+          "value": "20",
+          "label": "20px"
+        }
+      ],
+      "default": "14"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Text Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        },
+        {
+          "value": "justify",
+          "label": "Justify"
+        }
+      ],
+      "default": "left"
     },
     {
       "type": "richtext",

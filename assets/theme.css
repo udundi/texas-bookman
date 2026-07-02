@@ -2442,6 +2442,14 @@ video {
   text-align: center;
 }
 
+.tw-text-right {
+  text-align: right;
+}
+
+.tw-text-justify {
+  text-align: justify;
+}
+
 .tw-text-start {
   text-align: start;
 }
