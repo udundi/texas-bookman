@@ -18,7 +18,7 @@
           "settings": {
             "visibility": "both",
             "mobile": "full",
-            "desktop": "66%"
+            "desktop": "2/5"
           },
           "blocks": {
             "pdp_image_gallery_8eyDQJ": {
@@ -38,7 +38,7 @@
           "settings": {
             "visibility": "both",
             "mobile": "full",
-            "desktop": "33%"
+            "desktop": "3/5"
           },
           "blocks": {
             "pdp_title_rating_NGTraH": {
