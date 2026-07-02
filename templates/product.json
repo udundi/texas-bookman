@@ -97,6 +97,46 @@
                 "visibility": "both"
               },
               "blocks": {}
+            },
+            "pdp_info_tabs_KV8BAk": {
+              "type": "_pdp-info-tabs",
+              "name": "Tabbed Info Section",
+              "settings": {
+                "section_title": "Test",
+                "tab_titles": "Test - Test",
+                "padding_top": 4,
+                "padding_bottom": 4,
+                "mobile_padding_top": 4,
+                "mobile_padding_bottom": 4,
+                "padding_left": 2,
+                "padding_right": 2,
+                "mobile_padding_left": 2,
+                "mobile_padding_right": 2,
+                "background_color": "#ffffff",
+                "container_width": "full_width"
+              },
+              "blocks": {
+                "pdp_info_tab_YjN6CJ": {
+                  "type": "_pdp-info-tab",
+                  "name": "Info Tab",
+                  "settings": {
+                    "text": "<p>Lorem ipsum dolor sit amet.</p>"
+                  },
+                  "blocks": {}
+                },
+                "pdp_info_tab_6ENqUD": {
+                  "type": "_pdp-info-tab",
+                  "name": "Info Tab",
+                  "settings": {
+                    "text": "<p>Lorem ipsum dolor sit amet.</p>"
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "pdp_info_tab_YjN6CJ",
+                "pdp_info_tab_6ENqUD"
+              ]
             }
           },
           "block_order": [
@@ -105,7 +145,8 @@
             "pdp_description_GiPLFD",
             "pdp_price_L3riXr",
             "pdp_quantity_rj4mc7",
-            "pdp_box_quantity_7jBn3X"
+            "pdp_box_quantity_7jBn3X",
+            "pdp_info_tabs_KV8BAk"
           ]
         }
       },
@@ -168,7 +209,7 @@
         "padding_right": 2,
         "mobile_padding_left": 2,
         "mobile_padding_right": 2,
-        "background_color": "#FDFBF8",
+        "background_color": "#fdfbf8",
         "container_width": "full_width"
       }
     }
