@@ -1937,6 +1937,10 @@ video {
   gap: 2px;
 }
 
+.tw-gap-0\.5 {
+  gap: 0.125rem;
+}
+
 .tw-gap-x-10 {
   -moz-column-gap: 2.5rem;
        column-gap: 2.5rem;
