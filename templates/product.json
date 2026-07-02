@@ -114,7 +114,7 @@
               "type": "_pdp-info-tabs",
               "name": "Tabbed Info Section",
               "settings": {
-                "tab_titles": "Test - Test",
+                "tab_titles": "Details - Description",
                 "padding_top": 4,
                 "padding_bottom": 4,
                 "mobile_padding_top": 4,
@@ -139,7 +139,7 @@
                   "type": "_pdp-info-tab",
                   "name": "Info Tab",
                   "settings": {
-                    "text": "<p>Lorem ipsum dolor sit amet.</p>"
+                    "text": "{{ closest.product.description }}"
                   },
                   "blocks": {}
                 }
