@@ -95,6 +95,7 @@
     },
     "legacy-product": {
       "type": "product",
+      "disabled": true,
       "settings": {}
     }
   },
