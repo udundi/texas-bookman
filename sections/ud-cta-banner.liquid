@@ -96,17 +96,13 @@
 <section
   id="ud-cta-banner-{{ section.id }}"
   class="ud-cta-banner-{{ section.id }} tw"
-  aria-label="{{ section.settings.heading | escape }}">
-
+  aria-label="{{ section.settings.heading | escape }}"
+>
   {%- if section.settings.decoration_image != blank -%}
     {{
       section.settings.decoration_image
       | image_url: width: 1200
-      | image_tag:
-        class: 'cta-bg-image',
-        alt: '',
-        loading: 'lazy',
-        aria-hidden: 'true'
+      | image_tag: class: 'cta-bg-image', alt: '', loading: 'lazy', aria-hidden: 'true'
     }}
   {%- endif -%}
 
@@ -114,7 +110,8 @@
     {%- if section.settings.eyebrow != blank -%}
       <p
         class="tw-font-bold tw-uppercase tw-tracking-widest tw-mb-3"
-        style="color: {{ section.settings.eyebrow_color }}; font-size: {{ section.settings.eyebrow_size }}px;">
+        style="color: {{ section.settings.eyebrow_color }}; font-size: {{ section.settings.eyebrow_size }}px;"
+      >
         {{ section.settings.eyebrow }}
       </p>
     {%- endif -%}
@@ -135,7 +132,6 @@
       </a>
     {%- endif -%}
   </div>
-
 </section>
 
 {% schema %}
@@ -369,18 +365,18 @@
       "type": "range",
       "id": "padding_top",
       "label": "Desktop Padding Top (px)",
-      "min": 20,
-      "max": 120,
-      "step": 4,
+      "min": 24,
+      "max": 240,
+      "step": 8,
       "default": 72
     },
     {
       "type": "range",
       "id": "padding_bottom",
       "label": "Desktop Padding Bottom (px)",
-      "min": 20,
-      "max": 120,
-      "step": 4,
+      "min": 24,
+      "max": 240,
+      "step": 8,
       "default": 72
     },
     {

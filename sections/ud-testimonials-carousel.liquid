@@ -140,7 +140,6 @@
 {% endstyle %}
 
 <div class="ud-testimonials-{{ section.id }} tw">
-
   {%- if section.settings.heading != blank -%}
     <{{ section.settings.heading_tag }} class="testimonials-heading">
       {{ section.settings.heading }}
@@ -148,12 +147,14 @@
   {%- endif -%}
 
   <div class="testimonials-slider-outer">
-
     {%- comment -%} Prev arrow {%- endcomment -%}
     <button
       class="swiper-btn swiper-prev-{{ section.id }}"
-      aria-label="Previous testimonial">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      aria-label="Previous testimonial"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
     </button>
 
     {%- comment -%} Swiper {%- endcomment -%}
@@ -162,7 +163,6 @@
         {%- for block in section.blocks -%}
           <div class="swiper-slide" {{ block.shopify_attributes }}>
             <div class="testimonial-card">
-
               {%- comment -%} Stars {%- endcomment -%}
               {%- assign star_count = block.settings.star_count | default: 5 -%}
               <div class="testimonial-stars" aria-label="{{ star_count }} out of 5 stars">
@@ -183,12 +183,21 @@
 
               {%- comment -%} Logo {%- endcomment -%}
               {%- if block.settings.logo != blank -%}
-                {%- assign logo_alt = block.settings.logo.alt | default: block.settings.attribution | default: '' | escape -%}
-                {{ block.settings.logo | image_url: width: 300 | image_tag: class: 'testimonial-logo', alt: logo_alt, loading: 'lazy' }}
+                {%- assign logo_alt = block.settings.logo.alt
+                  | default: block.settings.attribution
+                  | default: ''
+                  | escape
+                -%}
+                {{
+                  block.settings.logo
+                  | image_url: width: 300
+                  | image_tag: class: 'testimonial-logo', alt: logo_alt, loading: 'lazy'
+                }}
               {%- elsif block.settings.attribution != blank -%}
-                <p class="testimonial-title" style="font-style: italic; font-weight: 400;">— {{ block.settings.attribution }}</p>
+                <p class="testimonial-title" style="font-style: italic; font-weight: 400;">
+                  — {{ block.settings.attribution }}
+                </p>
               {%- endif -%}
-
             </div>
           </div>
         {%- endfor -%}
@@ -198,10 +207,12 @@
     {%- comment -%} Next arrow {%- endcomment -%}
     <button
       class="swiper-btn swiper-next-{{ section.id }}"
-      aria-label="Next testimonial">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      aria-label="Next testimonial"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
     </button>
-
   </div>
 </div>
 

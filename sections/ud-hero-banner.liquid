@@ -69,18 +69,26 @@
 <section
   id="ud-hero-banner-{{ section.id }}"
   class="ud-hero-banner-{{ section.id }} tw"
-  style="background-color: {{ section.settings.overlay_color }};">
-
+  style="background-color: {{ section.settings.overlay_color }};"
+>
   {%- if section.settings.image != blank -%}
     {%- assign hero_img_alt = section.settings.image.alt | default: '' | escape -%}
     {%- comment -%} Mobile: image inside its own wrapper for aspect-ratio control {%- endcomment -%}
     <div class="hero-image-wrapper md:tw-hidden">
-      {{ section.settings.image | image_url: width: 800 | image_tag: class: 'hero-bg', alt: hero_img_alt, loading: 'lazy' }}
+      {{
+        section.settings.image
+        | image_url: width: 800
+        | image_tag: class: 'hero-bg', alt: hero_img_alt, loading: 'lazy'
+      }}
     </div>
 
     {%- comment -%} Desktop: image as absolute background {%- endcomment -%}
     <div class="tw-hidden md:tw-block">
-      {{ section.settings.image | image_url: width: 1600 | image_tag: class: 'hero-bg', alt: hero_img_alt, loading: 'lazy' }}
+      {{
+        section.settings.image
+        | image_url: width: 1600
+        | image_tag: class: 'hero-bg', alt: hero_img_alt, loading: 'lazy'
+      }}
     </div>
   {%- endif -%}
 
@@ -89,15 +97,16 @@
     <div
       class="tw-hidden md:tw-block tw-absolute tw-inset-0"
       style="background: {{ section.settings.overlay_color }}; opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};"
-      aria-hidden="true">
-    </div>
+      aria-hidden="true"
+    ></div>
   {%- endif -%}
 
   <div class="hero-content">
     {%- if section.settings.eyebrow != blank -%}
       <p
         class="tw-mb-2 tw-font-bold tw-uppercase tw-tracking-widest"
-        style="color: {{ section.settings.eyebrow_color }}; font-size: {{ section.settings.eyebrow_size }}px;">
+        style="color: {{ section.settings.eyebrow_color }}; font-size: {{ section.settings.eyebrow_size }}px;"
+      >
         {{ section.settings.eyebrow }}
       </p>
     {%- endif -%}
@@ -105,7 +114,8 @@
     {%- if section.settings.heading != blank -%}
       <{{ section.settings.heading_tag }}
         class="hero-heading tw-font-bold tw-leading-tight tw-mb-4"
-        style="color: {{ section.settings.heading_color }}; font-size: clamp({{ section.settings.heading_size_min }}px, 3vw, {{ section.settings.heading_size_max }}px);">
+        style="color: {{ section.settings.heading_color }}; font-size: clamp({{ section.settings.heading_size_min }}px, 3vw, {{ section.settings.heading_size_max }}px);"
+      >
         {{ section.settings.heading }}
       </{{ section.settings.heading_tag }}>
     {%- endif -%}
@@ -113,7 +123,8 @@
     {%- if section.settings.body_text != blank -%}
       <p
         class="hero-body tw-mb-6 tw-leading-relaxed"
-        style="color: {{ section.settings.body_color }}; font-size: {{ section.settings.body_size }}px;">
+        style="color: {{ section.settings.body_color }}; font-size: {{ section.settings.body_size }}px;"
+      >
         {{ section.settings.body_text }}
       </p>
     {%- endif -%}
@@ -127,12 +138,12 @@
           color: {{ section.settings.button_text_color }};
           padding: {{ section.settings.button_padding_y }}px {{ section.settings.button_padding_x }}px;
           font-size: {{ section.settings.button_font_size }}px;
-        ">
+        "
+      >
         {{ section.settings.button_label }}
       </a>
     {%- endif -%}
   </div>
-
 </section>
 
 {% schema %}
