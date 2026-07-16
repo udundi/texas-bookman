@@ -206,40 +206,46 @@
     "ud_flexbox_DaNpeD": {
       "type": "ud-flexbox",
       "blocks": {
-        "promo_card_dM8cb9": {
-          "type": "promo-card",
-          "name": "Promo Card",
+        "basic_image_AwNNTK": {
+          "type": "basic-image",
+          "name": "Base Image",
           "settings": {
-            "url": "",
-            "background_color": "#20448f",
-            "background_image": "shopify://shop_images/8000_bbd7f9df-afab-4c20-90ce-11687f1f4d98.jpg",
-            "bg_image_position": "center center",
-            "feature_image_width": 90,
-            "feature_image_bottom": 18,
-            "label": "New Flame Tree Journals",
-            "label_color": "#ffffff",
-            "label_font": "secondary",
-            "label_weight": "700",
-            "label_size": 22,
-            "mobile_label_size": 18,
-            "label_align": "center",
-            "label_padding_y": 16,
-            "label_padding_x": 16,
-            "show_label_overlay": true,
-            "label_overlay_color": "#000000",
-            "border_radius": 12,
-            "aspect_ratio": "5 / 3",
-            "mobile_aspect_ratio": "5 / 3",
-            "max_width": 660,
-            "mobile_max_width": 480,
-            "hover_zoom": true,
-            "display": "both"
+            "image": "shopify://shop_images/Group_118.png",
+            "aspect_ratio": "none",
+            "mobile_aspect_ratio": "none",
+            "object_fit": "cover",
+            "rounded": "none",
+            "max_width": 1040,
+            "mobile_max_width": 320,
+            "border": 0,
+            "border_color": "",
+            "lazy_load": true,
+            "alt_text": ""
+          },
+          "blocks": {}
+        },
+        "basic_image_eGU4zK": {
+          "type": "basic-image",
+          "name": "Base Image",
+          "settings": {
+            "image": "shopify://shop_images/Group_119.png",
+            "aspect_ratio": "none",
+            "mobile_aspect_ratio": "none",
+            "object_fit": "cover",
+            "rounded": "none",
+            "max_width": 1040,
+            "mobile_max_width": 320,
+            "border": 0,
+            "border_color": "",
+            "lazy_load": true,
+            "alt_text": ""
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "promo_card_dM8cb9"
+        "basic_image_AwNNTK",
+        "basic_image_eGU4zK"
       ],
       "name": "Base Flexbox",
       "settings": {
@@ -250,10 +256,10 @@
         "padding_left": 0,
         "padding_right": 0,
         "background_color": "#ffffff",
-        "flex_direction": "column",
-        "tablet_flex_direction": "column",
-        "mobile_flex_direction": "column",
-        "x_gap": 0,
+        "flex_direction": "row",
+        "tablet_flex_direction": "row",
+        "mobile_flex_direction": "row",
+        "x_gap": 0.5,
         "y_gap": 0,
         "mobile_gap": false,
         "mobile_x_gap": 0,
