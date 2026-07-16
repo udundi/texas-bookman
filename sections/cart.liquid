@@ -5,33 +5,95 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/cart
 {% endcomment %}
 
-<h1>{{ 'cart.title' | t }}</h1>
+<form
+  action="{{ routes.cart_url }}"
+  method="post"
+  class="tw-flex tw-flex-col tw-w-full tw-gap-12 tw-pt-8 tw-mx-auto tw-justify-start tw-max-w-screen-2xl"
+>
+  <h1 class="tw-text-26 tw-font-semibold tw-font-brand-header">{{ 'cart.title' | t }}</h1>
+  <div class="tw-flex tw-text-14 tw-w-full tw-gap-12 tw-mx-auto ">
+    <div class="tw-w-full tw-flex tw-flex-col tw-gap-2">
+      {% for item in cart.items %}
+        <div class="tw-flex tw-gap-4 tw-w-full ">
+          <div class="tw-h-32 tw-object-cover tw-aspect-5/6 tw-relative tw-py-2">
+            {{
+              item.image
+              | image_url: width: 200
+              | image_tag: loading: 'lazy', class: 'tw-size-full tw-aspect-5/6 tw-object-cover'
+            }}
+          </div>
+          <div class="tw-flex tw-flex-col tw-gap-1">
+            <!-- Title -->
+            <a href="/" class="tw-text-16 tw-text-brand-primary tw-flex tw-gap-2 tw-flex-row">
+              <p>{{ item.product.title }}</p>
+            </a>
+            <!-- Item Identifiers -->
+            <div class="tw-flex tw-gap-4">
+              <div>ISBN: XXXXXXXXXXXX</div>
+              <div>TB CODE: XXXXXXXXXXXXX</div>
+            </div>
+            <!-- Quantity Editor -->
+            <div class="tw-flex tw-items-center tw-w-fit tw-justify-start tw-gap-2">
+              <div>QTY:</div>
+              <input
+                type="text"
+                name="updates[]"
+                placeholder="0"
+                class=" tw-p-0.5 tw-px-4 tw-w-24 tw-text-center"
+                value="{{ item.quantity }}"
+              >
+              <input type="submit" value="{{ 'cart.update' | t }}">
+            </div>
+            <!-- Prices -->
+            <div class="tw-flex tw-gap-4">
+              <div>Price: {{ item.product.price | money }}</div>
+              <div>Total: {{ item.product.price | times: item.quantity | money }}</div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+      <a
+        href="/"
+        class="tw-bg-brand-primary tw-p-1.5 tw-text-white tw-uppercase tw-text-18 tw-w-full tw-max-w-72 tw-text-center tw-rounded-sm tw-mt-4"
+      >
+        Continue Shopping
+      </a>
+    </div>
+    <div class="tw-w-full tw-font-semibold tw-font-brand-body tw-max-w-80 tw-flex tw-flex-col tw-gap-24 tw-h-full tw-justify-between">
+      <div class="tw-flex tw-flex-col tw-gap-4">
+        <div>Your Order</div>
+        <div class="tw-flex tw-flex-col tw-gap-1">
+          <div class="tw-flex tw-justify-between tw-w-full tw-gap-4">
+            <div>Subtotal:</div>
+            <div>{{ cart.items_subtotal_price | money }}</div>
+          </div>
+          <div class="tw-flex tw-justify-between tw-w-full tw-gap-4">
+            <div>Shipping Estimate:</div>
+            <div>{{ 0 | money }}</div>
+          </div>
+        </div>
+      </div>
 
-<form action="{{ routes.cart_url }}" method="post">
-  <table>
-    {% for item in cart.items %}
-      <tr>
-        <td>
-          {% render 'image', image: item.image, url: item.url %}
-        </td>
-        <td>
-          <p>{{ item.product.title }}</p>
-          {{ 'cart.remove' | t | link_to: item.url_to_remove }}
-        </td>
-        <td>
-          <input type="text" name="updates[]" value="{{ item.quantity }}">
-          <input type="submit" value="{{ 'cart.update' | t }}">
-        </td>
-      </tr>
-    {% endfor %}
-  </table>
-
-  <input type="submit" name="checkout" value="{{ 'cart.checkout' | t }}">
+      <div class="tw-flex tw-flex-col tw-gap-8">
+        <div class="tw-flex tw-justify-between tw-w-full tw-gap-4">
+          <div>Total:</div>
+          <div>{{ cart.total_price | money }}</div>
+        </div>
+        <input
+          class="tw-bg-brand-secondary tw-p-1.5 tw-text-offblack tw-uppercase tw-text-20 tw-w-full"
+          type="submit"
+          name="checkout"
+          value="Checkout"
+        >
+      </div>
+    </div>
+  </div>
 </form>
 
 {% schema %}
 {
   "name": "t:general.cart",
+  "class": "tw-px-8 tw-mb-24 tw-mx-auto tw-w-full",
   "settings": []
 }
 {% endschema %}

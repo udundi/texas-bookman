@@ -1,14 +1,14 @@
 <!-- Menu Links Block -->
-<div class="tw-flex tw-flex-col tw-px-8 tw-border-l tw-border-gray-400 tw-ml-[-1px]">
+<div class="tw-flex tw-flex-col tw-animate-fade-in tw-px-8 tw-border-l tw-border-gray-400 tw-ml-[-1px]">
   <!-- Header with Blue Background -->
   {% if block.settings.header_url != blank and block.settings.menu_title != blank %}
     <a
       href="{{ block.settings.header_url | default: '/' }}"
-      class="tw-flex tw-gap-2 tw-items-center tw-pt-8 tw-px-4 tw-py-3 hover:tw-animate-pulse tw-text-brand-primary tw-font-semibold tw-text-14 tw-group"
+      class="tw-flex tw-gap-2 tw-items-center tw-pt-8 tw-px-4 tw-py-3 hover:tw-animate-pulse tw-text-brand-primary tw-font-semibold tw-text-14 tw-group/button hover:tw-underline tw-underline-offset-2"
     >
       <span>{{ block.settings.menu_title }}</span>
       <svg
-        class="tw-w-4 tw-h-4 tw-flex-shrink-0 group-hover:tw-translate-x-1 tw-transition-transform "
+        class="tw-w-4 tw-h-4 tw-flex-shrink-0 group-hover/button:tw-translate-x-1 tw-transition-transform"
         viewBox="0 0 512 512"
         fill="currentColor"
         aria-hidden="true"

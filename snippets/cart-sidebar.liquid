@@ -1,0 +1,86 @@
+<dialog id="cartSidebar" class="cartSidebar">
+  <div @click="closeModal" class="bg"></div>
+
+  <div class="tw-fixed tw-top-0 tw-right-0 md:tw-w-[570px] tw-w-full tw-max-w-[95vw] tw-bg-white tw-h-[100dvh] !tw-p-0 tw-flex tw-flex-col">
+    <div class="cartLoader items !tw-bg-white" v-if="cartStillLoading">
+      <img
+        src="https://cdn.shopify.com/s/files/1/0091/0272/1104/files/Ripple-1s-200px_zryyh1.svg?v=1671225272"
+        alt="ripple"
+      >
+    </div>
+
+    <!-- Shipping Callout and Close Button -->
+    <div class="tw-flex tw-items-center tw-p-4">
+      <!-- Cart Closing Button -->
+      <button class="tw-p-2 " @click="closeModal">
+        {% render 'icon-times' %}
+      </button>
+
+      <!-- Shipping Callout -->
+      {% render 'shipping-callout' %}
+    </div>
+
+    <div class="tw-w-full tw-flex tw-flex-col tw-justify-between tw-overflow-y-auto">
+      {% render 'empty-cart' %}
+      <div
+        v-if="(visibleCartItems.length > 0 || cartBundles.length > 0) && !cartStillLoading"
+        class="tw-w-full tw-grow tw-flex tw-flex-col tw-px-4"
+      >
+        <div v-if="!cartStillLoading" class="tw-grow">
+          {% render 'cart-items-v2' %}
+        </div>
+        {% render 'cart-upsells' %}
+        {% render 'ud-cart-totals' %}
+      </div>
+    </div>
+    <div v-if="(visibleCartItems.length > 0 || cartBundles.length > 0) && !cartStillLoading" class="tw-px-4 tw-pb-8">
+      {% render 'ud-checkout-buttons-v2' %}
+    </div>
+  </div>
+</dialog>
+
+<script>
+  new Vue({
+    el: '.cartSidebar',
+    delimiters: ['[[', ']]'],
+    mixins: [global, cart],
+  
+    data() {
+      return {
+        cartItems: {{ cart.items | json }},
+        cartData: {{ cart | json  }},
+        testVariant: '',
+        productDetails: {
+          {% for item in cart.items %}'{{ item.product.handle }}': {
+            {%-  assign var_product = all_products[item.product.handle] -%}
+            "title": {{ var_product.title | json }},
+            "compare_at_price": {{ var_product.compare_at_price | json }},
+            "adhesive_tab_count": {{ var_product.metafields.custom.adhesive_tab_count.value | json }},
+            "tags": {{ var_product.tags | json}} 
+          },{% endfor %}
+        }
+      };
+    },
+    mounted() {
+      //For If On Cart Page don't run parse Cart twice
+      {% unless canonical_url contains routes.cart_url %}  
+        this.parseCart();
+      {% endunless %}
+      
+      //On Show Cart
+      this.bus.$on("showCart", this.onShowCart);
+    },
+    methods: {
+      onShowCart() {
+        this.showCartSidebar = true;
+        this.getItemsForCart();
+        setTimeout(() => {
+          const cartSidebar = document.querySelector("#cartSidebar");
+          cartSidebar.showModal();
+          document.body.style.position = "fixed";
+          document.body.style.top = `-${window.scrollY}px`;
+        }, 100);
+      },
+    }
+  });
+</script>

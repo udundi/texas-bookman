@@ -161,7 +161,7 @@
       class="tw-flex tw-w-full tw-max-w-screen-xl tw-mx-auto tw-flex-col tw-justify-between tw-gap-4 tw-gap-x-10 tw-pt-4 md:tw-flex-row md:tw-items-start"
     >
       {% content_for 'blocks' %}
-    </div> 
+    </div>
   {% endform %}
 </div>
 
@@ -184,202 +184,35 @@
         openedBlocks: {% if section.blocks.size > 0 %}[String('block-{{ section.blocks[0].id }}').slice(0, -2)]{% else %}[]{% endif %},
         sitewideDiscount: {{ settings.sitewide_sale_discount | divided_by: 100.0 }},
         sitewideSale: {{ sitewide_discount }},
-        clickedTab: '',
+        clickedTab: 0,
       };
     },
     methods: {
       clickingTab(id) {
-        if (this.clickedTab != id) {
-          const oldTab = document.querySelector(`.info-tab-${this.clickedTab}`);
-          const selectedTab = document.querySelector(`.info-tab-${id}`);
-          this.clickedTab = id;
-          oldTab.classList.add('tw-max-h-0');
-          selectedTab.classList.remove('tw-max-h-0');
-        }
+        this.clickedTab = id;
       },
       async addToCart() {
         this.addingToCart = true;
+        let mainItemProperties = {};
         const params = new URLSearchParams(window.location.search);
         const urlVariant = params.get('variant');
-
-        // Default variant ID — currentVariantId is set synchronously on click so it always reflects
-        // the user's latest selection even if the async section fetch is still in flight.
         let variantIdToAdd = Number(this.currentVariantId || urlVariant || '{{ product.selected_or_first_available_variant.id }}');
-        let useBundleVariant = false;
-
-        // Debug: Log available tile variant info
-        console.log('Bundle Debug:', {
-          isBundleEnabled: this.isBundleProductEnabled,
-          quantity: this.quantity,
-          isMultiple: this.quantity % 8 === 0,
-          tileVariantIdFromLiquid: {{ product.selected_or_first_available_variant.metafields.custom.tile_variant.value.id | default: 0 }},
-          defaultVariantId: {{ product.selected_or_first_available_variant.id }}
-        });
-
-        // Check if we should use bundle variant (when quantity is a multiple of 8 and bundle is enabled)
-        if (this.isBundleProductEnabled && this.quantity % 8 === 0) {
-          const tileVariantId = {{ product.selected_or_first_available_variant.metafields.custom.tile_variant.value.id | default: 0 }};
-          console.log('Checking bundle variant:', tileVariantId);
-
-          if (!isNaN(tileVariantId) && tileVariantId > 0) {
-            variantIdToAdd = tileVariantId;
-            useBundleVariant = true;
-            console.log('✓ Using bundle variant:', tileVariantId);
-          } else {
-            console.warn('✗ Bundle variant ID invalid:', tileVariantId);
-          }
-        }
-
-        // Check shipping options (only if bundle product is not being used)
-        if (!useBundleVariant && this.selectedShipping === 'tiles') {
-          const tileVariantId = {{ product.selected_or_first_available_variant.metafields.custom.tile_variant.value.id | default: 0 }};
-          if (!isNaN(tileVariantId) && tileVariantId > 0) {
-            variantIdToAdd = tileVariantId;
-          } else {
-            console.warn('Tile variant not available, using default variant');
-          }
-        }
-
-        // Final validation of variant ID
-        if (isNaN(variantIdToAdd) || variantIdToAdd <= 0) {
-          console.error('Invalid variant ID:', variantIdToAdd);
-          Swal.fire({
-            icon: 'error',
-            text: 'Please select a valid product variant.',
-          });
-          this.addingToCart = false;
-          return;
-        }
-
-        console.log('Final cart add details:', {
-          variantIdToAdd,
-          useBundleVariant,
-          finalQuantity: useBundleVariant ? this.quantity / 8 : (this.quantity || 1),
-          originalQuantity: this.quantity
-        });
-
-        // Calculate the final quantity to add
         let finalQuantity = this.quantity || 1;
-
-        if (useBundleVariant) {
-          // When using bundle variant, divide quantity by 8 (e.g., quantity 8 = 1 bundle, 16 = 2 bundles)
-          finalQuantity = this.quantity / 8;
-          console.log('Bundle quantity:', finalQuantity);
-        } else if (this.selectedShipping === 'tiles') {
-          finalQuantity = this.quantity || 1;
-        } else if (this.isMultiplesOf8) {
-          // When using multiples of 8, divide quantity by 8
-          finalQuantity = Math.ceil(this.quantity / 8);
-        }
-
-        // Build properties object for the main product
-        let mainItemProperties = {};
-        {% if product.metafields.custom.adhesive_tab_count > 0 %}
-          mainItemProperties['adhesive-tabs'] = Number('{{ product.metafields.custom.adhesive_tab_count }}');
-        {% elsif product.metafields.custom.mini_adhesive_tab_count > 0 %}
-          mainItemProperties['mini-adhesive-tabs'] = Number('{{ product.metafields.custom.mini_adhesive_tab_count }}');
-        {% endif %}
-
-        // Add background layer to properties if selected
-        if (this.selectedBackgroundColor) {
-          mainItemProperties['Background Layer'] = this.selectedBackgroundColor;
-        }
-
-        // Add tile set description if tiles shipping is selected
-        if (this.selectedShipping === 'tiles') {
-          mainItemProperties['Shipping'] = 'Set of 8 - Cut Down Tiles';
-        }
-
-        // Add bundle product property if using bundle variant
-        if (useBundleVariant) {
-          mainItemProperties['Bundle'] = 'Set of 8 Tiles';
-        }
-
-        // Add multiples of 8 property if enabled
-        if (this.isMultiplesOf8 && !useBundleVariant) {
-          mainItemProperties['Type'] = 'Set of 8';
-        }
-
-        // 3D Acoustic Boxes: Add attachment property BEFORE building main item
-        {% if product.handle == '3d-boxes' or product.handle == '3d-acoustic-boxes-screws' or product.handle == 'small-3d-acoustic-boxes' %}
-        if (this.attachmentConfig) {
-          const attachmentType = this.selectedAttachment || 'adhesive';
-          const attachmentInfo = this.attachmentConfig[attachmentType];
-          if (attachmentInfo && attachmentInfo.count > 0 && attachmentInfo.variantId) {
-            const attachmentLabel = attachmentType === 'screws' ? 'drywall-screws' : 'adhesive-tape';
-            mainItemProperties[attachmentLabel] = attachmentInfo.count;
-            // Studio packing list reads this visible prop to render per-line hardware breakout
-            mainItemProperties['Attachment'] = attachmentType === 'screws' ? 'Drywall Screws' : 'Adhesive Tape';
-          }
-        }
-        {% endif %}
-
-        // Build main item - only include properties if not empty
         let mainItem = {
           quantity: finalQuantity,
           id: variantIdToAdd,
         };
 
         mainItemProperties['_tags'] = {{ product.tags | json }};
+        mainItemProperties['_isbn'] = {{ product.metafields.facts.isbn | json }};
         // Only add properties if there are any
         if (Object.keys(mainItemProperties).length > 0) {
           mainItem.properties = mainItemProperties;
         }
-
         let items = [mainItem];
-
-        // Add adhesive tabs if applicable (multiply by final quantity)
-        {% if product.metafields.custom.adhesive_tab_count > 0 %}
-          items.push({
-            quantity: Number('{{ product.metafields.custom.adhesive_tab_count }}') * finalQuantity,
-            id: '37500128919721',
-          });
-        {% elsif product.metafields.custom.mini_adhesive_tab_count > 0 %}
-          items.push({
-            quantity: Number('{{ product.metafields.custom.mini_adhesive_tab_count }}') * finalQuantity,
-            id: '45111050698980',
-          });
-        {% endif %}
-
-        // 3D Acoustic Boxes: Add attachment line item
-        {% if product.handle == '3d-boxes' or product.handle == '3d-acoustic-boxes-screws' or product.handle == 'small-3d-acoustic-boxes' %}
-        if (this.attachmentConfig) {
-          const attachmentType = this.selectedAttachment || 'adhesive';
-          const attachmentInfo = this.attachmentConfig[attachmentType];
-
-          if (attachmentInfo && attachmentInfo.count > 0 && attachmentInfo.variantId) {
-            const attachmentQuantity = attachmentInfo.count * finalQuantity;
-            items.push({
-              quantity: attachmentQuantity,
-              id: attachmentInfo.variantId,
-            });
-          }
-        }
-        {% endif %}
-
-        if (this.shippingMethod == 'Freight') {
-          this.bus.$emit('addFreight');
-          await fetch('/cart.js').then((r) => r.json()).then(async (data) => {
-            let cartItems = data.items;
-            let addShipping = true;
-          });
-        }
-
         items.reverse();
-
         // Filter out any invalid items
         items = items.filter(item => item && item.id && !isNaN(item.id) && item.quantity > 0);
-
-        // Validate we have items to add
-        if (items.length === 0) {
-          console.error('No valid items to add to cart');
-          Swal.fire({
-            icon: 'error',
-            text: 'Unable to add item to cart. Please select a valid variant.',
-          });
-          this.addingToCart = false;
-          return;
-        }
 
         console.log('Adding to cart:', JSON.stringify(items, null, 2));
 
@@ -399,19 +232,15 @@
             quantity: item.quantity,
             variant_title: item.variant_title
           })));
-          this.showCart();
+          const recentItem = data.items?.[0];
           this.bus.$emit('refreshCart');
+          if (recentItem) {
+            this.bus.$emit('cartItemAdded', recentItem);
+          }
           this.addingToCart = false;
           this.$forceUpdate();
         }).catch((error) => {
           console.error('Cart add error:', error);
-          const errorMessage = error && error.description
-            ? error.description
-            : 'Unable to add item to cart. Please try again.';
-          Swal.fire({
-            icon: 'error',
-            text: errorMessage,
-          });
           this.addingToCart = false;
         }).finally(() => {
           this.addingToCart = false;

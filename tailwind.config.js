@@ -49,8 +49,9 @@ module.exports = {
         },
       },
       animation: {
-        "fade-in": "fade 0.4s ease-in-out 1",
-        "fade-down": "fadeDown 0.5s ease-in-out 1",
+        "fade-in": "fade 0.4s ease-in-out 1 forwards",
+        "fade-out": "fadeout 0.4s ease-in-out 1 forwards",
+        "fade-down": "fadeDown 0.5s ease-in-out 1 forwards",
       },
       leading: {
         'tighter': '1.1'
@@ -59,6 +60,10 @@ module.exports = {
         fade: {
           "0%": { opacity: 0 },
           "100%": { opacity: 100 },
+        },
+        fadeout: {
+          "0%": { opacity: 100 },
+          "100%": { opacity: 0 },
         },
         fadeDown: {
           "0%": {

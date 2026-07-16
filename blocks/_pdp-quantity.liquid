@@ -13,9 +13,11 @@
     {% endif %} tw-flex-col tw-gap-1
   "
 >
-  <label class="tw-font-montserrat tw-text-16 tw-font-semibold tw-text-offblack">Quantity:</label>
+  <label class="tw-font-montserrat tw-text-16 tw-font-semibold tw-text-offblack"
+    >QTY <span class="tw-font-normal">(Minimum Required 2)</span></label
+  >
   <div class="tw-flex tw-w-full tw-pb-2">
-    <div class="tw-relative tw-flex tw-max-w-28 tw-items-center tw-rounded-sm tw-border tw-border-offblack">
+    <div class="tw-relative tw-flex tw-max-w-28 tw-items-center tw-rounded-md tw-bg-brand-eggshell tw-border tw-border-gray-400">
       <button
         type="button"
         id="decrement-button"
@@ -38,7 +40,7 @@
         @input="quantity < 1 ? quantity = 1 : quantity = quantity"
         max="{{ product.selected_or_first_available_variant.inventory_quantity }}"
         v-model="quantity"
-        class="tw-text-sm tw-bg-brand-bg-light tw-block tw-h-10 tw-w-full tw-py-1 tw-text-center tw-text-offblack"
+        class="tw-text-sm tw-block tw-h-10 tw-w-full tw-py-1 tw-text-center tw-text-offblack"
         required
       >
       <button
@@ -54,10 +56,13 @@
     <!-- Add to Cart Button -->
     <button
       type="submit"
-      @click="addToCart(product.selected_or_first_available_variant.id, quantity)"
-      class="tw-ml-2 tw-w-full tw-rounded-sm tw-bg-brand-primary tw-py-2 tw-text-sm tw-font-semibold tw-text-brand-eggshell"
+      @click="addToCart()"
+      class="tw-ml-2 tw-w-full tw-rounded-sm tw-bg-brand-primary tw-py-2 tw-text-sm tw-font-semibold tw-text-brand-eggshell tw-flex tw-justify-center"
     >
-      Add to Cart
+      <span v-if="!addingToCart"> Add to Cart </span>
+      <div v-if="addingToCart" class="tw-animate-spin tw-size-6 tw-fill-white">
+        {% render 'icon-spin' %}
+      </div>
     </button>
   </div>
 </div>

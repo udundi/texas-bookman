@@ -1,5 +1,4 @@
 <div class="tw-my-4 sm:tw-text-16 tw-text-12 tw-text-offblack">
-
   <!-- Order Summary -->
   <div class="tw-font-playfair tw-text-24 tw-font-bold tw-py-4 tw-border-t tw-border-solid tw-border-grey-dark tw-text-offblack">
     Order Summary ([[totalCartItems]])
@@ -25,8 +24,7 @@
   <!-- Shipping Total -->
   <div class="shipping tw-flex tw-font-bold tw-my-1.5">
     <div class="label tw-flex-1">Shipping:</div>
-    <div class="value tw-flex-none" v-if="!freeShipping()">Calculated At Checkout</div>
-    <div class="tw-text-offblack tw-flex-none" v-if="freeShipping()">FREE</div>
+    <div>test</div>
   </div>
   <!-- Subtotal -->
   <div class="subTotal tw-flex tw-font-bold tw-my-1.5">
@@ -38,5 +36,4 @@
     <div class="label tw-flex-1">Order Processing Time:</div>
     <div class="value tw-flex-none">[[leadTime]] Business Days</div>
   </div>
-
 </div>

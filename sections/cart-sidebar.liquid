@@ -1,218 +1,111 @@
-<dialog id="cartSidebar" class="cartSidebar tw-pointer-events-auto">
-  <div @click="closeModal" class="bg tw-pointer-events-auto"></div>
-
-  <div class="tw-fixed tw-top-0 tw-right-0 md:tw-w-[570px] tw-w-full tw-max-w-[95vw] tw-bg-white tw-h-[100dvh] !tw-p-0 tw-flex tw-flex-col">
-    <div class="tw-animate-spin tw-size-6" v-if="cartStillLoading">
-      {% render 'icon-spin' %}
-    </div>
-
-    <!-- Close Button -->
-    <div class="tw-flex tw-items-center tw-p-4">
-      <!-- Cart Closing Button -->
-      <button class="tw-p-2" @click="closeModal">
-        {% render 'icon-close' %}
-      </button>
-    </div>
-
-    <div class="tw-w-full tw-flex tw-flex-col tw-justify-between tw-overflow-y-auto">
-      <div class="tw-text-center" v-if="visibleCartItems.length < 1 && cartBundles.length < 1 && !cartStillLoading">
-        {% content_for 'block', type: 'flex-box', id: 'empty-cart-container' %}
-      </div>
+<div class="cartSidebar-{{ section.id }} tw-relative tw-z-[901]">
+  <div
+    v-if="showCartSidebar"
+    :class="fading ? 'tw-animate-fade-out' : 'tw-animate-fade-down'"
+    class="tw-bg-white tw-absolute tw-pointer-events-auto tw-z-[999] tw-top-4 tw-right-4"
+  >
+    <div class="tw-absolute tw-top-0 tw-right-0 md:tw-w-[570px] tw-w-full tw-max-w-[95vw] tw-bg-brand-eggshell tw-rounded-md tw-border tw-border-gray-400 tw-flex tw-flex-col">
+      <!-- Recently Added Banner -->
       <div
-        v-if="(visibleCartItems.length > 0 || cartBundles.length > 0) && !cartStillLoading"
-        class="tw-w-full tw-grow tw-flex tw-flex-col tw-px-4"
+        v-if="recentlyAddedItem"
+        class="tw-mb-2 tw-flex tw-items-center tw-gap-3 tw-p-3 tw-text-sm"
       >
-        <div v-if="!cartStillLoading" class="tw-grow">
-          {% render 'cart-items' %}
+        <div class="tw-bg-amber-400 tw-p-2 tw-rounded-full">
+          {% render 'icon-plus' %}
         </div>
-        {% render 'cart-upsells' %}
-        {% render 'ud-cart-totals' %}
+        <div class="tw-min-w-0 tw-flex-1">
+          <p class="tw-text-16 tw-text-black">Added to cart</p>
+        </div>
+        <button
+          @click="hideCart"
+          class="tw-shrink-0 tw-text-green-600 hover:tw-text-green-900"
+        >
+          {% render 'icon-times' %}
+        </button>
       </div>
-    </div>
-    <div v-if="(visibleCartItems.length > 0 || cartBundles.length > 0) && !cartStillLoading" class="tw-px-4 tw-pb-8">
-      <div class="tw-w-full tw-block">
-        <div class="tw-bg-white tw-pt-4">
-          <div
-            :class="[disabledCart ? 'tw-cursor-wait' : '', disableCartActions ? 'tw-opacity-50 tw-pointer-events-none' : '']"
-            class="tw-w-full"
-          >
-            <div
-              :class="[disabledCart ? 'tw-pointer-events-none' : '', disableCartActions ? 'tw-pointer-events-none' : '']"
-              class="tw-w-full tw-px-2 tw-flex tw-flex-col tw-gap-2"
+
+      <div
+        id="{{ product_id }}"
+        class="{{ class }} tw-flex tw-flex-row tw-items-center tw-p-4 tw-gap-4 tw-w-full"
+      >
+        <!-- Product Image -->
+        <div
+          class="tw-flex-shrink-0"
+        >
+          <div class="tw-h-28 tw-object-cover tw-aspect-5/6 tw-relative">
+            <img
+              v-if="recentlyAddedItem.featured_image?.url"
+              :src="recentlyAddedItem.featured_image.url"
+              :alt="recentlyAddedItem.title"
+              class="tw-size-full tw-aspect-5/6 tw-object-cover"
             >
-              <a
-                :class="disableCartActions ? 'tw-opacity-50 tw-pointer-events-none' : ''"
-                class="md:tw-block tw-hidden tw-p-2 tw-text-navy tw-underline tw-text-16 tw-text-center tw-w-full tw-font-semibold"
-                href="/checkout"
-                >Checkout</a
+          </div>
+        </div>
+
+        <!-- Product Info -->
+        <div class="tw-py-1 tw-w-full tw-flex tw-flex-col tw-justify-between tw-gap-2 tw-min-w-0 tw-grow">
+          <!-- Title and Product Details -->
+          <div class="tw-flex tw-grow tw-flex-col tw-justify-between tw-gap-1">
+            <div class="tw-flex tw-w-full tw-flex-row tw-justify-between tw-gap-x-3 tw-gap-y-0.5 tw-text-12">
+              <a :href="recentlyAddedItem.url" class="">
+                <h3 class="tw-font-semibold tw-text-13 tw-text-brand-primary tw-text-14 tw-leading-tight tw-m-0 tw-truncate">
+                  [[ recentlyAddedItem.title ]]
+                </h3>
+              </a>
+            </div>
+
+            <!-- Product Details -->
+            <div class="tw-flex tw-w-full tw-justify-between tw-items-end tw-gap-x-3 tw-gap-y-0.5 tw-text-14">
+              <!-- Product Details Section -->
+              <div class="tw-flex tw-w-full tw-flex-col tw-text-gray-700 tw-font-semibold tw-gap-y-0.5 tw-text-14">
+                <div class="tw-text-[#312F30] tw-text-opacity-80">
+                  ISBN:
+                  <span class="tw-font-normal">[[ recentlyAddedItem.properties._isbn ]]</span>
+                </div>
+                <div>
+                  QTY:
+                  <span class="tw-font-normal"> [[ recentlyAddedItem.quantity ]] </span>
+                </div>
+                <div class="tw-font-semibold">[[ recentlyAddedItem.price | currency ]]</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div v-if="(visibleCartItems.length > 0 || cartBundles.length > 0) && !cartStillLoading" class="tw-px-4 tw-pb-8">
+        <div class="tw-w-full tw-block">
+          <div class="tw-bg-white tw-pt-4">
+            <div
+              :class="[disabledCart ? 'tw-cursor-wait' : '', disableCartActions ? 'tw-opacity-50 tw-pointer-events-none' : '']"
+              class="tw-w-full"
+            >
+              <div
+                :class="[disabledCart ? 'tw-pointer-events-none' : '', disableCartActions ? 'tw-pointer-events-none' : '']"
+                class="tw-w-full tw-px-2 tw-flex tw-flex-row tw-gap-2"
               >
-              <a
-                :class="disableCartActions ? 'tw-opacity-50 tw-pointer-events-none' : ''"
-                class="md:tw-block tw-hidden tw-p-2 tw-text-navy tw-underline tw-text-16 tw-text-center tw-w-full tw-font-semibold"
-                href="{{ routes.cart_url }}"
-                >Expand Cart</a
-              >
+                <button
+                  :class="disableCartActions ? 'tw-opacity-50 tw-pointer-events-none' : ''"
+                  class="md:tw-block tw-hidden tw-p-2 tw-text-brand-primary tw-border tw-border-brand-primary tw-rounded-md tw-text-16 tw-text-center tw-w-full tw-uppercase tw-bg-white"
+                  @click="hideCart"
+                >
+                  Keep Shopping
+                </button>
+                <a
+                  :class="disableCartActions ? 'tw-opacity-50 tw-pointer-events-none' : ''"
+                  class="md:tw-block tw-hidden tw-p-2 tw-text-white tw-rounded-md tw-text-16 tw-text-center tw-w-full tw-uppercase tw-bg-brand-primary"
+                  href="{{ routes.cart_url }}"
+                >
+                  View Cart
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</dialog>
-
-<style>
-  /* ── Dialog / overlay reset ─────────────────────────────────────────────────
-     Without these the browser renders a native dialog box (centred, with a
-     visible border and inert backdrop). These rules turn it into a
-     transparent full-screen container so our own .bg and slide-in panel
-     handle all the visual chrome.
-  ── */
-  dialog.cartSidebar {
-    background: transparent;
-    border: none;
-    position: fixed;
-    inset: 0;
-    width: 100vw;
-    height: 100vh;
-    max-width: 100vw;
-    max-height: 100vh;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    z-index: 999999;
-  }
-
-  /* Hide the native ::backdrop so our .bg div controls the scrim */
-  dialog.cartSidebar::backdrop {
-    display: none;
-  }
-
-  /* ── Scrim / backdrop ────────────────────────────────────────────────────── */
-  .cartSidebar .bg {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.75);
-    cursor: pointer;
-  }
-
-  /* ── Upsells ─────────────────────────────────────────────────────────────── */
-  .upsellsv2 {
-    margin: 20px 0;
-    color: #707070;
-  }
-  .upsellsv2 .upsellHeader {
-    font-size: 18px;
-    font-weight: 700;
-  }
-  .upsellsv2 .upsellTop {
-    display: flex;
-  }
-  .upsellsv2 .upsellContainer {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 -10px;
-  }
-  .upsellsv2 .upsellContainer .upsell {
-    flex: 0 0 auto;
-    margin: 10px;
-    width: calc(50% - 20px);
-    border: 1px solid #aaa;
-    padding: 5px;
-    display: block;
-    font-size: 12px;
-  }
-  @media (max-width: 500px) {
-    .upsellsv2 .upsellContainer .upsell {
-      width: 90%;
-    }
-  }
-  .upsellsv2 .upsellContainer .upsell .data {
-    flex: 1;
-  }
-  .upsellsv2 .upsellContainer .upsell .image {
-    flex: 0 0 auto;
-    width: 70px;
-    margin: 0 10px 0 0;
-  }
-  .upsellsv2 .upsellContainer .upsell .image img {
-    width: 100%;
-    display: block;
-  }
-  .upsellsv2 .upsellContainer .upsell .price {
-    font-weight: 700;
-    margin: 5px 0;
-  }
-  .upsellsv2 .upsellContainer .upsell .upsellTitle {
-    font-size: 10px;
-    font-weight: 700;
-  }
-  .upsellsv2 .upsellContainer .upsell .adder {
-    margin-top: 5px;
-  }
-  .upsellsv2 .upsellContainer .upsell .primaryBTN {
-    border-radius: 0;
-    font-size: 11px;
-    padding: 5px;
-    width: 100%;
-  }
-
-  /* ── Primary button (base) ───────────────────────────────────────────────── */
-  .primaryBTN {
-    color: #fff;
-    text-align: center;
-    padding: 10px 20px;
-    font-weight: 600;
-    background: #313558;
-    border: none;
-    display: block;
-    cursor: pointer;
-    font-family: Montserrat, sans-serif;
-    letter-spacing: 1px;
-    transition: background 0.3s;
-    white-space: nowrap;
-    text-decoration: none;
-  }
-  .primaryBTN:hover {
-    background: #212121;
-    color: #fff;
-  }
-
-  /* ── Tooltip (used by upsells) ───────────────────────────────────────────── */
-  .tooltip {
-    display: inline-block;
-    position: relative;
-    text-align: left;
-    z-index: 1;
-  }
-  .tooltip .top {
-    top: -5px;
-    left: 50%;
-    transform: translate(-50%, -100%);
-    padding: 5px 20px;
-    color: #444;
-    background: #fff;
-    font-weight: 400;
-    font-size: 11px;
-    border-radius: 8px;
-    position: absolute;
-    z-index: 99999;
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.2s;
-    white-space: nowrap;
-    width: max-content;
-    max-width: 250px;
-    white-space: normal;
-  }
-  .tooltip:hover .top {
-    visibility: visible;
-    opacity: 1;
-  }
-</style>
+</div>
 
 {% schema %}
 {
@@ -229,44 +122,45 @@
 
 <script>
   new Vue({
-    el: '.cartSidebar',
+    el: '.cartSidebar-{{ section.id }}',
     delimiters: ['[[', ']]'],
     mixins: [global, cart],
-  
+
     data() {
       return {
         cartItems: {{ cart.items | json }},
         cartData: {{ cart | json  }},
         testVariant: '',
-        productDetails: {
-          {% for item in cart.items %}'{{ item.product.handle }}': {
-            {%-  assign var_product = all_products[item.product.handle] -%}
-            "title": {{ var_product.title | json }},
-            "compare_at_price": {{ var_product.compare_at_price | json }},
-            "tags": {{ var_product.tags | json}} 
-          },{% endfor %}
-        }
+        recentlyAddedItem: null,
+        fading: false,
+        fadingTimeout: null,
+        hideCartTimeout: null,
       };
     },
     mounted() {
       //For If On Cart Page don't run parse Cart twice
-      {% unless canonical_url contains routes.cart_url %}  
+      {% unless canonical_url contains routes.cart_url %}
         this.parseCart();
       {% endunless %}
-      
-      //On Show Cart
-      this.bus.$on("showCart", this.onShowCart);
+
+      //Track recently added item
+      this.bus.$on("cartItemAdded", (item) => {
+        clearTimeout(this.fadingTimeout);
+        clearTimeout(this.hideCartTimeout);
+        this.fading = false;
+        this.recentlyAddedItem = item;
+        this.showCartSidebar = true;
+        this.fadingTimeout = setTimeout(() => { this.fading = true }, 3500);
+        this.hideCartTimeout = setTimeout(() => { this.recentlyAddedItem = null; this.showCartSidebar = false; this.fading = false; }, 4000);
+      });
     },
     methods: {
-      onShowCart() {
-        this.showCartSidebar = true;
-        this.getItemsForCart();
-        setTimeout(() => {
-          const cartSidebar = document.querySelector("#cartSidebar");
-          cartSidebar.showModal();
-          document.body.style.position = "fixed";
-          document.body.style.top = `-${window.scrollY}px`;
-        }, 100);
+      hideCart() {
+        clearTimeout(this.fadingTimeout);
+        clearTimeout(this.hideCartTimeout);
+        this.fadingTimeout = null;
+        this.fading = true;
+        this.hideCartTimeout = setTimeout(() => { this.recentlyAddedItem = null; this.showCartSidebar = false; this.fading = false; }, 500);
       },
     }
   });

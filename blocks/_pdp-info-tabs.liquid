@@ -21,15 +21,15 @@
 <div class="section-{{ block.id }} tw-mx-auto tw-py-4">
   <div class="vue-controler-{{ block.id }} tw-mx-auto">
     {% if block.blocks[1] != blank %}
-      <div class="tw-flex tw-justify-start tw-gap-4">
+      <div class="tw-flex tw-justify-start tw-gap-0.5">
         {% assign tab_titles = block.settings.tab_titles | append: '-' | split: '-' %}
         {% for block in block.blocks %}
           <button
-            @click="clickingTab('{{ block.id }}')"
-            class="tw-mb-[-1px] tw-text-16 tw-font-montserrat tw-leading-tight tw-p-4 tw-capitalize tw-text-offblack"
+            @click="clickingTab('{{ forloop.index0 }}')"
+            class=" tw-text-16 tw-font-montserrat tw-leading-tight tw-px-4 tw-py-2 tw-capitalize tw-text-offblack"
             :class="
               [
-                clickedTab == '{{ block.id }}' ? 'tw-font-semibold tw-border-t tw-border-grey-400 tw-border-x tw-bg-brand-eggshell' : 'tw-font-normal'
+                clickedTab == '{{ forloop.index0 }}' ? 'tw-border-t tw-rounded-t-md tw-border-gray-400 tw-border-x tw-bg-brand-eggshell' : 'tw-font-normal'
               ]
             "
           >
@@ -40,12 +40,19 @@
     {% endif %}
   </div>
   {% for block in block.blocks %}
-    <div class="tw-overflow-hidden tw-border tw-border-grey-400 tw-mt-[-1px] tw-bg-brand-eggshell info-tab-{{ block.id }} {% unless forloop.first %}tw-max-h-0 {% endunless %}">
+    <div
+      v-if="clickedTab == {{ forloop.index0 }}"
+      class="tw-overflow-hidden tw-border tw-border-gray-400 tw-rounded-md tw-mt-[-1px] tw-bg-brand-eggshell info-tab-{{ block.id }}"
+      :class="
+        [
+          clickedTab == 0 ? 'tw-rounded-tl-none' : ''
+        ]
+      "
+    >
       {% render block %}
     </div>
   {% endfor %}
 </div>
-
 
 {% schema %}
 {
@@ -180,7 +187,7 @@
   "blocks": [
     {
       "type": "_pdp-info-tab"
-    },
+    }
   ],
   "presets": [
     {

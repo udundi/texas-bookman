@@ -36,13 +36,13 @@
 
   <body>
     {% sections 'header-group' %}
-    <main id="root" role="main">
+    <main id="root" class="tw-relative" role="main">
+      <div class="tw-absolute tw-z-[500] tw-size-full tw-pointer-events-none">
+        {% sections 'overlay-group' %}
+      </div>
       {{ content_for_layout }}
     </main>
 
-    <div class="tw-fixed tw-inset-0 tw-z-[500] tw-pointer-events-none">
-      {% sections 'overlay-group' %}
-    </div>
     {% sections 'footer-group' %}
     {% render 'script__external-body' %}
   </body>
