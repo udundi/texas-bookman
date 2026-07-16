@@ -266,7 +266,7 @@
         "mobile_y_gap": 0,
         "justify_content": "center",
         "align_items": "center",
-        "container_width": "full_width",
+        "container_width": "md_desktop",
         "content_overflow": "fit",
         "custom_id": ""
       }
