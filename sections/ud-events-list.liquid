@@ -1,0 +1,763 @@
+{% style %}
+  .ud-events-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ud-events-{{ section.id }} {
+      padding-top: {{ section.settings.mobile_padding_top }}px;
+      padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+    }
+  }
+
+  .ud-events-{{ section.id }} .events-inner {
+    max-width: {{ section.settings.content_max_width }}px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* Header */
+  .ud-events-{{ section.id }} .events-heading {
+    font-weight: 700;
+    text-align: center;
+    color: {{ section.settings.heading_color }};
+    font-size: clamp({{ section.settings.heading_size_min }}px, 2.5vw, {{ section.settings.heading_size_max }}px);
+    margin-bottom: 0.5rem;
+  }
+
+  .ud-events-{{ section.id }} .events-subtext {
+    text-align: center;
+    color: {{ section.settings.subtext_color }};
+    font-size: {{ section.settings.subtext_size }}px;
+    margin-bottom: 2.25rem;
+  }
+
+  /* Event Cards */
+  .ud-events-{{ section.id }} .event-card {
+    border: 1px solid {{ section.settings.card_border_color }};
+    border-radius: {{ section.settings.card_border_radius }}px;
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-bottom: 1.25rem;
+    overflow: hidden;
+    background: {{ section.settings.card_bg }};
+  }
+
+  .ud-events-{{ section.id }} .event-card:last-child {
+    margin-bottom: 0;
+  }
+
+  .ud-events-{{ section.id }} .event-thumbnail {
+    flex-shrink: 0;
+    width: 220px;
+    margin: 1.25rem 0 1.25rem 1.25rem;
+    border-radius: 6px;
+    object-fit: cover;
+    object-position: center;
+    align-self: flex-start;
+  }
+
+  .ud-events-{{ section.id }} .event-thumbnail-placeholder {
+    flex-shrink: 0;
+    width: 220px;
+    margin: 1.25rem 0 1.25rem 1.25rem;
+    border-radius: 6px;
+    background: #e5e7eb;
+    align-self: flex-start;
+    min-height: 148px;
+  }
+
+  .ud-events-{{ section.id }} .event-content {
+    flex: 1;
+    padding: 1.25rem 1.25rem 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 0;
+  }
+
+  .ud-events-{{ section.id }} .event-header-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .ud-events-{{ section.id }} .event-titles {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .ud-events-{{ section.id }} .event-title {
+    display: block;
+    font-weight: 700;
+    color: {{ section.settings.event_title_color }};
+    font-size: {{ section.settings.event_title_size }}px;
+    line-height: 1.3;
+    margin-bottom: 0.4rem;
+    text-decoration: none;
+  }
+
+  .ud-events-{{ section.id }} .event-title:hover {
+    text-decoration: underline;
+  }
+
+  .ud-events-{{ section.id }} .event-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: {{ section.settings.meta_color }};
+    font-size: {{ section.settings.meta_size }}px;
+    flex-wrap: wrap;
+  }
+
+  .ud-events-{{ section.id }} .event-meta-icon {
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+    stroke: {{ section.settings.meta_color }};
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .ud-events-{{ section.id }} .event-meta-divider {
+    color: {{ section.settings.meta_color }};
+    opacity: 0.5;
+  }
+
+  /* Date Badge */
+  .ud-events-{{ section.id }} .event-date-badge {
+    flex-shrink: 0;
+    background-color: {{ section.settings.badge_bg }};
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem 0.75rem;
+    min-width: 64px;
+    text-align: center;
+  }
+
+  .ud-events-{{ section.id }} .badge-month {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: {{ section.settings.badge_text_color }};
+    line-height: 1.2;
+  }
+
+  .ud-events-{{ section.id }} .badge-day {
+    font-size: 28px;
+    font-weight: 700;
+    color: {{ section.settings.badge_text_color }};
+    line-height: 1.1;
+  }
+
+  .ud-events-{{ section.id }} .badge-year {
+    font-size: 11px;
+    font-weight: 700;
+    color: {{ section.settings.badge_text_color }};
+    line-height: 1.2;
+  }
+
+  /* Description */
+  .ud-events-{{ section.id }} .event-description {
+    color: {{ section.settings.description_color }};
+    font-size: {{ section.settings.description_size }}px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* CTA Button */
+  .ud-events-{{ section.id }} .event-cta {
+    display: inline-block;
+    background-color: {{ section.settings.cta_bg }};
+    color: {{ section.settings.cta_text_color }};
+    font-weight: 700;
+    font-size: {{ section.settings.cta_font_size }}px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.5rem 1.25rem;
+    border-radius: {{ section.settings.cta_border_radius }}px;
+    margin-top: 0.25rem;
+    transition: opacity 0.2s;
+    align-self: flex-start;
+  }
+
+  .ud-events-{{ section.id }} .event-cta:hover {
+    opacity: 0.85;
+  }
+
+  /* View All Button */
+  .ud-events-{{ section.id }} .events-view-all-wrap {
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  .ud-events-{{ section.id }} .events-view-all {
+    display: inline-block;
+    border: 1.5px solid {{ section.settings.view_all_border_color }};
+    color: {{ section.settings.view_all_text_color }};
+    background: transparent;
+    font-weight: 700;
+    font-size: {{ section.settings.view_all_font_size }}px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.55rem 2.5rem;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .ud-events-{{ section.id }} .events-view-all:hover {
+    background: {{ section.settings.view_all_border_color }};
+    color: #fff;
+  }
+
+  /* Mobile */
+  @media screen and (max-width: 749px) {
+    .ud-events-{{ section.id }} .event-card {
+      flex-direction: column;
+    }
+
+    .ud-events-{{ section.id }} .event-thumbnail,
+    .ud-events-{{ section.id }} .event-thumbnail-placeholder {
+      width: calc(100% - 2rem);
+      margin: 1rem 1rem 0;
+      min-height: 180px;
+    }
+
+    .ud-events-{{ section.id }} .event-header-row {
+      flex-wrap: wrap;
+    }
+
+    .ud-events-{{ section.id }} .event-date-badge {
+      order: -1;
+    }
+  }
+{% endstyle %}
+
+<section class="ud-events-{{ section.id }} tw" id="ud-events-{{ section.id }}">
+  <div class="events-inner">
+
+    {%- comment -%} Section header {%- endcomment -%}
+    {%- if section.settings.heading != blank -%}
+      <{{ section.settings.heading_tag }} class="events-heading tw-font-montserrat">
+        {{ section.settings.heading }}
+      </{{ section.settings.heading_tag }}>
+    {%- endif -%}
+
+    {%- if section.settings.subtext != blank -%}
+      <p class="events-subtext tw-font-montserrat">{{ section.settings.subtext }}</p>
+    {%- endif -%}
+
+    {%- comment -%} Event cards {%- endcomment -%}
+    {%- if section.blocks.size > 0 -%}
+      <div class="events-list">
+        {%- for block in section.blocks -%}
+          <article class="event-card" {{ block.shopify_attributes }}>
+
+            {%- comment -%} Thumbnail {%- endcomment -%}
+            {%- if block.settings.image != blank -%}
+              {%- assign thumb_alt = block.settings.image.alt | default: block.settings.title | default: '' | escape -%}
+              <img
+                src="{{ block.settings.image | image_url: width: 440 }}"
+                alt="{{ thumb_alt }}"
+                class="event-thumbnail"
+                loading="lazy"
+                width="220"
+                height="148"
+              >
+            {%- else -%}
+              <div class="event-thumbnail-placeholder" aria-hidden="true"></div>
+            {%- endif -%}
+
+            <div class="event-content">
+              <div class="event-header-row">
+                <div class="event-titles">
+                  {%- if block.settings.title != blank -%}
+                    {%- if block.settings.title_url != blank -%}
+                      <a href="{{ block.settings.title_url }}" class="event-title tw-font-montserrat">
+                        {{ block.settings.title }}
+                      </a>
+                    {%- else -%}
+                      <span class="event-title tw-font-montserrat">{{ block.settings.title }}</span>
+                    {%- endif -%}
+                  {%- endif -%}
+
+                  {%- if block.settings.time != blank or block.settings.location != blank -%}
+                    <div class="event-meta tw-font-montserrat">
+                      {%- comment -%} Clock icon {%- endcomment -%}
+                      <svg class="event-meta-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                      </svg>
+                      {%- if block.settings.time != blank -%}
+                        <span>{{ block.settings.time }}</span>
+                      {%- endif -%}
+                      {%- if block.settings.time != blank and block.settings.location != blank -%}
+                        <span class="event-meta-divider">|</span>
+                      {%- endif -%}
+                      {%- if block.settings.location != blank -%}
+                        <span>{{ block.settings.location }}</span>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                </div>
+
+                {%- comment -%} Date badge {%- endcomment -%}
+                {%- if block.settings.date_month != blank or block.settings.date_day != blank -%}
+                  <div class="event-date-badge" aria-label="{{ block.settings.date_month }} {{ block.settings.date_day }} {{ block.settings.date_year }}">
+                    {%- if block.settings.date_month != blank -%}
+                      <span class="badge-month">{{ block.settings.date_month }}</span>
+                    {%- endif -%}
+                    {%- if block.settings.date_day != blank -%}
+                      <span class="badge-day">{{ block.settings.date_day }}</span>
+                    {%- endif -%}
+                    {%- if block.settings.date_year != blank -%}
+                      <span class="badge-year">{{ block.settings.date_year }}</span>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+              </div>
+
+              {%- if block.settings.description != blank -%}
+                <p class="event-description tw-font-montserrat">{{ block.settings.description }}</p>
+              {%- endif -%}
+
+              {%- if block.settings.cta_label != blank -%}
+                <a
+                  href="{{ block.settings.cta_url | default: '#' }}"
+                  class="event-cta tw-font-montserrat">
+                  {{ block.settings.cta_label }}
+                </a>
+              {%- endif -%}
+            </div>
+
+          </article>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} View All button {%- endcomment -%}
+    {%- if section.settings.view_all_label != blank -%}
+      <div class="events-view-all-wrap">
+        <a
+          href="{{ section.settings.view_all_url | default: '#' }}"
+          class="events-view-all tw-font-montserrat">
+          {{ section.settings.view_all_label }}
+        </a>
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Events List",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 20,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Upcoming Trade Shows"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading Tag",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#212121"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_min",
+      "label": "Heading Min Size (px)",
+      "min": 18,
+      "max": 48,
+      "step": 2,
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "heading_size_max",
+      "label": "Heading Max Size (px)",
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "default": 40
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "We'd love to meet you in person at one of our events or tradeshows"
+    },
+    {
+      "type": "color",
+      "id": "subtext_color",
+      "label": "Subtext Color",
+      "default": "#212121"
+    },
+    {
+      "type": "range",
+      "id": "subtext_size",
+      "label": "Subtext Font Size (px)",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Event Cards"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card Border Color",
+      "default": "#e5e7eb"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Card Border Radius (px)",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "default": 6
+    },
+    {
+      "type": "color",
+      "id": "event_title_color",
+      "label": "Event Title Color",
+      "default": "#20448F"
+    },
+    {
+      "type": "range",
+      "id": "event_title_size",
+      "label": "Event Title Size (px)",
+      "min": 14,
+      "max": 28,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "meta_color",
+      "label": "Meta (time/location) Color",
+      "default": "#6b7280"
+    },
+    {
+      "type": "range",
+      "id": "meta_size",
+      "label": "Meta Font Size (px)",
+      "min": 11,
+      "max": 18,
+      "step": 1,
+      "default": 13
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#212121"
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Description Font Size (px)",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Date Badge"
+    },
+    {
+      "type": "color",
+      "id": "badge_bg",
+      "label": "Badge Background",
+      "default": "#F0BA3A"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge Text Color",
+      "default": "#212121"
+    },
+    {
+      "type": "header",
+      "content": "CTA Button"
+    },
+    {
+      "type": "color",
+      "id": "cta_bg",
+      "label": "CTA Background",
+      "default": "#20448F"
+    },
+    {
+      "type": "color",
+      "id": "cta_text_color",
+      "label": "CTA Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "cta_font_size",
+      "label": "CTA Font Size (px)",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "cta_border_radius",
+      "label": "CTA Border Radius (px)",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "View All Button"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View All Label",
+      "default": "View All Events"
+    },
+    {
+      "type": "url",
+      "id": "view_all_url",
+      "label": "View All URL"
+    },
+    {
+      "type": "color",
+      "id": "view_all_border_color",
+      "label": "View All Border & Hover Background",
+      "default": "#20448F"
+    },
+    {
+      "type": "color",
+      "id": "view_all_text_color",
+      "label": "View All Text Color",
+      "default": "#20448F"
+    },
+    {
+      "type": "range",
+      "id": "view_all_font_size",
+      "label": "View All Font Size (px)",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "default": 13
+    },
+    {
+      "type": "header",
+      "content": "Background & Spacing"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section Background",
+      "default": "#FDFBF8"
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "label": "Content Max Width (px)",
+      "min": 600,
+      "max": 1600,
+      "step": 40,
+      "default": 1280
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Desktop Padding Top (px)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Desktop Padding Bottom (px)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile Padding Top (px)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile Padding Bottom (px)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "event",
+      "name": "Event",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Thumbnail Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Event Title",
+          "default": "Wholesale Strategy Seminar"
+        },
+        {
+          "type": "url",
+          "id": "title_url",
+          "label": "Event Title URL"
+        },
+        {
+          "type": "text",
+          "id": "time",
+          "label": "Time",
+          "default": "10:00 AM - 12:30 PM",
+          "info": "e.g. 10:00 AM - 12:30 PM"
+        },
+        {
+          "type": "text",
+          "id": "location",
+          "label": "Location",
+          "default": "Austin Distribution Center"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Join our supply chain experts for an in-depth look at optimizing inventory for independent bookstores."
+        },
+        {
+          "type": "header",
+          "content": "Date Badge"
+        },
+        {
+          "type": "text",
+          "id": "date_month",
+          "label": "Month",
+          "default": "OCT",
+          "info": "Short form, e.g. OCT"
+        },
+        {
+          "type": "text",
+          "id": "date_day",
+          "label": "Day",
+          "default": "2"
+        },
+        {
+          "type": "text",
+          "id": "date_year",
+          "label": "Year",
+          "default": "2026"
+        },
+        {
+          "type": "header",
+          "content": "CTA Button"
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "Button Label",
+          "default": "Register Now"
+        },
+        {
+          "type": "url",
+          "id": "cta_url",
+          "label": "Button URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Events List",
+      "blocks": [
+        {
+          "type": "event",
+          "settings": {
+            "title": "Wholesale Strategy Seminar",
+            "time": "10:00 AM - 12:30 PM",
+            "location": "Austin Distribution Center",
+            "description": "Join our supply chain experts for an in-depth look at optimizing inventory for independent bookstores.",
+            "date_month": "OCT",
+            "date_day": "2",
+            "date_year": "2026",
+            "cta_label": "Register Now"
+          }
+        },
+        {
+          "type": "event",
+          "settings": {
+            "title": "Texas Bookman Annual Tradeshow",
+            "time": "10:00 AM - 12:30 PM",
+            "location": "Austin Distribution Center",
+            "description": "Our annual networking event for educational partners. Preview upcoming fall titles over coffee.",
+            "date_month": "OCT",
+            "date_day": "23",
+            "date_year": "2026",
+            "cta_label": "Schedule Appointment"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
