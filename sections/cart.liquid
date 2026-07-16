@@ -40,14 +40,17 @@
           </div>
           <!-- Quantity Editor -->
           <div class="tw-flex tw-items-center tw-w-fit tw-justify-start tw-gap-2">
-            <div>QTY:</div>
+            <div class="tw-font-bold">QTY:</div>
             <input
               type="number"
               :value="item.quantity"
               min="0"
-              class="tw-p-0.5 tw-px-2 tw-border tw-border-gray-400 tw-w-16 tw-text-center"
+              class="tw-p-0.5 tw-px-2 tw-border tw-border-gray-400 tw-w-16 tw-text-center [appearance:textfield] [&::-webkit-outer-spin-button]:tw-appearance-none [&::-webkit-inner-spin-button]:tw-appearance-none"
               @input="onQtyInput(item, $event)"
             >
+            <button class="tw-size-4 tw-ml-4" @click="removeItem(item)">
+              {% render 'icon-trash' %}
+            </button>
           </div>
           <!-- Prices -->
           <div class="tw-flex tw-gap-4">
@@ -66,8 +69,8 @@
     </div>
 
     <!-- Order Summary -->
-    <div class="tw-w-full tw-font-semibold tw-font-brand-body tw-rounded-md tw-bg-brand-eggshell tw-max-w-80 tw-sticky tw-top-0 tw-h-full tw-justify-start">
-      <div class="tw-w-full tw-font-semibold tw-font-brand-body tw-border tw-border-gray-400 tw-rounded-md tw-bg-brand-eggshell tw-max-w-80 tw-flex tw-flex-col tw-gap-24 tw-h-full tw-justify-between">
+    <div class="tw-w-full tw-font-semibold tw-font-brand-body tw-rounded-md tw-bg-brand-eggshell tw-max-w-96 tw-sticky tw-top-4 tw-h-full tw-justify-start">
+      <div class="tw-w-full tw-font-semibold tw-font-brand-body tw-border tw-border-gray-400 tw-rounded-md tw-bg-brand-eggshell tw-max-w-96 tw-flex tw-flex-col tw-gap-24 tw-h-full tw-justify-between">
         <div class="tw-flex tw-flex-col tw-gap-4">
           <div class="tw-p-4 tw-text-16 tw-border-b tw-border-gray-400">Your Order</div>
           <div class="tw-flex tw-px-4 tw-flex-col tw-gap-1">
@@ -93,7 +96,7 @@
       <a
         v-if="!updatingCart"
         href="{{ routes.checkout_url }}"
-        class="tw-flex tw-gap-3 tw-rounded-md tw-items-center tw-justify-center tw-bg-brand-secondary tw-p-1.5 tw-text-offblack tw-uppercase tw-text-20 tw-w-full tw-text-center"
+        class="tw-flex tw-gap-3 tw-rounded-md tw-items-center tw-justify-center tw-bg-brand-secondary tw-p-1.5 tw-text-offblack tw-uppercase tw-text-20 tw-w-full tw-text-center tw-mt-4"
       >
         <span class="tw-size-4 tw-mb-1">{% render 'icon-lock' %}</span>
         Checkout
@@ -155,6 +158,23 @@
           .then((updatedCart) => {
             item.quantity = qty;
             item.line_price = item.price * qty;
+            this.subtotal = updatedCart.items_subtotal_price;
+            this.total = updatedCart.total_price;
+            this.bus.$emit('refreshCart');
+          })
+          .catch(() => {})
+          .finally(() => { this.updatingCart = false; });
+      },
+      removeItem(item) {
+        this.updatingCart = true;
+        fetch('/cart/change.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: item.key, quantity: 0 }),
+        })
+          .then((r) => r.json())
+          .then((updatedCart) => {
+            this.cartItems = this.cartItems.filter((i) => i.key !== item.key);
             this.subtotal = updatedCart.items_subtotal_price;
             this.total = updatedCart.total_price;
             this.bus.$emit('refreshCart');
