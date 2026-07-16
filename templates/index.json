@@ -14,6 +14,43 @@
       "disabled": true,
       "settings": {}
     },
+    "ud_hero_banner_iGd6Ft": {
+      "type": "ud-hero-banner",
+      "name": "Hero Banner",
+      "settings": {
+        "image": "shopify://shop_images/bc58b2ce114e7627982b434f25200296d4656fc1.png",
+        "desktop_image_position": "center center",
+        "mobile_image_position": "center top",
+        "mobile_image_ratio": "3 / 4",
+        "desktop_height": 480,
+        "show_overlay": false,
+        "overlay_color": "#000000",
+        "overlay_opacity": 30,
+        "eyebrow": "",
+        "eyebrow_color": "#ffffff",
+        "eyebrow_size": 12,
+        "heading": "Kids' Summer Reading Titles",
+        "heading_tag": "h2",
+        "heading_color": "#ffffff",
+        "heading_size_min": 28,
+        "heading_size_max": 48,
+        "body_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.",
+        "body_color": "#ffffff",
+        "body_size": 16,
+        "button_label": "Shop Now",
+        "button_url": "",
+        "button_bg": "#F0BA3A",
+        "button_text_color": "#212121",
+        "button_font_size": 13,
+        "button_padding_y": 14,
+        "button_padding_x": 32,
+        "desktop_content_alignment": "left",
+        "desktop_content_padding_x": 5,
+        "mobile_content_bg": "#ffffff",
+        "mobile_heading_color": "#212121",
+        "mobile_body_color": "#212121"
+      }
+    },
     "ud_flexbox_BCC4jh": {
       "type": "ud-flexbox",
       "blocks": {
@@ -179,13 +216,14 @@
         "padding_right": 2,
         "mobile_padding_left": 2,
         "mobile_padding_right": 2,
-        "background_color": "#FDFBF8",
+        "background_color": "#fdfbf8",
         "container_width": "md_desktop"
       }
     }
   },
   "order": [
     "main",
+    "ud_hero_banner_iGd6Ft",
     "ud_flexbox_BCC4jh",
     "ud_multi_carousel_DMK4LU"
   ]
