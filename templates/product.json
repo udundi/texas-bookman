@@ -62,15 +62,11 @@
               },
               "blocks": {}
             },
-            "pdp_description_YphFww": {
-              "type": "_pdp-description",
-              "name": "Author",
+            "pdp_info_numbers_X7KFzr": {
+              "type": "_pdp-info-numbers",
+              "name": "PDP Info Numbers",
               "settings": {
-                "visibility": "both",
-                "font_size": "16",
-                "text_align": "left",
-                "body": "<p>ISBN: XXXXXXXXX</p>",
-                "body_default": ""
+                "visibility": "both"
               },
               "blocks": {}
             },
@@ -153,7 +149,7 @@
           "block_order": [
             "pdp_title_rating_NGTraH",
             "pdp_description_r9bAyP",
-            "pdp_description_YphFww",
+            "pdp_info_numbers_X7KFzr",
             "pdp_description_GiPLFD",
             "pdp_price_L3riXr",
             "pdp_quantity_rj4mc7",
