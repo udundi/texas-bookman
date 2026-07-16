@@ -150,6 +150,8 @@
           this.bus.$emit('showCart');
           this.bus.$emit('refreshCart');
           this.addingToCart = false;
+          const recentItem = data.items?.[0];
+          this.bus.$emit('cartItemAdded', recentItem);
           this.$forceUpdate();
         }).catch((error) => {
           console.log(error, 'caught error');

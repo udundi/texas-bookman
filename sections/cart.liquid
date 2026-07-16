@@ -1,57 +1,62 @@
-{% comment %}
+﻿{% comment %}
   This section is used in the cart template to render /cart page with an
   overview of the items in customer's cart.
 
   https://shopify.dev/docs/storefronts/themes/architecture/templates/cart
 {% endcomment %}
 
-<form
-  action="{{ routes.cart_url }}"
-  method="post"
-  class="tw-flex tw-flex-col tw-w-full tw-gap-12 tw-pt-8 tw-mx-auto tw-justify-start tw-max-w-screen-2xl"
+<div
+  class="section-cart-{{ section.id }} tw-flex tw-flex-col tw-w-full tw-gap-12 tw-pt-8 tw-mx-auto tw-justify-start tw-max-w-screen-lg"
 >
-  <h1 class="tw-text-26 tw-font-semibold tw-font-brand-header">{{ 'cart.title' | t }}</h1>
-  <div class="tw-flex tw-text-14 tw-w-full tw-gap-12 tw-mx-auto ">
+  <div class="tw-flex tw-gap-2">
+    <h1 class="tw-text-26 tw-font-semibold tw-font-brand-header">{{ 'cart.title' | t }}</h1>
+    <div v-if="totalItemCount > 0" class="tw-text-26 tw-font-semibold tw-font-brand-header">([[ totalItemCount ]])</div>
+  </div>
+  <div class="tw-flex tw-relative tw-text-14 tw-w-full tw-gap-12 tw-mx-auto">
+    <!-- Cart Items -->
     <div class="tw-w-full tw-flex tw-flex-col tw-gap-2">
-      {% for item in cart.items %}
-        <div class="tw-flex tw-gap-4 tw-w-full ">
-          <div class="tw-h-32 tw-object-cover tw-aspect-5/6 tw-relative tw-py-2">
-            {{
-              item.image
-              | image_url: width: 200
-              | image_tag: loading: 'lazy', class: 'tw-size-full tw-aspect-5/6 tw-object-cover'
-            }}
+      <div
+        v-for="item in cartItems"
+        :key="item.key"
+        class="tw-flex tw-gap-4 tw-w-full"
+      >
+        <a :href="item.url" class="tw-h-32 tw-object-cover tw-aspect-5/6 tw-relative tw-py-2">
+          <img
+            v-if="item.featured_image"
+            :src="item.featured_image.url"
+            :alt="item.title"
+            loading="lazy"
+            class="tw-size-full tw-aspect-5/6 tw-object-cover"
+          >
+        </a>
+        <div class="tw-flex tw-flex-col tw-gap-1">
+          <!-- Title -->
+          <a :href="item.url" class="tw-text-16 tw-text-brand-primary tw-flex tw-gap-2 tw-flex-row">
+            <p>[[ item.title ]]</p>
+          </a>
+          <!-- Item Identifiers -->
+          <div class="tw-flex tw-gap-4">
+            <div v-if="item.properties && item.properties._isbn">ISBN: [[ item.properties._isbn ]]</div>
           </div>
-          <div class="tw-flex tw-flex-col tw-gap-1">
-            <!-- Title -->
-            <a href="/" class="tw-text-16 tw-text-brand-primary tw-flex tw-gap-2 tw-flex-row">
-              <p>{{ item.product.title }}</p>
-            </a>
-            <!-- Item Identifiers -->
-            <div class="tw-flex tw-gap-4">
-              <div>ISBN: XXXXXXXXXXXX</div>
-              <div>TB CODE: XXXXXXXXXXXXX</div>
-            </div>
-            <!-- Quantity Editor -->
-            <div class="tw-flex tw-items-center tw-w-fit tw-justify-start tw-gap-2">
-              <div>QTY:</div>
-              <input
-                type="text"
-                name="updates[]"
-                placeholder="0"
-                class=" tw-p-0.5 tw-px-4 tw-w-24 tw-text-center"
-                value="{{ item.quantity }}"
-              >
-              <input type="submit" value="{{ 'cart.update' | t }}">
-            </div>
-            <!-- Prices -->
-            <div class="tw-flex tw-gap-4">
-              <div>Price: {{ item.product.price | money }}</div>
-              <div>Total: {{ item.product.price | times: item.quantity | money }}</div>
-            </div>
+          <!-- Quantity Editor -->
+          <div class="tw-flex tw-items-center tw-w-fit tw-justify-start tw-gap-2">
+            <div>QTY:</div>
+            <input
+              type="number"
+              :value="item.quantity"
+              min="0"
+              class="tw-p-0.5 tw-px-2 tw-border tw-border-gray-400 tw-w-16 tw-text-center"
+              @input="onQtyInput(item, $event)"
+            >
+          </div>
+          <!-- Prices -->
+          <div class="tw-flex tw-gap-4">
+            <div>Price: [[ formatMoney(item.price) ]]</div>
+            <div>Total: [[ formatMoney(item.line_price) ]]</div>
           </div>
         </div>
-      {% endfor %}
+      </div>
+
       <a
         href="/"
         class="tw-bg-brand-primary tw-p-1.5 tw-text-white tw-uppercase tw-text-18 tw-w-full tw-max-w-72 tw-text-center tw-rounded-sm tw-mt-4"
@@ -59,37 +64,107 @@
         Continue Shopping
       </a>
     </div>
-    <div class="tw-w-full tw-font-semibold tw-font-brand-body tw-max-w-80 tw-flex tw-flex-col tw-gap-24 tw-h-full tw-justify-between">
-      <div class="tw-flex tw-flex-col tw-gap-4">
-        <div>Your Order</div>
-        <div class="tw-flex tw-flex-col tw-gap-1">
-          <div class="tw-flex tw-justify-between tw-w-full tw-gap-4">
-            <div>Subtotal:</div>
-            <div>{{ cart.items_subtotal_price | money }}</div>
+
+    <!-- Order Summary -->
+    <div class="tw-w-full tw-font-semibold tw-font-brand-body tw-rounded-md tw-bg-brand-eggshell tw-max-w-80 tw-sticky tw-top-0 tw-h-full tw-justify-start">
+      <div class="tw-w-full tw-font-semibold tw-font-brand-body tw-border tw-border-gray-400 tw-rounded-md tw-bg-brand-eggshell tw-max-w-80 tw-flex tw-flex-col tw-gap-24 tw-h-full tw-justify-between">
+        <div class="tw-flex tw-flex-col tw-gap-4">
+          <div class="tw-p-4 tw-text-16 tw-border-b tw-border-gray-400">Your Order</div>
+          <div class="tw-flex tw-px-4 tw-flex-col tw-gap-1">
+            <div class="tw-flex tw-justify-between tw-w-full tw-gap-4">
+              <div>Subtotal:</div>
+              <div>[[ formatMoney(subtotal) ]]</div>
+            </div>
+            <div class="tw-flex tw-justify-between tw-w-full tw-gap-4">
+              <div>Shipping Estimate:</div>
+              <div>{{ 0 | money }}</div>
+            </div>
           </div>
+        </div>
+
+        <div class="tw-flex tw-flex-col tw-gap-8 tw-p-4 tw-border-t tw-border-gray-400">
           <div class="tw-flex tw-justify-between tw-w-full tw-gap-4">
-            <div>Shipping Estimate:</div>
-            <div>{{ 0 | money }}</div>
+            <div>Total:</div>
+            <div>[[ formatMoney(total) ]]</div>
           </div>
         </div>
       </div>
-
-      <div class="tw-flex tw-flex-col tw-gap-8">
-        <div class="tw-flex tw-justify-between tw-w-full tw-gap-4">
-          <div>Total:</div>
-          <div>{{ cart.total_price | money }}</div>
+      <!-- Checkout button / spinner -->
+      <a
+        v-if="!updatingCart"
+        href="{{ routes.checkout_url }}"
+        class="tw-flex tw-gap-3 tw-rounded-md tw-items-center tw-justify-center tw-bg-brand-secondary tw-p-1.5 tw-text-offblack tw-uppercase tw-text-20 tw-w-full tw-text-center"
+      >
+        <span class="tw-size-4 tw-mb-1">{% render 'icon-lock' %}</span>
+        Checkout
+      </a>
+      <div
+        v-else
+        class="tw-bg-brand-secondary tw-rounded-md tw-p-1.5 tw-cursor-wait tw-flex tw-items-center tw-justify-center"
+      >
+        <div class="tw-size-6 tw-animate-spin">
+          {% render 'icon-spin' %}
         </div>
-        <input
-          class="tw-bg-brand-secondary tw-p-1.5 tw-text-offblack tw-uppercase tw-text-20 tw-w-full"
-          type="submit"
-          name="checkout"
-          value="Checkout"
-        >
       </div>
     </div>
   </div>
-</form>
+</div>
 
+<script>
+  Vue.createApp({
+    delimiters: ['[[', ']]'],
+    mixins: [global, cart],
+    data() {
+      return {
+        cartItems: {{ cart.items | json }},
+        cartData: {{ cart | json }},
+        subtotal: {{ cart.items_subtotal_price }},
+        total: {{ cart.total_price }},
+        updatingCart: false,
+        debounceTimers: {},
+        moneyFmt: {{ shop.money_format | json }},
+      };
+    },
+    computed: {
+      totalItemCount() {
+        return this.cartItems.reduce((sum, item) => sum + item.quantity, 0);
+      },
+    },
+    methods: {
+      formatMoney(cents) {
+        const amount = (cents / 100).toFixed(2);
+        return this.moneyFmt
+          .replace(/\{\{amount\}\}/g, amount)
+          .replace(/\{\{amount_no_decimals\}\}/g, String(Math.round(cents / 100)))
+          .replace(/\{\{amount_with_comma_separator\}\}/g, amount.replace('.', ','));
+      },
+      onQtyInput(item, event) {
+        const qty = parseInt(event.target.value, 10);
+        if (isNaN(qty) || qty < 0) return;
+        clearTimeout(this.debounceTimers[item.key]);
+        this.debounceTimers[item.key] = setTimeout(() => this.updateQuantity(item, qty), 800);
+      },
+      updateQuantity(item, qty) {
+        this.updatingCart = true;
+        fetch('/cart/change.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: item.key, quantity: qty }),
+        })
+          .then((r) => r.json())
+          .then((updatedCart) => {
+            item.quantity = qty;
+            item.line_price = item.price * qty;
+            this.subtotal = updatedCart.items_subtotal_price;
+            this.total = updatedCart.total_price;
+            this.bus.$emit('refreshCart');
+          })
+          .catch(() => {})
+          .finally(() => { this.updatingCart = false; });
+      },
+    },
+  }).mount('.section-cart-{{ section.id }}');
+</script>
 {% schema %}
 {
   "name": "t:general.cart",

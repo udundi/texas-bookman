@@ -205,6 +205,7 @@
 
         mainItemProperties['_tags'] = {{ product.tags | json }};
         mainItemProperties['_isbn'] = {{ product.metafields.facts.isbn | json }};
+        mainItemProperties['_tb'] = {{ product.metafields.custom.tb_code | json }};
         // Only add properties if there are any
         if (Object.keys(mainItemProperties).length > 0) {
           mainItem.properties = mainItemProperties;
@@ -241,6 +242,7 @@
           this.$forceUpdate();
         }).catch((error) => {
           console.error('Cart add error:', error);
+          this.bus.$emit('cartFailedToAdd', error);
           this.addingToCart = false;
         }).finally(() => {
           this.addingToCart = false;

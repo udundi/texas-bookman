@@ -1,0 +1,51 @@
+<div
+  class="
+    {% if block.settings.visibility contains 'mobile' %}
+      tw-flex
+      md:tw-hidden
+    {% elsif block.settings.visibility contains "desktop" %}
+      tw-hidden
+      md:tw-flex
+    {% else %}
+      tw-flex
+    {% endif %}
+    tw-text-gray-500 tw-gap-2
+  "
+>
+  <div><span class="tw-font-bold">ISBN:</span> {{ product.metafields.facts.isbn }}</div>
+  <div><span class="tw-font-bold">TB Code:</span> {{ product.metafields.custom.tb_code }}</div>
+</div>
+
+{% schema %}
+{
+  "name": "PDP Info Numbers",
+  "class": "tw-contents",
+  "settings": [
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Visibility",
+      "options": [
+        {
+          "value": "both",
+          "label": "Mobile and Desktop"
+        },
+        {
+          "value": "mobile",
+          "label": "Mobile only"
+        },
+        {
+          "value": "desktop",
+          "label": "Desktop only"
+        }
+      ],
+      "default": "both"
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP Info Numbers"
+    }
+  ]
+}
+{% endschema %}

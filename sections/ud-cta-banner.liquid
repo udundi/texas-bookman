@@ -1,0 +1,411 @@
+{% style %}
+  .ud-cta-banner-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background-color: {{ section.settings.background_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    text-align: center;
+  }
+
+  .ud-cta-banner-{{ section.id }} .cta-bg-image {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: {{ section.settings.decoration_width }}%;
+    max-width: 900px;
+    pointer-events: none;
+    opacity: {{ section.settings.decoration_opacity | divided_by: 100.0 }};
+  }
+
+  .ud-cta-banner-{{ section.id }} .cta-inner {
+    position: relative;
+    z-index: 1;
+    max-width: {{ section.settings.content_max_width }}px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .ud-cta-banner-{{ section.id }} .cta-heading {
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+    color: {{ section.settings.heading_color }};
+    font-size: clamp({{ section.settings.heading_size_min }}px, 3.5vw, {{ section.settings.heading_size_max }}px);
+  }
+
+  .ud-cta-banner-{{ section.id }} .cta-body {
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    color: {{ section.settings.body_color }};
+    font-size: clamp(14px, 1.2vw, {{ section.settings.body_size }}px);
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2rem;
+  }
+
+  .ud-cta-banner-{{ section.id }} .cta-btn {
+    display: inline-block;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    background-color: {{ section.settings.button_bg }};
+    color: {{ section.settings.button_text_color }};
+    padding: {{ section.settings.button_padding_y }}px {{ section.settings.button_padding_x }}px;
+    font-size: {{ section.settings.button_font_size }}px;
+    min-width: {{ section.settings.button_min_width }}px;
+    transition: opacity 0.2s;
+  }
+
+  .ud-cta-banner-{{ section.id }} .cta-btn:hover {
+    opacity: 0.88;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ud-cta-banner-{{ section.id }} {
+      padding-top: {{ section.settings.mobile_padding_top }}px;
+      padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+    }
+
+    .ud-cta-banner-{{ section.id }} .cta-heading {
+      font-size: {{ section.settings.mobile_heading_size }}px;
+    }
+
+    .ud-cta-banner-{{ section.id }} .cta-body {
+      font-size: {{ section.settings.mobile_body_size }}px;
+    }
+
+    .ud-cta-banner-{{ section.id }} .cta-btn {
+      display: block;
+      width: 100%;
+      max-width: 360px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .ud-cta-banner-{{ section.id }} .cta-bg-image {
+      width: 160%;
+    }
+  }
+{% endstyle %}
+
+<section
+  id="ud-cta-banner-{{ section.id }}"
+  class="ud-cta-banner-{{ section.id }} tw"
+  aria-label="{{ section.settings.heading | escape }}">
+
+  {%- if section.settings.decoration_image != blank -%}
+    {{
+      section.settings.decoration_image
+      | image_url: width: 1200
+      | image_tag:
+        class: 'cta-bg-image',
+        alt: '',
+        loading: 'lazy',
+        aria-hidden: 'true'
+    }}
+  {%- endif -%}
+
+  <div class="cta-inner">
+    {%- if section.settings.eyebrow != blank -%}
+      <p
+        class="tw-font-bold tw-uppercase tw-tracking-widest tw-mb-3"
+        style="color: {{ section.settings.eyebrow_color }}; font-size: {{ section.settings.eyebrow_size }}px;">
+        {{ section.settings.eyebrow }}
+      </p>
+    {%- endif -%}
+
+    {%- if section.settings.heading != blank -%}
+      <{{ section.settings.heading_tag }} class="cta-heading">
+        {{ section.settings.heading }}
+      </{{ section.settings.heading_tag }}>
+    {%- endif -%}
+
+    {%- if section.settings.body_text != blank -%}
+      <p class="cta-body">{{ section.settings.body_text }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.button_label != blank -%}
+      <a href="{{ section.settings.button_url }}" class="cta-btn">
+        {{ section.settings.button_label }}
+      </a>
+    {%- endif -%}
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "CTA Banner",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#20448F"
+    },
+    {
+      "type": "image_picker",
+      "id": "decoration_image",
+      "label": "Decoration / Illustration Image"
+    },
+    {
+      "type": "range",
+      "id": "decoration_opacity",
+      "label": "Decoration Opacity (%)",
+      "min": 5,
+      "max": 100,
+      "step": 5,
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "decoration_width",
+      "label": "Decoration Width (% of section)",
+      "min": 20,
+      "max": 120,
+      "step": 5,
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Eyebrow Text"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow Color",
+      "default": "#F0BA3A"
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_size",
+      "label": "Eyebrow Font Size (px)",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Wholesale Books. Exceptional Value."
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading Tag",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_min",
+      "label": "Heading Min Size — mobile clamp (px)",
+      "min": 20,
+      "max": 48,
+      "step": 2,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "heading_size_max",
+      "label": "Heading Max Size — desktop clamp (px)",
+      "min": 32,
+      "max": 80,
+      "step": 2,
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_size",
+      "label": "Mobile Heading Size (px)",
+      "min": 20,
+      "max": 52,
+      "step": 2,
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "Body Text"
+    },
+    {
+      "type": "textarea",
+      "id": "body_text",
+      "label": "Body Text",
+      "default": "Access wholesale pricing on thousands of books with low minimums and fast fulfillment."
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Body Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "label": "Body Font Size — desktop (px)",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mobile_body_size",
+      "label": "Body Font Size — mobile (px)",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Start Shopping"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button Background",
+      "default": "#F0BA3A"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#212121"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "label": "Button Font Size (px)",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "button_padding_y",
+      "label": "Button Padding Vertical (px)",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_padding_x",
+      "label": "Button Padding Horizontal (px)",
+      "min": 16,
+      "max": 80,
+      "step": 4,
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "button_min_width",
+      "label": "Button Min Width (px)",
+      "min": 100,
+      "max": 500,
+      "step": 10,
+      "default": 280
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "label": "Content Max Width (px)",
+      "min": 400,
+      "max": 1200,
+      "step": 40,
+      "default": 800
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Desktop Padding Top (px)",
+      "min": 20,
+      "max": 120,
+      "step": 4,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Desktop Padding Bottom (px)",
+      "min": 20,
+      "max": 120,
+      "step": 4,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile Padding Top (px)",
+      "min": 20,
+      "max": 100,
+      "step": 4,
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile Padding Bottom (px)",
+      "min": 20,
+      "max": 100,
+      "step": 4,
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "CTA Banner"
+    }
+  ]
+}
+{% endschema %}

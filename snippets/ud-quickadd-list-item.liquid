@@ -126,6 +126,8 @@
 <script>
   new Vue({
     el: '#{{ product_id }}',
+    delimiters: ['[[', ']]'],
+    mixins: [global],
     data() {
       return {
         addingToCart: false,
@@ -139,14 +141,13 @@
         let items = [
           {
             quantity: this.quantity,
-            'properties': {
+            properties: {
               '_tags': {{ product.tags | json }},
+              '_isbn': {{ product.metafields.facts.isbn | json }},
             },
-            id: '{{ product.selected_or_first_available_variant.id }}',
+            id: {{ product.selected_or_first_available_variant.id }},
           },
         ];
-        console.log(items);
-
         fetch('/cart/add.js', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -156,17 +157,13 @@
           if (!r.ok) throw data;
           return data;
         }).then((data) => {
-          console.log(data);
-          this.bus.$emit('showCart');
+          const recentItem = data.items?.[0];
           this.bus.$emit('refreshCart');
+          this.bus.$emit('cartItemAdded', recentItem);
           this.addingToCart = false;
           this.$forceUpdate();
         }).catch((error) => {
-          console.log(error, 'caught error');
-          Swal.fire({
-            icon: 'error',
-            text: error && error.description ? error.description : 'Unable to add item to cart.',
-          });
+          this.bus.$emit('cartFailedToAdd', error);
           this.addingToCart = false;
         }).finally(() => {
           this.addingToCart = false;

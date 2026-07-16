@@ -196,7 +196,7 @@
     <div class="tw-flex tw-w-full tw-flex-col md:tw-flex-row">
       <!-- Filter Container -->
       <div
-        class="ud-filter-container tw-fixed tw-z-50 tw-w-full tw-flex-col tw-justify-start tw-px-2 tw-py-4 md:tw-sticky md:tw-w-96 md:tw-gap-2 tw-border-r tw-border-gray-400 tw-mr-[-1px] tw-my-[-1px]"
+        class="ud-filter-container tw-fixed tw-z-50 tw-w-full tw-flex-col tw-justify-start tw-px-2 tw-py-4 tw-top-0 md:tw-sticky md:tw-w-96 md:tw-gap-2 tw-border-r tw-border-gray-400 tw-mr-[-1px] tw-my-[-1px]"
         :class="mobileFiltersOpen ? 'tw-flex' : 'md:tw-flex tw-hidden'"
       >
         <div
@@ -242,31 +242,215 @@
                   class="product-grid-card"
                   :style="{ display: viewMode === 'grid' ? 'block' : 'none' }"
                 >
-                  {% render 'ud-quickadd-card',
-                    cur_product: product,
-                    video_aspect: true,
-                    small_card: true,
-                    button_style: section.settings.button_style,
-                    product_reviews: 5,
-                    show_button_type: section.settings.button_type,
-                    button_text: section.settings.button_text,
-                    show_price: section.settings.show_price,
-                    show_color_options: section.settings.show_color_options
-                  %}
+                  <!-- Inlined ud-quickadd-card -->
+                  <div class="tw-justify-between tw-flex tw-flex-col tw-p-4 tw-border tw-border-gray-400 tw-mr-[-1px] tw-mb-[-1px]">
+                    <a href="{{ product.url | default: '/' }}">
+                      <div class="tw-w-full tw-aspect-square tw-object-contain md:tw-mb-3 tw-mb-2 tw-relative">
+                        {% if product.featured_image != blank %}
+                          {{
+                            product.featured_image
+                            | image_url: width: 400
+                            | image_tag: loading: 'lazy', class: 'tw-size-full tw-aspect-square tw-object-contain'
+                          }}
+                        {% else %}
+                          <div class="tw-size-full">
+                            {{
+                              'product-1'
+                              | placeholder_svg_tag: 'tw-w-full tw-max-w-[450px] tw-mx-auto tw-object-cover'
+                            }}
+                          </div>
+                        {% endif %}
+                        {% if product.tags contains 'New Product' %}
+                          <div class="tw-absolute tw-top-2.5 tw-right-2 tw-text-12 tw-px-4 tw-py-1 tw-bg-black tw-rounded-full tw-text-white tw-font-semibold">
+                            New
+                          </div>
+                        {% endif %}
+                      </div>
+                    </a>
+                    <div class="tw-flex tw-flex-col tw-justify-between tw-h-full tw-w-full tw-gap-x-4 tw-gap-y-3 tw-items-start">
+                      <div class="tw-w-full">
+                        <div class="tw-flex tw-gap-x-4 tw-gap-y-1 tw-pb-2 tw-items-center tw-flex-wrap tw-w-full tw-justify-between">
+                          <div class="tw-flex tw-w-full tw-flex-row tw-gap-2 tw-items-start tw-justify-between">
+                            <a class="tw-w-full tw-h-fit tw-max-w-96" href="{{ product.url | default: '/' }}">
+                              <h3 class="tw-font-semibold tw-text-14 tw-text-brand-primary tw-w-full tw-leading-tight tw-h-fit tw-m-0">
+                                {{ product.title | default: 'Product title' }}
+                              </h3>
+                            </a>
+                          </div>
+                          <h3 class="tw-font-semibold tw-text-14 tw-text-gray-600 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
+                            QTY:
+                            <span class="tw-font-normal">
+                              {{- product.selected_or_first_available_variant.inventory_quantity -}}
+                            </span>
+                          </h3>
+                          <div class="tw-flex tw-flex-col">
+                            <div class="tw-text-gray-600 tw-text-14 tw-font-semibold">
+                              List:
+                              <span class="tw-font-normal">
+                                {{- product.compare_at_price | default: product.price | money -}}
+                              </span>
+                            </div>
+                            <div class="tw-font-semibold tw-text-14">
+                              Your Net Price: <span class="tw-font-normal">{{ product.price | money }}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {% if section.settings.button_type != 'none' %}
+                        {% if section.settings.button_type == 'quick-add' %}
+                          <div class="tw-flex tw-gap-2 tw-items-stretch tw-w-full tw-h-full">
+                            <div class="tw-flex tw-items-center tw-gap-2 tw-w-full tw-h-full">
+                              <span>QTY:</span>
+                              <input
+                                type="number"
+                                min="1"
+                                placeholder="1"
+                                :value="getQty({{ product.selected_or_first_available_variant.id }})"
+                                @input="setQty({{ product.selected_or_first_available_variant.id }}, $event.target.value)"
+                                class="tw-w-full tw-text-center tw-leading-none tw-py-0.5 tw-border tw-border-gray-400 tw-rounded tw-h-full tw-text-12 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
+                                :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
+                              >
+                            </div>
+                            <button
+                              type="button"
+                              data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+                              data-tags='{{ product.tags | json }}'
+                              data-isbn="{{ product.metafields.facts.isbn }}"
+                              class="tw-bg-brand-secondary tw-w-full tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-black tw-rounded-md tw-flex tw-justify-center tw-leading-none tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center"
+                              @click="addToCart({{ product.selected_or_first_available_variant.id }}, $event.currentTarget)"
+                              :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
+                            >
+                              [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : '{{ section.settings.button_text | default: 'Add to Cart' }}' ]]
+                            </button>
+                          </div>
+                        {% else %}
+                          <a
+                            href="{{ product.url }}"
+                            class="tw-bg-white tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-black tw-rounded-full tw-flex tw-justify-center tw-border-black tw-border-2 tw-py-1 tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap"
+                          >
+                            <span>{{ section.settings.button_text | default: 'Shop Now' }}</span>
+                          </a>
+                        {% endif %}
+                      {% endif %}
+                    </div>
+                  </div>
                 </div>
                 <div
                   data-product-list-item
                   class="product-grid-list"
                   :style="{ display: viewMode === 'list' ? 'block' : 'none' }"
                 >
-                  {% render 'ud-quickadd-list-item',
-                    product: product,
-                    button_style: section.settings.button_style,
-                    show_button_type: section.settings.button_type,
-                    button_text: section.settings.button_text,
-                    show_price: section.settings.show_price,
-                    show_color_options: section.settings.show_color_options
-                  %}
+                  <!-- Inlined ud-quickadd-list-item -->
+                  <div class="tw-flex tw-flex-row tw-items-center tw-border tw-mb-[-1px] tw-border-gray-400 tw-p-4 tw-gap-4 tw-w-full">
+                    <a
+                      href="{% if product.metafields.custom.alt_gallery_link != blank %}{{ product.metafields.custom.alt_gallery_link.value.url }}{% else %}{{ product.url | default: '/' }}{% endif %}"
+                      class="tw-flex-shrink-0"
+                    >
+                      <div class="tw-h-36 tw-object-cover tw-aspect-5/6 tw-relative">
+                        {% if product.featured_image != blank %}
+                          {{
+                            product.featured_image
+                            | image_url: width: 200
+                            | image_tag: loading: 'lazy', class: 'tw-size-full tw-aspect-5/6 tw-object-cover'
+                          }}
+                        {% else %}
+                          <div class="tw-size-full">
+                            {{ 'product-1' | placeholder_svg_tag: 'tw-w-full tw-h-full tw-object-cover' }}
+                          </div>
+                        {% endif %}
+                        {% if product.tags contains 'New Product' %}
+                          <div class="tw-absolute tw-top-1 tw-right-1 tw-text-10 tw-px-2 tw-py-0.5 tw-bg-black tw-rounded-full tw-text-white tw-font-semibold">
+                            New
+                          </div>
+                        {% endif %}
+                      </div>
+                    </a>
+                    <div class="tw-py-1 tw-w-full tw-flex tw-flex-col tw-justify-between tw-gap-2 tw-min-w-0 tw-grow">
+                      <div class="tw-flex tw-grow tw-flex-col tw-justify-between tw-gap-1">
+                        <div class="tw-flex tw-w-full tw-flex-row tw-justify-between tw-gap-x-3 tw-gap-y-0.5 tw-text-12">
+                          <a href="{{ product.url | default: '/' }}">
+                            <h3 class="tw-font-semibold tw-text-13 tw-text-brand-primary tw-text-14 tw-leading-tight tw-m-0 tw-truncate">
+                              {{ product.title | default: 'Product title' }}
+                            </h3>
+                          </a>
+                          <div class="tw-text-gray-500 tw-text-14 tw-font-normal">
+                            List:
+                            <span class="tw-font-normal">
+                              {{- product.compare_at_price | default: product.price | money -}}
+                            </span>
+                          </div>
+                        </div>
+                        <div class="tw-flex tw-w-full tw-flex-wrap tw-justify-between tw-gap-x-3 tw-gap-y-0.5 tw-text-14">
+                          <div>
+                            <span class="tw-font-medium">by</span>
+                            <a class="tw-font-medium tw-capitalize">
+                              {{- product.metafields.custom.author.value | default: 'Author Name' -}}
+                            </a>
+                          </div>
+                          <div class="tw-font-semibold">
+                            Your Net Price: <span class="tw-font-semibold">{{ product.price | money }}</span>
+                          </div>
+                        </div>
+                        <div class="tw-grow tw-text-14 tw-text-gray-500">
+                          {{ product.description | default: 'No description available.' }}
+                        </div>
+                        <div class="tw-flex tw-w-full tw-justify-between tw-items-end tw-gap-x-3 tw-gap-y-0.5 tw-text-14">
+                          <div class="tw-flex tw-w-full tw-flex-wrap tw-text-gray-700 tw-font-semibold tw-gap-x-3 tw-gap-y-0.5 tw-text-14">
+                            <div>
+                              ISBN:
+                              <span class="tw-font-normal">
+                                {{- product.metafields.facts.isbn | default: 'XXXXXXXX' -}}
+                              </span>
+                            </div>
+                            <div>
+                              QTY:
+                              <span class="tw-font-normal">
+                                {{- product.selected_or_first_available_variant.inventory_quantity -}}
+                              </span>
+                            </div>
+                          </div>
+                          <div class="tw-flex-shrink-0">
+                            {% if section.settings.button_type != 'none' %}
+                              {% if section.settings.button_type == 'quick-add' %}
+                                <div class="tw-flex tw-items-center tw-gap-2 tw-h-full">
+                                  <div class="tw-flex tw-items-center tw-gap-1">
+                                    <label class="tw-text-14 tw-font-semibold">QTY:</label>
+                                    <input
+                                      type="number"
+                                      min="1"
+                                      placeholder="1"
+                                      :value="getQty({{ product.selected_or_first_available_variant.id }})"
+                                      @input="setQty({{ product.selected_or_first_available_variant.id }}, $event.target.value)"
+                                      class="tw-w-14 tw-text-center tw-leading-none tw-py-0.5 tw-px-1 tw-border tw-border-gray-400 tw-rounded tw-text-14 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
+                                      :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
+                                    >
+                                  </div>
+                                  <button
+                                    type="button"
+                                    data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+                                    data-tags='{{ product.tags | json }}'
+                                    data-isbn="{{ product.metafields.facts.isbn }}"
+                                    class="tw-bg-brand-secondary tw-cursor-pointer tw-pointer-events-auto tw-text-10 tw-text-black tw-rounded-md tw-flex tw-justify-center tw-leading-none tw-px-6 tw-py-1.5 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-sans hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center"
+                                    @click="addToCart({{ product.selected_or_first_available_variant.id }}, $event.currentTarget)"
+                                    :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
+                                  >
+                                    [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : '{{ section.settings.button_text | default: 'QUICK ADD' }}' ]]
+                                  </button>
+                                </div>
+                              {% else %}
+                                <a
+                                  href="{{ product.url }}"
+                                  class="tw-bg-white tw-cursor-pointer tw-pointer-events-auto tw-text-11 tw-text-black tw-rounded-full tw-flex tw-justify-center tw-border-black tw-border tw-py-1 tw-px-3 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap"
+                                >
+                                  <span>{{ section.settings.button_text | default: 'View' }}</span>
+                                </a>
+                              {% endif %}
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               {%- endfor %}
               {% if section.settings.enable_infinite_scroll %}
@@ -343,12 +527,15 @@
   new Vue({
     el: '.section-{{ section.id }}-props',
     delimiters: ['[[', ']]'],
+    mixins: [global],
     data() {
       return {
         mobileFiltersOpen: false,
         sectionHeight: 0,
         openFilters: [],
         viewMode: 'grid',
+        quantities: {},
+        addingToCartMap: {},
       };
     },
     mounted() {
@@ -422,10 +609,37 @@
       },
       toggleViewMode(mode) {
         this.viewMode = mode;
-        console.log('working')
-        console.log(this.viewMode, 'view')
-        // Store preference in localStorage
         localStorage.setItem('productViewMode', mode);
+      },
+      getQty(variantId) {
+        return this.quantities[variantId] || 1;
+      },
+      setQty(variantId, val) {
+        this.$set(this.quantities, variantId, parseInt(val, 10) || 1);
+      },
+      isAdding(variantId) {
+        return !!this.addingToCartMap[variantId];
+      },
+      addToCart(variantId, btn) {
+        const qty = this.getQty(variantId);
+        const tags = JSON.parse(btn.dataset.tags || '[]');
+        const isbn = btn.dataset.isbn || null;
+        this.$set(this.addingToCartMap, variantId, true);
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            items: [{ id: variantId, quantity: qty, properties: { '_tags': tags, '_isbn': isbn } }],
+          }),
+        })
+          .then(async (r) => { const data = await r.json(); if (!r.ok) throw data; return data; })
+          .then((data) => {
+            const recentItem = data.items?.[0];
+            this.bus.$emit('refreshCart');
+            this.bus.$emit('cartItemAdded', recentItem);
+          })
+          .catch((error) => { this.bus.$emit('cartFailedToAdd', error); })
+          .finally(() => { this.$set(this.addingToCartMap, variantId, false); });
       },
     },
   });

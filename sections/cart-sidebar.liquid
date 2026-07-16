@@ -2,7 +2,7 @@
   <div
     v-if="showCartSidebar"
     :class="fading ? 'tw-animate-fade-out' : 'tw-animate-fade-down'"
-    class="tw-bg-white tw-absolute tw-pointer-events-auto tw-z-[999] tw-top-4 tw-right-4"
+    class="tw-bg-white tw-fixed tw-pointer-events-auto tw-z-[999] tw-top-4 tw-right-4"
   >
     <div class="tw-absolute tw-top-0 tw-right-0 md:tw-w-[570px] tw-w-full tw-max-w-[95vw] tw-bg-brand-eggshell tw-rounded-md tw-border tw-border-gray-400 tw-flex tw-flex-col">
       <!-- Recently Added Banner -->
@@ -10,11 +10,15 @@
         v-if="recentlyAddedItem"
         class="tw-mb-2 tw-flex tw-items-center tw-gap-3 tw-p-3 tw-text-sm"
       >
-        <div class="tw-bg-amber-400 tw-p-2 tw-rounded-full">
+        <div
+          :class="failed ? 'tw-bg-red-500 tw-rotate-45 tw-text-white' : 'tw-bg-amber-400 tw-text-offblack'"
+          class="tw-p-2 tw-rounded-full"
+        >
           {% render 'icon-plus' %}
         </div>
         <div class="tw-min-w-0 tw-flex-1">
-          <p class="tw-text-16 tw-text-black">Added to cart</p>
+          <p v-if="!failed" class="tw-text-16 tw-text-black">Added to cart</p>
+          <p v-else class="tw-text-16 tw-text-black tw-font-semibold">Unable to add to cart</p>
         </div>
         <button
           @click="hideCart"
@@ -24,7 +28,13 @@
         </button>
       </div>
 
+      <!-- Error message block -->
+      <div v-if="failed" class="tw-px-4 tw-pb-6 tw-pt-2 tw-text-start">
+        <p class="tw-text-brand-sale tw-font-bold tw-text-14">[[ errorMessage ]]</p>
+      </div>
+
       <div
+        v-if="!failed"
         id="{{ product_id }}"
         class="{{ class }} tw-flex tw-flex-row tw-items-center tw-p-4 tw-gap-4 tw-w-full"
       >
@@ -66,14 +76,17 @@
                   QTY:
                   <span class="tw-font-normal"> [[ recentlyAddedItem.quantity ]] </span>
                 </div>
-                <div class="tw-font-semibold">[[ recentlyAddedItem.price | currency ]]</div>
+                <div class="tw-font-semibold">[[ recentlyAddedItem.price / 100 | currency ]]</div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div v-if="(visibleCartItems.length > 0 || cartBundles.length > 0) && !cartStillLoading" class="tw-px-4 tw-pb-8">
+      <div
+        v-if="!failed && (visibleCartItems.length > 0 || cartBundles.length > 0) && !cartStillLoading"
+        class="tw-px-4 tw-pb-8"
+      >
         <div class="tw-w-full tw-block">
           <div class="tw-bg-white tw-pt-4">
             <div
@@ -130,6 +143,8 @@
       return {
         cartItems: {{ cart.items | json }},
         cartData: {{ cart | json  }},
+        failed: false,
+        errorMessage: '',
         testVariant: '',
         recentlyAddedItem: null,
         fading: false,
@@ -147,8 +162,22 @@
       this.bus.$on("cartItemAdded", (item) => {
         clearTimeout(this.fadingTimeout);
         clearTimeout(this.hideCartTimeout);
+        this.failed = false;
+        this.errorMessage = '';
         this.fading = false;
         this.recentlyAddedItem = item;
+        this.showCartSidebar = true;
+        this.fadingTimeout = setTimeout(() => { this.fading = true }, 3500);
+        this.hideCartTimeout = setTimeout(() => { this.recentlyAddedItem = null; this.showCartSidebar = false; this.fading = false; }, 4000);
+      });
+
+      this.bus.$on("cartFailedToAdd", (error) => {
+        clearTimeout(this.fadingTimeout);
+        clearTimeout(this.hideCartTimeout);
+        this.failed = true;
+        this.errorMessage = error?.description || error?.message || error?.error || 'This item could not be added to your cart.';
+        this.fading = false;
+        this.recentlyAddedItem = {};
         this.showCartSidebar = true;
         this.fadingTimeout = setTimeout(() => { this.fading = true }, 3500);
         this.hideCartTimeout = setTimeout(() => { this.recentlyAddedItem = null; this.showCartSidebar = false; this.fading = false; }, 4000);
