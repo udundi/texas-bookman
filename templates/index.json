@@ -22,6 +22,7 @@
         "decoration_image": "shopify://shop_images/Group.png",
         "decoration_opacity": 60,
         "decoration_width": 35,
+        "mobile_decoration_width": 100,
         "eyebrow": "",
         "eyebrow_color": "#f0ba3a",
         "eyebrow_size": 12,
@@ -47,7 +48,7 @@
         "padding_top": 64,
         "padding_bottom": 152,
         "mobile_padding_top": 48,
-        "mobile_padding_bottom": 100
+        "mobile_padding_bottom": 112
       }
     },
     "ud_hero_banner_iGd6Ft": {
