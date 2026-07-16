@@ -109,7 +109,7 @@
         "desktop_height": 480,
         "show_overlay": true,
         "overlay_color": "#000000",
-        "overlay_opacity": 30,
+        "overlay_opacity": 20,
         "eyebrow": "",
         "eyebrow_color": "#ffffff",
         "eyebrow_size": 12,
