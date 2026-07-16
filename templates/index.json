@@ -37,7 +37,7 @@
         "body_size": 16,
         "mobile_body_size": 15,
         "button_label": "Start Shopping",
-        "button_url": "",
+        "button_url": "shopify://collections/frontpage",
         "button_bg": "#f0ba3a",
         "button_text_color": "#212121",
         "button_font_size": 13,
