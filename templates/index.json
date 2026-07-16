@@ -135,6 +135,74 @@
         "mobile_body_color": "#212121"
       }
     },
+    "ud_testimonials_carousel_NbYzVP": {
+      "type": "ud-testimonials-carousel",
+      "blocks": {
+        "testimonial_9pKzef": {
+          "type": "testimonial",
+          "settings": {
+            "star_count": 5,
+            "title": "Great Selection at Great Prices",
+            "quote": "\"We've been ordering from Texas Bookman for years. Their inventory is always changing, the pricing is competitive, and orders arrive quickly. It's become one of our go-to wholesale suppliers.\"",
+            "logo": "shopify://shop_images/coastalliving_1_1.png",
+            "attribution": ""
+          }
+        },
+        "testimonial_ttaepN": {
+          "type": "testimonial",
+          "settings": {
+            "star_count": 5,
+            "title": "Easy to Work With",
+            "quote": "\"The ordering process was straightforward, and their team was incredibly helpful throughout. We found exactly what we needed and appreciated the fast turnaround.\"",
+            "logo": "shopify://shop_images/food_wine_1.png",
+            "attribution": ""
+          }
+        },
+        "testimonial_8rrYca": {
+          "type": "testimonial",
+          "settings": {
+            "star_count": 5,
+            "title": "Reliable Wholesale Partner",
+            "quote": "\"We're always impressed by the variety of titles available and the value we receive. Texas Bookman makes it easy to keep our shelves stocked with books our customers love.\"",
+            "logo": "shopify://shop_images/vogue_1_1.png",
+            "attribution": ""
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_9pKzef",
+        "testimonial_ttaepN",
+        "testimonial_8rrYca"
+      ],
+      "name": "Testimonials Carousel",
+      "settings": {
+        "heading": "Trusted Wholesale Distribution Since 1983",
+        "heading_tag": "h2",
+        "heading_color": "#212121",
+        "heading_size_min": 24,
+        "heading_size_max": 40,
+        "content_max_width": 1280,
+        "slides_per_view_desktop": 3,
+        "slides_per_view_tablet": 2,
+        "card_gap": 24,
+        "loop": true,
+        "card_border_color": "#e5e7eb",
+        "card_padding": 28,
+        "star_color": "#F0BA3A",
+        "card_title_color": "#212121",
+        "card_title_size": 15,
+        "card_body_color": "#212121",
+        "card_body_size": 14,
+        "logo_max_height": 52,
+        "logo_max_width": 160,
+        "arrow_color": "#212121",
+        "background_color": "#ffffff",
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 40
+      }
+    },
     "ud_flexbox_BCC4jh": {
       "type": "ud-flexbox",
       "blocks": {
@@ -264,6 +332,7 @@
     "ud_cta_banner_xkxWDF",
     "ud_multi_carousel_DMK4LU",
     "ud_hero_banner_iGd6Ft",
+    "ud_testimonials_carousel_NbYzVP",
     "ud_flexbox_BCC4jh"
   ]
 }
