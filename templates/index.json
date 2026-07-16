@@ -197,8 +197,8 @@
         "logo_max_width": 160,
         "arrow_color": "#212121",
         "background_color": "#ffffff",
-        "padding_top": 64,
-        "padding_bottom": 64,
+        "padding_top": 44,
+        "padding_bottom": 8,
         "mobile_padding_top": 40,
         "mobile_padding_bottom": 40
       }
@@ -249,8 +249,8 @@
       ],
       "name": "Base Flexbox",
       "settings": {
-        "padding_top": 0,
-        "padding_bottom": 0,
+        "padding_top": 2,
+        "padding_bottom": 2,
         "mobile_padding_top": 0,
         "mobile_padding_bottom": 0,
         "padding_left": 0,
