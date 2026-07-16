@@ -185,6 +185,7 @@
         "basic_image_PNVGVw",
         "flex_box_VKGgji"
       ],
+      "disabled": true,
       "name": "Base Flexbox",
       "settings": {
         "padding_top": 2,
