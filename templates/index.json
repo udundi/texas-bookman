@@ -51,6 +51,53 @@
         "mobile_padding_bottom": 112
       }
     },
+    "ud_multi_carousel_DMK4LU": {
+      "type": "ud-multi-carousel",
+      "blocks": {
+        "multipurpose_carousel_yfaNdJ": {
+          "type": "_multipurpose-carousel",
+          "name": "Collection Carousel",
+          "settings": {
+            "carousel_type": "collection",
+            "product_source": "product_list",
+            "collection": "",
+            "product_list": [
+              "test-product",
+              "test-product-2",
+              "test-product-3",
+              "test-product-4",
+              "test-product-5"
+            ],
+            "button_url": "",
+            "button_text": "",
+            "mobile_slides": 1.3,
+            "tablet_slides": 2,
+            "sm_desktop_slides": 3,
+            "lg_desktop_slides": 4,
+            "show_price": true
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "multipurpose_carousel_yfaNdJ"
+      ],
+      "name": "Multi Carousel",
+      "settings": {
+        "section_title": "Featured Products",
+        "tab_titles": "",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0,
+        "padding_left": 2,
+        "padding_right": 2,
+        "mobile_padding_left": 2,
+        "mobile_padding_right": 2,
+        "background_color": "#fdfbf8",
+        "container_width": "md_desktop"
+      }
+    },
     "ud_hero_banner_iGd6Ft": {
       "type": "ud-hero-banner",
       "name": "Hero Banner",
@@ -210,60 +257,13 @@
         "content_overflow": "fit",
         "custom_id": ""
       }
-    },
-    "ud_multi_carousel_DMK4LU": {
-      "type": "ud-multi-carousel",
-      "blocks": {
-        "multipurpose_carousel_yfaNdJ": {
-          "type": "_multipurpose-carousel",
-          "name": "Collection Carousel",
-          "settings": {
-            "carousel_type": "collection",
-            "product_source": "product_list",
-            "collection": "",
-            "product_list": [
-              "test-product",
-              "test-product-2",
-              "test-product-3",
-              "test-product-4",
-              "test-product-5"
-            ],
-            "button_url": "",
-            "button_text": "",
-            "mobile_slides": 2.3,
-            "tablet_slides": 3,
-            "sm_desktop_slides": 4,
-            "lg_desktop_slides": 4,
-            "show_price": true
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "multipurpose_carousel_yfaNdJ"
-      ],
-      "name": "Multi Carousel",
-      "settings": {
-        "section_title": "Featured Products",
-        "tab_titles": "",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "mobile_padding_top": 0,
-        "mobile_padding_bottom": 0,
-        "padding_left": 2,
-        "padding_right": 2,
-        "mobile_padding_left": 2,
-        "mobile_padding_right": 2,
-        "background_color": "#fdfbf8",
-        "container_width": "md_desktop"
-      }
     }
   },
   "order": [
     "main",
     "ud_cta_banner_xkxWDF",
+    "ud_multi_carousel_DMK4LU",
     "ud_hero_banner_iGd6Ft",
-    "ud_flexbox_BCC4jh",
-    "ud_multi_carousel_DMK4LU"
+    "ud_flexbox_BCC4jh"
   ]
 }
