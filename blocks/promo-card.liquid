@@ -1,0 +1,402 @@
+<style>
+  .promo-card-{{ block.id }} {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: {{ block.settings.border_radius }}px;
+    background-color: {{ block.settings.background_color }};
+    width: 100%;
+    max-width: {{ block.settings.max_width }}px;
+    aspect-ratio: {{ block.settings.aspect_ratio }};
+    text-decoration: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .promo-card-{{ block.id }} {
+      max-width: {{ block.settings.mobile_max_width }}px;
+      aspect-ratio: {{ block.settings.mobile_aspect_ratio }};
+    }
+  }
+
+  .promo-card-{{ block.id }} .promo-card__bg-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: {{ block.settings.bg_image_position }};
+  }
+
+  .promo-card-{{ block.id }} .promo-card__feature-image {
+    position: absolute;
+    bottom: {{ block.settings.feature_image_bottom }}%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: {{ block.settings.feature_image_width }}%;
+    height: auto;
+    object-fit: contain;
+    object-position: bottom center;
+    pointer-events: none;
+  }
+
+  .promo-card-{{ block.id }} .promo-card__label-wrapper {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: {{ block.settings.label_padding_y }}px {{ block.settings.label_padding_x }}px;
+    text-align: {{ block.settings.label_align }};
+    {% if block.settings.show_label_overlay %}
+      background: linear-gradient(to top, {{ block.settings.label_overlay_color }} 0%, transparent 100%);
+    {% endif %}
+  }
+
+  .promo-card-{{ block.id }} .promo-card__label {
+    display: block;
+    font-weight: {{ block.settings.label_weight }};
+    color: {{ block.settings.label_color }};
+    font-size: {{ block.settings.mobile_label_size }}px;
+    line-height: 1.25;
+    margin: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .promo-card-{{ block.id }} .promo-card__label {
+      font-size: {{ block.settings.label_size }}px;
+    }
+  }
+
+  .promo-card-{{ block.id }}:hover .promo-card__bg-image,
+  .promo-card-{{ block.id }}:hover .promo-card__feature-image {
+    transform: {% if block.settings.hover_zoom %}scale(1.03){% else %}translateX(-50%){% endif %};
+    transition: transform 0.4s ease;
+  }
+
+  .promo-card-{{ block.id }} .promo-card__bg-image,
+  .promo-card-{{ block.id }} .promo-card__feature-image {
+    transition: transform 0.4s ease;
+  }
+
+  {% if block.settings.hover_zoom %}
+  .promo-card-{{ block.id }}:hover .promo-card__feature-image {
+    transform: translateX(-50%) scale(1.03);
+  }
+  {% endif %}
+</style>
+
+{% assign card_tag = 'div' %}
+{% if block.settings.url != blank %}
+  {% assign card_tag = 'a' %}
+{% endif %}
+
+<{{ card_tag }}
+  {% if block.settings.url != blank %}href="{{ block.settings.url }}"{% endif %}
+  class="promo-card-{{ block.id }} tw {% if block.settings.display == 'desktop' %}tw-hidden md:tw-block{% elsif block.settings.display == 'mobile' %}md:tw-hidden{% endif %} tw-mx-auto"
+  {% if block.settings.url == blank %}aria-hidden="true"{% endif %}
+  {{ block.shopify_attributes }}
+>
+
+  {%- comment -%} Background image {%- endcomment -%}
+  {%- if block.settings.background_image != blank -%}
+    {%- assign bg_alt = block.settings.background_image.alt | default: '' | escape -%}
+    <img
+      src="{{ block.settings.background_image | image_url: width: 1200 }}"
+      alt="{{ bg_alt }}"
+      class="promo-card__bg-image"
+      loading="lazy"
+      aria-hidden="true"
+    >
+  {%- endif -%}
+
+  {%- comment -%} Feature / product image {%- endcomment -%}
+  {%- if block.settings.feature_image != blank -%}
+    {%- assign feature_alt = block.settings.feature_image.alt | default: block.settings.label | default: '' | escape -%}
+    <img
+      src="{{ block.settings.feature_image | image_url: width: 900 }}"
+      alt="{{ feature_alt }}"
+      class="promo-card__feature-image"
+      loading="lazy"
+    >
+  {%- endif -%}
+
+  {%- comment -%} Label {%- endcomment -%}
+  {%- if block.settings.label != blank -%}
+    <div class="promo-card__label-wrapper">
+      <span class="promo-card__label
+        {% if block.settings.label_font == 'primary' %}tw-font-playfair{% else %}tw-font-montserrat{% endif %}
+      ">
+        {{ block.settings.label }}
+      </span>
+    </div>
+  {%- endif -%}
+
+</{{ card_tag }}>
+
+{% schema %}
+{
+  "name": "Promo Card",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Link"
+    },
+    {
+      "type": "url",
+      "id": "url",
+      "label": "Card URL"
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#20448F"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "select",
+      "id": "bg_image_position",
+      "label": "Background Image Position",
+      "options": [
+        { "value": "center center", "label": "Center" },
+        { "value": "center top", "label": "Top" },
+        { "value": "center bottom", "label": "Bottom" },
+        { "value": "left center", "label": "Left" },
+        { "value": "right center", "label": "Right" }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "header",
+      "content": "Feature Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "feature_image",
+      "label": "Feature / Product Image"
+    },
+    {
+      "type": "range",
+      "id": "feature_image_width",
+      "label": "Feature Image Width (%)",
+      "min": 20,
+      "max": 120,
+      "step": 5,
+      "default": 90
+    },
+    {
+      "type": "range",
+      "id": "feature_image_bottom",
+      "label": "Feature Image Bottom Offset (%)",
+      "min": 5,
+      "max": 60,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label Text",
+      "default": "New Flame Tree Journals"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Label Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "select",
+      "id": "label_font",
+      "label": "Label Font",
+      "options": [
+        { "value": "secondary", "label": "Montserrat" },
+        { "value": "primary", "label": "Playfair Display" }
+      ],
+      "default": "secondary"
+    },
+    {
+      "type": "select",
+      "id": "label_weight",
+      "label": "Label Font Weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "label": "Label Font Size — Desktop (px)",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "mobile_label_size",
+      "label": "Label Font Size — Mobile (px)",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "label_align",
+      "label": "Label Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "label_padding_y",
+      "label": "Label Padding Vertical (px)",
+      "min": 8,
+      "max": 48,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "label_padding_x",
+      "label": "Label Padding Horizontal (px)",
+      "min": 8,
+      "max": 48,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "checkbox",
+      "id": "show_label_overlay",
+      "label": "Show Gradient Behind Label",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "label_overlay_color",
+      "label": "Label Gradient Color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Card Size & Shape"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border Radius (px)",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "Aspect Ratio — Desktop",
+      "options": [
+        { "value": "auto", "label": "Auto" },
+        { "value": "1 / 1", "label": "Square (1:1)" },
+        { "value": "5 / 3", "label": "Landscape (5:3)" },
+        { "value": "5 / 4", "label": "Portrait (5:4)" },
+        { "value": "4 / 3", "label": "4:3" },
+        { "value": "16 / 9", "label": "Wide (16:9)" },
+        { "value": "3 / 2", "label": "3:2" }
+      ],
+      "default": "5 / 3"
+    },
+    {
+      "type": "select",
+      "id": "mobile_aspect_ratio",
+      "label": "Aspect Ratio — Mobile",
+      "options": [
+        { "value": "auto", "label": "Auto" },
+        { "value": "1 / 1", "label": "Square (1:1)" },
+        { "value": "5 / 3", "label": "Landscape (5:3)" },
+        { "value": "5 / 4", "label": "Portrait (5:4)" },
+        { "value": "4 / 3", "label": "4:3" },
+        { "value": "16 / 9", "label": "Wide (16:9)" },
+        { "value": "3 / 2", "label": "3:2" }
+      ],
+      "default": "5 / 3"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max Width — Desktop (px)",
+      "min": 100,
+      "max": 1400,
+      "step": 20,
+      "default": 660
+    },
+    {
+      "type": "range",
+      "id": "mobile_max_width",
+      "label": "Max Width — Mobile (px)",
+      "min": 100,
+      "max": 800,
+      "step": 20,
+      "default": 480
+    },
+    {
+      "type": "header",
+      "content": "Interactions"
+    },
+    {
+      "type": "checkbox",
+      "id": "hover_zoom",
+      "label": "Zoom on Hover",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Visibility"
+    },
+    {
+      "type": "select",
+      "id": "display",
+      "label": "Display",
+      "options": [
+        { "value": "both", "label": "Both" },
+        { "value": "desktop", "label": "Desktop Only" },
+        { "value": "mobile", "label": "Mobile Only" }
+      ],
+      "default": "both"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Promo Card",
+      "category": "Media Blocks",
+      "settings": {
+        "label": "New Flame Tree Journals",
+        "background_color": "#20448F",
+        "border_radius": 12,
+        "aspect_ratio": "5 / 3",
+        "mobile_aspect_ratio": "5 / 3",
+        "show_label_overlay": true,
+        "hover_zoom": true
+      }
+    }
+  ]
+}
+{% endschema %}

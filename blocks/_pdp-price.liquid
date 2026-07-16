@@ -19,7 +19,7 @@
     {% render 'ud-pdp-price', product: product %}
   {% endcomment %}
 
-  <div class="tw-flex tw-flex-col tw-items-start tw-gap-1 tw-py-2">
+  <div class="tw-flex tw-flex-col tw-items-start tw-gap-1 tw-pb-2">
     {% render 'ud-product-price',
       price: product.selected_or_first_available_variant.price,
       compare_price: product.selected_or_first_available_variant.compare_at_price,

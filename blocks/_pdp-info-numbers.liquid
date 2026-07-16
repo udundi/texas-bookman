@@ -9,11 +9,15 @@
     {% else %}
       tw-flex
     {% endif %}
-    tw-text-gray-500 tw-gap-2
+    tw-text-offblack/60 tw-gap-2
   "
 >
-  <div><span class="tw-font-bold">ISBN:</span> {{ product.metafields.facts.isbn }}</div>
-  <div><span class="tw-font-bold">TB Code:</span> {{ product.metafields.custom.tb_code }}</div>
+  {% if product.metafields.facts.isbn != blank %}
+    <div><span class="tw-font-semibold">ISBN:</span> {{ product.metafields.facts.isbn }}</div>
+  {% endif %}
+  {% if product.metafields.custom.tb_code != blank %}
+    <div><span class="tw-font-semibold">TB Code:</span> {{ product.metafields.custom.tb_code }}</div>
+  {% endif %}
 </div>
 
 {% schema %}

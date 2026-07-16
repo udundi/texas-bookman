@@ -2885,6 +2885,14 @@ video {
   color: rgb(189 32 38 / var(--tw-text-opacity, 1));
 }
 
+.tw-text-offblack\/50 {
+  color: rgb(33 33 33 / 0.5);
+}
+
+.tw-text-offblack\/60 {
+  color: rgb(33 33 33 / 0.6);
+}
+
 .tw-text-opacity-80 {
   --tw-text-opacity: 0.8;
 }
