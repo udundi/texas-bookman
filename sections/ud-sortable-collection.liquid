@@ -49,7 +49,7 @@
     display: none;
   }
 </style>
-<div v-cloak class="section-{{ section.id }}-props tw-border-gray-400 tw-border-b">
+<div v-cloak class="section-{{ section.id }}-props tw-border-brand-grey tw-border-b">
   <style>
     #filters-{{ block.id }} {
       height: 100%;
@@ -63,7 +63,7 @@
       max-height: 0;
     }
   </style>
-  <div class="tw-w-full tw-flex tw-justify-center tw-border-y tw-border-gray-400 tw-border-solid tw-p-2 tw-my-[-1px]">
+  <div class="tw-w-full tw-flex tw-justify-center tw-border-y tw-border-brand-grey tw-border-solid tw-p-2 tw-my-[-1px]">
     <div class="tw-flex tw-gap-2 tw-w-full tw-max-w-screen-2xl tw-justify-between tw-items-center">
       <!-- Title and description Container -->
       <div class=" tw-flex tw-flex-col tw-items-start tw-justify-start tw-gap-2 tw-text-center max-md:tw-px-4 md:tw-text-left">
@@ -81,7 +81,7 @@
             <button
               type="button"
               @click="toggleViewMode('grid')"
-              :class="viewMode === 'grid' ? '  tw-border-gray-600' : '  tw-border-gray-400'"
+              :class="viewMode === 'grid' ? '  tw-border-brand-grey' : '  tw-border-brand-grey'"
               class="duration-200 tw-p-2 tw-size-10 tw-rounded tw-transition-colors tw-flex tw-text-black tw-items-center tw-justify-center tw-border tw-bg-white hover:tw-bg-gray-100"
               title="Grid View"
             >
@@ -100,7 +100,7 @@
             <button
               type="button"
               @click="toggleViewMode('list')"
-              :class="viewMode === 'list' ? ' tw-border-gray-600' : ' tw-border-gray-400'"
+              :class="viewMode === 'list' ? ' tw-border-brand-grey' : ' tw-border-brand-grey'"
               class="duration-200 tw-p-2 tw-size-10 tw-rounded tw-text-black tw-transition-colors tw-flex tw-items-center tw-justify-center tw-border tw-bg-white hover:tw-bg-gray-100"
               title="List View"
             >
@@ -124,7 +124,7 @@
             </div>
             <select
               aria-label="Sort By"
-              class="tw-w-full tw-rounded-md tw-border tw-border-solid tw-border-gray-400 tw-p-2 tw-pr-8 tw-text-14"
+              class="tw-w-full tw-rounded-md tw-border tw-border-solid tw-border-brand-grey tw-p-2 tw-pr-8 tw-text-14"
               @change="sortByChange($event)"
             >
               <option
@@ -196,7 +196,7 @@
     <div class="tw-flex tw-w-full tw-flex-col md:tw-flex-row">
       <!-- Filter Container -->
       <div
-        class="ud-filter-container tw-fixed tw-z-50 tw-w-full tw-flex-col tw-justify-start tw-px-2 tw-py-4 tw-top-0 md:tw-sticky md:tw-w-96 md:tw-gap-2 tw-border-r tw-border-gray-400 tw-mr-[-1px] tw-my-[-1px]"
+        class="ud-filter-container tw-fixed tw-z-50 tw-w-full tw-flex-col tw-justify-start tw-px-2 tw-py-4 tw-top-0 md:tw-sticky md:tw-w-96 md:tw-gap-2 tw-border-r tw-border-brand-grey tw-mr-[-1px] tw-my-[-1px]"
         :class="mobileFiltersOpen ? 'tw-flex' : 'md:tw-flex tw-hidden'"
       >
         <div
@@ -243,7 +243,7 @@
                   :style="{ display: viewMode === 'grid' ? 'block' : 'none' }"
                 >
                   <!-- Inlined ud-quickadd-card -->
-                  <div class="tw-justify-between tw-flex tw-flex-col tw-p-4 tw-border tw-border-gray-400 tw-mr-[-1px] tw-mb-[-1px]">
+                  <div class="tw-justify-between tw-flex tw-flex-col tw-p-4 tw-border tw-border-brand-grey tw-mr-[-1px] tw-mb-[-1px]">
                     <a href="{{ product.url | default: '/' }}">
                       <div class="tw-w-full tw-aspect-square tw-object-contain md:tw-mb-3 tw-mb-2 tw-relative">
                         {% if product.featured_image != blank %}
@@ -307,20 +307,22 @@
                                 placeholder="1"
                                 :value="getQty({{ product.selected_or_first_available_variant.id }})"
                                 @input="setQty({{ product.selected_or_first_available_variant.id }}, $event.target.value)"
-                                class="tw-w-full tw-text-center tw-leading-none tw-py-0.5 tw-border tw-border-gray-400 tw-rounded tw-h-full tw-text-12 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
+                                class="tw-w-full tw-text-center tw-leading-none tw-py-0.5 tw-border tw-border-brand-grey tw-rounded tw-h-full tw-text-12 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
                                 :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                               >
                             </div>
                             <button
                               type="button"
                               data-variant-id="{{ product.selected_or_first_available_variant.id }}"
-                              data-tags='{{ product.tags | json }}'
+                              data-tags="{{ product.tags | json }}"
                               data-isbn="{{ product.metafields.facts.isbn }}"
                               class="tw-bg-brand-secondary tw-w-full tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-black tw-rounded-md tw-flex tw-justify-center tw-leading-none tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center"
                               @click="addToCart({{ product.selected_or_first_available_variant.id }}, $event.currentTarget)"
                               :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                             >
-                              [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : '{{ section.settings.button_text | default: 'Add to Cart' }}' ]]
+                              [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : '
+                              {{- section.settings.button_text | default: 'Add to Cart' -}}
+                              ' ]]
                             </button>
                           </div>
                         {% else %}
@@ -341,7 +343,7 @@
                   :style="{ display: viewMode === 'list' ? 'block' : 'none' }"
                 >
                   <!-- Inlined ud-quickadd-list-item -->
-                  <div class="tw-flex tw-flex-row tw-items-center tw-border tw-mb-[-1px] tw-border-gray-400 tw-p-4 tw-gap-4 tw-w-full">
+                  <div class="tw-flex tw-flex-row tw-items-center tw-border tw-mb-[-1px] tw-border-brand-grey tw-p-4 tw-gap-4 tw-w-full">
                     <a
                       href="{% if product.metafields.custom.alt_gallery_link != blank %}{{ product.metafields.custom.alt_gallery_link.value.url }}{% else %}{{ product.url | default: '/' }}{% endif %}"
                       class="tw-flex-shrink-0"
@@ -421,20 +423,22 @@
                                       placeholder="1"
                                       :value="getQty({{ product.selected_or_first_available_variant.id }})"
                                       @input="setQty({{ product.selected_or_first_available_variant.id }}, $event.target.value)"
-                                      class="tw-w-14 tw-text-center tw-leading-none tw-py-0.5 tw-px-1 tw-border tw-border-gray-400 tw-rounded tw-text-14 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
+                                      class="tw-w-14 tw-text-center tw-leading-none tw-py-0.5 tw-px-1 tw-border tw-border-brand-grey tw-rounded tw-text-14 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
                                       :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                                     >
                                   </div>
                                   <button
                                     type="button"
                                     data-variant-id="{{ product.selected_or_first_available_variant.id }}"
-                                    data-tags='{{ product.tags | json }}'
+                                    data-tags="{{ product.tags | json }}"
                                     data-isbn="{{ product.metafields.facts.isbn }}"
                                     class="tw-bg-brand-secondary tw-cursor-pointer tw-pointer-events-auto tw-text-10 tw-text-black tw-rounded-md tw-flex tw-justify-center tw-leading-none tw-px-6 tw-py-1.5 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-sans hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center"
                                     @click="addToCart({{ product.selected_or_first_available_variant.id }}, $event.currentTarget)"
                                     :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                                   >
-                                    [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : '{{ section.settings.button_text | default: 'QUICK ADD' }}' ]]
+                                    [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : '
+                                    {{- section.settings.button_text | default: 'QUICK ADD' -}}
+                                    ' ]]
                                   </button>
                                 </div>
                               {% else %}

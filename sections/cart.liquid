@@ -15,51 +15,53 @@
   <div class="tw-flex tw-relative tw-text-14 tw-w-full tw-gap-12 tw-mx-auto">
     <!-- Cart Items -->
     <div class="tw-w-full tw-flex tw-flex-col tw-gap-2">
-      <div
-        v-for="item in cartItems"
-        :key="item.key"
-        class="tw-flex tw-gap-4 tw-w-full"
-      >
-        <a :href="item.url" class="tw-h-32 tw-object-cover tw-aspect-5/6 tw-relative tw-py-2">
-          <img
-            v-if="item.featured_image"
-            :src="item.featured_image.url"
-            :alt="item.title"
-            loading="lazy"
-            class="tw-size-full tw-aspect-5/6 tw-object-cover"
-          >
-        </a>
-        <div class="tw-flex tw-flex-col tw-gap-1">
-          <!-- Title -->
-          <a :href="item.url" class="tw-text-16 tw-text-brand-primary tw-flex tw-gap-2 tw-flex-row">
-            <p>[[ item.title ]]</p>
-          </a>
-          <!-- Item Identifiers -->
-          <div class="tw-flex tw-gap-4">
-            <div v-if="item.properties && item.properties._isbn">ISBN: [[ item.properties._isbn ]]</div>
-          </div>
-          <!-- Quantity Editor -->
-          <div class="tw-flex tw-items-center tw-w-fit tw-justify-start tw-gap-2">
-            <div class="tw-font-bold">QTY:</div>
-            <input
-              type="number"
-              :value="item.quantity"
-              min="0"
-              class="tw-p-0.5 tw-px-2 tw-border tw-border-gray-400 tw-w-16 tw-text-center [appearance:textfield] [&::-webkit-outer-spin-button]:tw-appearance-none [&::-webkit-inner-spin-button]:tw-appearance-none"
-              @input="onQtyInput(item, $event)"
+      <div class="tw-bg-brand-eggshell tw-border tw-border-brand-grey tw-rounded-md">
+        <div
+          v-for="(item, index) in cartItems"
+          :key="item.key"
+          class="tw-flex tw-gap-4 tw-w-full tw-border-brand-grey tw-p-2"
+          :class="index > 0 ? 'tw-border-t' : ''"
+        >
+          <a :href="item.url" class="tw-h-32 tw-object-cover tw-aspect-3/4 tw-relative tw-py-2">
+            <img
+              v-if="item.featured_image"
+              :src="item.featured_image.url"
+              :alt="item.title"
+              loading="lazy"
+              class="tw-size-full tw-aspect-3/4 tw-object-cover"
             >
-            <button class="tw-size-4 tw-ml-4" @click="removeItem(item)">
-              {% render 'icon-trash' %}
-            </button>
-          </div>
-          <!-- Prices -->
-          <div class="tw-flex tw-gap-4">
-            <div>Price: [[ formatMoney(item.price) ]]</div>
-            <div>Total: [[ formatMoney(item.line_price) ]]</div>
+          </a>
+          <div class="tw-flex tw-flex-col tw-gap-1">
+            <!-- Title -->
+            <a :href="item.url" class="tw-text-16 tw-text-brand-primary tw-flex tw-gap-2 tw-flex-row">
+              <p>[[ item.title ]]</p>
+            </a>
+            <!-- Item Identifiers -->
+            <div class="tw-flex tw-gap-4">
+              <div v-if="item.properties && item.properties._isbn">ISBN: [[ item.properties._isbn ]]</div>
+            </div>
+            <!-- Quantity Editor -->
+            <div class="tw-flex tw-items-center tw-w-fit tw-justify-start tw-gap-2">
+              <div class="tw-font-semibold">QTY:</div>
+              <input
+                type="number"
+                :value="item.quantity"
+                min="0"
+                class="tw-p-0.5 tw-px-2 tw-border tw-border-brand-grey tw-w-16 tw-text-center [appearance:textfield] [&::-webkit-outer-spin-button]:tw-appearance-none [&::-webkit-inner-spin-button]:tw-appearance-none"
+                @input="onQtyInput(item, $event)"
+              >
+              <button class="tw-size-4 tw-ml-4" @click="removeItem(item)">
+                {% render 'icon-trash' %}
+              </button>
+            </div>
+            <!-- Prices -->
+            <div class="tw-flex tw-gap-4">
+              <div>Price: [[ formatMoney(item.price) ]]</div>
+              <div>Total: [[ formatMoney(item.line_price) ]]</div>
+            </div>
           </div>
         </div>
       </div>
-
       <a
         href="/"
         class="tw-bg-brand-primary tw-p-1.5 tw-text-white tw-uppercase tw-text-18 tw-w-full tw-max-w-72 tw-text-center tw-rounded-sm tw-mt-4"
@@ -69,10 +71,10 @@
     </div>
 
     <!-- Order Summary -->
-    <div class="tw-w-full tw-font-semibold tw-font-brand-body tw-rounded-md tw-bg-brand-eggshell tw-max-w-96 tw-sticky tw-top-4 tw-h-full tw-justify-start">
-      <div class="tw-w-full tw-font-semibold tw-font-brand-body tw-border tw-border-gray-400 tw-rounded-md tw-bg-brand-eggshell tw-max-w-96 tw-flex tw-flex-col tw-gap-24 tw-h-full tw-justify-between">
+    <div class="tw-w-full tw-font-semibold tw-font-brand-body tw-rounded-md tw-max-w-96 tw-sticky tw-top-4 tw-h-full tw-justify-start">
+      <div class="tw-w-full tw-font-semibold tw-font-brand-body tw-border tw-border-brand-grey tw-rounded-md tw-bg-brand-eggshell tw-max-w-96 tw-flex tw-flex-col tw-gap-24 tw-h-full tw-justify-between">
         <div class="tw-flex tw-flex-col tw-gap-4">
-          <div class="tw-p-4 tw-text-16 tw-border-b tw-border-gray-400">Your Order</div>
+          <div class="tw-p-4 tw-text-16 tw-border-b tw-border-brand-grey">Your Order</div>
           <div class="tw-flex tw-px-4 tw-flex-col tw-gap-1">
             <div class="tw-flex tw-justify-between tw-w-full tw-gap-4">
               <div>Subtotal:</div>
@@ -85,7 +87,7 @@
           </div>
         </div>
 
-        <div class="tw-flex tw-flex-col tw-gap-8 tw-p-4 tw-border-t tw-border-gray-400">
+        <div class="tw-flex tw-flex-col tw-gap-8 tw-p-4 tw-border-t tw-border-brand-grey">
           <div class="tw-flex tw-justify-between tw-w-full tw-gap-4">
             <div>Total:</div>
             <div>[[ formatMoney(total) ]]</div>

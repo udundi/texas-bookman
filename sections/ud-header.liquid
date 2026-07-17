@@ -1,4 +1,4 @@
-<div id="nav-bar-{{ section.id }}" class="tw-border-b tw-border-gray-400">
+<div id="nav-bar-{{ section.id }}" class="tw-border-b tw-border-brand-grey">
   <div class="tw-relative tw-z-90 tw-mx-auto tw-flex tw-w-full tw-max-w-screen-2xl tw-items-center tw-justify-between tw-bg-white tw-px-4">
     <div class="logo tw-flex tw-gap-4 tw-py-2">
       <a
@@ -112,7 +112,7 @@
             v-if="showCountryDropdown"
             role="listbox"
             aria-label="Select country"
-            class="tw-absolute tw-right-0 tw-top-full tw-z-[20] tw-mt-1 tw-max-h-72 tw-overflow-y-auto tw-bg-white tw-border tw-border-gray-200 tw-shadow-lg tw-min-w-[210px]"
+            class="tw-absolute tw-right-0 tw-top-full tw-z-[20] tw-mt-1 tw-max-h-72 tw-overflow-y-auto tw-bg-white tw-border tw-border-brand-grey tw-shadow-lg tw-min-w-[210px]"
             @click.stop
           >
             {% form 'localization', id: 'CountryForm-{{ section.id }}' %}

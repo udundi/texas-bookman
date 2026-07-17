@@ -1,7 +1,7 @@
 {% capture blocks %}  
   {% content_for 'blocks' %}
 {% endcapture %}
-<div class="block-{{ block.id }} tw-pb-1{% if block.settings.nested %} tw-pl-4 tw-border-l-2 tw-border-gray-200{% endif %}">
+<div class="block-{{ block.id }} tw-pb-1{% if block.settings.nested %} tw-pl-4 tw-border-l-2 tw-border-brand-grey{% endif %}">
   {% if block.settings.collapsible %}
     <button
       class="tw-flex tw-w-full tw-justify-between tw-items-middle tw-cursor-pointer tw-pb-2"

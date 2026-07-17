@@ -46,6 +46,7 @@ module.exports = {
           secondary: "#F0BA3A",
           sale: "#BD2026",
           eggshell: "#FDFBF8",
+          grey: "#CCCBC7",
         },
       },
       animation: {

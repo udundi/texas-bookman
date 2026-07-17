@@ -15,7 +15,7 @@
         <a
           href="{{ paginate.previous.url }}"
           aria-label="Previous page"
-          class="tw-flex tw-items-center tw-justify-center tw-w-8 tw-h-8 tw-border tw-border-gray-300 tw-text-offblack hover:tw-bg-gray-100 tw-transition-colors"
+          class="tw-flex tw-items-center tw-justify-center tw-w-8 tw-h-8 tw-border tw-border-brand-grey tw-text-offblack hover:tw-bg-gray-100 tw-transition-colors"
         >
           <svg class="tw-w-3 tw-h-3" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true">
             <path d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"/>
@@ -24,7 +24,7 @@
       {% else %}
         <span
           aria-disabled="true"
-          class="tw-flex tw-items-center tw-justify-center tw-w-8 tw-h-8 tw-border tw-border-gray-200 tw-text-gray-300 tw-cursor-not-allowed"
+          class="tw-flex tw-items-center tw-justify-center tw-w-8 tw-h-8 tw-border tw-border-brand-grey tw-text-gray-300 tw-cursor-not-allowed"
         >
           <svg class="tw-w-3 tw-h-3" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true">
             <path d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"/>
@@ -38,7 +38,7 @@
           <a
             href="{{ part.url }}"
             aria-label="Page {{ part.title }}"
-            class="tw-flex tw-items-center tw-justify-center tw-w-8 tw-h-8 tw-border tw-border-gray-300 tw-text-14 tw-text-offblack hover:tw-bg-gray-100 tw-transition-colors"
+            class="tw-flex tw-items-center tw-justify-center tw-w-8 tw-h-8 tw-border tw-border-brand-grey tw-text-14 tw-text-offblack hover:tw-bg-gray-100 tw-transition-colors"
           >
             {{ part.title }}
           </a>
@@ -64,7 +64,7 @@
         <a
           href="{{ paginate.next.url }}"
           aria-label="Next page"
-          class="tw-flex tw-items-center tw-justify-center tw-w-8 tw-h-8 tw-border tw-border-gray-300 tw-text-offblack hover:tw-bg-gray-100 tw-transition-colors"
+          class="tw-flex tw-items-center tw-justify-center tw-w-8 tw-h-8 tw-border tw-border-brand-grey tw-text-offblack hover:tw-bg-gray-100 tw-transition-colors"
         >
           <svg class="tw-w-3 tw-h-3" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true">
             <path d="M278.6 406.6c-12.5 12.5-32.8 12.5-45.3 0l-192-192c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L256 338.7l169.4-169.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3l-192 192z"/>
@@ -73,7 +73,7 @@
       {% else %}
         <span
           aria-disabled="true"
-          class="tw-flex tw-items-center tw-justify-center tw-w-8 tw-h-8 tw-border tw-border-gray-200 tw-text-gray-300 tw-cursor-not-allowed"
+          class="tw-flex tw-items-center tw-justify-center tw-w-8 tw-h-8 tw-border tw-border-brand-grey tw-text-gray-300 tw-cursor-not-allowed"
         >
           <svg class="tw-w-3 tw-h-3" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true">
             <path d="M278.6 406.6c-12.5 12.5-32.8 12.5-45.3 0l-192-192c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L256 338.7l169.4-169.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3l-192 192z"/>
@@ -89,7 +89,7 @@
     <div class="tw-relative tw-flex tw-items-center">
       <select
         aria-label="Results per page"
-        class="tw-appearance-none tw-border tw-border-gray-300 tw-pl-3 tw-pr-8 tw-py-1.5 tw-text-14 tw-text-offblack tw-bg-white tw-cursor-pointer hover:tw-border-gray-400 tw-transition-colors"
+        class="tw-appearance-none tw-border tw-border-brand-grey tw-pl-3 tw-pr-8 tw-py-1.5 tw-text-14 tw-text-offblack tw-bg-white tw-cursor-pointer hover:tw-border-brand-grey tw-transition-colors"
         onchange="
           (function(val) {
             var url = new URL(window.location.href);

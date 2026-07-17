@@ -29,7 +29,7 @@
             class=" tw-text-16 tw-font-montserrat tw-leading-tight tw-px-4 tw-py-2 tw-capitalize tw-text-offblack"
             :class="
               [
-                clickedTab == '{{ forloop.index0 }}' ? 'tw-border-t tw-rounded-t-md tw-border-gray-400 tw-border-x tw-bg-brand-eggshell' : 'tw-font-normal'
+                clickedTab == '{{ forloop.index0 }}' ? 'tw-border-t tw-rounded-t-md tw-border-brand-grey tw-border-x tw-bg-brand-eggshell' : 'tw-font-normal'
               ]
             "
           >
@@ -42,7 +42,7 @@
   {% for block in block.blocks %}
     <div
       v-if="clickedTab == {{ forloop.index0 }}"
-      class="tw-overflow-hidden tw-border tw-border-gray-400 tw-rounded-md tw-mt-[-1px] tw-bg-brand-eggshell info-tab-{{ block.id }}"
+      class="tw-overflow-hidden tw-border tw-border-brand-grey tw-rounded-md tw-mt-[-1px] tw-bg-brand-eggshell info-tab-{{ block.id }}"
       :class="
         [
           clickedTab == 0 ? 'tw-rounded-tl-none' : ''

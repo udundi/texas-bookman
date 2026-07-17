@@ -15,7 +15,7 @@
   {% assign available = product.selected_or_first_available_variant.inventory_quantity %}
   {% assign cases_available = available | divided_by: case_size %}
   {% assign case_size_discount = 8 %}
-  <div class="tw-flex tw-flex-col tw-py-2 tw-px-3 tw-rounded-md tw-bg-brand-eggshell tw-border tw-border-gray-400 tw-items-start tw-gap-1">
+  <div class="tw-flex tw-flex-col tw-py-2 tw-px-3 tw-rounded-md tw-bg-brand-eggshell tw-border tw-border-brand-grey tw-items-start tw-gap-1">
     <div>
       <span class="tw-font-bold">Availability:</span>
       {{ available | default: 0 }} in stock
