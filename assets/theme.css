@@ -2524,6 +2524,11 @@ video {
   padding-bottom: 1.5rem;
 }
 
+.tw-py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
 .tw-pb-1 {
   padding-bottom: 0.25rem;
 }
@@ -3252,6 +3257,10 @@ video {
     position: absolute;
   }
 
+  .md\:tw-relative {
+    position: relative;
+  }
+
   .md\:tw-sticky {
     position: sticky;
   }
@@ -3438,6 +3447,10 @@ video {
     max-width: 20rem;
   }
 
+  .md\:tw-max-w-\[50\%\] {
+    max-width: 50%;
+  }
+
   .md\:-tw-translate-x-1\/2 {
     --tw-translate-x: -50%;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -3465,6 +3478,10 @@ video {
 
   .md\:tw-items-end {
     align-items: flex-end;
+  }
+
+  .md\:tw-items-center {
+    align-items: center;
   }
 
   .md\:tw-justify-center {
@@ -3510,6 +3527,11 @@ video {
   .md\:tw-px-4 {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+
+  .md\:tw-py-12 {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
   }
 
   .md\:tw-pt-8 {

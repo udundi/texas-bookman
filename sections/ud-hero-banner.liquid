@@ -1,58 +1,32 @@
 {% style %}
-  .ud-hero-banner-{{ section.id }} {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-  }
-
-  /* Desktop: fixed height with background image */
-  @media screen and (min-width: 750px) {
+  /* Dynamic desktop values */
+  @media screen and (min-width: 768px) {
     .ud-hero-banner-{{ section.id }} {
       min-height: {{ section.settings.desktop_height }}px;
-      display: flex;
-      align-items: center;
       justify-content: {{ section.settings.desktop_content_alignment | replace: 'left', 'flex-start' | replace: 'right', 'flex-end' | replace: 'center', 'center' }};
     }
 
     .ud-hero-banner-{{ section.id }} .hero-bg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
       object-position: {{ section.settings.desktop_image_position }};
     }
 
     .ud-hero-banner-{{ section.id }} .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 50%;
-      padding: 3rem {{ section.settings.desktop_content_padding_x }}rem;
+      padding-left: {{ section.settings.desktop_content_padding_x }}rem;
+      padding-right: {{ section.settings.desktop_content_padding_x }}rem;
     }
   }
 
-  /* Mobile: stacked layout */
-  @media screen and (max-width: 749px) {
-    .ud-hero-banner-{{ section.id }} {
-      display: flex;
-      flex-direction: column;
-    }
-
+  /* Dynamic mobile values */
+  @media screen and (max-width: 767px) {
     .ud-hero-banner-{{ section.id }} .hero-image-wrapper {
-      width: 100%;
       aspect-ratio: {{ section.settings.mobile_image_ratio }};
-      overflow: hidden;
     }
 
     .ud-hero-banner-{{ section.id }} .hero-bg {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
       object-position: {{ section.settings.mobile_image_position }};
     }
 
     .ud-hero-banner-{{ section.id }} .hero-content {
-      padding: 2rem 1.5rem;
       background-color: {{ section.settings.mobile_content_bg }};
     }
 
@@ -68,17 +42,17 @@
 
 <section
   id="ud-hero-banner-{{ section.id }}"
-  class="ud-hero-banner-{{ section.id }} tw-max-w-screen-2xl tw-mx-auto"
+  class="ud-hero-banner-{{ section.id }} tw-relative tw-w-full tw-overflow-hidden tw-flex tw-flex-col md:tw-flex-row md:tw-items-center tw-max-w-screen-2xl tw-mx-auto"
   style="background-color: {{ section.settings.overlay_color }};"
 >
   {%- if section.settings.image != blank -%}
     {%- assign hero_img_alt = section.settings.image.alt | default: '' | escape -%}
     {%- comment -%} Mobile: image inside its own wrapper for aspect-ratio control {%- endcomment -%}
-    <div class="hero-image-wrapper md:tw-hidden">
+    <div class="hero-image-wrapper tw-w-full tw-overflow-hidden md:tw-hidden">
       {{
         section.settings.image
         | image_url: width: 800
-        | image_tag: class: 'hero-bg', alt: hero_img_alt, loading: 'lazy'
+        | image_tag: class: 'hero-bg tw-w-full tw-h-full tw-object-cover', alt: hero_img_alt, loading: 'lazy'
       }}
     </div>
 
@@ -87,7 +61,10 @@
       {{
         section.settings.image
         | image_url: width: 1600
-        | image_tag: class: 'hero-bg', alt: hero_img_alt, loading: 'lazy'
+        | image_tag:
+          class: 'hero-bg tw-absolute tw-inset-0 tw-w-full tw-h-full tw-object-cover',
+          alt: hero_img_alt,
+          loading: 'lazy'
       }}
     </div>
   {%- endif -%}
@@ -102,7 +79,7 @@
     ></div>
   {%- endif -%}
 
-  <div class="hero-content ">
+  <div class="hero-content tw-py-8 tw-px-6 md:tw-py-12 md:tw-relative md:tw-z-[1] md:tw-max-w-[50%]">
     {%- if section.settings.eyebrow != blank -%}
       <p
         class="tw-mb-2 tw-font-bold tw-uppercase tw-tracking-widest"
