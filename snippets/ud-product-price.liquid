@@ -61,26 +61,30 @@
           Sale
         </div>
       {% endif %}
-      <div class="tw-flex tw-flex-col tw-w-fit tw-justify-start tw-items-start tw-flex-col tw-gap-1">
+      <div class="tw-flex tw-flex-col tw-w-fit tw-justify-start tw-items-start tw-gap-1">
         <div class="tw-text-blue-grey tw-font-normal tw-text-16">
           {% if compare_price %}
             List Price: {{ compare_price | money }}
           {% else %}
-            Your Net Price: {{ price | money }}
+            {% if customer %}Your{% endif %} Net Price: {{ price | money }}
           {% endif %}
         </div>
         <div class="tw-text-black tw-leading-tight tw-text-16">
           {% unless settings.sitewide_sale or flash_sale_live %}
-            Your Net Price: {{ price | money }}
+            {% if customer %}Your{% endif %} Net Price: {{ price | money }}
           {% else %}
-            Your Net Price: {{ price | minus: product_discount | money }}
+            {% if customer %}Your{% endif %} Net Price: {{ price | minus: product_discount | money }}
           {% endunless %}
         </div>
       </div>
     {% else %}
-      <div>Your Net Price: {{ price | money }}</div>
+      <div>
+        {% if customer %}Your{% endif %} Net Price: {{ price | money }}
+      </div>
     {% endif %}
   {% else %}
-    <div>Your Net Price: {{ price | money }}</div>
+    <div>
+      {% if customer %}Your{% endif %} Net Price: {{ price | money }}
+    </div>
   {% endunless %}
 </div>

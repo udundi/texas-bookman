@@ -3,22 +3,22 @@
 
 <div
   id="{{ product_id }}"
-  class="{{ class }} tw-justify-between tw-flex tw-flex-col  tw-p-4 {%  unless no_border %}   tw-border tw-border-brand-grey tw-mr-[-1px] tw-mb-[-1px]{% endunless %}"
+  class="{{ class }} tw-justify-between tw-flex tw-flex-col tw-p-4 {%  unless no_border %}tw-border tw-border-brand-grey tw-mr-[-1px] tw-mb-[-1px]{% endunless %}"
 >
   <a href="{{ cur_product.url | default: '/' }}">
-    <div class=" tw-w-full tw-aspect-square tw-object-contain md:tw-mb-3 tw-mb-2 tw-relative">
+    <div class=" tw-aspect-3/4 tw-h-96 tw-object-cover md:tw-mb-3 tw-mb-2 tw-relative">
       {% if cur_product.featured_image != blank %}
         {% if small_image == true %}
           {{
             cur_product.featured_image
             | image_url: width: 400
-            | image_tag: loading: 'lazy', class: 'tw-size-full tw-aspect-square tw-object-contain'
+            | image_tag: loading: 'lazy', class: ' tw-object-cover tw-h-96 tw-aspect-3/4'
           }}
         {% else %}
           {{
             cur_product.featured_image
             | image_url: width: 800
-            | image_tag: loading: 'lazy', class: 'tw-size-full tw-aspect-square tw-object-contain'
+            | image_tag: loading: 'lazy', class: 'tw-size-full tw-object-cover tw-aspect-3/4'
           }}
         {% endif %}
       {% else %}

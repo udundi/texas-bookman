@@ -1,3 +1,11 @@
+{% unless customer %}
+  <div class="tw-w-full tw-bg-brand-secondary tw-h-10 tw-flex tw-justify-center tw-items-center">
+    <div>
+      You’re Not Logged In |
+      <a class="tw-font-semibold tw-py-4 tw-underline" href="{{ routes.account_login_url }}">Sign In to Shop</a>
+    </div>
+  </div>
+{% endunless %}
 <div id="nav-bar-{{ section.id }}" class="tw-border-b tw-border-brand-grey">
   <div class="tw-relative tw-z-90 tw-mx-auto tw-flex tw-w-full tw-max-w-screen-2xl tw-items-center tw-justify-between tw-bg-white tw-px-4">
     <div class="logo tw-flex tw-gap-4 tw-py-2">

@@ -28,12 +28,14 @@
                       {{
                         product.featured_image
                         | image_url: width: 800
-                        | image_tag: loading: 'lazy', class: 'tw-relative tw-top-0 tw-z-30 tw-size-full tw-object-cover'
+                        | image_tag:
+                          loading: 'lazy',
+                          class: 'tw-relative tw-aspect-3/4 tw-top-0 tw-z-30 tw-size-full tw-object-cover'
                       }}
                       <img
                         src="{{ product.featured_image | image_url: width: 8 }}"
                         alt="{{ product.featured_image.alt | escape }}"
-                        class="tw-absolute tw-top-0 tw-z-20 tw-size-full tw-object-cover"
+                        class="tw-absolute tw-aspect-3/4 tw-top-0 tw-z-20 tw-size-full tw-object-cover"
                         preload="true"
                         loading="eager"
                         fetchpriority="high"
