@@ -174,7 +174,7 @@
         "mobile_padding_left": 2,
         "mobile_padding_right": 2,
         "background_color": "#ffffff",
-        "container_width": "full_width",
+        "container_width": "lg_desktop",
         "product_source": "product_list",
         "collection": "frontpage",
         "product_list": [
