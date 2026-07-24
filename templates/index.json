@@ -54,6 +54,30 @@
     "ud_multi_carousel_DMK4LU": {
       "type": "ud-multi-carousel",
       "blocks": {
+        "basic_product_carousel_WwQVkz": {
+          "type": "_basic-product-carousel",
+          "name": "Basic Product Carousel",
+          "settings": {
+            "product_source": "product_list",
+            "collection": "",
+            "product_list": [
+              "1-000-places-to-see-before-you-die-used-2603095",
+              "100-best-selling-albums-of-the-80s-2303370",
+              "100-iconic-gangster-movies-2411359",
+              "100-iconic-gangster-movies-2308011",
+              "1000-flags-banners-and-ensigns-2410033",
+              "1000-ideas-for-color-schemes-2310103"
+            ],
+            "button_url": "",
+            "button_text": "",
+            "mobile_slides": 1.3,
+            "tablet_slides": 3,
+            "sm_desktop_slides": 4,
+            "lg_desktop_slides": 5,
+            "show_price": true
+          },
+          "blocks": {}
+        },
         "multipurpose_carousel_yfaNdJ": {
           "type": "_multipurpose-carousel",
           "name": "Collection Carousel",
@@ -80,6 +104,7 @@
         }
       },
       "block_order": [
+        "basic_product_carousel_WwQVkz",
         "multipurpose_carousel_yfaNdJ"
       ],
       "name": "Multi Carousel",
