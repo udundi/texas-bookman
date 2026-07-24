@@ -68,7 +68,7 @@
 
 <section
   id="ud-hero-banner-{{ section.id }}"
-  class="ud-hero-banner-{{ section.id }} tw"
+  class="ud-hero-banner-{{ section.id }} tw-max-w-screen-2xl tw-mx-auto"
   style="background-color: {{ section.settings.overlay_color }};"
 >
   {%- if section.settings.image != blank -%}
@@ -94,14 +94,15 @@
 
   {%- comment -%} Optional overlay for desktop readability {%- endcomment -%}
   {%- if section.settings.show_overlay -%}
+    {%- assign overlay_opacity = section.settings.overlay_opacity | divided_by: 100.0 -%}
     <div
       class="tw-hidden md:tw-block tw-absolute tw-inset-0"
-      style="background: {{ section.settings.overlay_color }}; opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};"
+      style="background: linear-gradient(to right, {{ section.settings.overlay_color | color_modify: 'alpha', overlay_opacity }} 0%, {{ section.settings.overlay_color | color_modify: 'alpha', overlay_opacity }} 25%, transparent 60%);"
       aria-hidden="true"
     ></div>
   {%- endif -%}
 
-  <div class="hero-content">
+  <div class="hero-content ">
     {%- if section.settings.eyebrow != blank -%}
       <p
         class="tw-mb-2 tw-font-bold tw-uppercase tw-tracking-widest"
