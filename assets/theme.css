@@ -2590,6 +2590,21 @@ video {
   padding-bottom: 2rem;
 }
 
+.tw-px-24 {
+  padding-left: 6rem;
+  padding-right: 6rem;
+}
+
+.tw-px-20 {
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
+.tw-py-12 {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
 .tw-pb-1 {
   padding-bottom: 0.25rem;
 }

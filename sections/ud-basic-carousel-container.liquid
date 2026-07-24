@@ -36,11 +36,19 @@
   }
 {% endstyle %}
 
-<div class="section-outer-{{ section.id }} tw-border-b tw-border-brand-grey">
+<div class="section-outer-{{ section.id }}">
   <div class="section-{{ section.id }}">
     {% if section.settings.section_title != blank %}
-      <div class=" tw-font-playfair tw-font-normal tw-text-36 tw-leading-tight tw-text-offblack tw-w-full tw-text-center tw-border-y tw-border-brand-grey tw-py-4">
-        {{ section.settings.section_title }}
+      <div class="tw-flex tw-justify-between tw-px-20 tw-py-4">
+        <div class=" tw-font-playfair tw-font-semibold tw-text-36 tw-leading-tight tw-text-offblack">
+          {{ section.settings.section_title }}
+        </div>
+        <a
+          href="{{ section.settings.button_url }}"
+          class="tw-bg-brand-primary tw-uppercase tw-font-semibold tw-text-white tw-py-2 tw-px-10"
+        >
+          {{ section.settings.button_text }}
+        </a>
       </div>
     {% endif %}
     <div class="tw-flex tw-flex-col tw-gap-4 tw-items-center">
