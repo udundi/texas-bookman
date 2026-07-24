@@ -74,7 +74,7 @@
             "tablet_slides": 2,
             "sm_desktop_slides": 3,
             "lg_desktop_slides": 4,
-            "show_price": true
+            "show_price": false
           },
           "blocks": {}
         }
