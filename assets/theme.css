@@ -1331,6 +1331,11 @@ video {
   margin-bottom: auto;
 }
 
+.tw-mx-1 {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+
 .tw-mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -1401,6 +1406,29 @@ video {
 
 .tw-mt-\[-1px\] {
   margin-top: -1px;
+}
+
+.tw-mb-8 {
+  margin-bottom: 2rem;
+}
+
+.tw-mt-auto {
+  margin-top: auto;
+}
+
+.tw-mb-auto {
+  margin-bottom: auto;
+}
+
+.tw-box-border {
+  box-sizing: border-box;
+}
+
+.tw-line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .tw-block {
@@ -1642,6 +1670,14 @@ video {
   height: 24rem;
 }
 
+.tw-h-72 {
+  height: 18rem;
+}
+
+.\!tw-h-full {
+  height: 100% !important;
+}
+
 .tw-max-h-0 {
   max-height: 0px;
 }
@@ -1753,6 +1789,14 @@ video {
 
 .tw-w-screen {
   width: 100vw;
+}
+
+.tw-w-3\/4 {
+  width: 75%;
+}
+
+.tw-w-auto {
+  width: auto;
 }
 
 .tw-min-w-0 {
@@ -2264,6 +2308,10 @@ video {
   border-top-width: 1px;
 }
 
+.tw-border-l-0 {
+  border-left-width: 0px;
+}
+
 .\!tw-border-solid {
   border-style: solid !important;
 }
@@ -2384,8 +2432,16 @@ video {
   fill: #FFFFFF;
 }
 
+.tw-fill-none {
+  fill: none;
+}
+
 .tw-stroke-black {
   stroke: #000000;
+}
+
+.tw-stroke-current {
+  stroke: currentColor;
 }
 
 .tw-object-contain {
@@ -2406,6 +2462,11 @@ video {
 .tw-object-left-top {
   -o-object-position: left top;
      object-position: left top;
+}
+
+.tw-object-\[left_center\] {
+  -o-object-position: left center;
+     object-position: left center;
 }
 
 .\!tw-p-0 {
@@ -2701,6 +2762,10 @@ video {
   font-size: 4rem;
 }
 
+.tw-text-\[1\.1rem\] {
+  font-size: 1.1rem;
+}
+
 .tw-font-bold {
   font-weight: 700;
 }
@@ -2759,6 +2824,10 @@ video {
 
 .tw-leading-tight {
   line-height: 1.25;
+}
+
+.tw-leading-\[1\.3\] {
+  line-height: 1.3;
 }
 
 .tw-tracking-tight {
@@ -3082,6 +3151,10 @@ video {
 
 .hover\:tw-underline:hover {
   text-decoration-line: underline;
+}
+
+.hover\:tw-opacity-60:hover {
+  opacity: 0.6;
 }
 
 .focus\:tw-border-brand-primary:focus {
@@ -3532,6 +3605,11 @@ video {
   .md\:tw-py-12 {
     padding-top: 3rem;
     padding-bottom: 3rem;
+  }
+
+  .md\:tw-px-12 {
+    padding-left: 3rem;
+    padding-right: 3rem;
   }
 
   .md\:tw-pt-8 {

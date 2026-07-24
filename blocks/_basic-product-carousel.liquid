@@ -1,18 +1,18 @@
 <div class="tw-flex tw-flex-col tw-gap-4 tw-items-center">
-  <div class="tw-w-full tw-h-full tw-flex tw-items-center tw-relative sm:tw-gap-4 tw-py-4">
+  <div class="tw-w-full tw-h-full tw-flex tw-items-center sm:tw-gap-4 tw-py-4">
     <!-- Desktop Prev Button -->
     <button
-      class="tw-bg-grey-light tw-m-2 tw-size-12 tw-absolute tw-aspect-square tw-rounded-full tw-border-none md:tw-flex tw-hidden tw-items-center tw-justify-center tw-cursor-pointer tw-left-0 tw-drop-shadow-lg tw-pointer-events-auto"
+      class="tw-bg-grey-light tw-m-2 tw-size-12 tw-aspect-square tw-rounded-full tw-border-none md:tw-flex tw-hidden tw-items-center tw-justify-center tw-cursor-pointer tw-drop-shadow-lg tw-pointer-events-auto tw-shrink-0"
       id="featured-swiper-prev-{{ block.id }}"
     >
       {% render 'icon-chevron-left' %}
     </button>
     <!-- Swiper Container -->
-    <div class="tw-w-full swiper block-{{ block.id }}">
-      <div class="swiper-wrapper">
+    <div class="tw-w-full swiper tw-border-l tw-border-offblack block-{{ block.id }}">
+      <div class="swiper-wrapper tw-h-full">
         {% if block.settings.product_source == 'product_list' %}
           {% for car_product in block.settings.product_list limit: 15 %}
-            <div class="swiper-slide">
+            <div class="swiper-slide tw-border tw-border-offblack tw-border-l-0 !tw-h-full">
               {% render 'ud-basic-product-card',
                 cur_product: car_product,
                 video_aspect: true,
@@ -47,7 +47,7 @@
     </div>
     <!-- Next Button -->
     <button
-      class="tw-bg-grey-light tw-aspect-square tw-size-12 tw-m-2 tw-rounded-full tw-border-none md:tw-flex tw-hidden tw-items-center tw-justify-center tw-cursor-pointer tw-right-0 tw-drop-shadow-lg tw-absolute tw-pointer-events-auto"
+      class="tw-bg-grey-light tw-aspect-square tw-size-12 tw-m-2 tw-rounded-full tw-border-none md:tw-flex tw-hidden tw-items-center tw-justify-center tw-cursor-pointer tw-drop-shadow-lg tw-pointer-events-auto tw-shrink-0"
       id="featured-swiper-next-{{ block.id }}"
     >
       {% render 'icon-chevron-right' %}
@@ -58,7 +58,6 @@
 <script>
   var swiper = new Swiper('.block-{{ block.id }}', {
     slidesPerView: {{ block.settings.mobile_slides }},
-    spaceBetween: 16,
     loop: true,
     breakpoints: {
       425: {

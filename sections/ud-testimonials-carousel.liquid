@@ -1,11 +1,12 @@
 {% style %}
+  /* Dynamic values only */
   .ud-testimonials-{{ section.id }} {
     background-color: {{ section.settings.background_color }};
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
   }
 
-  @media screen and (max-width: 749px) {
+  @media screen and (max-width: 767px) {
     .ud-testimonials-{{ section.id }} {
       padding-top: {{ section.settings.mobile_padding_top }}px;
       padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
@@ -13,172 +14,104 @@
   }
 
   .ud-testimonials-{{ section.id }} .testimonials-heading {
-    text-align: center;
-    font-weight: 700;
     color: {{ section.settings.heading_color }};
     font-size: clamp({{ section.settings.heading_size_min }}px, 2.5vw, {{ section.settings.heading_size_max }}px);
-    margin-bottom: 2rem;
-    padding: 0 1.5rem;
   }
 
-  /* Outer wrapper: holds arrows + swiper side-by-side */
   .ud-testimonials-{{ section.id }} .testimonials-slider-outer {
-    position: relative;
-    display: flex;
-    align-items: center;
     max-width: {{ section.settings.content_max_width }}px;
-    margin: 0 auto;
-    padding: 0 3rem;
   }
 
-  @media screen and (max-width: 749px) {
-    .ud-testimonials-{{ section.id }} .testimonials-slider-outer {
-      padding: 0 2.5rem;
-    }
-  }
-
-  /* Swiper container */
-  .ud-testimonials-{{ section.id }} .swiper {
-    width: 100%;
-    overflow: hidden;
-  }
-
-  /* Cards */
   .ud-testimonials-{{ section.id }} .testimonial-card {
-    background: #fff;
-    border: 1px solid {{ section.settings.card_border_color }};
     padding: {{ section.settings.card_padding }}px;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    box-sizing: border-box;
-  }
-
-  .ud-testimonials-{{ section.id }} .testimonial-stars {
-    display: flex;
-    gap: 4px;
-    margin-bottom: 1rem;
   }
 
   .ud-testimonials-{{ section.id }} .testimonial-star {
     color: {{ section.settings.star_color }};
-    font-size: 1.1rem;
-    line-height: 1;
   }
 
   .ud-testimonials-{{ section.id }} .testimonial-title {
-    font-weight: 700;
     color: {{ section.settings.card_title_color }};
     font-size: {{ section.settings.card_title_size }}px;
-    margin-bottom: 0.75rem;
-    line-height: 1.3;
   }
 
   .ud-testimonials-{{ section.id }} .testimonial-quote {
     color: {{ section.settings.card_body_color }};
     font-size: {{ section.settings.card_body_size }}px;
-    line-height: 1.6;
-    flex-grow: 1;
-    margin-bottom: 1.5rem;
   }
 
   .ud-testimonials-{{ section.id }} .testimonial-logo {
-    margin-top: auto;
     max-height: {{ section.settings.logo_max_height }}px;
     max-width: {{ section.settings.logo_max_width }}px;
-    width: auto;
-    object-fit: contain;
-    object-position: left center;
   }
 
-  /* Arrows */
   .ud-testimonials-{{ section.id }} .swiper-btn {
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    cursor: pointer;
     color: {{ section.settings.arrow_color }};
-    background: none;
-    border: none;
-    padding: 0;
-    transition: opacity 0.2s;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
   }
 
-  .ud-testimonials-{{ section.id }} .swiper-btn:hover {
-    opacity: 0.6;
-  }
-
-  .ud-testimonials-{{ section.id }} .swiper-btn.swiper-prev-{{ section.id }} {
-    left: 0;
-  }
-
-  .ud-testimonials-{{ section.id }} .swiper-btn.swiper-next-{{ section.id }} {
-    right: 0;
-  }
-
-  .ud-testimonials-{{ section.id }} .swiper-btn svg {
-    width: 1.5rem;
-    height: 1.5rem;
-    stroke: currentColor;
-    fill: none;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .ud-testimonials-{{ section.id }} .swiper-btn.swiper-button-disabled {
+  /* Swiper disabled state — added dynamically by Swiper.js */
+  .ud-testimonials-{{ section.id }} .swiper-button-disabled {
     opacity: 0.25;
     cursor: default;
+  }
+
+  /* Equal height slides — override Swiper's JS-injected height */
+  .ud-testimonials-{{ section.id }} .swiper-wrapper {
+    align-items: stretch;
+  }
+
+  .ud-testimonials-{{ section.id }} .swiper-slide {
+    height: auto !important;
   }
 {% endstyle %}
 
 <div class="ud-testimonials-{{ section.id }} tw">
   {%- if section.settings.heading != blank -%}
-    <{{ section.settings.heading_tag }} class="testimonials-heading">
+    <{{ section.settings.heading_tag }} class="testimonials-heading tw-text-center tw-font-bold tw-mb-8 tw-px-6">
       {{ section.settings.heading }}
     </{{ section.settings.heading_tag }}>
   {%- endif -%}
 
-  <div class="testimonials-slider-outer">
+  <div class="testimonials-slider-outer tw-relative tw-flex tw-items-center tw-mx-auto tw-px-10 md:tw-px-12">
     {%- comment -%} Prev arrow {%- endcomment -%}
     <button
-      class="swiper-btn swiper-prev-{{ section.id }}"
+      class="swiper-btn swiper-prev-{{ section.id }} tw-shrink-0 tw-flex tw-items-center tw-justify-center tw-w-8 tw-h-8 tw-cursor-pointer tw-bg-transparent tw-border-0 tw-p-0 tw-transition-opacity tw-duration-200 tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-z-10 tw-left-0 hover:tw-opacity-60"
       aria-label="Previous testimonial"
     >
-      <svg viewBox="0 0 24 24" aria-hidden="true">
+      <svg
+        class="tw-w-6 tw-h-6 tw-stroke-current tw-fill-none"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
         <polyline points="15 18 9 12 15 6"></polyline>
       </svg>
     </button>
 
     {%- comment -%} Swiper {%- endcomment -%}
-    <div class="swiper testimonials-swiper-{{ section.id }}">
-      <div class="swiper-wrapper">
+    <div class="swiper testimonials-swiper-{{ section.id }} tw-w-full tw-overflow-hidden tw-border-l tw-border-offblack">
+      <div class="swiper-wrapper tw-items-stretch">
         {%- for block in section.blocks -%}
-          <div class="swiper-slide" {{ block.shopify_attributes }}>
-            <div class="testimonial-card">
+          <div class="swiper-slide tw-border-offblack tw-border tw-border-l-0">
+            <div class=" tw-my-auto tw-p-4 tw-gap-2 tw-bg-white tw-flex tw-flex-col !tw-h-full tw-box-border">
               {%- comment -%} Stars {%- endcomment -%}
               {%- assign star_count = block.settings.star_count | default: 5 -%}
-              <div class="testimonial-stars" aria-label="{{ star_count }} out of 5 stars">
+              <div class="testimonial-stars tw-flex tw-gap-1 tw-mb-4" aria-label="{{ star_count }} out of 5 stars">
                 {%- for i in (1..star_count) -%}
-                  <span class="testimonial-star" aria-hidden="true">&#9733;</span>
+                  <span class="testimonial-star tw-text-[1.1rem] tw-leading-none" aria-hidden="true">&#9733;</span>
                 {%- endfor -%}
               </div>
 
               {%- comment -%} Title {%- endcomment -%}
               {%- if block.settings.title != blank -%}
-                <p class="testimonial-title">{{ block.settings.title }}</p>
+                <p class="testimonial-title tw-font-bold tw-mb-3 tw-leading-[1.3]">{{ block.settings.title }}</p>
               {%- endif -%}
 
               {%- comment -%} Quote {%- endcomment -%}
               {%- if block.settings.quote != blank -%}
-                <p class="testimonial-quote">{{ block.settings.quote }}</p>
+                <p class="testimonial-quote tw-leading-relaxed tw-grow tw-mb-6">{{ block.settings.quote }}</p>
               {%- endif -%}
 
               {%- comment -%} Logo {%- endcomment -%}
@@ -191,7 +124,10 @@
                 {{
                   block.settings.logo
                   | image_url: width: 300
-                  | image_tag: class: 'testimonial-logo', alt: logo_alt, loading: 'lazy'
+                  | image_tag:
+                    class: 'testimonial-logo tw-mt-auto tw-h-full tw-w-auto tw-object-contain tw-object-[left_center]',
+                    alt: logo_alt,
+                    loading: 'lazy'
                 }}
               {%- elsif block.settings.attribution != blank -%}
                 <p class="testimonial-title" style="font-style: italic; font-weight: 400;">
@@ -206,10 +142,17 @@
 
     {%- comment -%} Next arrow {%- endcomment -%}
     <button
-      class="swiper-btn swiper-next-{{ section.id }}"
+      class="swiper-btn swiper-next-{{ section.id }} tw-shrink-0 tw-flex tw-items-center tw-justify-center tw-w-8 tw-h-8 tw-cursor-pointer tw-bg-transparent tw-border-0 tw-p-0 tw-transition-opacity tw-duration-200 tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-z-10 tw-right-0 hover:tw-opacity-60"
       aria-label="Next testimonial"
     >
-      <svg viewBox="0 0 24 24" aria-hidden="true">
+      <svg
+        class="tw-w-6 tw-h-6 tw-stroke-current tw-fill-none"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
         <polyline points="9 18 15 12 9 6"></polyline>
       </svg>
     </button>
@@ -226,7 +169,6 @@
 
       new Swiper('.testimonials-swiper-{{ section.id }}', {
         slidesPerView: 1,
-        spaceBetween: {{ section.settings.card_gap }},
         loop: {{ section.settings.loop }},
         navigation: {
           prevEl: '.swiper-prev-{{ section.id }}',
@@ -240,11 +182,9 @@
         breakpoints: {
           750: {
             slidesPerView: {{ section.settings.slides_per_view_tablet }},
-            spaceBetween: {{ section.settings.card_gap }},
           },
           1024: {
             slidesPerView: {{ section.settings.slides_per_view_desktop }},
-            spaceBetween: {{ section.settings.card_gap }},
           },
         },
       });
