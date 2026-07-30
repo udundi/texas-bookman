@@ -58,16 +58,9 @@
           "type": "_basic-product-carousel",
           "name": "Basic Product Carousel",
           "settings": {
-            "product_source": "collection",
+            "product_source": "product_list",
             "collection": "fantasy",
-            "product_list": [
-              "1-000-places-to-see-before-you-die-used-2603095",
-              "100-best-selling-albums-of-the-80s-2303370",
-              "100-iconic-gangster-movies-2411359",
-              "100-iconic-gangster-movies-2308011",
-              "1000-flags-banners-and-ensigns-2410033",
-              "1000-ideas-for-color-schemes-2310103"
-            ],
+            "product_list": "{{ closest.collection.products }}",
             "button_url": "",
             "button_text": "",
             "mobile_slides": 2,
