@@ -246,7 +246,6 @@
 
 <section class="ud-events-{{ section.id }} tw" id="ud-events-{{ section.id }}">
   <div class="events-inner">
-
     {%- comment -%} Section header {%- endcomment -%}
     {%- if section.settings.heading != blank -%}
       <{{ section.settings.heading_tag }} class="events-heading tw-font-montserrat">
@@ -263,7 +262,6 @@
       <div class="events-list">
         {%- for block in section.blocks -%}
           <article class="event-card" {{ block.shopify_attributes }}>
-
             {%- comment -%} Thumbnail {%- endcomment -%}
             {%- if block.settings.image != blank -%}
               {%- assign thumb_alt = block.settings.image.alt | default: block.settings.title | default: '' | escape -%}
@@ -314,7 +312,10 @@
 
                 {%- comment -%} Date badge {%- endcomment -%}
                 {%- if block.settings.date_month != blank or block.settings.date_day != blank -%}
-                  <div class="event-date-badge" aria-label="{{ block.settings.date_month }} {{ block.settings.date_day }} {{ block.settings.date_year }}">
+                  <div
+                    class="event-date-badge"
+                    aria-label="{{ block.settings.date_month }} {{ block.settings.date_day }} {{ block.settings.date_year }}"
+                  >
                     {%- if block.settings.date_month != blank -%}
                       <span class="badge-month">{{ block.settings.date_month }}</span>
                     {%- endif -%}
@@ -335,12 +336,12 @@
               {%- if block.settings.cta_label != blank -%}
                 <a
                   href="{{ block.settings.cta_url | default: '#' }}"
-                  class="event-cta tw-font-montserrat">
+                  class="event-cta tw-font-montserrat"
+                >
                   {{ block.settings.cta_label }}
                 </a>
               {%- endif -%}
             </div>
-
           </article>
         {%- endfor -%}
       </div>
@@ -351,12 +352,12 @@
       <div class="events-view-all-wrap">
         <a
           href="{{ section.settings.view_all_url | default: '#' }}"
-          class="events-view-all tw-font-montserrat">
+          class="events-view-all tw-font-montserrat"
+        >
           {{ section.settings.view_all_label }}
         </a>
       </div>
     {%- endif -%}
-
   </div>
 </section>
 
@@ -370,6 +371,11 @@
     {
       "type": "header",
       "content": "Section Header"
+    },
+    {
+      "type": "article",
+      "id": "blog",
+      "label": "Event"
     },
     {
       "type": "text",
