@@ -11,10 +11,62 @@
   "sections": {
     "main": {
       "type": "page",
+      "disabled": true,
       "settings": {}
+    },
+    "ud_faq_zqBRAx": {
+      "type": "ud-faq",
+      "blocks": {
+        "faq_item_NagCHR": {
+          "type": "_faq-item",
+          "settings": {
+            "question": "What is this product?",
+            "answer": "<p>Provide a detailed answer to the question here. <br/><br/><br/>Provide a detailed answer to the question here.<br/>Provide a detailed answer to the question here.<br/>Provide a detailed answer to the question here.<br/>Provide a detailed answer to the question here.</p>"
+          },
+          "blocks": {}
+        },
+        "faq_item_9eQkjA": {
+          "type": "_faq-item",
+          "settings": {
+            "question": "What is this product?",
+            "answer": "<p>Provide a detailed answer to the question here.</p>"
+          },
+          "blocks": {}
+        },
+        "faq_item_m37r6e": {
+          "type": "_faq-item",
+          "settings": {
+            "question": "What is this product?",
+            "answer": "<p>Provide a detailed answer to the question here.</p>"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "faq_item_NagCHR",
+        "faq_item_9eQkjA",
+        "faq_item_m37r6e"
+      ],
+      "name": "FAQ Section",
+      "settings": {
+        "heading": "Frequently Asked Questions",
+        "heading_size": 32,
+        "heading_color": "#322f30",
+        "heading_alignment": "left",
+        "heading_margin_bottom": 16,
+        "description": "",
+        "description_size": 14,
+        "description_color": "#626262",
+        "description_alignment": "left",
+        "description_margin_bottom": 32,
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "max_width": 800
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "ud_faq_zqBRAx"
   ]
 }
