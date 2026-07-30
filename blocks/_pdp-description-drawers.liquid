@@ -11,17 +11,6 @@
     {% endif %}
   "
 >
-  <!-- Tax Exempt message -->
-  {% if block.settings.show_tax_exempt %}
-    <a
-      href="/pages/tax-exempt-application"
-      class="tw-m-0 tw-flex tw-w-full tw-justify-start tw-gap-2 tw-border-y tw-border-[#D2DADC] tw-py-4 tw-font-montserrat tw-text-16 tw-font-semibold tw-text-offblack"
-    >
-      <span>Tax Exempt?</span>
-      <span class="tw-underline">Click Here</span>
-    </a>
-  {% endif %}
-
   {% content_for 'blocks' %}
 </div>
 

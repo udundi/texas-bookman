@@ -1,0 +1,54 @@
+{% if block.settings.answer != blank %}
+  {% assign button_id = 'faq-' | append: block.id %}
+  <div class="tw-border-[#D2DADC] tw-border-0 tw-border-b tw-border-solid">
+    <!-- FAQ Item Header -->
+    <button
+      @click="selectedDrawer == '{{ button_id }}' ? selectedDrawer = '' : selectedDrawer = '{{ button_id }}'"
+      class="tw-text-offblack tw-py-4 tw-font-extrabold tw-w-full tw-flex tw-flex-row tw-justify-between tw-gap-4 tw-items-center hover:tw-opacity-80 tw-transition-opacity"
+    >
+      <div class="tw-w-fit tw-text-16 tw-font-montserrat tw-font-semibold tw-text-left">
+        {{ block.settings.question }}
+      </div>
+      <div
+        class="tw-size-4 tw-stroke-black tw-transition-transform tw-duration-300 tw-flex-shrink-0"
+        :class="selectedDrawer == '{{ button_id }}' ? 'tw-rotate-45' : '-tw-rotate-90'"
+      >
+        {% render 'icon-plus' %}
+      </div>
+    </button>
+    <!-- FAQ Item Body -->
+    <div
+      class="tw-transition-all tw-h-full tw-overflow-hidden tw-text-14 tw-pb-4"
+      :class="selectedDrawer == '{{ button_id }}' ? 'tw-max-h-[1000px] tw-duration-300' : 'tw-max-h-0 tw-delay-100 tw-duration-500'"
+    >
+      <div class="tw-pr-8">
+        {{ block.settings.answer }}
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "FAQ Item",
+  "settings": [
+    {
+      "type": "text",
+      "id": "question",
+      "label": "Question",
+      "default": "What is this product?"
+    },
+    {
+      "type": "richtext",
+      "id": "answer",
+      "label": "Answer",
+      "default": "<p>Provide a detailed answer to the question here.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Item"
+    }
+  ]
+}
+{% endschema %}

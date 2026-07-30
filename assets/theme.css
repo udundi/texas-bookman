@@ -1411,6 +1411,10 @@ video {
   margin-top: auto;
 }
 
+.tw-mt-8 {
+  margin-top: 2rem;
+}
+
 .tw-box-border {
   box-sizing: border-box;
 }
@@ -1683,6 +1687,10 @@ video {
 
 .tw-max-h-\[calc\(100vh-70px\)\] {
   max-height: calc(100vh - 70px);
+}
+
+.tw-max-h-\[1000px\] {
+  max-height: 1000px;
 }
 
 .tw-min-h-0 {
@@ -3147,6 +3155,10 @@ video {
 
 .hover\:tw-opacity-60:hover {
   opacity: 0.6;
+}
+
+.hover\:tw-opacity-80:hover {
+  opacity: 0.8;
 }
 
 .focus\:tw-border-brand-primary:focus {

@@ -1,0 +1,227 @@
+<style>
+  .ud-faq-{{ section.id }} {
+    width: 100%;
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  .ud-faq-{{ section.id }} .faq-container {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  .ud-faq-{{ section.id }} .faq-heading {
+    font-size: {{ section.settings.heading_size }}px;
+    font-weight: 700;
+    margin-bottom: {{ section.settings.heading_margin_bottom }}px;
+    color: {{ section.settings.heading_color }};
+    text-align: {{ section.settings.heading_alignment }};
+  }
+
+  .ud-faq-{{ section.id }} .faq-description {
+    font-size: {{ section.settings.description_size }}px;
+    margin-bottom: {{ section.settings.description_margin_bottom }}px;
+    color: {{ section.settings.description_color }};
+    text-align: {{ section.settings.description_alignment }};
+  }
+</style>
+
+<div
+  id="FAQ-{{ section.id }}"
+  class="ud-faq-{{ section.id }}"
+  data-faq-container
+>
+  <div class="faq-container">
+    {% if section.settings.heading != blank %}
+      <h2 class="faq-heading">
+        {{ section.settings.heading }}
+      </h2>
+    {% endif %}
+
+    {% if section.settings.description != blank %}
+      <p class="faq-description">
+        {{ section.settings.description }}
+      </p>
+    {% endif %}
+
+    <div class="tw-mt-8">
+      {% content_for 'blocks' %}
+    </div>
+  </div>
+</div>
+
+<script>
+  const faqApp = Vue.createApp({
+    delimiters: ['[[', ']]'],
+    data() {
+      return {
+        selectedDrawer: '',
+      };
+    },
+  });
+
+  faqApp.mount('[data-faq-container]');
+</script>
+
+{% schema %}
+{
+  "name": "FAQ Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading Size",
+      "default": 32
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#322f30"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "heading_margin_bottom",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Heading Margin Bottom",
+      "default": 16
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Description Size",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#626262"
+    },
+    {
+      "type": "select",
+      "id": "description_alignment",
+      "label": "Description Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "description_margin_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "label": "Description Margin Bottom",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 300,
+      "step": 20,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 300,
+      "step": 20,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 600,
+      "max": 1400,
+      "step": 100,
+      "unit": "px",
+      "label": "Container Max Width",
+      "default": 800
+    }
+  ],
+  "blocks": [
+    {
+      "type": "_faq-item"
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Section",
+      "blocks": [
+        {
+          "type": "_faq-item"
+        },
+        {
+          "type": "_faq-item"
+        },
+        {
+          "type": "_faq-item"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,254 +1,581 @@
 {% style %}
-  .section-outer-{{ section.id }} {
+  .ud-events-{{ section.id }} {
     background-color: {{ section.settings.background_color }};
-    padding-top: {{ section.settings.padding_top }}rem;
-    padding-bottom: {{ section.settings.padding_bottom }}rem;
-  }
-
-  .section-{{ section.id }} {
-    padding-left: {{ section.settings.padding_left }}rem;
-    {% if section.settings.container_width == 'full_width' %}
-      width: 100%;
-    {% elsif section.settings.container_width == 'lg_desktop' %}
-      max-width: var(--container-width, 1440px);
-    {% elsif section.settings.container_width == 'md_desktop' %}
-      max-width: var(--container-width, 1440px);
-    {% elsif section.settings.container_width == 'sm_desktop' %}
-      max-width: var(--container-width, 1280px);
-    {% elsif section.settings.container_width == 'tablet' %}
-      max-width: var(--container-width, 768px);
-    {% else section.settings.container_width == 'mobile' %}
-      max-width: var(--container-width, 448px);
-    {% endif %}
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
   }
 
   @media screen and (max-width: 749px) {
-    .section-outer-{{ section.id }} {
-      padding-top: {{ section.settings.mobile_padding_top }}rem;
-      padding-bottom: {{ section.settings.mobile_padding_bottom }}rem;
+    .ud-events-{{ section.id }} {
+      padding-top: {{ section.settings.mobile_padding_top }}px;
+      padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
     }
   }
+
+  .ud-events-{{ section.id }} .events-inner {
+    max-width: {{ section.settings.content_max_width }}px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* Header */
+  .ud-events-{{ section.id }} .events-heading {
+    font-weight: 700;
+    text-align: center;
+    color: {{ section.settings.heading_color }};
+    font-size: clamp({{ section.settings.heading_size_min }}px, 2.5vw, {{ section.settings.heading_size_max }}px);
+    margin-bottom: 0.5rem;
+  }
+
+  .ud-events-{{ section.id }} .events-subtext {
+    text-align: center;
+    color: {{ section.settings.subtext_color }};
+    font-size: {{ section.settings.subtext_size }}px;
+    margin-bottom: 2.25rem;
+  }
+
+  /* Event Cards */
+  .ud-events-{{ section.id }} .event-card {
+    border: 1px solid {{ section.settings.card_border_color }};
+    border-radius: {{ section.settings.card_border_radius }}px;
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-bottom: 1.25rem;
+    overflow: hidden;
+    background: {{ section.settings.card_bg }};
+  }
+
+  .ud-events-{{ section.id }} .event-card:last-child {
+    margin-bottom: 0;
+  }
+
+  .ud-events-{{ section.id }} .event-thumbnail {
+    flex-shrink: 0;
+    width: 220px;
+    margin: 1.25rem 0 1.25rem 1.25rem;
+    border-radius: 6px;
+    object-fit: cover;
+    object-position: center;
+    align-self: flex-start;
+  }
+
+  .ud-events-{{ section.id }} .event-thumbnail-placeholder {
+    flex-shrink: 0;
+    width: 220px;
+    margin: 1.25rem 0 1.25rem 1.25rem;
+    border-radius: 6px;
+    background: #e5e7eb;
+    align-self: flex-start;
+    min-height: 148px;
+  }
+
+  .ud-events-{{ section.id }} .event-content {
+    flex: 1;
+    padding: 1.25rem 1.25rem 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 0;
+  }
+
+  .ud-events-{{ section.id }} .event-header-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .ud-events-{{ section.id }} .event-titles {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .ud-events-{{ section.id }} .event-title {
+    display: block;
+    font-weight: 700;
+    color: {{ section.settings.event_title_color }};
+    font-size: {{ section.settings.event_title_size }}px;
+    line-height: 1.3;
+    margin-bottom: 0.4rem;
+    text-decoration: none;
+  }
+
+  .ud-events-{{ section.id }} .event-title:hover {
+    text-decoration: underline;
+  }
+
+  .ud-events-{{ section.id }} .event-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: {{ section.settings.meta_color }};
+    font-size: {{ section.settings.meta_size }}px;
+    flex-wrap: wrap;
+  }
+
+  .ud-events-{{ section.id }} .event-meta-icon {
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+    stroke: {{ section.settings.meta_color }};
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .ud-events-{{ section.id }} .event-meta-divider {
+    color: {{ section.settings.meta_color }};
+    opacity: 0.5;
+  }
+
+  /* Date Badge */
+  .ud-events-{{ section.id }} .event-date-badge {
+    flex-shrink: 0;
+    background-color: {{ section.settings.badge_bg }};
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem 0.75rem;
+    min-width: 64px;
+    text-align: center;
+  }
+
+  .ud-events-{{ section.id }} .badge-month {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: {{ section.settings.badge_text_color }};
+    line-height: 1.2;
+  }
+
+  .ud-events-{{ section.id }} .badge-day {
+    font-size: 28px;
+    font-weight: 700;
+    color: {{ section.settings.badge_text_color }};
+    line-height: 1.1;
+  }
+
+  .ud-events-{{ section.id }} .badge-year {
+    font-size: 11px;
+    font-weight: 700;
+    color: {{ section.settings.badge_text_color }};
+    line-height: 1.2;
+  }
+
+  /* Description */
+  .ud-events-{{ section.id }} .event-description {
+    color: {{ section.settings.description_color }};
+    font-size: {{ section.settings.description_size }}px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* CTA Button */
+  .ud-events-{{ section.id }} .event-cta {
+    display: inline-block;
+    background-color: {{ section.settings.cta_bg }};
+    color: {{ section.settings.cta_text_color }};
+    font-weight: 700;
+    font-size: {{ section.settings.cta_font_size }}px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.5rem 1.25rem;
+    border-radius: {{ section.settings.cta_border_radius }}px;
+    margin-top: 0.25rem;
+    transition: opacity 0.2s;
+    align-self: flex-start;
+  }
+
+  .ud-events-{{ section.id }} .event-cta:hover {
+    opacity: 0.85;
+  }
+
+  /* Mobile */
   @media screen and (max-width: 749px) {
-    .section-{{ section.id }} {
-      padding-left: {{ section.settings.mobile_padding_left }}rem;
-      padding-right: {{ section.settings.mobile_padding_right }}rem;
+    .ud-events-{{ section.id }} .event-card {
+      flex-direction: column;
+    }
+
+    .ud-events-{{ section.id }} .event-thumbnail,
+    .ud-events-{{ section.id }} .event-thumbnail-placeholder {
+      width: calc(100% - 2rem);
+      margin: 1rem 1rem 0;
+      min-height: 180px;
+    }
+
+    .ud-events-{{ section.id }} .event-header-row {
+      flex-wrap: wrap;
+    }
+
+    .ud-events-{{ section.id }} .event-date-badge {
+      order: -1;
     }
   }
 {% endstyle %}
 
-<div class="section-outer-{{ section.id }}">
-  <div class="section-{{ section.id }} tw-mx-auto">
-    {% if section.settings.section_title != blank %}
-      <div class="tw-flex tw-justify-between tw-px-20 tw-py-4">
-        <div class=" tw-font-playfair tw-font-semibold tw-text-36 tw-leading-tight tw-text-offblack">
-          {{ section.settings.section_title }}
-        </div>
-        <a
-          href="{{ section.settings.button_url }}"
-          class="tw-bg-brand-primary tw-uppercase tw-font-semibold tw-text-white tw-py-2 tw-px-4 tw-w-full tw-flex tw-items-center tw-justify-center tw-max-w-64 tw-rounded-md"
-        >
-          {{ section.settings.button_text }}
-        </a>
+<section class="ud-events-{{ section.id }} tw" id="ud-events-{{ section.id }}">
+  <div class="events-inner">
+    {%- if section.settings.heading != blank -%}
+      <{{ section.settings.heading_tag }} class="events-heading font-montserrat">
+        {{ section.settings.heading }}
+      </{{ section.settings.heading_tag }}>
+    {%- endif -%}
+
+    {%- if section.settings.subtext != blank -%}
+      <p class="events-subtext font-montserrat">{{ section.settings.subtext }}</p>
+    {%- endif -%}
+
+    {%- assign selected_blog = section.settings.blog -%}
+    {%- if selected_blog != blank -%}
+      <div class="events-list">
+        {%- for article in blogs[selected_blog].articles -%}
+          {%- assign date_str = article.published_at | date: "%b|%d|%Y" | split: "|" -%}
+          <article class="event-card">
+            {%- if article.image -%}
+              <img
+                src="{{ article.image | image_url: width: 440 }}"
+                alt="{{ article.title | escape }}"
+                class="event-thumbnail"
+                loading="lazy"
+                width="220"
+                height="148"
+              >
+            {%- else -%}
+              <div class="event-thumbnail-placeholder" aria-hidden="true"></div>
+            {%- endif -%}
+
+            <div class="event-content">
+              <div class="event-header-row">
+                <div class="event-titles">
+                  <a href="{{ article.url }}" class="event-title font-montserrat">
+                    {{ article.title }}
+                  </a>
+
+                  {%- assign start_time = article.metafields.custom.start_time.value -%}
+                  {%- assign end_time = article.metafields.custom.end_time.value -%}
+                  {%- assign location = article.metafields.custom.location.value -%}
+                  {%- if start_time != blank or location != blank -%}
+                    <div class="event-meta font-montserrat">
+                      <svg class="event-meta-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                      </svg>
+                      {%- if start_time != blank -%}
+                        <span>{{ start_time }}{% if end_time != blank %} - {{ end_time }}{% endif %}</span>
+                      {%- endif -%}
+                      {%- if start_time != blank and location != blank -%}
+                        <span class="event-meta-divider">|</span>
+                      {%- endif -%}
+                      {%- if location != blank -%}
+                        <span>{{ location }}</span>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                </div>
+
+                {%- if date_str.size >= 2 -%}
+                  <div
+                    class="event-date-badge"
+                    aria-label="{{ date_str[0] }} {{ date_str[1] }} {{ date_str[2] }}"
+                  >
+                    <span class="badge-month">{{ date_str[0] | upcase }}</span>
+                    <span class="badge-day">{{ date_str[1] | remove: '0' }}</span>
+                    {%- if date_str[2] != blank -%}
+                      <span class="badge-year">{{ date_str[2] }}</span>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+              </div>
+
+              {%- if article.excerpt != blank -%}
+                <p class="event-description font-montserrat">{{ article.excerpt | strip_html | truncatewords: 30 }}</p>
+              {%- endif -%}
+
+              {%- assign cta_text = article.metafields.custom.cta_text.value -%}
+              {%- assign cta_link = article.metafields.custom.cta_link.value -%}
+              {%- if cta_text != blank -%}
+                <a
+                  href="{{ cta_link | default: article.url }}"
+                  class="event-cta font-montserrat"
+                >
+                  {{ cta_text }}
+                </a>
+              {%- endif -%}
+            </div>
+          </article>
+        {%- endfor -%}
       </div>
-    {% endif %}
-    <div class="tw-flex tw-flex-col tw-gap-4 tw-items-center">
-      {% for event in events %}
-        <!-- Event Block -->
-        <div>
-          <!-- Image -->
-          <div>
-            {% if image == true %}
-              {{
-                cur_product.featured_image
-                | image_url: width: 400
-                | image_tag: loading: 'lazy', class: 'tw-w-full tw-object-cover tw-h-72 tw-aspect-3/4'
-              }}
-            {% else %}
-              {{
-                cur_product.featured_image
-                | image_url: width: 800
-                | image_tag: loading: 'lazy', class: 'tw-size-full tw-object-cover tw-aspect-3/4'
-              }}
-            {% endif %}
-          </div>
-          <!-- Details -->
-          <div>
-            <!-- Title -->
-            <div></div>
-            <!-- Location + Time -->
-            <div></div>
-            <!-- Description -->
-            <div></div>
-            <!-- Event Button -->
-            <div></div>
-          </div>
-        </div>
-      {% endfor %}
-    </div>
+    {%- endif -%}
   </div>
-</div>
-
-<script>
-  var swiper = new Swiper('.carousel-{{ section.id }}', {
-    slidesPerView: {{ section.settings.mobile_slides }},
-    loop: true,
-    breakpoints: {
-      425: {
-        slidesPerView: {{ section.settings.tablet_slides }},
-      },
-      768: {
-        slidesPerView: {{ section.settings.sm_desktop_slides }},
-      },
-      1024: {
-        slidesPerView: {{ section.settings.lg_desktop_slides }},
-      },
-    },
-    // Disable all automatic slide advancement from pointer/touch events
-    touchStartPreventDefault: false,
-
-    navigation: {
-      nextEl: '#featured-swiper-next-{{ section.id }}',
-      prevEl: '#featured-swiper-prev-{{ section.id }}',
-    },
-  });
-</script>
+</section>
 
 {% schema %}
 {
-  "name": "Events",
+  "name": "All Events",
+  "tag": "section",
+  "class": "section",
   "settings": [
     {
-      "type": "text",
-      "label": "Section Title",
-      "id": "section_title"
+      "type": "header",
+      "content": "Section Header"
     },
     {
       "type": "text",
-      "label": "Section Subtitle",
-      "id": "section_subtitle"
+      "id": "heading",
+      "label": "Heading",
+      "default": "Upcoming Events"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading Tag",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#212121"
     },
     {
       "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 40,
-      "step": 0.5,
-      "unit": "rem",
-      "label": "Desktop Padding Top",
-      "default": 4
+      "id": "heading_size_min",
+      "label": "Heading Min Size (px)",
+      "min": 18,
+      "max": 48,
+      "step": 2,
+      "default": 26
     },
     {
       "type": "range",
-      "min": 0,
-      "max": 40,
-      "step": 0.5,
-      "unit": "rem",
-      "id": "padding_bottom",
-      "label": "Desktop Padding Bottom",
-      "default": 4
+      "id": "heading_size_max",
+      "label": "Heading Max Size (px)",
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "default": 40
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Join us at our upcoming events and trade shows"
+    },
+    {
+      "type": "color",
+      "id": "subtext_color",
+      "label": "Subtext Color",
+      "default": "#212121"
     },
     {
       "type": "range",
-      "id": "mobile_padding_top",
-      "min": 0,
-      "max": 40,
-      "step": 0.5,
-      "unit": "rem",
-      "label": "Mobile Padding Top",
-      "default": 4
+      "id": "subtext_size",
+      "label": "Subtext Font Size (px)",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Blog Selection"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Select Blog",
+      "info": "Choose the blog containing your events"
+    },
+    {
+      "type": "header",
+      "content": "Event Cards"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card Border Color",
+      "default": "#e5e7eb"
     },
     {
       "type": "range",
+      "id": "card_border_radius",
+      "label": "Card Border Radius (px)",
       "min": 0,
-      "max": 40,
-      "step": 0.5,
-      "unit": "rem",
-      "id": "mobile_padding_bottom",
-      "label": "Mobile Padding Bottom",
-      "default": 4
+      "max": 24,
+      "step": 2,
+      "default": 6
+    },
+    {
+      "type": "color",
+      "id": "event_title_color",
+      "label": "Event Title Color",
+      "default": "#20448F"
     },
     {
       "type": "range",
+      "id": "event_title_size",
+      "label": "Event Title Size (px)",
+      "min": 14,
+      "max": 28,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "meta_color",
+      "label": "Meta (time/location) Color",
+      "default": "#6b7280"
+    },
+    {
+      "type": "range",
+      "id": "meta_size",
+      "label": "Meta Font Size (px)",
+      "min": 11,
+      "max": 18,
+      "step": 1,
+      "default": 13
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#212121"
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Description Font Size (px)",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Date Badge"
+    },
+    {
+      "type": "color",
+      "id": "badge_bg",
+      "label": "Badge Background",
+      "default": "#F0BA3A"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge Text Color",
+      "default": "#212121"
+    },
+    {
+      "type": "header",
+      "content": "CTA Button"
+    },
+    {
+      "type": "color",
+      "id": "cta_bg",
+      "label": "CTA Background",
+      "default": "#20448F"
+    },
+    {
+      "type": "color",
+      "id": "cta_text_color",
+      "label": "CTA Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "cta_font_size",
+      "label": "CTA Font Size (px)",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "cta_border_radius",
+      "label": "CTA Border Radius (px)",
       "min": 0,
-      "max": 40,
-      "step": 0.5,
-      "unit": "rem",
-      "id": "padding_left",
-      "label": "Padding Left",
+      "max": 20,
+      "step": 2,
       "default": 2
     },
     {
-      "type": "range",
-      "min": 0,
-      "max": 40,
-      "step": 0.5,
-      "unit": "rem",
-      "id": "padding_right",
-      "label": "Padding Right",
-      "default": 2
-    },
-    {
-      "type": "range",
-      "min": 0,
-      "max": 40,
-      "step": 0.5,
-      "unit": "rem",
-      "id": "mobile_padding_left",
-      "label": "Mobile Padding Left",
-      "default": 2
-    },
-    {
-      "type": "range",
-      "min": 0,
-      "max": 40,
-      "step": 0.5,
-      "unit": "rem",
-      "id": "mobile_padding_right",
-      "label": "Mobile Padding Right",
-      "default": 2
+      "type": "header",
+      "content": "Background & Spacing"
     },
     {
       "type": "color",
       "id": "background_color",
-      "label": "Background Color",
-      "default": "#ffffff"
+      "label": "Section Background",
+      "default": "#FDFBF8"
     },
     {
-      "type": "select",
-      "id": "container_width",
-      "label": "Max Width Of Section",
-      "options": [
-        {
-          "value": "mobile",
-          "label": "448px (Mobile)"
-        },
-        {
-          "value": "tablet",
-          "label": "768px (Tablet)"
-        },
-        {
-          "value": "sm_desktop",
-          "label": "1024px (Sm Desktop)"
-        },
-        {
-          "value": "md_desktop",
-          "label": "1280px (Md Desktop)"
-        },
-        {
-          "value": "lg_desktop",
-          "label": "1440px (Lg Desktop)"
-        },
-        {
-          "value": "full_width",
-          "label": "Full Width"
-        }
-      ],
-      "default": "full_width"
+      "type": "range",
+      "id": "content_max_width",
+      "label": "Content Max Width (px)",
+      "min": 600,
+      "max": 1600,
+      "step": 40,
+      "default": 1280
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Desktop Padding Top (px)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Desktop Padding Bottom (px)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile Padding Top (px)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile Padding Bottom (px)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 36
     }
   ],
   "presets": [
     {
-      "name": "Events"
+      "name": "All Events"
     }
   ]
 }
