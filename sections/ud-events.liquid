@@ -51,7 +51,40 @@
         </a>
       </div>
     {% endif %}
-    <div class="tw-flex tw-flex-col tw-gap-4 tw-items-center">Test</div>
+    <div class="tw-flex tw-flex-col tw-gap-4 tw-items-center">
+      {% for event in events %}
+        <!-- Event Block -->
+        <div>
+          <!-- Image -->
+          <div>
+            {% if image == true %}
+              {{
+                cur_product.featured_image
+                | image_url: width: 400
+                | image_tag: loading: 'lazy', class: 'tw-w-full tw-object-cover tw-h-72 tw-aspect-3/4'
+              }}
+            {% else %}
+              {{
+                cur_product.featured_image
+                | image_url: width: 800
+                | image_tag: loading: 'lazy', class: 'tw-size-full tw-object-cover tw-aspect-3/4'
+              }}
+            {% endif %}
+          </div>
+          <!-- Details -->
+          <div>
+            <!-- Title -->
+            <div></div>
+            <!-- Location + Time -->
+            <div></div>
+            <!-- Description -->
+            <div></div>
+            <!-- Event Button -->
+            <div></div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
   </div>
 </div>
 
