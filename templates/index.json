@@ -51,6 +51,41 @@
         "mobile_padding_bottom": 112
       }
     },
+    "ud_basic_carousel_container_QErUyT": {
+      "type": "ud-basic-carousel-container",
+      "name": "Basic Product Carousel",
+      "settings": {
+        "section_title": "Browse New Arrivals",
+        "padding_top": 4,
+        "padding_bottom": 4,
+        "mobile_padding_top": 4,
+        "mobile_padding_bottom": 4,
+        "padding_left": 2,
+        "padding_right": 2,
+        "mobile_padding_left": 2,
+        "mobile_padding_right": 2,
+        "background_color": "#ffffff",
+        "container_width": "lg_desktop",
+        "product_source": "product_list",
+        "collection": "frontpage",
+        "product_list": [
+          "1-000-places-to-see-before-you-die-used-2603095",
+          "10-principles-of-good-design-today-2412010",
+          "100-best-selling-albums-of-the-80s-2303370",
+          "100-iconic-gangster-movies-2308011",
+          "100-iconic-gangster-movies-2411359",
+          "1000-flags-banners-and-ensigns-2410033",
+          "1000-ideas-for-color-schemes-2310103",
+          "1001-photographs-you-must-see-in-your-lifetime-2508078"
+        ],
+        "button_url": "{{ section.settings.collection.url }}",
+        "button_text": "Shop All",
+        "mobile_slides": 2,
+        "tablet_slides": 3,
+        "sm_desktop_slides": 4,
+        "lg_desktop_slides": 5
+      }
+    },
     "ud_hero_banner_iGd6Ft": {
       "type": "ud-hero-banner",
       "name": "Hero Banner",
@@ -137,6 +172,7 @@
         "basic_product_carousel_WwQVkz",
         "multipurpose_carousel_yfaNdJ"
       ],
+      "disabled": true,
       "name": "Multi Carousel",
       "settings": {
         "section_title": "Featured Products",
@@ -151,41 +187,6 @@
         "mobile_padding_right": 2,
         "background_color": "#fdfbf8",
         "container_width": "md_desktop"
-      }
-    },
-    "ud_basic_carousel_container_QErUyT": {
-      "type": "ud-basic-carousel-container",
-      "name": "Basic Product Carousel",
-      "settings": {
-        "section_title": "Browse New Arrivals",
-        "padding_top": 4,
-        "padding_bottom": 4,
-        "mobile_padding_top": 4,
-        "mobile_padding_bottom": 4,
-        "padding_left": 2,
-        "padding_right": 2,
-        "mobile_padding_left": 2,
-        "mobile_padding_right": 2,
-        "background_color": "#ffffff",
-        "container_width": "lg_desktop",
-        "product_source": "product_list",
-        "collection": "frontpage",
-        "product_list": [
-          "1-000-places-to-see-before-you-die-used-2603095",
-          "10-principles-of-good-design-today-2412010",
-          "100-best-selling-albums-of-the-80s-2303370",
-          "100-iconic-gangster-movies-2308011",
-          "100-iconic-gangster-movies-2411359",
-          "1000-flags-banners-and-ensigns-2410033",
-          "1000-ideas-for-color-schemes-2310103",
-          "1001-photographs-you-must-see-in-your-lifetime-2508078"
-        ],
-        "button_url": "{{ section.settings.collection.url }}",
-        "button_text": "Shop All",
-        "mobile_slides": 2,
-        "tablet_slides": 3,
-        "sm_desktop_slides": 4,
-        "lg_desktop_slides": 5
       }
     },
     "ud_testimonials_carousel_NbYzVP": {
@@ -451,9 +452,9 @@
   "order": [
     "main",
     "ud_cta_banner_xkxWDF",
+    "ud_basic_carousel_container_QErUyT",
     "ud_hero_banner_iGd6Ft",
     "ud_multi_carousel_DMK4LU",
-    "ud_basic_carousel_container_QErUyT",
     "ud_testimonials_carousel_NbYzVP",
     "ud_flexbox_DaNpeD",
     "ud_flexbox_BCC4jh"
