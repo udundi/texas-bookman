@@ -447,6 +447,83 @@
         "content_overflow": "fit",
         "custom_id": ""
       }
+    },
+    "ud_events_list_7HzD99": {
+      "type": "ud-events-list",
+      "blocks": {
+        "event_nythTC": {
+          "type": "event",
+          "settings": {
+            "title": "Wholesale Strategy Seminar",
+            "title_url": "",
+            "time": "10:00 AM - 12:30 PM",
+            "location": "Austin Distribution Center",
+            "description": "Join our supply chain experts for an in-depth look at optimizing inventory for independent bookstores.",
+            "date_month": "OCT",
+            "date_day": "2",
+            "date_year": "2026",
+            "cta_label": "Register Now",
+            "cta_url": ""
+          }
+        },
+        "event_EQjL4M": {
+          "type": "event",
+          "settings": {
+            "title": "Texas Bookman Annual Tradeshow",
+            "title_url": "",
+            "time": "10:00 AM - 12:30 PM",
+            "location": "Austin Distribution Center",
+            "description": "Our annual networking event for educational partners. Preview upcoming fall titles over coffee.",
+            "date_month": "OCT",
+            "date_day": "23",
+            "date_year": "2026",
+            "cta_label": "Schedule Appointment",
+            "cta_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "event_nythTC",
+        "event_EQjL4M"
+      ],
+      "name": "Events List",
+      "settings": {
+        "blog": "",
+        "heading": "Upcoming Trade Shows",
+        "heading_tag": "h2",
+        "heading_color": "#212121",
+        "heading_size_min": 26,
+        "heading_size_max": 40,
+        "subtext": "We'd love to meet you in person at one of our events or tradeshows",
+        "subtext_color": "#212121",
+        "subtext_size": 15,
+        "card_bg": "#ffffff",
+        "card_border_color": "#e5e7eb",
+        "card_border_radius": 6,
+        "event_title_color": "#20448F",
+        "event_title_size": 18,
+        "meta_color": "#6b7280",
+        "meta_size": 13,
+        "description_color": "#212121",
+        "description_size": 14,
+        "badge_bg": "#F0BA3A",
+        "badge_text_color": "#212121",
+        "cta_bg": "#20448F",
+        "cta_text_color": "#ffffff",
+        "cta_font_size": 12,
+        "cta_border_radius": 2,
+        "view_all_label": "View All Events",
+        "view_all_url": "",
+        "view_all_border_color": "#20448F",
+        "view_all_text_color": "#20448F",
+        "view_all_font_size": 13,
+        "background_color": "#FDFBF8",
+        "content_max_width": 1280,
+        "padding_top": 56,
+        "padding_bottom": 56,
+        "mobile_padding_top": 36,
+        "mobile_padding_bottom": 36
+      }
     }
   },
   "order": [
@@ -457,6 +534,7 @@
     "ud_multi_carousel_DMK4LU",
     "ud_testimonials_carousel_NbYzVP",
     "ud_flexbox_DaNpeD",
-    "ud_flexbox_BCC4jh"
+    "ud_flexbox_BCC4jh",
+    "ud_events_list_7HzD99"
   ]
 }
