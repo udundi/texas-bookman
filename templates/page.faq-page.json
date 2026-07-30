@@ -28,8 +28,8 @@
         "faq_item_9eQkjA": {
           "type": "_faq-item",
           "settings": {
-            "question": "What is this product?",
-            "answer": "<p>Provide a detailed answer to the question here.</p>"
+            "question": "What do I need to place an order?",
+            "answer": "<p>U.S. Customers</p><ul><li>Completed account application</li><li>Resale certificate</li><li>Tax ID</li></ul><p>International Customers</p><ul><li>Completed account application</li></ul><p>All required documentation must be on file before your order can be shipped.<br/><br/></p>"
           },
           "blocks": {}
         },
