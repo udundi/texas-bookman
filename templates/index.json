@@ -58,8 +58,8 @@
           "type": "_basic-product-carousel",
           "name": "Basic Product Carousel",
           "settings": {
-            "product_source": "product_list",
-            "collection": "",
+            "product_source": "collection",
+            "collection": "fantasy",
             "product_list": [
               "1-000-places-to-see-before-you-die-used-2603095",
               "100-best-selling-albums-of-the-80s-2303370",
