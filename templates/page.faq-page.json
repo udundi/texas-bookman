@@ -20,7 +20,7 @@
         "faq_item_NagCHR": {
           "type": "_faq-item",
           "settings": {
-            "question": "What is this product?",
+            "question": "Who can order from Texas Bookman?",
             "answer": "<p>Texas Bookman is a wholesale company and does not sell directly to consumers. We require proof of business status before fulfilling any orders.</p>"
           },
           "blocks": {}
