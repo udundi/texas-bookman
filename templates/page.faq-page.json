@@ -36,8 +36,8 @@
         "faq_item_m37r6e": {
           "type": "_faq-item",
           "settings": {
-            "question": "What is this product?",
-            "answer": "<p>Provide a detailed answer to the question here.</p>"
+            "question": "Is there a minimum order?",
+            "answer": "<p>Yes. The minimum order is $100.</p>"
           },
           "blocks": {}
         }
