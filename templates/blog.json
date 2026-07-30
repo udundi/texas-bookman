@@ -19,7 +19,7 @@
       "name": "All Events",
       "settings": {
         "heading": "Upcoming Events",
-        "heading_tag": "h2",
+        "heading_tag": "h1",
         "heading_color": "#212121",
         "heading_size_min": 26,
         "heading_size_max": 40,
