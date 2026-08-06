@@ -17,19 +17,19 @@
         "menu_bezynk": {
           "type": "menu",
           "settings": {
-            "menu": "childrens-books"
+            "menu": "shop"
           }
         },
         "menu_9JkbV7": {
           "type": "menu",
           "settings": {
-            "menu": "childrens-books"
+            "menu": "resources-1"
           }
         },
         "menu_HJbCbE": {
           "type": "menu",
           "settings": {
-            "menu": "childrens-books"
+            "menu": "terms-policies"
           }
         }
       },
@@ -58,9 +58,7 @@
     "ud_copy_bar_qFiBkR": {
       "type": "ud-copy-bar",
       "name": "Copyright Bar",
-      "settings": {
-        "copy_text": "Copyright © 2026 Texas Bookman. All rights reserved"
-      }
+      "settings": {}
     }
   },
   "order": [
