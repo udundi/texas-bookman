@@ -120,7 +120,7 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "",
+                "tag": "Classic & General Fiction",
                 "title": "Classic & General Fiction",
                 "filter_type": "filter.p.tag="
               },
