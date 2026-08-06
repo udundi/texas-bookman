@@ -22,7 +22,7 @@
   %}
   {% if block.settings.filter_type != 'color' %}
     <a
-      {% assign filter_change = block.settings.filter_type | append: block.settings.tag | replace: ' ', '+' | escape %}
+      {% assign filter_change = block.settings.filter_type | append: block.settings.tag | replace: ' ', '+' %}
       {% if get_full_url contains '?' %}
         {% assign query_params = get_full_url
           | replace: 'pb=0', ''
