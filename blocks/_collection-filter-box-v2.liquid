@@ -2,9 +2,9 @@
   {% content_for 'blocks' %}
 {% endcapture %}
 <div
-  class="block-{{ block.id }} tw-py-1"
+  class="block-{{ block.id }} tw-py-1 {% if block.settings.nested %}tw-pl-6{% endif %}"
   {% if block.settings.nested %}
-    :class="{ 'tw-pl-6 tw-pt-1 tw-border-l-2 tw-border-brand-grey': {% if block.settings.collapsed == true %}!openFilters.includes('{{ block.id }}'){% else %}openFilters.includes('{{ block.id }}'){% endif %} }"
+    :class="{ ' tw-pt-1 tw-border-l-2 tw-border-brand-grey': {% if block.settings.collapsed == true %}!openFilters.includes('{{ block.id }}'){% else %}openFilters.includes('{{ block.id }}'){% endif %} }"
   {% endif %}
 >
   {% if block.settings.collapsible %}
