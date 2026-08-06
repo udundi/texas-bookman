@@ -220,25 +220,30 @@
             "nested": false
           },
           "blocks": {
-            "collection_filter_99c3CU": {
-              "type": "_collection-filter",
-              "name": "Collection Filter",
+            "collection_filter_box_v2_TxDrRb": {
+              "type": "_collection-filter-box-v2",
+              "name": "Collection Filter Box",
               "settings": {
-                "tag": "Art",
+                "collapsible": true,
+                "collapsed": true,
                 "title": "Art",
-                "filter_type": "filter.p.tag="
+                "nested": true
               },
-              "blocks": {}
-            },
-            "collection_filter_y4KQPC": {
-              "type": "_collection-filter",
-              "name": "Collection Filter",
-              "settings": {
-                "tag": "Architecture",
-                "title": "Architecture",
-                "filter_type": "filter.p.tag="
+              "blocks": {
+                "collection_filter_UFWjJU": {
+                  "type": "_collection-filter",
+                  "name": "Collection Filter",
+                  "settings": {
+                    "tag": "Architecture",
+                    "title": "Architecture",
+                    "filter_type": "filter.p.tag="
+                  },
+                  "blocks": {}
+                }
               },
-              "blocks": {}
+              "block_order": [
+                "collection_filter_UFWjJU"
+              ]
             },
             "collection_filter_kdWzgK": {
               "type": "_collection-filter",
@@ -312,8 +317,7 @@
             }
           },
           "block_order": [
-            "collection_filter_99c3CU",
-            "collection_filter_y4KQPC",
+            "collection_filter_box_v2_TxDrRb",
             "collection_filter_kdWzgK",
             "collection_filter_NLV7KA",
             "collection_filter_Pz96Fw",
