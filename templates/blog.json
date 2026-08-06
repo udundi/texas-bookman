@@ -28,7 +28,7 @@
         "subtext_color": "#212121",
         "subtext_alignment": "center",
         "subtext_size": 15,
-        "blog": "events",
+        "blog": "{{ blog }}",
         "card_bg": "#ffffff",
         "card_border_color": "#e5e7eb",
         "card_border_radius": 6,
