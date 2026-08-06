@@ -439,38 +439,14 @@
               "settings": {
                 "menu_title": "My Account",
                 "header_url": "shopify://collections",
-                "menu": "resources",
+                "menu": "",
                 "column_layout": "2-col"
-              },
-              "blocks": {}
-            },
-            "header_menu_links_qtb3YQ": {
-              "type": "_header-menu-links",
-              "name": "Menu Links",
-              "settings": {
-                "menu_title": "All Children’s",
-                "header_url": "shopify://collections/frontpage",
-                "menu": "childrens-books",
-                "column_layout": "1-col"
-              },
-              "blocks": {}
-            },
-            "header_menu_links_q69jgi": {
-              "type": "_header-menu-links",
-              "name": "Menu Links",
-              "settings": {
-                "menu_title": "Featured Collections",
-                "header_url": "",
-                "menu": "featured-collections",
-                "column_layout": "1-col"
               },
               "blocks": {}
             }
           },
           "block_order": [
-            "header_menu_links_LcLCky",
-            "header_menu_links_qtb3YQ",
-            "header_menu_links_q69jgi"
+            "header_menu_links_LcLCky"
           ]
         }
       },
