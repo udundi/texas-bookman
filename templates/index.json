@@ -69,14 +69,16 @@
         "product_source": "product_list",
         "collection": "frontpage",
         "product_list": [
+          "a-cycling-lexicon-bicycle-headbadges-from-a-bygone-era-2506067",
           "1-000-places-to-see-before-you-die-used-2603095",
+          "a-home-that-means-the-world-2603058",
           "10-principles-of-good-design-today-2412010",
           "100-best-selling-albums-of-the-80s-2303370",
           "100-iconic-gangster-movies-2308011",
-          "100-iconic-gangster-movies-2411359",
           "1000-flags-banners-and-ensigns-2410033",
           "1000-ideas-for-color-schemes-2310103",
-          "1001-photographs-you-must-see-in-your-lifetime-2508078"
+          "1001-photographs-you-must-see-in-your-lifetime-2508078",
+          "100-iconic-gangster-movies-2411359"
         ],
         "button_url": "shopify://collections/all",
         "button_text": "Shop All",
@@ -451,10 +453,10 @@
     "ud_events_list_7HzD99": {
       "type": "ud-events-list",
       "blocks": {
-        "event_nythTC": {
+        "event_NRLgFK": {
           "type": "event",
           "settings": {
-            "blog": "news/dallas-antiquarian-book-fair-2026",
+            "blog": "events/dallas-antiquarian-book-fair-2026",
             "image": "{{ block.settings.blog.image }}",
             "title": "{{ block.settings.blog.title }}",
             "title_url": "{{ block.settings.blog.url }}",
@@ -468,10 +470,10 @@
             "cta_url": "{{ block.settings.blog.metafields.custom.cta_link.value }}"
           }
         },
-        "event_NRLgFK": {
+        "event_nythTC": {
           "type": "event",
           "settings": {
-            "blog": "news/texas-remainder-expo-trex-fall-2026",
+            "blog": "events/texas-remainder-expo-trex-fall-2026",
             "image": "{{ block.settings.blog.image }}",
             "title": "{{ block.settings.blog.title }}",
             "title_url": "{{ block.settings.blog.url }}",
@@ -487,8 +489,8 @@
         }
       },
       "block_order": [
-        "event_nythTC",
-        "event_NRLgFK"
+        "event_NRLgFK",
+        "event_nythTC"
       ],
       "name": "Events List",
       "settings": {
