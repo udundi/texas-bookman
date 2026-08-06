@@ -451,10 +451,10 @@
     "ud_events_list_7HzD99": {
       "type": "ud-events-list",
       "blocks": {
-        "event_nythTC": {
+        "event_NRLgFK": {
           "type": "event",
           "settings": {
-            "blog": "news/dallas-antiquarian-book-fair-2026",
+            "blog": "events/dallas-antiquarian-book-fair-2026",
             "image": "{{ block.settings.blog.image }}",
             "title": "{{ block.settings.blog.title }}",
             "title_url": "{{ block.settings.blog.url }}",
@@ -468,10 +468,10 @@
             "cta_url": "{{ block.settings.blog.metafields.custom.cta_link.value }}"
           }
         },
-        "event_NRLgFK": {
+        "event_nythTC": {
           "type": "event",
           "settings": {
-            "blog": "news/texas-remainder-expo-trex-fall-2026",
+            "blog": "events/texas-remainder-expo-trex-fall-2026",
             "image": "{{ block.settings.blog.image }}",
             "title": "{{ block.settings.blog.title }}",
             "title_url": "{{ block.settings.blog.url }}",
@@ -487,8 +487,8 @@
         }
       },
       "block_order": [
-        "event_nythTC",
-        "event_NRLgFK"
+        "event_NRLgFK",
+        "event_nythTC"
       ],
       "name": "Events List",
       "settings": {
