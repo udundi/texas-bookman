@@ -1,5 +1,53 @@
 {% if block.settings.answer != blank %}
   {% assign button_id = 'faq-' | append: block.id %}
+
+  {% style %}
+    .faq-richtext ul {
+      list-style: disc;
+      padding-left: 1.5rem;
+      margin: 0.5rem 0;
+    }
+    .faq-richtext ol {
+      list-style: decimal;
+      padding-left: 1.5rem;
+      margin: 0.5rem 0;
+    }
+    .faq-richtext li {
+      margin-bottom: 0.25rem;
+    }
+    .faq-richtext h1,
+    .faq-richtext h2,
+    .faq-richtext h3,
+    .faq-richtext h4,
+    .faq-richtext h5,
+    .faq-richtext h6 {
+      font-weight: 700;
+      line-height: 1.3;
+      margin: 0.75rem 0 0.35rem;
+    }
+    .faq-richtext h1 {
+      font-size: 1.5rem;
+    }
+    .faq-richtext h2 {
+      font-size: 1.25rem;
+    }
+    .faq-richtext h3 {
+      font-size: 1.1rem;
+    }
+    .faq-richtext p {
+      margin: 0.4rem 0;
+    }
+    .faq-richtext a {
+      color: #20448f;
+      text-decoration: underline;
+    }
+    .faq-richtext strong {
+      font-weight: 700;
+    }
+    .faq-richtext em {
+      font-style: italic;
+    }
+  {% endstyle %}
   <div class="tw-border-[#D2DADC] tw-border-0 tw-border-b tw-border-solid">
     <!-- FAQ Item Header -->
     <button
@@ -11,17 +59,17 @@
       </div>
       <div
         class="tw-size-4 tw-stroke-black tw-transition-transform tw-duration-300 tw-flex-shrink-0"
-        :class="selectedDrawer == '{{ button_id }}' ? 'tw-rotate-45' : '-tw-rotate-90'"
+        :class="selectedDrawer == '{{ button_id }}' ? 'tw-rotate-0' : '-tw-rotate-180'"
       >
-        {% render 'icon-plus' %}
+        {% render 'icon-arrow-down' %}
       </div>
     </button>
     <!-- FAQ Item Body -->
     <div
-      class="tw-transition-all tw-h-full tw-overflow-hidden tw-text-14 tw-pb-4"
-      :class="selectedDrawer == '{{ button_id }}' ? 'tw-max-h-[1000px] tw-duration-300' : 'tw-max-h-0 tw-delay-100 tw-duration-500'"
+      class="tw-transition-all tw-overflow-hidden tw-text-14"
+      :class="selectedDrawer == '{{ button_id }}' ? 'tw-max-h-[500px] tw-duration-300' : 'tw-max-h-0 tw-delay-100 tw-duration-500'"
     >
-      <div class="tw-pr-8">
+      <div class="tw-pr-8 tw-pb-4 faq-richtext">
         {{ block.settings.answer }}
       </div>
     </div>

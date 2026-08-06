@@ -1,0 +1,650 @@
+{% style %}
+  .ud-contact-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ud-contact-{{ section.id }} {
+      padding-top: {{ section.settings.mobile_padding_top }}px;
+      padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+    }
+  }
+
+  .ud-contact-{{ section.id }} .contact-inner {
+    max-width: {{ section.settings.content_max_width }}px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    gap: 3rem;
+    align-items: flex-start;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ud-contact-{{ section.id }} .contact-inner {
+      flex-direction: column;
+      gap: 2rem;
+    }
+  }
+
+  /* Form Side */
+  .ud-contact-{{ section.id }} .contact-form-side {
+    flex: 1 1 55%;
+    min-width: 0;
+  }
+
+  .ud-contact-{{ section.id }} .contact-heading {
+    font-weight: 700;
+    color: #312f30;
+    font-size: 30px;
+    line-height: 1.2;
+    margin: 0 0 0.75rem;
+  }
+
+  .ud-contact-{{ section.id }} .contact-subtext {
+    color: #312f30;
+    font-size: 15px;
+    line-height: 1.5;
+    margin: 0 0 1.75rem;
+  }
+
+  .ud-contact-{{ section.id }} .contact-subtext a {
+    color: #20448f;
+    text-decoration: underline;
+    font-weight: 600;
+  }
+
+  .ud-contact-{{ section.id }} .contact-form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ud-contact-{{ section.id }} .contact-form-row {
+      flex-direction: column;
+    }
+  }
+
+  .ud-contact-{{ section.id }} .contact-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    flex: 1;
+  }
+
+  .ud-contact-{{ section.id }} .contact-field-full {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .ud-contact-{{ section.id }} label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #312f30;
+  }
+
+  .ud-contact-{{ section.id }} input[type="text"],
+  .ud-contact-{{ section.id }} input[type="email"],
+  .ud-contact-{{ section.id }} input[type="tel"],
+  .ud-contact-{{ section.id }} textarea {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    padding: 0.625rem 0.875rem;
+    font-size: 14px;
+    color: #312f30;
+    background: #fff;
+    outline: none;
+    box-sizing: border-box;
+    font-family: inherit;
+    transition: border-color 0.15s;
+  }
+
+  .ud-contact-{{ section.id }} input[type="text"]:focus,
+  .ud-contact-{{ section.id }} input[type="email"]:focus,
+  .ud-contact-{{ section.id }} input[type="tel"]:focus,
+  .ud-contact-{{ section.id }} textarea:focus {
+    border-color: #20448f;
+  }
+
+  .ud-contact-{{ section.id }} textarea {
+    resize: vertical;
+    min-height: 130px;
+  }
+
+  .ud-contact-{{ section.id }} .contact-submit {
+    display: block;
+    width: 100%;
+    background-color: #20448f;
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 4px;
+    padding: 0.875rem 1.5rem;
+    cursor: pointer;
+    margin-top: 1.25rem;
+    transition: opacity 0.2s;
+  }
+
+  .ud-contact-{{ section.id }} .contact-submit:hover {
+    opacity: 0.88;
+  }
+
+  .ud-contact-{{ section.id }} .contact-success {
+    background: #f0f7f0;
+    border: 1px solid #c3e0c3;
+    border-radius: 4px;
+    padding: 1rem 1.25rem;
+    color: #1a6b1a;
+    font-size: 14px;
+    margin-bottom: 1rem;
+    display: none;
+  }
+
+  /* Info Side */
+  .ud-contact-{{ section.id }} .contact-info-side {
+    flex: 0 0 38%;
+    min-width: 0;
+  }
+
+  .ud-contact-{{ section.id }} .contact-info-panel {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 1.5rem;
+    font-size: 14px;
+    color: #312f30;
+    line-height: 1.6;
+  }
+
+  .ud-contact-{{ section.id }} .info-section {
+    margin-bottom: 1.5rem;
+  }
+
+  .ud-contact-{{ section.id }} .info-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .ud-contact-{{ section.id }} .info-section-heading {
+    font-weight: 700;
+    font-size: 16px;
+    color: #312f30;
+    margin: 0 0 0.625rem;
+  }
+
+  .ud-contact-{{ section.id }} .info-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    margin-bottom: 0.4rem;
+    font-size: 14px;
+  }
+
+  .ud-contact-{{ section.id }} .info-row svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+    width: 14px;
+    height: 14px;
+    fill: #312f30;
+  }
+
+  .ud-contact-{{ section.id }} .info-label {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.03em;
+  }
+
+  .ud-contact-{{ section.id }} .info-value a {
+    color: #20448f;
+    text-decoration: underline;
+  }
+
+  .ud-contact-{{ section.id }} .info-hours {
+    font-size: 13px;
+    color: #5a5a5a;
+    margin-top: 0.15rem;
+  }
+
+  .ud-contact-{{ section.id }} .info-address-block {
+    margin-bottom: 0.875rem;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .ud-contact-{{ section.id }} .info-address-block:last-child {
+    margin-bottom: 0;
+  }
+
+  .ud-contact-{{ section.id }} .info-description {
+    font-size: 13px;
+    color: #5a5a5a;
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+  }
+{% endstyle %}
+
+<section class="ud-contact-{{ section.id }}" id="ud-contact-{{ section.id }}">
+  <div class="contact-inner">
+    {%- comment -%} Form Side {%- endcomment -%}
+    <div class="contact-form-side">
+      <h1 class="contact-heading tw-font-montserrat">
+        {{ section.settings.form_heading | default: 'How can we help you?' }}
+      </h1>
+
+      {%- if section.settings.form_subtext != blank or section.settings.faq_url != blank -%}
+        <p class="contact-subtext tw-font-montserrat">
+          {{ section.settings.form_subtext }}
+          {%- if section.settings.faq_url != blank and section.settings.faq_link_label != blank -%}
+            <a href="{{ section.settings.faq_url }}">{{ section.settings.faq_link_label }}</a>
+          {%- endif -%}
+          {%- if section.settings.form_subtext_after != blank -%}
+            {{ section.settings.form_subtext_after }}
+          {%- endif -%}
+        </p>
+      {%- endif -%}
+
+      {%- form 'contact', id: 'contact-form-{{ section.id }}' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="contact-success" style="display:block;">
+            {{ section.settings.success_message | default: "Thank you for your message! We'll be in touch soon." }}
+          </p>
+        {%- endif -%}
+
+        <div class="contact-form-row">
+          <div class="contact-field">
+            <label for="ContactFirstName-{{ section.id }}" class="tw-font-montserrat">First Name</label>
+            <input
+              type="text"
+              id="ContactFirstName-{{ section.id }}"
+              name="contact[first_name]"
+              placeholder="John"
+              autocomplete="given-name"
+              class="tw-font-montserrat"
+            >
+          </div>
+          <div class="contact-field">
+            <label for="ContactLastName-{{ section.id }}" class="tw-font-montserrat">Last Name</label>
+            <input
+              type="text"
+              id="ContactLastName-{{ section.id }}"
+              name="contact[last_name]"
+              placeholder="Doe"
+              autocomplete="family-name"
+              class="tw-font-montserrat"
+            >
+          </div>
+        </div>
+
+        <div class="contact-form-row">
+          <div class="contact-field">
+            <label for="ContactCompany-{{ section.id }}" class="tw-font-montserrat">Company</label>
+            <input
+              type="text"
+              id="ContactCompany-{{ section.id }}"
+              name="contact[company]"
+              placeholder="Company XYZ"
+              autocomplete="organization"
+              class="tw-font-montserrat"
+            >
+          </div>
+          <div class="contact-field">
+            <label for="ContactPhone-{{ section.id }}" class="tw-font-montserrat">Phone</label>
+            <input
+              type="tel"
+              id="ContactPhone-{{ section.id }}"
+              name="contact[phone]"
+              placeholder="555-555-5555"
+              autocomplete="tel"
+              class="tw-font-montserrat"
+            >
+          </div>
+        </div>
+
+        <div class="contact-field-full">
+          <label for="ContactEmail-{{ section.id }}" class="tw-font-montserrat">Email</label>
+          <input
+            type="email"
+            id="ContactEmail-{{ section.id }}"
+            name="contact[email]"
+            placeholder="email@example.com"
+            autocomplete="email"
+            required
+            class="tw-font-montserrat"
+          >
+        </div>
+
+        <div class="contact-field-full">
+          <label for="ContactMessage-{{ section.id }}" class="tw-font-montserrat">Message</label>
+          <textarea
+            id="ContactMessage-{{ section.id }}"
+            name="contact[body]"
+            placeholder="Start typing here..."
+            class="tw-font-montserrat"
+          ></textarea>
+        </div>
+
+        <button type="submit" class="contact-submit tw-font-montserrat">
+          {{ section.settings.submit_label | default: 'Submit' }}
+        </button>
+      {%- endform -%}
+    </div>
+
+    {%- comment -%} Info Side {%- endcomment -%}
+    <div class="contact-info-side tw-bg-brand-eggshell">
+      <div class="contact-info-panel">
+        {%- comment -%} General Inquiries {%- endcomment -%}
+        <div class="info-section">
+          <h2 class="info-section-heading tw-font-montserrat">General Inquiries</h2>
+
+          {%- if section.settings.general_phone != blank -%}
+            <div class="info-row">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.47 11.47 0 003.58.57 1 1 0 011 1v3.5a1 1 0 01-1 1A17 17 0 013 5a1 1 0 011-1h3.5a1 1 0 011 1 11.47 11.47 0 00.57 3.58 1 1 0 01-.25 1.01l-2.2 2.2z"/>
+              </svg>
+              <span><span class="info-label">Phone:</span> {{ section.settings.general_phone }}</span>
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.general_email != blank -%}
+            <div class="info-row">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+              </svg>
+              <span
+                ><span class="info-label">Email:</span>
+                <a href="mailto:{{ section.settings.general_email }}" class="info-value">
+                  {{- section.settings.general_email -}}
+                </a></span
+              >
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.general_fax != blank -%}
+            <div class="info-row">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M19 3H9a2 2 0 00-2 2v2H5a2 2 0 00-2 2v9a2 2 0 002 2h2a2 2 0 002 2h10a2 2 0 002-2V5a2 2 0 00-2-2zm-7 16H5v-9h7v9zm7 0h-5v-2h1a1 1 0 000-2h-1v-2h1a1 1 0 000-2h-1V9h5v10zm0-12H9V5h10v2z"/>
+              </svg>
+              <span><span class="info-label">FAX:</span> {{ section.settings.general_fax }}</span>
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.business_hours != blank -%}
+            <div style="margin-top: 0.5rem;">
+              <div class="info-label tw-font-montserrat" style="display:block; margin-bottom: 0.15rem;">
+                Business Hours:
+              </div>
+              <div class="info-hours tw-font-montserrat">{{ section.settings.business_hours }}</div>
+            </div>
+          {%- endif -%}
+        </div>
+
+        {%- comment -%} Billing Inquiries {%- endcomment -%}
+        {%- if section.settings.billing_heading != blank -%}
+          <div class="info-section">
+            <h2 class="info-section-heading tw-font-montserrat">{{ section.settings.billing_heading }}</h2>
+
+            {%- if section.settings.billing_description != blank -%}
+              <p class="info-description tw-font-montserrat">{{ section.settings.billing_description }}</p>
+            {%- endif -%}
+
+            {%- if section.settings.billing_phone != blank -%}
+              <div class="info-row">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.47 11.47 0 003.58.57 1 1 0 011 1v3.5a1 1 0 01-1 1A17 17 0 013 5a1 1 0 011-1h3.5a1 1 0 011 1 11.47 11.47 0 00.57 3.58 1 1 0 01-.25 1.01l-2.2 2.2z"/>
+                </svg>
+                <span><span class="info-label">Phone:</span> {{ section.settings.billing_phone }}</span>
+              </div>
+            {%- endif -%}
+
+            {%- if section.settings.billing_email != blank -%}
+              <div class="info-row">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+                <span
+                  ><span class="info-label">Email:</span>
+                  <a href="mailto:{{ section.settings.billing_email }}" class="info-value">
+                    {{- section.settings.billing_email -}}
+                  </a></span
+                >
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} Mailing Addresses {%- endcomment -%}
+        {%- if section.settings.mailing_address_1_label != blank
+          or section.settings.mailing_address_2_label != blank
+        -%}
+          <div class="info-section">
+            <h2 class="info-section-heading tw-font-montserrat">Mailing Addresses</h2>
+
+            {%- if section.settings.mailing_address_1_label != blank -%}
+              <div class="info-address-block tw-font-montserrat">
+                <div class="info-label">{{ section.settings.mailing_address_1_label }}</div>
+                {{ section.settings.mailing_address_1 | newline_to_br }}
+              </div>
+            {%- endif -%}
+
+            {%- if section.settings.mailing_address_2_label != blank -%}
+              <div class="info-address-block tw-font-montserrat">
+                <div class="info-label">{{ section.settings.mailing_address_2_label }}</div>
+                {{ section.settings.mailing_address_2 | newline_to_br }}
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact Page",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Form"
+    },
+    {
+      "type": "text",
+      "id": "form_heading",
+      "label": "Heading",
+      "default": "How can we help you?"
+    },
+    {
+      "type": "text",
+      "id": "form_subtext",
+      "label": "Subtext (before link)",
+      "default": "We're here to help, but first, "
+    },
+    {
+      "type": "text",
+      "id": "faq_link_label",
+      "label": "FAQ Link Label",
+      "default": "check out our FAQ"
+    },
+    {
+      "type": "url",
+      "id": "faq_url",
+      "label": "FAQ URL"
+    },
+    {
+      "type": "text",
+      "id": "form_subtext_after",
+      "label": "Subtext (after link)",
+      "default": " for commonly asked questions."
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "label": "Submit Button Label",
+      "default": "Submit"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success Message",
+      "default": "Thank you for your message! We'll be in touch soon."
+    },
+    {
+      "type": "header",
+      "content": "General Inquiries"
+    },
+    {
+      "type": "text",
+      "id": "general_phone",
+      "label": "Phone",
+      "default": "1-800-566-2665"
+    },
+    {
+      "type": "text",
+      "id": "general_email",
+      "label": "Email",
+      "default": "orders@texasbookman.com"
+    },
+    {
+      "type": "text",
+      "id": "general_fax",
+      "label": "Fax",
+      "default": "214-678-6699"
+    },
+    {
+      "type": "text",
+      "id": "business_hours",
+      "label": "Business Hours",
+      "default": "Monday–Friday 8:45 AM–4:15 PM CST"
+    },
+    {
+      "type": "header",
+      "content": "Billing Inquiries"
+    },
+    {
+      "type": "text",
+      "id": "billing_heading",
+      "label": "Section Heading",
+      "default": "Billing Inquiries"
+    },
+    {
+      "type": "textarea",
+      "id": "billing_description",
+      "label": "Description",
+      "default": "Questions regarding accounts, payment or payment methods including wire transfer information should be directed to Accounts Receivable Manager Kathryn Williams"
+    },
+    {
+      "type": "text",
+      "id": "billing_phone",
+      "label": "Phone",
+      "default": "214-360-0833 ext. 1078"
+    },
+    {
+      "type": "text",
+      "id": "billing_email",
+      "label": "Email",
+      "default": "kwilliams@texasbookman.com"
+    },
+    {
+      "type": "header",
+      "content": "Mailing Address 1"
+    },
+    {
+      "type": "text",
+      "id": "mailing_address_1_label",
+      "label": "Label",
+      "default": "Sales Department:"
+    },
+    {
+      "type": "textarea",
+      "id": "mailing_address_1",
+      "label": "Address",
+      "default": "Texas Bookman\n2700 Lone Star Drive\nDallas, TX 75212"
+    },
+    {
+      "type": "header",
+      "content": "Mailing Address 2"
+    },
+    {
+      "type": "text",
+      "id": "mailing_address_2_label",
+      "label": "Label",
+      "default": "Accounts Receivable:"
+    },
+    {
+      "type": "textarea",
+      "id": "mailing_address_2",
+      "label": "Address",
+      "default": "Texas Bookman\nAttn: Kathryn Williams\n5803 E Northwest Hwy\nDallas, TX 75231"
+    },
+    {
+      "type": "header",
+      "content": "Background & Spacing"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "label": "Content Max Width (px)",
+      "min": 600,
+      "max": 1600,
+      "step": 40,
+      "default": 1160
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Desktop Padding Top (px)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Desktop Padding Bottom (px)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile Padding Top (px)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile Padding Bottom (px)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Page"
+    }
+  ]
+}
+{% endschema %}

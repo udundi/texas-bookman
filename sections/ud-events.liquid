@@ -21,17 +21,32 @@
   /* Header */
   .ud-events-{{ section.id }} .events-heading {
     font-weight: 700;
-    text-align: center;
     color: {{ section.settings.heading_color }};
     font-size: clamp({{ section.settings.heading_size_min }}px, 2.5vw, {{ section.settings.heading_size_max }}px);
     margin-bottom: 0.5rem;
+    text-align: {{ section.settings.heading_alignment }};
   }
 
   .ud-events-{{ section.id }} .events-subtext {
-    text-align: center;
     color: {{ section.settings.subtext_color }};
     font-size: {{ section.settings.subtext_size }}px;
     margin-bottom: 2.25rem;
+    text-align: {{ section.settings.subtext_alignment }};
+  }
+
+  /* Results Count Row */
+  .ud-events-{{ section.id }} .results-count-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+
+  .ud-events-{{ section.id }} .results-count-text {
+    font-weight: 600;
+    font-size: 18px;
+    color: #312f30;
+    margin: 0;
   }
 
   /* Event Cards */
@@ -233,9 +248,16 @@
 
     {%- assign selected_blog = section.settings.blog -%}
     {%- if selected_blog != blank -%}
+      {%- assign event_count = blogs[selected_blog].articles | size -%}
+      <div class="results-count-row">
+        <p class="results-count-text font-montserrat">
+          Showing {{ event_count }} Scheduled Event{% if event_count != 1 %}s{% endif %}
+        </p>
+      </div>
+
       <div class="events-list">
         {%- for article in blogs[selected_blog].articles -%}
-          {%- assign date_str = article.published_at | date: "%b|%d|%Y" | split: "|" -%}
+          {%- assign date_str = article.published_at | date: '%b|%d|%Y' | split: '|' -%}
           <article class="event-card">
             {%- if article.image -%}
               <img
@@ -267,7 +289,10 @@
                         <polyline points="12 6 12 12 16 14"></polyline>
                       </svg>
                       {%- if start_time != blank -%}
-                        <span>{{ start_time }}{% if end_time != blank %} - {{ end_time }}{% endif %}</span>
+                        <span>
+                          {{- start_time | date: '%I:%M %p' -}}
+                          {%- if end_time != blank %} - {{ end_time | date: '%I:%M %p' }}{% endif -%}
+                        </span>
                       {%- endif -%}
                       {%- if start_time != blank and location != blank -%}
                         <span class="event-meta-divider">|</span>
@@ -278,19 +303,6 @@
                     </div>
                   {%- endif -%}
                 </div>
-
-                {%- if date_str.size >= 2 -%}
-                  <div
-                    class="event-date-badge"
-                    aria-label="{{ date_str[0] }} {{ date_str[1] }} {{ date_str[2] }}"
-                  >
-                    <span class="badge-month">{{ date_str[0] | upcase }}</span>
-                    <span class="badge-day">{{ date_str[1] | remove: '0' }}</span>
-                    {%- if date_str[2] != blank -%}
-                      <span class="badge-year">{{ date_str[2] }}</span>
-                    {%- endif -%}
-                  </div>
-                {%- endif -%}
               </div>
 
               {%- if article.excerpt != blank -%}
@@ -349,6 +361,16 @@
       "default": "#212121"
     },
     {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "center"
+    },
+    {
       "type": "range",
       "id": "heading_size_min",
       "label": "Heading Min Size (px)",
@@ -377,6 +399,16 @@
       "id": "subtext_color",
       "label": "Subtext Color",
       "default": "#212121"
+    },
+    {
+      "type": "select",
+      "id": "subtext_alignment",
+      "label": "Subtext Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "center"
     },
     {
       "type": "range",

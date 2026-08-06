@@ -34,9 +34,9 @@
     {{ content_for_header }}
   </head>
 
-  <body>
+  <body class="tw-flex tw-flex-col tw-min-h-screen">
     {% sections 'header-group' %}
-    <main id="root" class="tw-relative" role="main">
+    <main id="root" class="tw-relative tw-flex-1 tw-bg-brand-eggshell" role="main">
       <div class="tw-absolute tw-z-[500] tw-size-full tw-pointer-events-none">
         {% sections 'overlay-group' %}
       </div>

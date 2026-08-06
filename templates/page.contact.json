@@ -1,0 +1,34 @@
+{
+  "sections": {
+    "contact": {
+      "type": "ud-contact",
+      "settings": {
+        "form_heading": "How can we help you?",
+        "form_subtext": "We're here to help, but first, ",
+        "faq_link_label": "check out our FAQ",
+        "form_subtext_after": " for commonly asked questions.",
+        "submit_label": "Submit",
+        "success_message": "Thank you for your message! We'll be in touch soon.",
+        "general_phone": "1-800-566-2665",
+        "general_email": "orders@texasbookman.com",
+        "general_fax": "214-678-6699",
+        "business_hours": "Monday–Friday 8:45 AM–4:15 PM CST",
+        "billing_heading": "Billing Inquiries",
+        "billing_description": "Questions regarding accounts, payment or payment methods including wire transfer information should be directed to Accounts Receivable Manager Kathryn Williams",
+        "billing_phone": "214-360-0833 ext. 1078",
+        "billing_email": "kwilliams@texasbookman.com",
+        "mailing_address_1_label": "Sales Department:",
+        "mailing_address_1": "Texas Bookman\n2700 Lone Star Drive\nDallas, TX 75212",
+        "mailing_address_2_label": "Accounts Receivable:",
+        "mailing_address_2": "Texas Bookman\nAttn: Kathryn Williams\n5803 E Northwest Hwy\nDallas, TX 75231",
+        "background_color": "#ffffff",
+        "content_max_width": 1160,
+        "padding_top": 56,
+        "padding_bottom": 56,
+        "mobile_padding_top": 36,
+        "mobile_padding_bottom": 36
+      }
+    }
+  },
+  "order": ["contact"]
+}

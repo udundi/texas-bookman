@@ -5,9 +5,96 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/page
 {% endcomment %}
 
-<h1>{{ page.title }}</h1>
+<style>
+  .ud-page-{{ section.id }} {
+    width: 100%;
+    padding-top: 56px;
+    padding-bottom: 56px;
+    background-color: #fdfbf8;
+  }
 
-{{ page.content }}
+  .ud-page-{{ section.id }} .page-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  .ud-page-{{ section.id }} .page-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #322f30;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Richtext content styles */
+  .ud-page-{{ section.id }} .page-content h1,
+  .ud-page-{{ section.id }} .page-content h2,
+  .ud-page-{{ section.id }} .page-content h3,
+  .ud-page-{{ section.id }} .page-content h4,
+  .ud-page-{{ section.id }} .page-content h5,
+  .ud-page-{{ section.id }} .page-content h6 {
+    font-weight: 700;
+    color: #322f30;
+    line-height: 1.3;
+    margin: 1.5rem 0 0.5rem;
+  }
+
+  .ud-page-{{ section.id }} .page-content h1 { font-size: 1.75rem; }
+  .ud-page-{{ section.id }} .page-content h2 { font-size: 1.4rem; }
+  .ud-page-{{ section.id }} .page-content h3 { font-size: 1.15rem; }
+
+  .ud-page-{{ section.id }} .page-content p {
+    font-size: 15px;
+    color: #322f30;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
+  .ud-page-{{ section.id }} .page-content ul,
+  .ud-page-{{ section.id }} .page-content ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+    color: #322f30;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .ud-page-{{ section.id }} .page-content ul { list-style: disc; }
+  .ud-page-{{ section.id }} .page-content ol { list-style: decimal; }
+
+  .ud-page-{{ section.id }} .page-content li { margin-bottom: 0.35rem; }
+
+  .ud-page-{{ section.id }} .page-content a {
+    color: #20448f;
+    text-decoration: underline;
+  }
+
+  .ud-page-{{ section.id }} .page-content strong { font-weight: 700; }
+  .ud-page-{{ section.id }} .page-content em { font-style: italic; }
+
+  .ud-page-{{ section.id }} .page-content hr {
+    border: none;
+    border-top: 1px solid #D2DADC;
+    margin: 1.5rem 0;
+  }
+
+  .ud-page-{{ section.id }} .page-content blockquote {
+    border-left: 3px solid #D2DADC;
+    padding-left: 1rem;
+    margin: 1rem 0;
+    color: #626262;
+    font-style: italic;
+  }
+</style>
+
+<div class="ud-page-{{ section.id }}">
+  <div class="page-container">
+    <h1 class="page-title tw-font-montserrat">{{ page.title }}</h1>
+    <div class="page-content tw-font-montserrat">
+      {{ page.content }}
+    </div>
+  </div>
+</div>
 
 {% schema %}
 {
