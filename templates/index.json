@@ -454,7 +454,7 @@
         "event_nythTC": {
           "type": "event",
           "settings": {
-            "blog": "events/wholesale-strategy-seminar",
+            "blog": "news/dallas-antiquarian-book-fair-2026",
             "image": "{{ block.settings.blog.image }}",
             "title": "{{ block.settings.blog.title }}",
             "title_url": "{{ block.settings.blog.url }}",
@@ -471,7 +471,7 @@
         "event_NRLgFK": {
           "type": "event",
           "settings": {
-            "blog": "events/wholesale-strategy-seminar",
+            "blog": "news/texas-remainder-expo-trex-fall-2026",
             "image": "{{ block.settings.blog.image }}",
             "title": "{{ block.settings.blog.title }}",
             "title_url": "{{ block.settings.blog.url }}",
