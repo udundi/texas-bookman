@@ -15,6 +15,7 @@
         "collection_filter_box_v2_nz8K4p": {
           "type": "_collection-filter-box-v2",
           "name": "Collection Filter Box",
+          "disabled": true,
           "settings": {
             "collapsible": true,
             "collapsed": true,
@@ -116,6 +117,16 @@
             "nested": false
           },
           "blocks": {
+            "collection_filter_htakT7": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Fiction & Literature",
+                "title": "Fiction & Literature",
+                "filter_type": "filter.p.tag="
+              },
+              "blocks": {}
+            },
             "collection_filter_JFYMRU": {
               "type": "_collection-filter",
               "name": "Collection Filter",
@@ -140,7 +151,7 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "Mystery & Thriller",
+                "tag": "Mystery",
                 "title": "Mystery & Thriller",
                 "filter_type": "filter.p.tag="
               },
@@ -150,28 +161,8 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "Science Fiction",
-                "title": "Science Fiction",
-                "filter_type": "filter.p.tag="
-              },
-              "blocks": {}
-            },
-            "collection_filter_Jgamzq": {
-              "type": "_collection-filter",
-              "name": "Collection Filter",
-              "settings": {
-                "tag": "Fantasy",
-                "title": "Fantasy",
-                "filter_type": "filter.p.tag="
-              },
-              "blocks": {}
-            },
-            "collection_filter_Hp3Pk6": {
-              "type": "_collection-filter",
-              "name": "Collection Filter",
-              "settings": {
-                "tag": "Horror",
-                "title": "Horror",
+                "tag": "Science Fiction, Fantasy & Horror",
+                "title": "Science Fiction, Fantasy & Horror",
                 "filter_type": "filter.p.tag="
               },
               "blocks": {}
@@ -190,7 +181,7 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "Literary Criticism",
+                "tag": "Essays & Literary Criticism",
                 "title": "Literary Criticism",
                 "filter_type": "filter.p.tag="
               },
@@ -199,6 +190,7 @@
             "collection_filter_XA8bkj": {
               "type": "_collection-filter",
               "name": "Collection Filter",
+              "disabled": true,
               "settings": {
                 "tag": "Historical Fiction",
                 "title": "Historical Fiction",
@@ -208,12 +200,11 @@
             }
           },
           "block_order": [
+            "collection_filter_htakT7",
             "collection_filter_JFYMRU",
             "collection_filter_thyNyh",
             "collection_filter_TiK9AY",
             "collection_filter_LN4FwC",
-            "collection_filter_Jgamzq",
-            "collection_filter_Hp3Pk6",
             "collection_filter_aHt6Xd",
             "collection_filter_68xEyN",
             "collection_filter_XA8bkj"
