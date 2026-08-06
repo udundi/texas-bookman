@@ -78,7 +78,7 @@
           "1000-ideas-for-color-schemes-2310103",
           "1001-photographs-you-must-see-in-your-lifetime-2508078"
         ],
-        "button_url": "{{ section.settings.collection.url }}",
+        "button_url": "shopify://collections/all",
         "button_text": "Shop All",
         "mobile_slides": 2,
         "tablet_slides": 3,
