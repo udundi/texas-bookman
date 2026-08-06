@@ -19,84 +19,123 @@
     | replace: collection.url, ''
     | replace: 'feltright.com', ''
     | replace: '%2F', '/'
+    | replace: '%27', "'"
   %}
   {% if block.settings.filter_type != 'color' %}
-    <a
-      {% assign filter_change = block.settings.filter_type | append: block.settings.tag | replace: ' ', '+' %}
-      {% if get_full_url contains '?' %}
-        {% assign query_params = get_full_url
-          | replace: 'pb=0', ''
-          | replace: '_fd=0', ''
-          | replace: '&&', '&'
-          | replace: '?&', '?'
-          | replace: '?', ''
-          | split: '&'
-        %}
-        {% if query_params contains filter_change %}
-          {% assign new_params = '' %}
-          {% for param in query_params %}
-            {% if param contains 'tag' and filter_change contains 'tag' %}
-              {% continue %}
-            {% endif %}
-            {% unless forloop.last and param == filter_change %}
-              {% assign new_params = new_params | append: '&' %}
-            {% endunless %}
-            {% unless param == filter_change %}
-              {% assign new_params = new_params | append: param %}
-            {% endunless %}
-          {% endfor %}
-          {% if new_params != blank %}
-            href="{{ collection.url |  append: '?' |  append: new_params | replace: '&&', '&' | replace: '?&', '?' }}"
-          {% else %}
-            href="{{ collection.url }}"
-          {% endif %}
-        {% elsif filter_change contains 'filter.v.price' %}
-          {% assign new_params = '' %}
-          {% for param in query_params %}
-            {% unless forloop.last and param == filter_change %}
-              {% assign new_params = new_params | append: '&' %}
-            {% endunless %}
-            {% if param contains 'filter.v.price' and param != filter_change %}
-              {% continue %}
-            {% endif %}
-            {% assign new_params = new_params | append: param %}
-          {% endfor %}
-          href="{{ collection.url}}{{ new_params |  join: '&' |  prepend: '?' | append: '&' | append: filter_change | replace: '&&', '&' | replace: '?&', '?' }}"
-        {% elsif filter_change contains 'filter.p.tag' %}
-          {% assign new_params = '' %}
-          {% for param in query_params %}
-            {% unless forloop.last and param == filter_change %}
-              {% assign new_params = new_params | append: '&' %}
-            {% endunless %}
-            {% if param contains 'filter.p.tag' and param != filter_change %}
-              {% continue %}
-            {% endif %}
-            {% assign new_params = new_params | append: param %}
-          {% endfor %}
-          href="{{ collection.url}}{{ new_params |  join: '&' |  prepend: '?' | append: '&' | append: filter_change | replace: '&&', '&' | replace: '?&', '?' }}"
-        {% else %}
-          href="{{ collection.url}}{{ query_params |  join: '&' |  prepend: '?' | append: '&' | append: filter_change | replace: '&&', '&' | replace: '?&', '?' }}"
-        {% endif %}
-      {% else %}
-        href="{{ collection.url }}{%- if block.settings.tag != 'all' -%}?{{ block.settings.filter_type }}{{ block.settings.tag | replace: ' ', '+' | replace: '&&', '&' | replace: '?&', '?'}}{%- endif -%}"
-      {% endif %}
-      class="tw-flex tw-justify-center tw-w-full tw-items-middle tw-gap-2 tw-group"
-    >
-      <div class="tw-border group-hover:tw-border-black tw-rounded-sm tw-border-offblack tw-size-4 tw-aspect-square tw-p-0.5 tw-my-auto {% if get_full_url contains filter_change %} tw-bg-black {% endif %}">
-        <svg
-          class="tw-fill-white {% unless get_full_url contains filter_change %} tw-hidden {% endunless %}"
-          viewBox="0 0 448 512"
-        >
-          <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
-        </svg>
-      </div>
+    {%- assign filter_change = block.settings.filter_type
+      | append: block.settings.tag
+      | replace: ' ', '+'
+      | replace: '&', '%26'
+    -%}
+    {%- assign query_params = get_full_url
+      | replace: 'pb=0', ''
+      | replace: '_fd=0', ''
+      | replace: '&&', '&'
+      | replace: '?&', '?'
+      | replace: '?', ''
+      | split: '&'
+    -%}
 
-      <p
-        class="group-hover:tw-underline tw-text-offblack tw-text-14 tw-w-full !tw-m-0"
-      >
-        {{ block.settings.title }}
-      </p>
-    </a>
+    {%- if get_full_url contains '?' -%}
+      {%- if query_params contains filter_change -%}
+        {%- assign new_params = '' -%}
+        {%- for param in query_params -%}
+          {%- if param == filter_change -%}{%- continue -%}{%- endif -%}
+          {%- if new_params != blank -%}{%- assign new_params = new_params | append: '&' -%}{%- endif -%}
+          {%- assign new_params = new_params | append: param -%}
+        {%- endfor -%}
+        {%- if new_params != blank -%}
+          {%- assign filter_href = collection.url | append: '?' | append: new_params -%}
+        {%- else -%}
+          {%- assign filter_href = collection.url -%}
+        {%- endif -%}
+      {%- elsif filter_change contains 'filter.v.price' -%}
+        {%- assign new_params = '' -%}
+        {%- for param in query_params -%}
+          {%- if param contains 'filter.v.price' -%}{%- continue -%}{%- endif -%}
+          {%- if new_params != blank -%}{%- assign new_params = new_params | append: '&' -%}{%- endif -%}
+          {%- assign new_params = new_params | append: param -%}
+        {%- endfor -%}
+        {%- if new_params != blank -%}
+          {%- assign filter_href = collection.url
+            | append: '?'
+            | append: new_params
+            | append: '&'
+            | append: filter_change
+          -%}
+        {%- else -%}
+          {%- assign filter_href = collection.url | append: '?' | append: filter_change -%}
+        {%- endif -%}
+      {%- else -%}
+        {%- assign new_params = '' -%}
+        {%- for param in query_params -%}
+          {%- if new_params != blank -%}{%- assign new_params = new_params | append: '&' -%}{%- endif -%}
+          {%- assign new_params = new_params | append: param -%}
+        {%- endfor -%}
+        {%- if new_params != blank -%}
+          {%- assign filter_href = collection.url
+            | append: '?'
+            | append: new_params
+            | append: '&'
+            | append: filter_change
+          -%}
+        {%- else -%}
+          {%- assign filter_href = collection.url | append: '?' | append: filter_change -%}
+        {%- endif -%}
+      {%- endif -%}
+    {%- else -%}
+      {%- if block.settings.tag == 'all' -%}
+        {%- assign filter_href = collection.url -%}
+      {%- else -%}
+        {%- assign filter_href = collection.url | append: '?' | append: filter_change -%}
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- capture child_blocks -%}{%- content_for 'blocks' -%}{%- endcapture -%}
+
+    <div class="tw-flex tw-w-full tw-flex-col">
+      <div class="tw-flex tw-w-full tw-items-center tw-gap-1">
+        <a
+          href="{{ filter_href }}"
+          class="tw-flex tw-flex-1 tw-justify-center tw-items-center tw-gap-2 tw-group"
+        >
+          <div class="tw-border group-hover:tw-border-black tw-rounded-sm tw-border-offblack tw-size-4 tw-aspect-square tw-p-0.5 tw-my-auto {% if query_params contains filter_change %} tw-bg-black {% endif %}">
+            <svg
+              class="tw-fill-white {% unless query_params contains filter_change %} tw-hidden {% endunless %}"
+              viewBox="0 0 448 512"
+            >
+              <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+            </svg>
+          </div>
+          <p class="group-hover:tw-underline tw-text-offblack tw-text-14 tw-w-full !tw-m-0">
+            {{ block.settings.title }}
+          </p>
+        </a>
+        {%- unless child_blocks == blank -%}
+          <button
+            type="button"
+            class="tw-flex-shrink-0 tw-fill-offblack tw-size-3 tw-cursor-pointer tw-bg-transparent tw-border-0 tw-p-0 tw-m-0"
+            @click="openFilters.includes('{{ block.id }}') ? openFilters.splice(openFilters.indexOf('{{ block.id }}'), 1) : openFilters.push('{{ block.id }}')"
+          >
+            <div
+              class="tw-fill-offblack tw-size-3"
+              v-if="{% if block.settings.children_collapsed %}openFilters.includes('{{ block.id }}'){% else %}!openFilters.includes('{{ block.id }}'){% endif %}"
+            >
+              {% render 'icon-arrow-up' %}
+            </div>
+            <div v-else class="tw-fill-offblack tw-size-3">{% render 'icon-arrow-down' %}</div>
+          </button>
+        {%- endunless -%}
+      </div>
+      {%- unless child_blocks == blank -%}
+        <div
+          class="tw-pl-4 tw-pt-1 tw-flex tw-flex-col tw-gap-[1px]"
+          v-show="{% if block.settings.children_collapsed %}openFilters.includes('{{ block.id }}'){% else %}!openFilters.includes('{{ block.id }}'){% endif %}"
+        >
+          {{ child_blocks }}
+        </div>
+      {%- endunless -%}
+    </div>
   {% else %}
     <div class="tw-flex tw-flex-wrap tw-gap-2 tw-w-full ">
       {% for color in metaobjects.tile_colors.values %}
@@ -184,6 +223,20 @@
           "label": "Color"
         }
       ]
+    },
+    {
+      "type": "checkbox",
+      "id": "children_collapsed",
+      "label": "Nested filters collapsed by default?",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "_collection-filter"
+    },
+    {
+      "type": "_collection-filter-box-v2"
     }
   ],
   "presets": [

@@ -1,68 +1,466 @@
-{% comment %}
-  This section is used in the article template to render the article page, which
-  displays the full content of the blog post and can optionally include a
-  comments section for customers (not shown in this example).
+{% style %}
+  .ud-article-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/article
-{% endcomment %}
+  @media screen and (max-width: 749px) {
+    .ud-article-{{ section.id }} {
+      padding-top: {{ section.settings.mobile_padding_top }}px;
+      padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+    }
+  }
 
-{% if article.image %}
-  {{ article.image | image_url: width: 1000 | image_tag }}
-{% endif %}
+  .ud-article-{{ section.id }} .article-inner {
+    max-width: {{ section.settings.content_max_width }}px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
 
-<h1>{{ article.title }}</h1>
+  .ud-article-{{ section.id }} .article-hero {
+    width: 100%;
+    border-radius: {{ section.settings.image_border_radius }}px;
+    object-fit: cover;
+    margin-bottom: 2rem;
+    display: block;
+  }
 
-{% assign date = article.published_at | time_tag: format: 'date' %}
-<p>{{ 'blog.article_metadata_html' | t: date: date, author: article.author }}</p>
+  .ud-article-{{ section.id }} .article-title {
+    font-weight: 700;
+    color: {{ section.settings.heading_color }};
+    font-size: clamp({{ section.settings.heading_size_min }}px, 3vw, {{ section.settings.heading_size_max }}px);
+    line-height: 1.2;
+    margin: 0 0 0.75rem;
+  }
 
-{{ article.content }}
+  .ud-article-{{ section.id }} .article-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: {{ section.settings.meta_color }};
+    font-size: {{ section.settings.meta_size }}px;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid {{ section.settings.divider_color }};
+  }
 
-{% if blog.comments_enabled? %}
-  <h2>{{ 'blog.article_comments' | t }}</h2>
+  .ud-article-{{ section.id }} .article-meta-icon {
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+    stroke: {{ section.settings.meta_color }};
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
 
-  <div id="comments">
-    {% paginate article.comments by 10 %}
-      {% for comment in article.comments %}
-        <div>
-          <p>{{ comment.author }}</p>
-          <p>
-            {{- comment.created_at | time_tag: format: 'date' -}}
-          </p>
-          <p>{{ comment.content }}</p>
+  .ud-article-{{ section.id }} .article-meta-divider {
+    color: {{ section.settings.meta_color }};
+    opacity: 0.5;
+  }
+
+  .ud-article-{{ section.id }} .article-body {
+    color: {{ section.settings.body_color }};
+    font-size: {{ section.settings.body_size }}px;
+    line-height: 1.75;
+  }
+
+  .ud-article-{{ section.id }} .article-body h1,
+  .ud-article-{{ section.id }} .article-body h2,
+  .ud-article-{{ section.id }} .article-body h3,
+  .ud-article-{{ section.id }} .article-body h4 {
+    color: {{ section.settings.heading_color }};
+    margin-top: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .ud-article-{{ section.id }} .article-body a {
+    color: {{ section.settings.heading_color }};
+    text-decoration: underline;
+  }
+
+  .ud-article-{{ section.id }} .article-body img {
+    max-width: 100%;
+    border-radius: 6px;
+  }
+
+  /* Event metafields */
+  .ud-article-{{ section.id }} .article-event-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: {{ section.settings.meta_color }};
+    font-size: {{ section.settings.meta_size }}px;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid {{ section.settings.divider_color }};
+  }
+
+  .ud-article-{{ section.id }} .article-cta {
+    display: inline-block;
+    background-color: {{ section.settings.heading_color }};
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.6rem 1.75rem;
+    border-radius: 4px;
+    margin-top: 1.5rem;
+    transition: opacity 0.2s;
+  }
+
+  .ud-article-{{ section.id }} .article-cta:hover {
+    opacity: 0.85;
+  }
+
+  /* Comments */
+  .ud-article-{{ section.id }} .article-comments {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid {{ section.settings.divider_color }};
+  }
+
+  .ud-article-{{ section.id }} .comments-heading {
+    font-weight: 700;
+    color: {{ section.settings.heading_color }};
+    font-size: 22px;
+    margin: 0 0 1.5rem;
+  }
+
+  .ud-article-{{ section.id }} .comment-item {
+    border: 1px solid {{ section.settings.divider_color }};
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .ud-article-{{ section.id }} .comment-author {
+    font-weight: 700;
+    color: {{ section.settings.heading_color }};
+    font-size: 14px;
+    margin: 0 0 0.2rem;
+  }
+
+  .ud-article-{{ section.id }} .comment-date {
+    color: {{ section.settings.meta_color }};
+    font-size: 12px;
+    margin: 0 0 0.5rem;
+  }
+
+  .ud-article-{{ section.id }} .comment-body {
+    color: {{ section.settings.body_color }};
+    font-size: {{ section.settings.body_size }}px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .ud-article-{{ section.id }} .comment-form {
+    margin-top: 2rem;
+  }
+
+  .ud-article-{{ section.id }} .comment-form-heading {
+    font-weight: 700;
+    color: {{ section.settings.heading_color }};
+    font-size: 18px;
+    margin: 0 0 1rem;
+  }
+
+  .ud-article-{{ section.id }} .comment-form-field {
+    margin-bottom: 1rem;
+  }
+
+  .ud-article-{{ section.id }} .comment-form-field label {
+    display: block;
+    font-weight: 600;
+    color: {{ section.settings.heading_color }};
+    font-size: 13px;
+    margin-bottom: 0.35rem;
+  }
+
+  .ud-article-{{ section.id }} .comment-form-field input,
+  .ud-article-{{ section.id }} .comment-form-field textarea {
+    width: 100%;
+    border: 1px solid {{ section.settings.divider_color }};
+    border-radius: 4px;
+    padding: 0.5rem 0.75rem;
+    font-size: {{ section.settings.body_size }}px;
+    color: {{ section.settings.body_color }};
+    background: #fff;
+    box-sizing: border-box;
+  }
+
+  .ud-article-{{ section.id }} .comment-form-field textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  .ud-article-{{ section.id }} .comment-form-submit {
+    display: inline-block;
+    background-color: {{ section.settings.heading_color }};
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    padding: 0.6rem 1.75rem;
+    border-radius: 4px;
+    transition: opacity 0.2s;
+  }
+
+  .ud-article-{{ section.id }} .comment-form-submit:hover {
+    opacity: 0.85;
+  }
+{% endstyle %}
+
+<section class="ud-article-{{ section.id }} tw" id="ud-article-{{ section.id }}">
+  <div class="article-inner">
+    <article>
+      {%- if article.image -%}
+        <img
+          src="{{ article.image | image_url: width: 1200 }}"
+          alt="{{ article.image.alt | default: article.title | escape }}"
+          class="article-hero"
+          loading="eager"
+          width="{{ article.image.width }}"
+          height="{{ article.image.height }}"
+        >
+      {%- endif -%}
+
+      <h1 class="article-title tw-font-montserrat">{{ article.title }}</h1>
+
+      {%- assign has_event_meta = false -%}
+      {%- if article.metafields.custom.location != blank
+        or article.metafields.custom.start_time != blank
+        or article.metafields.custom.end_time != blank
+      -%}
+        {%- assign has_event_meta = true -%}
+      {%- endif -%}
+      {%- if has_event_meta -%}
+        <div class="article-event-meta tw-font-montserrat">
+          {%- if article.metafields.custom.location != blank -%}
+            <svg class="article-meta-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            {{ article.metafields.custom.location }}
+          {%- endif -%}
+          {%- if article.metafields.custom.start_time != blank -%}
+            {%- if article.metafields.custom.location != blank -%}
+              <span class="article-meta-divider">·</span>
+            {%- endif -%}
+            <svg class="article-meta-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            {{ article.metafields.custom.start_time | date: '%a, %b %-d · %-I:%M %p' }}
+            {%- if article.metafields.custom.end_time != blank -%}
+              &ndash; {{ article.metafields.custom.end_time | date: '%-I:%M %p' }}
+            {%- endif -%}
+          {%- endif -%}
         </div>
-      {% endfor %}
+      {%- endif -%}
 
-      {{ paginate | default_pagination: anchor: 'comments' }}
-    {% endpaginate %}
+      <div class="article-body">
+        {{ article.content }}
+      </div>
+
+      {%- if article.metafields.custom.cta_link != blank -%}
+        <a
+          href="{{ article.metafields.custom.cta_link }}"
+          class="article-cta tw-font-montserrat"
+        >
+          {{- article.metafields.custom.cta_text | default: 'Learn More' -}}
+        </a>
+      {%- endif -%}
+    </article>
+
+    {%- if blog.comments_enabled? -%}
+      <div class="article-comments">
+        <h2 class="comments-heading tw-font-montserrat">{{ 'blog.article_comments' | t }}</h2>
+
+        {%- if article.comments_count > 0 -%}
+          <div id="comments">
+            {%- paginate article.comments by 10 -%}
+              {%- for comment in article.comments -%}
+                <div class="comment-item">
+                  <p class="comment-author tw-font-montserrat">{{ comment.author }}</p>
+                  <p class="comment-date tw-font-montserrat">{{ comment.created_at | time_tag: format: 'date' }}</p>
+                  <p class="comment-body">{{ comment.content }}</p>
+                </div>
+              {%- endfor -%}
+              {{ paginate | default_pagination: anchor: 'comments' }}
+            {%- endpaginate -%}
+          </div>
+        {%- endif -%}
+
+        {%- form 'new_comment', article -%}
+          <div class="comment-form">
+            <h3 class="comment-form-heading tw-font-montserrat">{{ 'blog.comment_form_title' | t }}</h3>
+            {{ form.errors | default_errors }}
+            <div class="comment-form-field">
+              <label for="author">{{ 'blog.comment_form_name' | t }}</label>
+              <input type="text" name="comment[author]" id="author" value="{{ form.author }}" required>
+            </div>
+            <div class="comment-form-field">
+              <label for="email">{{ 'blog.comment_form_email' | t }}</label>
+              <input type="email" name="comment[email]" id="email" value="{{ form.email }}" required>
+            </div>
+            <div class="comment-form-field">
+              <label for="body">{{ 'blog.comment_form_body' | t }}</label>
+              <textarea name="comment[body]" id="body" required>{{ form.body }}</textarea>
+            </div>
+            <input
+              type="submit"
+              class="comment-form-submit tw-font-montserrat"
+              value="{{ 'blog.comment_form_submit' | t }}"
+            >
+          </div>
+        {%- endform -%}
+      </div>
+    {%- endif -%}
   </div>
-
-  {% form 'new_comment', article %}
-    <h2>{{ 'blog.comment_form_title' | t }}</h2>
-
-    {{ form.errors | default_errors }}
-
-    <div>
-      <label for="author">{{ 'blog.comment_form_name' | t }}</label>
-      <input type="text" name="comment[author]" id="author" value="{{ form.author }}" required>
-    </div>
-
-    <div>
-      <label for="email">{{ 'blog.comment_form_email' | t }}</label>
-      <input type="email" name="comment[email]" id="email" value="{{ form.email }}" required>
-    </div>
-
-    <div>
-      <label for="body">{{ 'blog.comment_form_body' | t }}</label>
-      <textarea name="comment[body]" id="body" required>{{ form.body }}</textarea>
-    </div>
-
-    <input type="submit" value="{{ 'blog.comment_form_submit' | t }}">
-  {% endform %}
-{% endif %}
+</section>
 
 {% schema %}
 {
   "name": "t:general.article",
-  "settings": []
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "label": "Content Max Width (px)",
+      "min": 480,
+      "max": 1200,
+      "step": 20,
+      "default": 800
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top (Desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom (Desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "label": "Hero Image Border Radius (px)",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading / Title Color",
+      "default": "#212121"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_min",
+      "label": "Title Min Size (px)",
+      "min": 20,
+      "max": 48,
+      "step": 2,
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "heading_size_max",
+      "label": "Title Max Size (px)",
+      "min": 28,
+      "max": 72,
+      "step": 2,
+      "default": 42
+    },
+    {
+      "type": "color",
+      "id": "meta_color",
+      "label": "Meta Text Color",
+      "default": "#6b7280"
+    },
+    {
+      "type": "range",
+      "id": "meta_size",
+      "label": "Meta Font Size (px)",
+      "min": 11,
+      "max": 18,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Body Text Color",
+      "default": "#374151"
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "label": "Body Font Size (px)",
+      "min": 13,
+      "max": 20,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider / Border Color",
+      "default": "#e5e7eb"
+    }
+  ]
 }
 {% endschema %}
