@@ -239,61 +239,66 @@
                     "filter_type": "filter.p.tag="
                   },
                   "blocks": {}
+                },
+                "collection_filter_aqgJHH": {
+                  "type": "_collection-filter",
+                  "name": "Collection Filter",
+                  "settings": {
+                    "tag": "Artists",
+                    "title": "Artists",
+                    "filter_type": "filter.p.tag="
+                  },
+                  "blocks": {}
+                },
+                "collection_filter_TgqmAR": {
+                  "type": "_collection-filter",
+                  "name": "Collection Filter",
+                  "settings": {
+                    "tag": "History/Criticism",
+                    "title": "History/Criticism",
+                    "filter_type": "filter.p.tag="
+                  },
+                  "blocks": {}
+                },
+                "collection_filter_UEFPyV": {
+                  "type": "_collection-filter",
+                  "name": "Collection Filter",
+                  "settings": {
+                    "tag": "Instruction",
+                    "title": "Instruction",
+                    "filter_type": "filter.p.tag="
+                  },
+                  "blocks": {}
+                },
+                "collection_filter_NpYxTz": {
+                  "type": "_collection-filter",
+                  "name": "Collection Filter",
+                  "settings": {
+                    "tag": "Fashion",
+                    "title": "Fashion",
+                    "filter_type": "filter.p.tag="
+                  },
+                  "blocks": {}
+                },
+                "collection_filter_HhCK8j": {
+                  "type": "_collection-filter",
+                  "name": "Collection Filter",
+                  "settings": {
+                    "tag": "Photography",
+                    "title": "Photography",
+                    "filter_type": "filter.p.tag="
+                  },
+                  "blocks": {}
                 }
               },
               "block_order": [
-                "collection_filter_UFWjJU"
+                "collection_filter_UFWjJU",
+                "collection_filter_aqgJHH",
+                "collection_filter_TgqmAR",
+                "collection_filter_UEFPyV",
+                "collection_filter_NpYxTz",
+                "collection_filter_HhCK8j"
               ]
-            },
-            "collection_filter_kdWzgK": {
-              "type": "_collection-filter",
-              "name": "Collection Filter",
-              "settings": {
-                "tag": "Artists",
-                "title": "Artists",
-                "filter_type": "filter.p.tag="
-              },
-              "blocks": {}
-            },
-            "collection_filter_NLV7KA": {
-              "type": "_collection-filter",
-              "name": "Collection Filter",
-              "settings": {
-                "tag": "History/Criticism",
-                "title": "History/Criticism",
-                "filter_type": "filter.p.tag="
-              },
-              "blocks": {}
-            },
-            "collection_filter_Pz96Fw": {
-              "type": "_collection-filter",
-              "name": "Collection Filter",
-              "settings": {
-                "tag": "Instruction",
-                "title": "Instruction",
-                "filter_type": "filter.p.tag="
-              },
-              "blocks": {}
-            },
-            "collection_filter_xbmzBt": {
-              "type": "_collection-filter",
-              "name": "Collection Filter",
-              "settings": {
-                "tag": "Horror",
-                "title": "Horror",
-                "filter_type": "filter.p.tag="
-              },
-              "blocks": {}
-            },
-            "collection_filter_tpbaGw": {
-              "type": "_collection-filter",
-              "name": "Collection Filter",
-              "settings": {
-                "tag": "Drama & Poetry",
-                "title": "Drama & Poetry",
-                "filter_type": "filter.p.tag="
-              },
-              "blocks": {}
             },
             "collection_filter_Q6P6Kp": {
               "type": "_collection-filter",
@@ -318,11 +323,6 @@
           },
           "block_order": [
             "collection_filter_box_v2_TxDrRb",
-            "collection_filter_kdWzgK",
-            "collection_filter_NLV7KA",
-            "collection_filter_Pz96Fw",
-            "collection_filter_xbmzBt",
-            "collection_filter_tpbaGw",
             "collection_filter_Q6P6Kp",
             "collection_filter_CFqdge"
           ]
