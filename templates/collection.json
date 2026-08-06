@@ -26,7 +26,7 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "",
+                "tag": "Arcturus",
                 "title": "Arcturus",
                 "filter_type": "filter.p.tag="
               },
@@ -36,7 +36,7 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "",
+                "tag": "Flame Tree",
                 "title": "Flame Tree",
                 "filter_type": "filter.p.tag="
               },
@@ -46,7 +46,7 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "",
+                "tag": "Yale University Press",
                 "title": "Yale University Press",
                 "filter_type": "filter.p.tag="
               },
@@ -73,7 +73,7 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "",
+                "tag": "Children’s",
                 "title": "Children’s",
                 "filter_type": "filter.p.tag="
               },
@@ -83,7 +83,7 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "",
+                "tag": "Teen & Young Adult",
                 "title": "Teen & Young Adult",
                 "filter_type": "filter.p.tag="
               },
@@ -93,7 +93,7 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "",
+                "tag": "Adult",
                 "title": "Adult",
                 "filter_type": "filter.p.tag="
               },
@@ -130,7 +130,7 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "",
+                "tag": "Romance & Erotica",
                 "title": "Romance & Erotica",
                 "filter_type": "filter.p.tag="
               },
@@ -140,7 +140,7 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "",
+                "tag": "Mystery & Thriller",
                 "title": "Mystery & Thriller",
                 "filter_type": "filter.p.tag="
               },
@@ -150,7 +150,7 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "",
+                "tag": "Science Fiction",
                 "title": "Science Fiction",
                 "filter_type": "filter.p.tag="
               },
@@ -160,7 +160,7 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "",
+                "tag": "Fantasy",
                 "title": "Fantasy",
                 "filter_type": "filter.p.tag="
               },
@@ -170,7 +170,7 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "",
+                "tag": "Horror",
                 "title": "Horror",
                 "filter_type": "filter.p.tag="
               },
@@ -180,7 +180,7 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "",
+                "tag": "Drama & Poetry",
                 "title": "Drama & Poetry",
                 "filter_type": "filter.p.tag="
               },
@@ -190,7 +190,7 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "",
+                "tag": "Literary Criticism",
                 "title": "Literary Criticism",
                 "filter_type": "filter.p.tag="
               },
@@ -200,7 +200,7 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "",
+                "tag": "Historical Fiction",
                 "title": "Historical Fiction",
                 "filter_type": "filter.p.tag="
               },
@@ -233,7 +233,7 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "",
+                "tag": "Art",
                 "title": "Art",
                 "filter_type": "filter.p.tag="
               },
@@ -243,7 +243,7 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "",
+                "tag": "Architecture",
                 "title": "Architecture",
                 "filter_type": "filter.p.tag="
               },
@@ -253,7 +253,7 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "",
+                "tag": "Artists",
                 "title": "Artists",
                 "filter_type": "filter.p.tag="
               },
@@ -263,7 +263,7 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "",
+                "tag": "History/Criticism",
                 "title": "History/Criticism",
                 "filter_type": "filter.p.tag="
               },
@@ -273,7 +273,7 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "",
+                "tag": "Instruction",
                 "title": "Instruction",
                 "filter_type": "filter.p.tag="
               },
@@ -283,7 +283,7 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "",
+                "tag": "Horror",
                 "title": "Horror",
                 "filter_type": "filter.p.tag="
               },
@@ -293,7 +293,7 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "",
+                "tag": "Drama & Poetry",
                 "title": "Drama & Poetry",
                 "filter_type": "filter.p.tag="
               },
@@ -303,7 +303,7 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "",
+                "tag": "Literary Criticism",
                 "title": "Literary Criticism",
                 "filter_type": "filter.p.tag="
               },
@@ -313,7 +313,7 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "",
+                "tag": "Historical Fiction",
                 "title": "Historical Fiction",
                 "filter_type": "filter.p.tag="
               },
