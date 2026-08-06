@@ -1415,6 +1415,10 @@ video {
   margin-top: auto;
 }
 
+.tw-mb-0 {
+  margin-bottom: 0px;
+}
+
 .tw-box-border {
   box-sizing: border-box;
 }
@@ -2670,6 +2674,18 @@ video {
 
 .tw-pt-1 {
   padding-top: 0.25rem;
+}
+
+.tw-pl-8 {
+  padding-left: 2rem;
+}
+
+.tw-pl-5 {
+  padding-left: 1.25rem;
+}
+
+.tw-pl-6 {
+  padding-left: 1.5rem;
 }
 
 .tw-text-left {
