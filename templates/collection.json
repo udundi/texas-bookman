@@ -121,7 +121,7 @@
           "settings": {
             "collapsible": true,
             "collapsed": true,
-            "title": "Genre",
+            "title": "Gifts and Stationery",
             "nested": false
           },
           "blocks": {
@@ -242,7 +242,7 @@
           "settings": {
             "collapsible": true,
             "collapsed": true,
-            "title": "Book Categories",
+            "title": "Books",
             "nested": false
           },
           "blocks": {
