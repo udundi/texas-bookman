@@ -22,28 +22,78 @@
             "nested": false
           },
           "blocks": {
-            "collection_gate_NqBrxe": {
+            "collection_gate_cdaFLd": {
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "activities-games",
-                "title": "Games & Puzzles"
+                "collection_gate": "coloring-books",
+                "title": "{{ closest.collection.title }}"
               },
               "blocks": {}
             },
-            "collection_gate_MJj9U7": {
+            "collection_gate_aG67iT": {
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "sidelines-gifts-stationery",
-                "title": "Sidelines, Gifts, & Stationery"
+                "collection_gate": "games-toys-puzzles",
+                "title": "{{ closest.collection.title }}"
+              },
+              "blocks": {}
+            },
+            "collection_gate_iN3DRc": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "gifts-kits",
+                "title": "{{ closest.collection.title }}"
+              },
+              "blocks": {}
+            },
+            "collection_gate_tFTxxr": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "greeting-cards",
+                "title": "{{ closest.collection.title }}"
+              },
+              "blocks": {}
+            },
+            "collection_gate_UC3tRR": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "journals",
+                "title": "{{ closest.collection.title }}"
+              },
+              "blocks": {}
+            },
+            "collection_gate_jqFm9r": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "stationery-notecards",
+                "title": "{{ closest.collection.title }}"
+              },
+              "blocks": {}
+            },
+            "collection_gate_HkRYww": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "sketchbooks",
+                "title": "{{ closest.collection.title }}"
               },
               "blocks": {}
             }
           },
           "block_order": [
-            "collection_gate_NqBrxe",
-            "collection_gate_MJj9U7"
+            "collection_gate_cdaFLd",
+            "collection_gate_aG67iT",
+            "collection_gate_iN3DRc",
+            "collection_gate_tFTxxr",
+            "collection_gate_UC3tRR",
+            "collection_gate_jqFm9r",
+            "collection_gate_HkRYww"
           ]
         },
         "collection_filter_box_v2_YMiUtx": {
@@ -353,44 +403,38 @@
             "nested": false
           },
           "blocks": {
-            "collection_filter_AAkJkg": {
-              "type": "_collection-filter",
-              "name": "Collection Filter",
+            "collection_gate_htAbDb": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
               "settings": {
-                "tag": "Children’s",
-                "title": "Children",
-                "filter_type": "filter.p.tag=",
-                "children_collapsed": false
+                "collection_gate": "teen-young-adult",
+                "title": "{{ closest.collection.title }}"
               },
               "blocks": {}
             },
-            "collection_filter_mUeTTH": {
-              "type": "_collection-filter",
-              "name": "Collection Filter",
+            "collection_gate_ceaABn": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
               "settings": {
-                "tag": "Teen & Young Adult",
-                "title": "Teen & Young Adult",
-                "filter_type": "filter.p.tag=",
-                "children_collapsed": false
+                "collection_gate": "childrens-picture-story-books",
+                "title": "{{ closest.collection.title }}"
               },
               "blocks": {}
             },
-            "collection_filter_fyjCdz": {
-              "type": "_collection-filter",
-              "name": "Collection Filter",
+            "collection_gate_8egrhU": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
               "settings": {
-                "tag": "Adult",
-                "title": "Adult",
-                "filter_type": "filter.p.tag=",
-                "children_collapsed": false
+                "collection_gate": "childrens-educational-nonfiction",
+                "title": "{{ closest.collection.title }}"
               },
               "blocks": {}
             }
           },
           "block_order": [
-            "collection_filter_AAkJkg",
-            "collection_filter_mUeTTH",
-            "collection_filter_fyjCdz"
+            "collection_gate_htAbDb",
+            "collection_gate_ceaABn",
+            "collection_gate_8egrhU"
           ]
         },
         "collection_filter_box_v2_YdNKP9": {
