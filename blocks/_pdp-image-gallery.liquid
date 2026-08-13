@@ -4,7 +4,7 @@
 >
   <!-- Main Image Carousel -->
   <div class=" swiper swiper-container tw-h-full lg:tw-h-auto tw-w-full tw-cursor-pointer tw-text-black">
-    <div class="swiper-wrapper tw-h-fit tw-max-w-96  ">
+    <div class="swiper-wrapper tw-h-fit tw-max-w-96 ">
       <!-- ---------------------- Image Classes ---------------------- -->
       {% if block.settings.image_aspect == '4x3' %}
         {% assign size_classes = 'tw-w-full tw-aspect-4/3 tw-h-fit ' %}
@@ -69,11 +69,13 @@
       {% endfor %}
     </div>
     <!-- Navigation Buttons -->
-    {% comment %} {% render 'component__icon',
-      icon: 'arrow-left',
-      size: '132',
-      class: 'ct-swiper-button-prev !tw-text-black tw-size-12'
-    %} {% endcomment %}
+    {% comment %}
+      {% render 'component__icon',
+        icon: 'arrow-left',
+        size: '132',
+        class: 'ct-swiper-button-prev !tw-text-black tw-size-12'
+      %}
+    {% endcomment %}
     {% comment %} {% render 'component__icon', icon: 'arrow-right', size: '14', class: 'swiper-button-next' %} {% endcomment %}
   </div>
   <!-- Thumbs for Main Image Carousel -->
@@ -95,24 +97,26 @@
       {% endif %}
 
       <!-- Normal Thumb for Videos and Images -->
-      {% for media in product.media %}
-        <!-- Videos -->
-        {% if media.media_type == 'video' %}
-          {% render 'ud-product-thumb-image', thumb_image: media.preview_image, thumb_number: slide_number %}
-          {% assign slide_number = slide_number | plus: 1 %}
-          <!-- Images -->
-        {% elsif media.media_type == 'image' %}
-          {% assign compare_media = media %}
-          {% for image in product.images %}
-            {% if image.position == compare_media.position %}
-              {% if image.attached_to_variant? != true %}
-                {% render 'ud-product-thumb-image', thumb_image: image, thumb_number: slide_number %}
-                {% assign slide_number = slide_number | plus: 1 %}
+      {% comment %}
+        {% for media in product.media %}
+          <!-- Videos -->
+          {% if media.media_type == 'video' %}
+            {% render 'ud-product-thumb-image', thumb_image: media.preview_image, thumb_number: slide_number %}
+            {% assign slide_number = slide_number | plus: 1 %}
+            <!-- Images -->
+          {% elsif media.media_type == 'image' %}
+            {% assign compare_media = media %}
+            {% for image in product.images %}
+              {% if image.position == compare_media.position %}
+                {% if image.attached_to_variant? != true %}
+                  {% render 'ud-product-thumb-image', thumb_image: image, thumb_number: slide_number %}
+                  {% assign slide_number = slide_number | plus: 1 %}
+                {% endif %}
               {% endif %}
-            {% endif %}
-          {% endfor %}
-        {% endif %}
-      {% endfor %}
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+      {% endcomment %}
     </div>
   </div>
 </div>

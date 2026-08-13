@@ -71,7 +71,7 @@
 
     {%- if section.settings.heading != blank -%}
       <{{ section.settings.heading_tag }}
-        class="hero-heading tw-font-bold tw-text-center tw-leading-tight tw-mb-4"
+        class="hero-heading tw-font-bold tw-text-center tw-max-w-72 tw-leading-tight tw-mb-2"
         style="color: {{ section.settings.heading_color }}; font-size: {{ section.settings.mobile_heading_size }}px;"
       >
         {{ section.settings.heading }}
@@ -80,7 +80,7 @@
 
     {%- if section.settings.body_text != blank -%}
       <p
-        class="hero-body tw-mb-6 tw-text-center tw-leading-relaxed"
+        class="hero-body tw-mb-2 tw-text-center tw-leading-relaxed"
         style="color: {{ section.settings.body_color }}; font-size: {{ section.settings.mobile_body_size }}px;"
       >
         {{ section.settings.body_text }}
