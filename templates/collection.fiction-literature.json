@@ -1,0 +1,384 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "ud-sortable-collection",
+      "blocks": {
+        "collection_filter_box_v2_nz8K4p": {
+          "type": "_collection-filter-box-v2",
+          "name": "Collection Filter Box",
+          "disabled": true,
+          "settings": {
+            "collapsible": true,
+            "collapsed": true,
+            "title": "Publisher",
+            "nested": false
+          },
+          "blocks": {
+            "collection_filter_hjf7pc": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Arcturus",
+                "title": "Arcturus",
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_njxfRV": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Flame Tree",
+                "title": "Flame Tree",
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_7z4XAQ": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Yale University Press",
+                "title": "Yale University Press",
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "collection_filter_hjf7pc",
+            "collection_filter_njxfRV",
+            "collection_filter_7z4XAQ"
+          ]
+        },
+        "collection_filter_box_v2_8paAqE": {
+          "type": "_collection-filter-box-v2",
+          "name": "Collection Filter Box",
+          "settings": {
+            "collapsible": true,
+            "collapsed": true,
+            "title": "Audience",
+            "nested": false
+          },
+          "blocks": {
+            "collection_filter_AAkJkg": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Children’s",
+                "title": "Children’s",
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_mUeTTH": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Teen & Young Adult",
+                "title": "Teen & Young Adult",
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_fyjCdz": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Adult",
+                "title": "Adult",
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "collection_filter_AAkJkg",
+            "collection_filter_mUeTTH",
+            "collection_filter_fyjCdz"
+          ]
+        },
+        "collection_filter_box_v2_YdNKP9": {
+          "type": "_collection-filter-box-v2",
+          "name": "Collection Filter Box",
+          "settings": {
+            "collapsible": true,
+            "collapsed": true,
+            "title": "Genre",
+            "nested": false
+          },
+          "blocks": {
+            "collection_filter_htakT7": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Fiction & Literature",
+                "title": "Fiction & Literature",
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_JFYMRU": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Classic & General Fiction",
+                "title": "Classic & General Fiction",
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_thyNyh": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Romance & Erotica",
+                "title": "Romance & Erotica",
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_TiK9AY": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Mystery",
+                "title": "Mystery & Thriller",
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_LN4FwC": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Science Fiction, Fantasy & Horror",
+                "title": "Science Fiction, Fantasy & Horror",
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_aHt6Xd": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Drama & Poetry",
+                "title": "Drama & Poetry",
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_68xEyN": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Essays & Literary Criticism",
+                "title": "Literary Criticism",
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_XA8bkj": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "disabled": true,
+              "settings": {
+                "tag": "Historical Fiction",
+                "title": "Historical Fiction",
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "collection_filter_htakT7",
+            "collection_filter_JFYMRU",
+            "collection_filter_thyNyh",
+            "collection_filter_TiK9AY",
+            "collection_filter_LN4FwC",
+            "collection_filter_aHt6Xd",
+            "collection_filter_68xEyN",
+            "collection_filter_XA8bkj"
+          ]
+        },
+        "collection_filter_box_v2_YMiUtx": {
+          "type": "_collection-filter-box-v2",
+          "name": "Collection Filter Box",
+          "settings": {
+            "collapsible": true,
+            "collapsed": true,
+            "title": "Subject",
+            "nested": false
+          },
+          "blocks": {
+            "collection_filter_box_v2_TxDrRb": {
+              "type": "_collection-filter-box-v2",
+              "name": "Collection Filter Box",
+              "settings": {
+                "collapsible": true,
+                "collapsed": true,
+                "title": "Art",
+                "nested": true
+              },
+              "blocks": {
+                "collection_filter_UFWjJU": {
+                  "type": "_collection-filter",
+                  "name": "Collection Filter",
+                  "settings": {
+                    "tag": "Architecture",
+                    "title": "Architecture",
+                    "filter_type": "filter.p.tag=",
+                    "children_collapsed": false
+                  },
+                  "blocks": {}
+                },
+                "collection_filter_aqgJHH": {
+                  "type": "_collection-filter",
+                  "name": "Collection Filter",
+                  "settings": {
+                    "tag": "Artists",
+                    "title": "Artists",
+                    "filter_type": "filter.p.tag=",
+                    "children_collapsed": false
+                  },
+                  "blocks": {}
+                },
+                "collection_filter_TgqmAR": {
+                  "type": "_collection-filter",
+                  "name": "Collection Filter",
+                  "settings": {
+                    "tag": "History/Criticism",
+                    "title": "History/Criticism",
+                    "filter_type": "filter.p.tag=",
+                    "children_collapsed": false
+                  },
+                  "blocks": {}
+                },
+                "collection_filter_UEFPyV": {
+                  "type": "_collection-filter",
+                  "name": "Collection Filter",
+                  "settings": {
+                    "tag": "Instruction",
+                    "title": "Instruction",
+                    "filter_type": "filter.p.tag=",
+                    "children_collapsed": false
+                  },
+                  "blocks": {}
+                },
+                "collection_filter_NpYxTz": {
+                  "type": "_collection-filter",
+                  "name": "Collection Filter",
+                  "settings": {
+                    "tag": "Fashion",
+                    "title": "Fashion",
+                    "filter_type": "filter.p.tag=",
+                    "children_collapsed": false
+                  },
+                  "blocks": {}
+                },
+                "collection_filter_HhCK8j": {
+                  "type": "_collection-filter",
+                  "name": "Collection Filter",
+                  "settings": {
+                    "tag": "Photography",
+                    "title": "Photography",
+                    "filter_type": "filter.p.tag=",
+                    "children_collapsed": false
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "collection_filter_UFWjJU",
+                "collection_filter_aqgJHH",
+                "collection_filter_TgqmAR",
+                "collection_filter_UEFPyV",
+                "collection_filter_NpYxTz",
+                "collection_filter_HhCK8j"
+              ]
+            },
+            "collection_filter_Q6P6Kp": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Literary Criticism",
+                "title": "Literary Criticism",
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_CFqdge": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Historical Fiction",
+                "title": "Historical Fiction",
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "collection_filter_box_v2_TxDrRb",
+            "collection_filter_Q6P6Kp",
+            "collection_filter_CFqdge"
+          ]
+        }
+      },
+      "block_order": [
+        "collection_filter_box_v2_nz8K4p",
+        "collection_filter_box_v2_8paAqE",
+        "collection_filter_box_v2_YdNKP9",
+        "collection_filter_box_v2_YMiUtx"
+      ],
+      "settings": {
+        "title": "Lorum Ipsum",
+        "description": "<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit tenetur, rem in ab nobis autem suscipit. Excepturi officia maxime saepe, perspiciatis accusamus ducimus, nihil odio provident, doloribus omnis recusandae iure.</p>",
+        "padding_top": 2,
+        "padding_bottom": 2,
+        "mobile_padding_top": 2,
+        "mobile_padding_bottom": 2,
+        "enable_infinite_scroll": false,
+        "button_type": "quick-add",
+        "button_text": "",
+        "show_price": true,
+        "show_color_options": false,
+        "enable_cta": false,
+        "cta_background_color": "#f9f8f5",
+        "cta_header": "",
+        "cta_body": "",
+        "cta_button_text": "",
+        "cta_button_link": "",
+        "cta_image_direction": "right"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
