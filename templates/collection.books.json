@@ -12,6 +12,56 @@
     "main": {
       "type": "ud-sortable-collection",
       "blocks": {
+        "collection_filter_box_v2_feYKED": {
+          "type": "_collection-filter-box-v2",
+          "name": "Collection Filter Box",
+          "settings": {
+            "collapsible": true,
+            "collapsed": false,
+            "title": "Featured Publishers",
+            "nested": false
+          },
+          "blocks": {
+            "collection_filter_nfKADU": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Arcturus",
+                "title": "Arcturus",
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_8gptDV": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Flame Tree",
+                "title": "Flame Tree",
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_PCNbGn": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Piccadilly Inc.",
+                "title": "Piccadilly Inc.",
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "collection_filter_nfKADU",
+            "collection_filter_8gptDV",
+            "collection_filter_PCNbGn"
+          ]
+        },
         "collection_filter_box_v2_Wt68LX": {
           "type": "_collection-filter-box-v2",
           "name": "Collection Filter Box",
@@ -572,6 +622,7 @@
         }
       },
       "block_order": [
+        "collection_filter_box_v2_feYKED",
         "collection_filter_box_v2_Wt68LX",
         "collection_filter_box_v2_8paAqE",
         "collection_filter_box_v2_YMiUtx",
