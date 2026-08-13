@@ -12,6 +12,286 @@
     "main": {
       "type": "ud-sortable-collection",
       "blocks": {
+        "collection_filter_box_v2_Wt68LX": {
+          "type": "_collection-filter-box-v2",
+          "name": "Collection Filter Box",
+          "settings": {
+            "collapsible": true,
+            "collapsed": true,
+            "title": "Gifts and Stationery",
+            "nested": false
+          },
+          "blocks": {
+            "collection_gate_NqBrxe": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "activities-games",
+                "title": "Games & Puzzles"
+              },
+              "blocks": {}
+            },
+            "collection_gate_MJj9U7": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "sidelines-gifts-stationery",
+                "title": "Sidelines, Gifts, & Stationery"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "collection_gate_NqBrxe",
+            "collection_gate_MJj9U7"
+          ]
+        },
+        "collection_filter_box_v2_YMiUtx": {
+          "type": "_collection-filter-box-v2",
+          "name": "Collection Filter Box",
+          "settings": {
+            "collapsible": true,
+            "collapsed": true,
+            "title": "Books",
+            "nested": false
+          },
+          "blocks": {
+            "collection_gate_N8PbGG": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "art",
+                "title": "Art"
+              },
+              "blocks": {}
+            },
+            "collection_gate_A4FpGq": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "architecture",
+                "title": "{{ closest.collection.title }}"
+              },
+              "blocks": {}
+            },
+            "collection_gate_YU3WqN": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "audio-books",
+                "title": "Audio Books"
+              },
+              "blocks": {}
+            },
+            "collection_gate_jVXA6z": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "cooking-beverages",
+                "title": "{{ closest.collection.title }}"
+              },
+              "blocks": {}
+            },
+            "collection_gate_gwygLE": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "crafts",
+                "title": "{{ closest.collection.title }}"
+              },
+              "blocks": {}
+            },
+            "collection_gate_zjXwDV": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "gardening-homesteading",
+                "title": "Gardening & Homesteading"
+              },
+              "blocks": {}
+            },
+            "collection_gate_TttDhw": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "health-medicine-parenting",
+                "title": "Health, Medicine, & Parenting"
+              },
+              "blocks": {}
+            },
+            "collection_gate_itTYbW": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "history",
+                "title": "History"
+              },
+              "blocks": {}
+            },
+            "collection_gate_AWtfiY": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "metaphysics",
+                "title": "Metaphysics"
+              },
+              "blocks": {}
+            },
+            "collection_gate_LRJf3f": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "",
+                "title": "Mythology & Folktales"
+              },
+              "blocks": {}
+            },
+            "collection_gate_PiRQdF": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "performing-arts",
+                "title": "Performing Arts"
+              },
+              "blocks": {}
+            },
+            "collection_gate_L49iFC": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "philosophy-religion",
+                "title": "Philosophy & Religion"
+              },
+              "blocks": {}
+            },
+            "collection_gate_PhXpE6": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "photography",
+                "title": "Photography"
+              },
+              "blocks": {}
+            },
+            "collection_gate_Jd8eAe": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "pop-culture",
+                "title": "Pop Culture"
+              },
+              "blocks": {}
+            },
+            "collection_gate_AHfBcY": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "reference",
+                "title": "Reference"
+              },
+              "blocks": {}
+            },
+            "collection_gate_xzGnFz": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "science-nature",
+                "title": "Science & Nature"
+              },
+              "blocks": {}
+            },
+            "collection_gate_RqRwLY": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "social-sciences",
+                "title": "Social Sciences"
+              },
+              "blocks": {}
+            },
+            "collection_gate_wd6hDE": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "sports-travel-transportation",
+                "title": "Sports, Travel, & Transportation"
+              },
+              "blocks": {}
+            },
+            "collection_gate_Y3CgnQ": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "university-press-titles",
+                "title": "University Press Titles"
+              },
+              "blocks": {}
+            },
+            "collection_gate_YM9WaN": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "vinyl-records",
+                "title": "Vinyl Records"
+              },
+              "blocks": {}
+            },
+            "collection_gate_FaC4gN": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "decorative-books",
+                "title": "Decorative Books"
+              },
+              "blocks": {}
+            },
+            "collection_gate_TzL79t": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "used-books",
+                "title": "{{ closest.collection.title }}"
+              },
+              "blocks": {}
+            },
+            "collection_filter_kQyKac": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "*MARKDOWNS*",
+                "title": "Books on Sale",
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "collection_gate_N8PbGG",
+            "collection_gate_A4FpGq",
+            "collection_gate_YU3WqN",
+            "collection_gate_jVXA6z",
+            "collection_gate_gwygLE",
+            "collection_gate_zjXwDV",
+            "collection_gate_TttDhw",
+            "collection_gate_itTYbW",
+            "collection_gate_AWtfiY",
+            "collection_gate_LRJf3f",
+            "collection_gate_PiRQdF",
+            "collection_gate_L49iFC",
+            "collection_gate_PhXpE6",
+            "collection_gate_Jd8eAe",
+            "collection_gate_AHfBcY",
+            "collection_gate_xzGnFz",
+            "collection_gate_RqRwLY",
+            "collection_gate_wd6hDE",
+            "collection_gate_Y3CgnQ",
+            "collection_gate_YM9WaN",
+            "collection_gate_FaC4gN",
+            "collection_gate_TzL79t",
+            "collection_filter_kQyKac"
+          ]
+        },
         "collection_filter_box_v2_nz8K4p": {
           "type": "_collection-filter-box-v2",
           "name": "Collection Filter Box",
@@ -66,7 +346,6 @@
         "collection_filter_box_v2_8paAqE": {
           "type": "_collection-filter-box-v2",
           "name": "Collection Filter Box",
-          "disabled": true,
           "settings": {
             "collapsible": true,
             "collapsed": true,
@@ -235,291 +514,14 @@
             "collection_filter_68xEyN",
             "collection_filter_XA8bkj"
           ]
-        },
-        "collection_filter_box_v2_YMiUtx": {
-          "type": "_collection-filter-box-v2",
-          "name": "Collection Filter Box",
-          "settings": {
-            "collapsible": true,
-            "collapsed": true,
-            "title": "Books",
-            "nested": false
-          },
-          "blocks": {
-            "collection_gate_N8PbGG": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "art",
-                "title": "Art"
-              },
-              "blocks": {}
-            },
-            "collection_gate_A4FpGq": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "architecture",
-                "title": "{{ closest.collection.title }}"
-              },
-              "blocks": {}
-            },
-            "collection_gate_YU3WqN": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "audio-books",
-                "title": "Audio Books"
-              },
-              "blocks": {}
-            },
-            "collection_gate_jVXA6z": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "cooking-beverages",
-                "title": "{{ closest.collection.title }}"
-              },
-              "blocks": {}
-            },
-            "collection_gate_gwygLE": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "crafts",
-                "title": "{{ closest.collection.title }}"
-              },
-              "blocks": {}
-            },
-            "collection_gate_7Hfpbh": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "activities-games",
-                "title": "Games & Puzzles"
-              },
-              "blocks": {}
-            },
-            "collection_gate_zjXwDV": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "gardening-homesteading",
-                "title": "Gardening & Homesteading"
-              },
-              "blocks": {}
-            },
-            "collection_gate_TttDhw": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "health-medicine-parenting",
-                "title": "Health, Medicine, & Parenting"
-              },
-              "blocks": {}
-            },
-            "collection_gate_itTYbW": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "history",
-                "title": "History"
-              },
-              "blocks": {}
-            },
-            "collection_gate_AWtfiY": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "metaphysics",
-                "title": "Metaphysics"
-              },
-              "blocks": {}
-            },
-            "collection_gate_LRJf3f": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "",
-                "title": "Mythology & Folktales"
-              },
-              "blocks": {}
-            },
-            "collection_gate_PiRQdF": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "performing-arts",
-                "title": "Performing Arts"
-              },
-              "blocks": {}
-            },
-            "collection_gate_L49iFC": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "philosophy-religion",
-                "title": "Philosophy & Religion"
-              },
-              "blocks": {}
-            },
-            "collection_gate_PhXpE6": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "photography",
-                "title": "Photography"
-              },
-              "blocks": {}
-            },
-            "collection_gate_Jd8eAe": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "pop-culture",
-                "title": "Pop Culture"
-              },
-              "blocks": {}
-            },
-            "collection_gate_AHfBcY": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "reference",
-                "title": "Reference"
-              },
-              "blocks": {}
-            },
-            "collection_gate_xzGnFz": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "science-nature",
-                "title": "Science & Nature"
-              },
-              "blocks": {}
-            },
-            "collection_gate_riHywp": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "sidelines-gifts-stationery",
-                "title": "Sidelines, Gifts, & Stationery"
-              },
-              "blocks": {}
-            },
-            "collection_gate_RqRwLY": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "social-sciences",
-                "title": "Social Sciences"
-              },
-              "blocks": {}
-            },
-            "collection_gate_wd6hDE": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "sports-travel-transportation",
-                "title": "Sports, Travel, & Transportation"
-              },
-              "blocks": {}
-            },
-            "collection_gate_Y3CgnQ": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "university-press-titles",
-                "title": "University Press Titles"
-              },
-              "blocks": {}
-            },
-            "collection_gate_YM9WaN": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "vinyl-records",
-                "title": "Vinyl Records"
-              },
-              "blocks": {}
-            },
-            "collection_gate_FaC4gN": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "decorative-books",
-                "title": "Decorative Books"
-              },
-              "blocks": {}
-            },
-            "collection_gate_b7EBbP": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "",
-                "title": "*MARKDOWNS*"
-              },
-              "blocks": {}
-            },
-            "collection_filter_8fpHtt": {
-              "type": "_collection-filter",
-              "name": "Collection Filter",
-              "settings": {
-                "tag": "used-books",
-                "title": "Used Books",
-                "filter_type": "filter.p.tag=",
-                "children_collapsed": false
-              },
-              "blocks": {}
-            },
-            "collection_filter_zt6G9R": {
-              "type": "_collection-filter",
-              "name": "Collection Filter",
-              "settings": {
-                "tag": "Books on Sale",
-                "title": "Filter Title",
-                "filter_type": "filter.p.tag=",
-                "children_collapsed": false
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "collection_gate_N8PbGG",
-            "collection_gate_A4FpGq",
-            "collection_gate_YU3WqN",
-            "collection_gate_jVXA6z",
-            "collection_gate_gwygLE",
-            "collection_gate_7Hfpbh",
-            "collection_gate_zjXwDV",
-            "collection_gate_TttDhw",
-            "collection_gate_itTYbW",
-            "collection_gate_AWtfiY",
-            "collection_gate_LRJf3f",
-            "collection_gate_PiRQdF",
-            "collection_gate_L49iFC",
-            "collection_gate_PhXpE6",
-            "collection_gate_Jd8eAe",
-            "collection_gate_AHfBcY",
-            "collection_gate_xzGnFz",
-            "collection_gate_riHywp",
-            "collection_gate_RqRwLY",
-            "collection_gate_wd6hDE",
-            "collection_gate_Y3CgnQ",
-            "collection_gate_YM9WaN",
-            "collection_gate_FaC4gN",
-            "collection_gate_b7EBbP",
-            "collection_filter_8fpHtt",
-            "collection_filter_zt6G9R"
-          ]
         }
       },
       "block_order": [
+        "collection_filter_box_v2_Wt68LX",
+        "collection_filter_box_v2_YMiUtx",
         "collection_filter_box_v2_nz8K4p",
         "collection_filter_box_v2_8paAqE",
-        "collection_filter_box_v2_YdNKP9",
-        "collection_filter_box_v2_YMiUtx"
+        "collection_filter_box_v2_YdNKP9"
       ],
       "settings": {
         "title": "Lorum Ipsum",
