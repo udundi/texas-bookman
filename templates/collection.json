@@ -106,75 +106,96 @@
             "nested": false
           },
           "blocks": {
-            "collection_gate_N8PbGG": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
+            "collection_filter_box_v2_PmJeLD": {
+              "type": "_collection-filter-box-v2",
+              "name": "Collection Filter Box",
               "settings": {
-                "collection_gate": "art",
-                "title": "Art"
+                "collapsible": true,
+                "collapsed": true,
+                "title": "Genres",
+                "nested": true
               },
-              "blocks": {}
-            },
-            "collection_gate_A4FpGq": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "architecture",
-                "title": "{{ closest.collection.title }}"
+              "blocks": {
+                "collection_gate_bcdQ9m": {
+                  "type": "_collection-gate",
+                  "name": "Collection Gate",
+                  "settings": {
+                    "collection_gate": "art",
+                    "title": "Art"
+                  },
+                  "blocks": {}
+                },
+                "collection_gate_3bVC66": {
+                  "type": "_collection-gate",
+                  "name": "Collection Gate",
+                  "settings": {
+                    "collection_gate": "architecture",
+                    "title": "{{ closest.collection.title }}"
+                  },
+                  "blocks": {}
+                },
+                "collection_gate_bUkPNT": {
+                  "type": "_collection-gate",
+                  "name": "Collection Gate",
+                  "settings": {
+                    "collection_gate": "cooking-beverages",
+                    "title": "{{ closest.collection.title }}"
+                  },
+                  "blocks": {}
+                },
+                "collection_gate_TWKgKK": {
+                  "type": "_collection-gate",
+                  "name": "Collection Gate",
+                  "settings": {
+                    "collection_gate": "crafts",
+                    "title": "{{ closest.collection.title }}"
+                  },
+                  "blocks": {}
+                },
+                "collection_gate_mqPAG8": {
+                  "type": "_collection-gate",
+                  "name": "Collection Gate",
+                  "settings": {
+                    "collection_gate": "gardening-homesteading",
+                    "title": "Gardening & Homesteading"
+                  },
+                  "blocks": {}
+                },
+                "collection_gate_Tdgnye": {
+                  "type": "_collection-gate",
+                  "name": "Collection Gate",
+                  "settings": {
+                    "collection_gate": "health-medicine-parenting",
+                    "title": "Health, Medicine, & Parenting"
+                  },
+                  "blocks": {}
+                },
+                "collection_gate_8DmGid": {
+                  "type": "_collection-gate",
+                  "name": "Collection Gate",
+                  "settings": {
+                    "collection_gate": "history",
+                    "title": "History"
+                  },
+                  "blocks": {}
+                }
               },
-              "blocks": {}
+              "block_order": [
+                "collection_gate_bcdQ9m",
+                "collection_gate_3bVC66",
+                "collection_gate_bUkPNT",
+                "collection_gate_TWKgKK",
+                "collection_gate_mqPAG8",
+                "collection_gate_Tdgnye",
+                "collection_gate_8DmGid"
+              ]
             },
-            "collection_gate_YU3WqN": {
+            "collection_gate_UfHdgr": {
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "audio-books",
                 "title": "Audio Books"
-              },
-              "blocks": {}
-            },
-            "collection_gate_jVXA6z": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "cooking-beverages",
-                "title": "{{ closest.collection.title }}"
-              },
-              "blocks": {}
-            },
-            "collection_gate_gwygLE": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "crafts",
-                "title": "{{ closest.collection.title }}"
-              },
-              "blocks": {}
-            },
-            "collection_gate_zjXwDV": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "gardening-homesteading",
-                "title": "Gardening & Homesteading"
-              },
-              "blocks": {}
-            },
-            "collection_gate_TttDhw": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "health-medicine-parenting",
-                "title": "Health, Medicine, & Parenting"
-              },
-              "blocks": {}
-            },
-            "collection_gate_itTYbW": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "history",
-                "title": "History"
               },
               "blocks": {}
             },
@@ -317,14 +338,8 @@
             }
           },
           "block_order": [
-            "collection_gate_N8PbGG",
-            "collection_gate_A4FpGq",
-            "collection_gate_YU3WqN",
-            "collection_gate_jVXA6z",
-            "collection_gate_gwygLE",
-            "collection_gate_zjXwDV",
-            "collection_gate_TttDhw",
-            "collection_gate_itTYbW",
+            "collection_filter_box_v2_PmJeLD",
+            "collection_gate_UfHdgr",
             "collection_gate_AWtfiY",
             "collection_gate_LRJf3f",
             "collection_gate_PiRQdF",
@@ -412,6 +427,15 @@
               },
               "blocks": {}
             },
+            "collection_gate_aRk7ae": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "board-books",
+                "title": "Filter Title"
+              },
+              "blocks": {}
+            },
             "collection_gate_ceaABn": {
               "type": "_collection-gate",
               "name": "Collection Gate",
@@ -433,6 +457,7 @@
           },
           "block_order": [
             "collection_gate_htAbDb",
+            "collection_gate_aRk7ae",
             "collection_gate_ceaABn",
             "collection_gate_8egrhU"
           ]
