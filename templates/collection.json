@@ -29,7 +29,8 @@
               "settings": {
                 "tag": "Arcturus",
                 "title": "Arcturus",
-                "filter_type": "filter.p.tag="
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
               },
               "blocks": {}
             },
@@ -39,7 +40,8 @@
               "settings": {
                 "tag": "Flame Tree",
                 "title": "Flame Tree",
-                "filter_type": "filter.p.tag="
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
               },
               "blocks": {}
             },
@@ -49,7 +51,8 @@
               "settings": {
                 "tag": "Yale University Press",
                 "title": "Yale University Press",
-                "filter_type": "filter.p.tag="
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
               },
               "blocks": {}
             }
@@ -75,8 +78,9 @@
               "name": "Collection Filter",
               "settings": {
                 "tag": "Children’s",
-                "title": "Children’s",
-                "filter_type": "filter.p.tag="
+                "title": "Children",
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
               },
               "blocks": {}
             },
@@ -86,7 +90,8 @@
               "settings": {
                 "tag": "Teen & Young Adult",
                 "title": "Teen & Young Adult",
-                "filter_type": "filter.p.tag="
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
               },
               "blocks": {}
             },
@@ -96,7 +101,8 @@
               "settings": {
                 "tag": "Adult",
                 "title": "Adult",
-                "filter_type": "filter.p.tag="
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
               },
               "blocks": {}
             }
@@ -117,13 +123,23 @@
             "nested": false
           },
           "blocks": {
+            "collection_gate_Kt8cE4": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "",
+                "title": "Fiction & Literature"
+              },
+              "blocks": {}
+            },
             "collection_filter_htakT7": {
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
                 "tag": "Fiction & Literature",
                 "title": "Fiction & Literature",
-                "filter_type": "filter.p.tag="
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
               },
               "blocks": {}
             },
@@ -133,7 +149,8 @@
               "settings": {
                 "tag": "Classic & General Fiction",
                 "title": "Classic & General Fiction",
-                "filter_type": "filter.p.tag="
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
               },
               "blocks": {}
             },
@@ -143,7 +160,8 @@
               "settings": {
                 "tag": "Romance & Erotica",
                 "title": "Romance & Erotica",
-                "filter_type": "filter.p.tag="
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
               },
               "blocks": {}
             },
@@ -153,7 +171,8 @@
               "settings": {
                 "tag": "Mystery",
                 "title": "Mystery & Thriller",
-                "filter_type": "filter.p.tag="
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
               },
               "blocks": {}
             },
@@ -163,7 +182,8 @@
               "settings": {
                 "tag": "Science Fiction, Fantasy & Horror",
                 "title": "Science Fiction, Fantasy & Horror",
-                "filter_type": "filter.p.tag="
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
               },
               "blocks": {}
             },
@@ -173,7 +193,8 @@
               "settings": {
                 "tag": "Drama & Poetry",
                 "title": "Drama & Poetry",
-                "filter_type": "filter.p.tag="
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
               },
               "blocks": {}
             },
@@ -183,7 +204,8 @@
               "settings": {
                 "tag": "Essays & Literary Criticism",
                 "title": "Literary Criticism",
-                "filter_type": "filter.p.tag="
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
               },
               "blocks": {}
             },
@@ -194,12 +216,14 @@
               "settings": {
                 "tag": "Historical Fiction",
                 "title": "Historical Fiction",
-                "filter_type": "filter.p.tag="
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
               },
               "blocks": {}
             }
           },
           "block_order": [
+            "collection_gate_Kt8cE4",
             "collection_filter_htakT7",
             "collection_filter_JFYMRU",
             "collection_filter_thyNyh",
@@ -220,6 +244,35 @@
             "nested": false
           },
           "blocks": {
+            "collection_filter_ztRcjX": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Architecture",
+                "title": "Architecture",
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_gate_N8PbGG": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "",
+                "title": "Art"
+              },
+              "blocks": {}
+            },
+            "collection_gate_YU3WqN": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "",
+                "title": "Audio Books"
+              },
+              "blocks": {}
+            },
             "collection_filter_box_v2_TxDrRb": {
               "type": "_collection-filter-box-v2",
               "name": "Collection Filter Box",
@@ -230,23 +283,14 @@
                 "nested": true
               },
               "blocks": {
-                "collection_filter_UFWjJU": {
-                  "type": "_collection-filter",
-                  "name": "Collection Filter",
-                  "settings": {
-                    "tag": "Architecture",
-                    "title": "Architecture",
-                    "filter_type": "filter.p.tag="
-                  },
-                  "blocks": {}
-                },
                 "collection_filter_aqgJHH": {
                   "type": "_collection-filter",
                   "name": "Collection Filter",
                   "settings": {
                     "tag": "Artists",
                     "title": "Artists",
-                    "filter_type": "filter.p.tag="
+                    "filter_type": "filter.p.tag=",
+                    "children_collapsed": false
                   },
                   "blocks": {}
                 },
@@ -256,7 +300,8 @@
                   "settings": {
                     "tag": "History/Criticism",
                     "title": "History/Criticism",
-                    "filter_type": "filter.p.tag="
+                    "filter_type": "filter.p.tag=",
+                    "children_collapsed": false
                   },
                   "blocks": {}
                 },
@@ -266,7 +311,8 @@
                   "settings": {
                     "tag": "Instruction",
                     "title": "Instruction",
-                    "filter_type": "filter.p.tag="
+                    "filter_type": "filter.p.tag=",
+                    "children_collapsed": false
                   },
                   "blocks": {}
                 },
@@ -276,7 +322,8 @@
                   "settings": {
                     "tag": "Fashion",
                     "title": "Fashion",
-                    "filter_type": "filter.p.tag="
+                    "filter_type": "filter.p.tag=",
+                    "children_collapsed": false
                   },
                   "blocks": {}
                 },
@@ -286,13 +333,13 @@
                   "settings": {
                     "tag": "Photography",
                     "title": "Photography",
-                    "filter_type": "filter.p.tag="
+                    "filter_type": "filter.p.tag=",
+                    "children_collapsed": false
                   },
                   "blocks": {}
                 }
               },
               "block_order": [
-                "collection_filter_UFWjJU",
                 "collection_filter_aqgJHH",
                 "collection_filter_TgqmAR",
                 "collection_filter_UEFPyV",
@@ -306,7 +353,8 @@
               "settings": {
                 "tag": "Literary Criticism",
                 "title": "Literary Criticism",
-                "filter_type": "filter.p.tag="
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
               },
               "blocks": {}
             },
@@ -316,12 +364,16 @@
               "settings": {
                 "tag": "Historical Fiction",
                 "title": "Historical Fiction",
-                "filter_type": "filter.p.tag="
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
               },
               "blocks": {}
             }
           },
           "block_order": [
+            "collection_filter_ztRcjX",
+            "collection_gate_N8PbGG",
+            "collection_gate_YU3WqN",
             "collection_filter_box_v2_TxDrRb",
             "collection_filter_Q6P6Kp",
             "collection_filter_CFqdge"

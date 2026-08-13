@@ -123,17 +123,6 @@
             "nested": false
           },
           "blocks": {
-            "collection_filter_htakT7": {
-              "type": "_collection-filter",
-              "name": "Collection Filter",
-              "settings": {
-                "tag": "Fiction & Literature",
-                "title": "Fiction & Literature",
-                "filter_type": "filter.p.tag=",
-                "children_collapsed": false
-              },
-              "blocks": {}
-            },
             "collection_filter_JFYMRU": {
               "type": "_collection-filter",
               "name": "Collection Filter",
@@ -214,7 +203,6 @@
             }
           },
           "block_order": [
-            "collection_filter_htakT7",
             "collection_filter_JFYMRU",
             "collection_filter_thyNyh",
             "collection_filter_TiK9AY",
