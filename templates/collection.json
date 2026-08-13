@@ -448,8 +448,8 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "",
-                "title": "*BBY - Decorative Books*"
+                "collection_gate": "decorative-books",
+                "title": "Decorative Books"
               },
               "blocks": {}
             },
