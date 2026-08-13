@@ -102,7 +102,7 @@
                 "visibility": "desktop",
                 "font_size": "16",
                 "text_align": "left",
-                "body": "<p><strong>By: </strong>Author</p>",
+                "body": "<p><strong>By: </strong>{{ closest.product.metafields.custom.author.value }}</p>",
                 "body_default": ""
               },
               "blocks": {}
