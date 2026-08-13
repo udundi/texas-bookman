@@ -18,68 +18,121 @@
 
   /* Dynamic mobile values */
   @media screen and (max-width: 767px) {
-    .ud-hero-banner-{{ section.id }} .hero-image-wrapper {
+    .ud-hero-banner-mobile-{{ section.id }} .hero-image-wrapper {
       aspect-ratio: {{ section.settings.mobile_image_ratio }};
     }
 
-    .ud-hero-banner-{{ section.id }} .hero-bg {
+    .ud-hero-banner-mobile-{{ section.id }} .hero-bg-mobile {
       object-position: {{ section.settings.mobile_image_position }};
     }
 
-    .ud-hero-banner-{{ section.id }} .hero-content {
-      background-color: {{ section.settings.mobile_content_bg }};
-    }
-
-    .ud-hero-banner-{{ section.id }} .hero-heading {
+    .ud-hero-banner-mobile-{{ section.id }} .hero-heading {
       color: {{ section.settings.mobile_heading_color }} !important;
     }
 
-    .ud-hero-banner-{{ section.id }} .hero-body {
+    .ud-hero-banner-mobile-{{ section.id }} .hero-body {
       color: {{ section.settings.mobile_body_color }} !important;
     }
   }
 {% endstyle %}
 
+{%- comment -%} Mobile layout: image with absolute text and top gradient {%- endcomment -%}
+{%- assign mobile_img = section.settings.mobile_image | default: section.settings.image -%}
+<div
+  class="ud-hero-banner-mobile-{{ section.id }} tw-relative tw-w-full tw-overflow-hidden md:tw-hidden"
+>
+  {%- if mobile_img != blank -%}
+    {%- assign mobile_img_alt = mobile_img.alt | default: '' | escape -%}
+    <div class="hero-image-wrapper tw-w-full tw-overflow-hidden">
+      {{
+        mobile_img
+        | image_url: width: 800
+        | image_tag: class: 'hero-bg-mobile tw-w-full tw-h-full tw-object-cover', alt: mobile_img_alt, loading: 'lazy'
+      }}
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} Black gradient overlay from top for text legibility {%- endcomment -%}
+  <div
+    class="tw-absolute tw-inset-0 tw-pointer-events-none"
+    style="background: linear-gradient(to bottom, rgba(0,0,0,{{ section.settings.mobile_overlay_opacity | divided_by: 100.0 }}) 0%, transparent 70%);"
+    aria-hidden="true"
+  ></div>
+
+  <div class="hero-content tw-absolute tw-flex tw-flex-col tw-justify-center tw-items-center tw-top-0 tw-left-0 tw-right-0 tw-py-8 tw-px-6">
+    {%- if section.settings.eyebrow != blank -%}
+      <p
+        class="tw-mb-2 tw-font-bold tw-uppercase tw-tracking-widest"
+        style="color: {{ section.settings.eyebrow_color }}; font-size: {{ section.settings.mobile_eyebrow_size }}px;"
+      >
+        {{ section.settings.eyebrow }}
+      </p>
+    {%- endif -%}
+
+    {%- if section.settings.heading != blank -%}
+      <{{ section.settings.heading_tag }}
+        class="hero-heading tw-font-bold tw-text-center tw-leading-tight tw-mb-4"
+        style="color: {{ section.settings.heading_color }}; font-size: {{ section.settings.mobile_heading_size }}px;"
+      >
+        {{ section.settings.heading }}
+      </{{ section.settings.heading_tag }}>
+    {%- endif -%}
+
+    {%- if section.settings.body_text != blank -%}
+      <p
+        class="hero-body tw-mb-6 tw-text-center tw-leading-relaxed"
+        style="color: {{ section.settings.body_color }}; font-size: {{ section.settings.mobile_body_size }}px;"
+      >
+        {{ section.settings.body_text }}
+      </p>
+    {%- endif -%}
+
+    {%- if section.settings.button_label != blank -%}
+      <a
+        href="{{ section.settings.button_url }}"
+        class="tw-inline-block tw-font-bold tw-w-full tw-max-w-72 tw-text-center tw-uppercase tw-tracking-widest tw-no-underline"
+        style="
+          background-color: {{ section.settings.button_bg }};
+          color: {{ section.settings.button_text_color }};
+          padding: {{ section.settings.button_padding_y }}px {{ section.settings.button_padding_x }}px;
+          font-size: {{ section.settings.mobile_button_font_size }}px;
+        "
+      >
+        {{ section.settings.button_label }}
+      </a>
+    {%- endif -%}
+  </div>
+</div>
+
+{%- comment -%} Desktop layout {%- endcomment -%}
 <section
   id="ud-hero-banner-{{ section.id }}"
-  class="ud-hero-banner-{{ section.id }} tw-relative tw-w-full tw-overflow-hidden tw-flex tw-flex-col md:tw-flex-row md:tw-items-center tw-max-w-screen-2xl tw-mx-auto"
+  class="ud-hero-banner-{{ section.id }} tw-hidden md:tw-flex tw-relative tw-w-full tw-overflow-hidden tw-flex-row tw-items-center tw-max-w-screen-2xl tw-mx-auto"
   style="background-color: {{ section.settings.overlay_color }};"
 >
   {%- if section.settings.image != blank -%}
     {%- assign hero_img_alt = section.settings.image.alt | default: '' | escape -%}
-    {%- comment -%} Mobile: image inside its own wrapper for aspect-ratio control {%- endcomment -%}
-    <div class="hero-image-wrapper tw-w-full tw-overflow-hidden md:tw-hidden">
-      {{
-        section.settings.image
-        | image_url: width: 800
-        | image_tag: class: 'hero-bg tw-w-full tw-h-full tw-object-cover', alt: hero_img_alt, loading: 'lazy'
-      }}
-    </div>
-
-    {%- comment -%} Desktop: image as absolute background {%- endcomment -%}
-    <div class="tw-hidden md:tw-block">
-      {{
-        section.settings.image
-        | image_url: width: 1600
-        | image_tag:
-          class: 'hero-bg tw-absolute tw-inset-0 tw-w-full tw-h-full tw-object-cover',
-          alt: hero_img_alt,
-          loading: 'lazy'
-      }}
-    </div>
+    {{
+      section.settings.image
+      | image_url: width: 1600
+      | image_tag:
+        class: 'hero-bg tw-absolute tw-inset-0 tw-w-full tw-h-full tw-object-cover',
+        alt: hero_img_alt,
+        loading: 'lazy'
+    }}
   {%- endif -%}
 
   {%- comment -%} Optional overlay for desktop readability {%- endcomment -%}
   {%- if section.settings.show_overlay -%}
     {%- assign overlay_opacity = section.settings.overlay_opacity | divided_by: 100.0 -%}
     <div
-      class="tw-hidden md:tw-block tw-absolute tw-inset-0"
+      class="tw-absolute tw-inset-0"
       style="background: linear-gradient(to right, {{ section.settings.overlay_color | color_modify: 'alpha', overlay_opacity }} 0%, {{ section.settings.overlay_color | color_modify: 'alpha', overlay_opacity }} 25%, transparent 60%);"
       aria-hidden="true"
     ></div>
   {%- endif -%}
 
-  <div class="hero-content tw-py-8 tw-px-6 md:tw-py-12 md:tw-relative md:tw-z-[1] md:tw-max-w-[50%]">
+  <div class="hero-content tw-py-12 tw-relative tw-z-[1] tw-max-w-[50%]">
     {%- if section.settings.eyebrow != blank -%}
       <p
         class="tw-mb-2 tw-font-bold tw-uppercase tw-tracking-widest"
@@ -137,7 +190,17 @@
     {
       "type": "image_picker",
       "id": "image",
-      "label": "Background Image"
+      "label": "Desktop Background Image"
+    },
+    {
+      "type": "header",
+      "content": "Mobile Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile Background Image",
+      "info": "If not set, the desktop image will be used"
     },
     {
       "type": "select",
@@ -189,7 +252,20 @@
     },
     {
       "type": "header",
-      "content": "Overlay"
+      "content": "Mobile Overlay"
+    },
+    {
+      "type": "range",
+      "id": "mobile_overlay_opacity",
+      "label": "Mobile Gradient Opacity (%)",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "default": 70
+    },
+    {
+      "type": "header",
+      "content": "Desktop Overlay"
     },
     {
       "type": "checkbox",
@@ -237,6 +313,15 @@
       "default": 12
     },
     {
+      "type": "range",
+      "id": "mobile_eyebrow_size",
+      "label": "Eyebrow Font Size — Mobile (px)",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "default": 11
+    },
+    {
       "type": "header",
       "content": "Heading"
     },
@@ -282,6 +367,15 @@
       "default": 48
     },
     {
+      "type": "range",
+      "id": "mobile_heading_size",
+      "label": "Heading Font Size — Mobile (px)",
+      "min": 18,
+      "max": 56,
+      "step": 2,
+      "default": 28
+    },
+    {
       "type": "header",
       "content": "Body Text"
     },
@@ -305,6 +399,15 @@
       "max": 24,
       "step": 1,
       "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mobile_body_size",
+      "label": "Body Font Size — Mobile (px)",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "default": 14
     },
     {
       "type": "header",
@@ -337,6 +440,15 @@
       "type": "range",
       "id": "button_font_size",
       "label": "Button Font Size (px)",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "mobile_button_font_size",
+      "label": "Button Font Size — Mobile (px)",
       "min": 10,
       "max": 22,
       "step": 1,
@@ -386,21 +498,15 @@
     },
     {
       "type": "color",
-      "id": "mobile_content_bg",
-      "label": "Mobile Content Background",
-      "default": "#ffffff"
-    },
-    {
-      "type": "color",
       "id": "mobile_heading_color",
       "label": "Mobile Heading Color",
-      "default": "#212121"
+      "default": "#ffffff"
     },
     {
       "type": "color",
       "id": "mobile_body_color",
       "label": "Mobile Body Color",
-      "default": "#212121"
+      "default": "#ffffff"
     }
   ],
   "presets": [

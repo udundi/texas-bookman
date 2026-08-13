@@ -39,13 +39,14 @@
 <div class="section-outer-{{ section.id }}">
   <div class="section-{{ section.id }} tw-mx-auto">
     {% if section.settings.section_title != blank %}
-      <div class="tw-flex tw-justify-between tw-px-20 tw-py-4">
-        <div class=" tw-font-playfair tw-font-semibold tw-text-36 tw-leading-tight tw-text-offblack">
+      <div class="tw-flex tw-justify-between md:tw-px-20 tw-py-4">
+        <div class=" tw-font-playfair tw-font-semibold tw-w-full md:tw-text-36 tw-text-22 tw-leading-tight tw-text-center tw-text-offblack">
           {{ section.settings.section_title }}
         </div>
+        <!-- Desktop Button -->
         <a
           href="{{ section.settings.button_url }}"
-          class="tw-bg-brand-primary tw-uppercase tw-font-semibold tw-text-white tw-py-2 tw-px-4 tw-w-full tw-flex tw-items-center tw-justify-center tw-max-w-64 tw-rounded-md"
+          class="tw-bg-brand-primary tw-uppercase tw-font-semibold tw-text-white tw-py-2 tw-px-4 tw-w-full tw-hidden md:tw-flex tw-items-center tw-justify-center tw-max-w-64 tw-rounded-md"
         >
           {{ section.settings.button_text }}
         </a>
@@ -106,6 +107,13 @@
           {% render 'icon-chevron-right' %}
         </button>
       </div>
+      <!-- Mobile Button -->
+      <a
+        href="{{ section.settings.button_url }}"
+        class="tw-bg-brand-primary tw-uppercase tw-font-semibold tw-text-white tw-py-2 tw-px-4 tw-w-full md:tw-hidden tw-flex tw-items-center tw-justify-center tw-max-w-96 tw-rounded-sm"
+      >
+        {{ section.settings.button_text }}
+      </a>
     </div>
   </div>
 </div>
