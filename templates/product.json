@@ -12,6 +12,51 @@
     "main": {
       "type": "ud-pdp-details",
       "blocks": {
+        "pdp_column_z7AybX": {
+          "type": "_pdp-column",
+          "name": "Main Details Column",
+          "settings": {
+            "visibility": "mobile",
+            "mobile": "full",
+            "desktop": "33%"
+          },
+          "blocks": {
+            "pdp_title_rating_wjMMtU": {
+              "type": "_pdp-title-rating",
+              "name": "PDP Title & Ratings",
+              "settings": {
+                "title_override": "",
+                "visibility": "mobile"
+              },
+              "blocks": {}
+            },
+            "pdp_description_pQ7t3w": {
+              "type": "_pdp-description",
+              "name": "Author",
+              "settings": {
+                "visibility": "mobile",
+                "font_size": "16",
+                "text_align": "left",
+                "body": "<p><strong>By: </strong>Author</p>",
+                "body_default": ""
+              },
+              "blocks": {}
+            },
+            "pdp_price_3DaFFC": {
+              "type": "_pdp-price",
+              "name": "PDP Price",
+              "settings": {
+                "visibility": "mobile"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "pdp_title_rating_wjMMtU",
+            "pdp_description_pQ7t3w",
+            "pdp_price_3DaFFC"
+          ]
+        },
         "pdp_column_kbqTYQ": {
           "type": "_pdp-column",
           "name": "Main Details Column",
@@ -41,20 +86,20 @@
             "desktop": "3/5"
           },
           "blocks": {
-            "pdp_title_rating_NGTraH": {
+            "pdp_title_rating_kPwfKm": {
               "type": "_pdp-title-rating",
               "name": "PDP Title & Ratings",
               "settings": {
                 "title_override": "",
-                "visibility": "both"
+                "visibility": "desktop"
               },
               "blocks": {}
             },
-            "pdp_description_r9bAyP": {
+            "pdp_description_jdm3TW": {
               "type": "_pdp-description",
               "name": "Author",
               "settings": {
-                "visibility": "both",
+                "visibility": "desktop",
                 "font_size": "16",
                 "text_align": "left",
                 "body": "<p><strong>By: </strong>Author</p>",
@@ -86,7 +131,7 @@
               "type": "_pdp-price",
               "name": "PDP Price",
               "settings": {
-                "visibility": "both"
+                "visibility": "desktop"
               },
               "blocks": {}
             },
@@ -147,8 +192,8 @@
             }
           },
           "block_order": [
-            "pdp_title_rating_NGTraH",
-            "pdp_description_r9bAyP",
+            "pdp_title_rating_kPwfKm",
+            "pdp_description_jdm3TW",
             "pdp_info_numbers_X7KFzr",
             "pdp_description_GiPLFD",
             "pdp_price_L3riXr",
@@ -159,6 +204,7 @@
         }
       },
       "block_order": [
+        "pdp_column_z7AybX",
         "pdp_column_kbqTYQ",
         "pdp_column_6panjT"
       ],
