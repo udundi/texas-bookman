@@ -578,7 +578,7 @@
         "collection_filter_box_v2_YdNKP9"
       ],
       "settings": {
-        "title": "Lorum Ipsum",
+        "title": "{{ collection.title }}",
         "description": "<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit tenetur, rem in ab nobis autem suscipit. Excepturi officia maxime saepe, perspiciatis accusamus ducimus, nihil odio provident, doloribus omnis recusandae iure.</p>",
         "padding_top": 2,
         "padding_bottom": 2,
