@@ -261,8 +261,8 @@
         "mobile_padding_bottom": 0,
         "padding_left": 2,
         "padding_right": 2,
-        "mobile_padding_left": 2,
-        "mobile_padding_right": 2,
+        "mobile_padding_left": 0,
+        "mobile_padding_right": 0,
         "background_color": "#fdfbf8",
         "container_width": "md_desktop"
       }
