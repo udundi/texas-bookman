@@ -273,9 +273,43 @@
               },
               "blocks": {}
             },
+            "collection_filter_HezrTp": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Cooking & Beverages",
+                "title": "Cooking & Beverages",
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_wrked8": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Crafts",
+                "title": "Crafts",
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": true
+              },
+              "blocks": {}
+            },
+            "collection_filter_Wk3rWA": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Games & Puzzles",
+                "title": "Games & Puzzles",
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
             "collection_filter_box_v2_TxDrRb": {
               "type": "_collection-filter-box-v2",
               "name": "Collection Filter Box",
+              "disabled": true,
               "settings": {
                 "collapsible": true,
                 "collapsed": true,
@@ -374,6 +408,9 @@
             "collection_filter_ztRcjX",
             "collection_gate_N8PbGG",
             "collection_gate_YU3WqN",
+            "collection_filter_HezrTp",
+            "collection_filter_wrked8",
+            "collection_filter_Wk3rWA",
             "collection_filter_box_v2_TxDrRb",
             "collection_filter_Q6P6Kp",
             "collection_filter_CFqdge"
