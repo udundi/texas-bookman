@@ -12,12 +12,62 @@
     "main": {
       "type": "ud-sortable-collection",
       "blocks": {
+        "collection_filter_box_v2_UitiGe": {
+          "type": "_collection-filter-box-v2",
+          "name": "Collection Filter Box",
+          "settings": {
+            "collapsible": true,
+            "collapsed": true,
+            "title": "Featured Publishers",
+            "nested": false
+          },
+          "blocks": {
+            "collection_filter_raheCJ": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Arcturus",
+                "title": "Arcturus",
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_kq7hjx": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Flame Tree",
+                "title": "Flame Tree",
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_zrwRdN": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Piccadilly Inc.",
+                "title": "Piccadilly Inc.",
+                "filter_type": "filter.p.tag=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "collection_filter_raheCJ",
+            "collection_filter_kq7hjx",
+            "collection_filter_zrwRdN"
+          ]
+        },
         "collection_filter_box_v2_Wt68LX": {
           "type": "_collection-filter-box-v2",
           "name": "Collection Filter Box",
           "settings": {
             "collapsible": true,
-            "collapsed": false,
+            "collapsed": true,
             "title": "Gifts and Stationery",
             "nested": false
           },
@@ -114,6 +164,60 @@
             "collection_gate_8cKa9P",
             "collection_gate_HkRYww",
             "collection_gate_n6Gm9T"
+          ]
+        },
+        "collection_filter_box_v2_8paAqE": {
+          "type": "_collection-filter-box-v2",
+          "name": "Collection Filter Box",
+          "settings": {
+            "collapsible": true,
+            "collapsed": true,
+            "title": "Children's Books",
+            "nested": false
+          },
+          "blocks": {
+            "collection_gate_htAbDb": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "teen-young-adult",
+                "title": "{{ closest.collection.title }}"
+              },
+              "blocks": {}
+            },
+            "collection_gate_aRk7ae": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "board-books",
+                "title": "{{ closest.collection.title }}"
+              },
+              "blocks": {}
+            },
+            "collection_gate_ceaABn": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "childrens-picture-story-books",
+                "title": "{{ closest.collection.title }}"
+              },
+              "blocks": {}
+            },
+            "collection_gate_8egrhU": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "childrens-educational-nonfiction",
+                "title": "{{ closest.collection.title }}"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "collection_gate_htAbDb",
+            "collection_gate_aRk7ae",
+            "collection_gate_ceaABn",
+            "collection_gate_8egrhU"
           ]
         },
         "collection_filter_box_v2_YMiUtx": {
@@ -343,111 +447,6 @@
             "collection_filter_kQyKac"
           ]
         },
-        "collection_filter_box_v2_nz8K4p": {
-          "type": "_collection-filter-box-v2",
-          "name": "Collection Filter Box",
-          "disabled": true,
-          "settings": {
-            "collapsible": true,
-            "collapsed": true,
-            "title": "Publisher",
-            "nested": false
-          },
-          "blocks": {
-            "collection_filter_hjf7pc": {
-              "type": "_collection-filter",
-              "name": "Collection Filter",
-              "settings": {
-                "tag": "Arcturus",
-                "title": "Arcturus",
-                "filter_type": "filter.p.tag=",
-                "children_collapsed": false
-              },
-              "blocks": {}
-            },
-            "collection_filter_njxfRV": {
-              "type": "_collection-filter",
-              "name": "Collection Filter",
-              "settings": {
-                "tag": "Flame Tree",
-                "title": "Flame Tree",
-                "filter_type": "filter.p.tag=",
-                "children_collapsed": false
-              },
-              "blocks": {}
-            },
-            "collection_filter_7z4XAQ": {
-              "type": "_collection-filter",
-              "name": "Collection Filter",
-              "settings": {
-                "tag": "Yale University Press",
-                "title": "Yale University Press",
-                "filter_type": "filter.p.tag=",
-                "children_collapsed": false
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "collection_filter_hjf7pc",
-            "collection_filter_njxfRV",
-            "collection_filter_7z4XAQ"
-          ]
-        },
-        "collection_filter_box_v2_8paAqE": {
-          "type": "_collection-filter-box-v2",
-          "name": "Collection Filter Box",
-          "settings": {
-            "collapsible": true,
-            "collapsed": true,
-            "title": "Children's Books",
-            "nested": false
-          },
-          "blocks": {
-            "collection_gate_htAbDb": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "teen-young-adult",
-                "title": "{{ closest.collection.title }}"
-              },
-              "blocks": {}
-            },
-            "collection_gate_aRk7ae": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "board-books",
-                "title": "{{ closest.collection.title }}"
-              },
-              "blocks": {}
-            },
-            "collection_gate_ceaABn": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "childrens-picture-story-books",
-                "title": "{{ closest.collection.title }}"
-              },
-              "blocks": {}
-            },
-            "collection_gate_8egrhU": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "childrens-educational-nonfiction",
-                "title": "{{ closest.collection.title }}"
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "collection_gate_htAbDb",
-            "collection_gate_aRk7ae",
-            "collection_gate_ceaABn",
-            "collection_gate_8egrhU"
-          ]
-        },
         "collection_filter_box_v2_YdNKP9": {
           "type": "_collection-filter-box-v2",
           "name": "Collection Filter Box",
@@ -572,10 +571,10 @@
         }
       },
       "block_order": [
+        "collection_filter_box_v2_UitiGe",
         "collection_filter_box_v2_Wt68LX",
-        "collection_filter_box_v2_YMiUtx",
-        "collection_filter_box_v2_nz8K4p",
         "collection_filter_box_v2_8paAqE",
+        "collection_filter_box_v2_YMiUtx",
         "collection_filter_box_v2_YdNKP9"
       ],
       "settings": {
