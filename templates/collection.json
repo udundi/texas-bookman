@@ -66,6 +66,7 @@
         "collection_filter_box_v2_8paAqE": {
           "type": "_collection-filter-box-v2",
           "name": "Collection Filter Box",
+          "disabled": true,
           "settings": {
             "collapsible": true,
             "collapsed": true,
@@ -116,6 +117,7 @@
         "collection_filter_box_v2_YdNKP9": {
           "type": "_collection-filter-box-v2",
           "name": "Collection Filter Box",
+          "disabled": true,
           "settings": {
             "collapsible": true,
             "collapsed": true,
@@ -240,27 +242,25 @@
           "settings": {
             "collapsible": true,
             "collapsed": true,
-            "title": "Subject",
+            "title": "Book Categories",
             "nested": false
           },
           "blocks": {
-            "collection_filter_ztRcjX": {
-              "type": "_collection-filter",
-              "name": "Collection Filter",
-              "settings": {
-                "tag": "Architecture",
-                "title": "Architecture",
-                "filter_type": "filter.p.tag=",
-                "children_collapsed": false
-              },
-              "blocks": {}
-            },
             "collection_gate_N8PbGG": {
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "",
+                "collection_gate": "art",
                 "title": "Art"
+              },
+              "blocks": {}
+            },
+            "collection_gate_A4FpGq": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "architecture",
+                "title": "{{ closest.collection.title }}"
               },
               "blocks": {}
             },
@@ -268,30 +268,26 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "",
+                "collection_gate": "audio-books",
                 "title": "Audio Books"
               },
               "blocks": {}
             },
-            "collection_filter_HezrTp": {
-              "type": "_collection-filter",
-              "name": "Collection Filter",
+            "collection_gate_jVXA6z": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
               "settings": {
-                "tag": "Cooking & Beverages",
-                "title": "Cooking & Beverages",
-                "filter_type": "filter.p.tag=",
-                "children_collapsed": false
+                "collection_gate": "cooking-beverages",
+                "title": "{{ closest.collection.title }}"
               },
               "blocks": {}
             },
-            "collection_filter_wrked8": {
-              "type": "_collection-filter",
-              "name": "Collection Filter",
+            "collection_gate_gwygLE": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
               "settings": {
-                "tag": "Crafts",
-                "title": "Crafts",
-                "filter_type": "filter.p.tag=",
-                "children_collapsed": true
+                "collection_gate": "crafts",
+                "title": "{{ closest.collection.title }}"
               },
               "blocks": {}
             },
@@ -299,7 +295,7 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "",
+                "collection_gate": "activities-games",
                 "title": "Games & Puzzles"
               },
               "blocks": {}
@@ -308,7 +304,7 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "",
+                "collection_gate": "gardening-homesteading",
                 "title": "Gardening & Homesteading"
               },
               "blocks": {}
@@ -317,7 +313,7 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "",
+                "collection_gate": "health-medicine-parenting",
                 "title": "Health, Medicine, & Parenting"
               },
               "blocks": {}
@@ -326,7 +322,7 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "",
+                "collection_gate": "history",
                 "title": "History"
               },
               "blocks": {}
@@ -335,7 +331,7 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "",
+                "collection_gate": "metaphysics",
                 "title": "Metaphysics"
               },
               "blocks": {}
@@ -353,7 +349,7 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "",
+                "collection_gate": "performing-arts",
                 "title": "Performing Arts"
               },
               "blocks": {}
@@ -362,7 +358,7 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "",
+                "collection_gate": "philosophy-religion",
                 "title": "Philosophy & Religion"
               },
               "blocks": {}
@@ -371,7 +367,7 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "",
+                "collection_gate": "photography",
                 "title": "Photography"
               },
               "blocks": {}
@@ -380,7 +376,7 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "",
+                "collection_gate": "pop-culture",
                 "title": "Pop Culture"
               },
               "blocks": {}
@@ -389,7 +385,7 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "",
+                "collection_gate": "reference",
                 "title": "Reference"
               },
               "blocks": {}
@@ -398,7 +394,7 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "",
+                "collection_gate": "science-nature",
                 "title": "Science & Nature"
               },
               "blocks": {}
@@ -407,7 +403,7 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "",
+                "collection_gate": "sidelines-gifts-stationery",
                 "title": "Sidelines, Gifts, & Stationery"
               },
               "blocks": {}
@@ -416,7 +412,7 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "",
+                "collection_gate": "social-sciences",
                 "title": "Social Sciences"
               },
               "blocks": {}
@@ -425,7 +421,7 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "",
+                "collection_gate": "sports-travel-transportation",
                 "title": "Sports, Travel, & Transportation"
               },
               "blocks": {}
@@ -434,7 +430,7 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "",
+                "collection_gate": "university-press-titles",
                 "title": "University Press Titles"
               },
               "blocks": {}
@@ -443,7 +439,7 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "",
+                "collection_gate": "vinyl-records",
                 "title": "Vinyl Records"
               },
               "blocks": {}
@@ -470,7 +466,7 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "",
+                "tag": "used-books",
                 "title": "Used Books",
                 "filter_type": "filter.p.tag=",
                 "children_collapsed": false
@@ -490,11 +486,11 @@
             }
           },
           "block_order": [
-            "collection_filter_ztRcjX",
             "collection_gate_N8PbGG",
+            "collection_gate_A4FpGq",
             "collection_gate_YU3WqN",
-            "collection_filter_HezrTp",
-            "collection_filter_wrked8",
+            "collection_gate_jVXA6z",
+            "collection_gate_gwygLE",
             "collection_gate_7Hfpbh",
             "collection_gate_zjXwDV",
             "collection_gate_TttDhw",
