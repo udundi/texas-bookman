@@ -30,14 +30,14 @@
               },
               "blocks": {}
             },
-            "pdp_description_pQ7t3w": {
+            "pdp_description_UAMEnJ": {
               "type": "_pdp-description",
               "name": "Author",
               "settings": {
-                "visibility": "mobile",
+                "visibility": "desktop",
                 "font_size": "16",
                 "text_align": "left",
-                "body": "<p><strong>By: </strong>Author</p>",
+                "body": "<p><strong>By: </strong>{{ closest.product.metafields.custom.author.value }}</p>",
                 "body_default": ""
               },
               "blocks": {}
@@ -53,7 +53,7 @@
           },
           "block_order": [
             "pdp_title_rating_wjMMtU",
-            "pdp_description_pQ7t3w",
+            "pdp_description_UAMEnJ",
             "pdp_price_3DaFFC"
           ]
         },
@@ -95,7 +95,7 @@
               },
               "blocks": {}
             },
-            "pdp_description_jdm3TW": {
+            "pdp_description_cnTzrp": {
               "type": "_pdp-description",
               "name": "Author",
               "settings": {
@@ -193,7 +193,7 @@
           },
           "block_order": [
             "pdp_title_rating_kPwfKm",
-            "pdp_description_jdm3TW",
+            "pdp_description_cnTzrp",
             "pdp_info_numbers_X7KFzr",
             "pdp_description_GiPLFD",
             "pdp_price_L3riXr",
