@@ -229,14 +229,7 @@
             "carousel_type": "collection",
             "product_source": "product_list",
             "collection": "",
-            "product_list": [
-              "test-product",
-              "test-product-2",
-              "test-product-3",
-              "test-product-4",
-              "test-product-5",
-              "test-product-6"
-            ],
+            "product_list": "{{ closest.product.metafields[\"shopify--discovery--product_recommendation\"].related_products.value }}",
             "button_url": "",
             "button_text": "",
             "mobile_slides": 2,
