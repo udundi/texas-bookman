@@ -229,7 +229,7 @@
             "carousel_type": "collection",
             "product_source": "product_list",
             "collection": "",
-            "product_list": "{{ closest.product.metafields[\"shopify--discovery--product_recommendation\"].related_products.value }}",
+            "product_list": "{{ product.metafields[\"shopify--discovery--product_recommendation\"].related_products.value }}",
             "button_url": "",
             "button_text": "",
             "mobile_slides": 2,
