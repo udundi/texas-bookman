@@ -67,12 +67,12 @@
 
 <div class="ud-testimonials-{{ section.id }} tw">
   {%- if section.settings.heading != blank -%}
-    <{{ section.settings.heading_tag }} class="testimonials-heading tw-text-center tw-font-bold tw-mb-8 tw-px-6">
+    <{{ section.settings.heading_tag }} class="testimonials-heading tw-text-center tw-font-semibold tw-mb-8 tw-px-6">
       {{ section.settings.heading }}
     </{{ section.settings.heading_tag }}>
   {%- endif -%}
 
-  <div class="testimonials-slider-outer tw-relative tw-flex tw-items-center tw-mx-auto ">
+  <div class="testimonials-slider-outer tw-relative tw-flex tw-items-center tw-mx-auto tw-px-4">
     {%- comment -%} Prev arrow {%- endcomment -%}
     <button
       class="swiper-btn swiper-prev-{{ section.id }} tw-shrink-0 tw-flex tw-items-center tw-justify-center tw-w-8 tw-h-8 tw-cursor-pointer tw-bg-transparent tw-border-0 tw-p-0 tw-transition-opacity tw-duration-200 tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-z-10 tw-left-0 hover:tw-opacity-60"
@@ -91,10 +91,10 @@
     </button>
 
     {%- comment -%} Swiper {%- endcomment -%}
-    <div class="swiper testimonials-swiper-{{ section.id }} tw-w-full tw-overflow-hidden tw-border-l tw-border-offblack">
+    <div class="swiper testimonials-swiper-{{ section.id }} tw-w-full tw-overflow-hidden tw-border-l tw-border-brand-grey">
       <div class="swiper-wrapper tw-items-stretch">
         {%- for block in section.blocks -%}
-          <div class="swiper-slide tw-border-offblack tw-border tw-border-l-0">
+          <div class="swiper-slide tw-border-brand-grey tw-border tw-border-l-0">
             <div class=" tw-my-auto tw-p-4 tw-gap-2 tw-bg-white tw-flex tw-flex-col !tw-h-full tw-box-border">
               {%- comment -%} Stars {%- endcomment -%}
               {%- assign star_count = block.settings.star_count | default: 5 -%}

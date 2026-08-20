@@ -1,0 +1,71 @@
+{%- assign author_tag = '' -%}
+{%- for tag in product.tags -%}
+  {%- if tag contains 'author:' -%}
+    {%- assign author_tag = tag | remove: 'author:' | strip -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if author_tag != '' -%}
+  <p
+    class="
+      tw-font-montserrat
+      {% if block.settings.font_size == '12' %} tw-text-12
+      {% elsif block.settings.font_size == '14' %} tw-text-14
+      {% elsif block.settings.font_size == '16' %} tw-text-16
+      {% elsif block.settings.font_size == '18' %} tw-text-18
+      {% elsif block.settings.font_size == '20' %} tw-text-20
+      {% else %} tw-text-14
+      {% endif %}
+    "
+    style="color: {{ block.settings.color }};"
+  >
+    <span class="{% if block.settings.label_bold %}tw-font-bold{% endif %}">{{ block.settings.label }}</span>{{ author_tag }}
+  </p>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "PDP Author",
+  "class": "tw-contents",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "By: ",
+      "info": "Text shown before the author name"
+    },
+    {
+      "type": "checkbox",
+      "id": "label_bold",
+      "label": "Bold Label",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "font_size",
+      "label": "Font Size",
+      "options": [
+        { "value": "12", "label": "12px" },
+        { "value": "14", "label": "14px" },
+        { "value": "16", "label": "16px" },
+        { "value": "18", "label": "18px" },
+        { "value": "20", "label": "20px" }
+      ],
+      "default": "14"
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "Text Color",
+      "default": "#212121"
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP Author"
+    }
+  ]
+}
+{% endschema %}

@@ -19,12 +19,24 @@
     | replace: collection.url, ''
     | replace: 'feltright.com', ''
   %}
+  {% assign gate_collection = block.settings.collection_gate %}
+  {% if collection == block.settings.collection_gate %}
+    {% assign gate_collection = collections.all %}
+  {% endif %}
   <a
     {% assign query_params = get_full_url | replace: '?', '' | replace: '_fd=0&pb=0&', '' | split: '&' %}
     {% if query_params != blank %}
-      href="{{ block.settings.collection_gate.url }}?{{ query_params |  join: '&' }}"
+      {% if collection == block.settings.collection_gate %}
+        href="{{ routes.all_products_collection_url }}?{{ query_params |  join: '&' }}"
+      {% else %}
+        href="{{ block.settings.collection_gate.url }}?{{ query_params |  join: '&' }}"
+      {% endif %}
     {% else %}
-      href="{{ block.settings.collection_gate.url }}"
+      {% if collection == block.settings.collection_gate %}
+        href="{{ routes.all_products_collection_url }}"
+      {% else %}
+        href="{{ block.settings.collection_gate.url }}"
+      {% endif %}
     {% endif %}
     class="tw-flex tw-justify-center tw-w-full tw-items-center tw-gap-2 tw-group"
   >
@@ -38,7 +50,12 @@
     </div>
 
     <p class=" group-hover:tw-underline tw-text-offblack tw-text-14 tw-w-full !tw-m-0">
-      {{ block.settings.title }}
+      {{ block.settings.title -}}
+      {% unless collection == block.settings.collection_gate %}
+        ({{ gate_collection.all_products_count }})
+      {% else %}
+        ({{ collection.all_products_count }})
+      {% endunless %}
     </p>
   </a>
 </div>

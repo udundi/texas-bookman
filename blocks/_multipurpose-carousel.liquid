@@ -99,7 +99,6 @@
             </div>
           {% endfor %}
         {% elsif block.settings.product_source == 'product_list' %}
-          {% for car_product in block.settings.product_list limit: 15 %}
             <div class="swiper-slide">
               {% render 'ud-quickadd-card',
                 cur_product: car_product,
@@ -112,104 +111,30 @@
                 button_text: section.settings.button_text,
                 show_price: section.settings.show_price
               %}
-              {% comment %}
-                <div class="tw-flex tw-flex-col tw-h-full tw-justify-between">
-                  <a href="{% if product.metafields.custom.alt_gallery_link != blank %}{{ product.metafields.custom.alt_gallery_link.value.url }}{% else %}{{ product.url | default: "/" }}{% endif %}">
-                    <!-- Image Container -->
-                    <div class="tw-w-full tw-aspect-3/4 -tw-z-20 tw-relative">
-                      {% if product.featured_image != blank %}
-                        <!-- Image -->
-                        {{
-                          product.featured_image
-                          | image_url: width: 800
-                          | image_tag: loading: 'lazy', class: 'tw-relative tw-top-0 tw-z-30 tw-size-full tw-object-cover'
-                        }}
-                        <img
-                          src="{{ product.featured_image | image_url: width: 8 }}"
-                          alt="{{ product.featured_image.alt | escape }}"
-                          class="tw-absolute tw-top-0 tw-z-20 tw-size-full tw-object-cover"
-                          preload="true"
-                          loading="eager"
-                          fetchpriority="high"
-                          width="100%"
-                          height="100%"
-                        >
-                      {% else %}
-                        <!-- Placeholder Image -->
-                        <div class="tw-border tw-size-full tw-bg-offblack">
-                          {{
-                            'product-1'
-                            | placeholder_svg_tag: 'tw-w-full tw-max-w-[450px] tw-mx-auto tw-object-cover tw-fill-white'
-                          }}
-                        </div>
-                      {% endif %}
-                      {% if product.tags contains 'New Product' %}
-                        <div class="tw-absolute tw-z-30 tw-top-2.5 tw-right-2 tw-text-12 tw-px-4 tw-py-1 tw-bg-navy tw-rounded-full tw-text-white tw-font-semibold">
-                          new
-                        </div>
-                      {% elsif product.metafields.custom_fields.design_id != blank %}
-                        <div class="tw-absolute tw-z-30 tw-right-2 tw-top-2 tw-bg-white tw-rounded-full tw-p-1 tw-pr-2 tw-text-navy tw-font-semibold tw-text-10 lg:tw-text-12 tw-flex tw-items-center tw-gap-1 tw-leading-tight hover:tw-scale-110 tw-transition-transform">
-                          <div
-                            class="tw-w-4 tw-h-4 lg:tw-h-5 lg:tw-w-5 tw-rounded-full tw-flex tw-items-center tw-justify-center"
-                            style="background: conic-gradient(from 90deg, rgba(255, 0, 60, 1) 0deg, rgba(255, 0, 0, 1) 15.8083deg, rgba(246, 255, 0, 1) 101.575deg, rgba(0, 255, 17, 1) 163.447deg, rgba(0, 165, 255, 1) 207.692deg, rgba(131, 0, 255, 1) 270deg, rgba(255, 0, 212, 1) 320.474deg, rgba(255, 0, 60, 1) 360deg); opacity: 0.54;"
-                          ></div>
-                          <div>Customizable</div>
-                        </div>
-                      {% endif %}
-                    </div>
-                  </a>
-                  <!-- Text & Button Container -->
-                  <div class="tw-flex tw-flex-col tw-justify-between tw-h-full tw-w-full tw-items-start !tw-leading-tight tw-text-start tw-gap-1 tw-py-2">
-                    <!-- Title & Metadata -->
-                    <div class="tw-w-full">
-                      <a href="{{ product.url | default: "/" }}">
-                        <h3 class="tw-font-semibold tw-capitalize tw-tracking-wide md:tw-text-16 tw-text-12 tw-text-black tw-w-full tw-leading-tight tw-m-0">
-                          {{ product.title | default: 'Product Title' }}
-                        </h3>
-                      </a>
-                      {% if block.settings.show_price != false %}
-                        <div class="!tw-text-offblack">
-                          {% render 'ud-product-price',
-                            price: product.selected_or_first_available_variant.price,
-                            compare_price: product.selected_or_first_available_variant.compare_at_price,
-                            side_sale: true,
-                            product: product
-                          %}
-                        </div>
-                      {% endif %}
-                    </div>
-                    {% if block.settings.show_shop_now_button != false %}
-                      <a
-                        href="{% if product.metafields.custom.alt_gallery_link != blank %}{{ product.metafields.custom.alt_gallery_link.value.url }}{% else %}{{ product.url }}{% endif %}"
-                        class="tw-bg-navy tw-cursor-pointer tw-text-12 tw-text-white tw-rounded-full tw-flex tw-justify-center tw-border-2 tw-py-1 tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap"
-                      >
-                        <span>Shop Now</span>
-                      </a>
-                    {% endif %}
-                  </div>
-                </div>
-              {% endcomment %}
             </div>
-          {% endfor %}
-        {% endif %}
-      </div>
-    </div>
-    <!-- Next Button -->
-    <button
-      class="tw-bg-grey-light tw-aspect-square tw-size-12 tw-m-2 tw-rounded-full tw-border-none md:tw-flex tw-hidden tw-items-center tw-justify-center tw-cursor-pointer tw-right-0 tw-drop-shadow-lg tw-absolute tw-pointer-events-auto"
-      id="featured-swiper-next-{{ block.id }}"
-    >
-      {% render 'icon-chevron-right' %}
-    </button>
-  </div>
-  {% if block.settings.carousel_type == 'collection' and block.settings.button_url %}
-    <a
-      href="{{ block.settings.button_url }}"
-      class="tw-rounded-full tw-bg-navy tw-px-8 tw-py-2 tw-font-semibold tw-text-white"
-    >
-      {{ block.settings.button_text | default: 'Shop All Designs' }}
-    </a>
-  {% endif %}
+
+{% endfor %}
+
+{% endif %}
+
+</div>
+</div>
+<!-- Next Button -->
+<button
+  class="tw-bg-grey-light tw-aspect-square tw-size-12 tw-m-2 tw-rounded-full tw-border-none md:tw-flex tw-hidden tw-items-center tw-justify-center tw-cursor-pointer tw-right-0 tw-drop-shadow-lg tw-absolute tw-pointer-events-auto"
+  id="featured-swiper-next-{{ block.id }}"
+>
+  {% render 'icon-chevron-right' %}
+</button>
+</div>
+{% if block.settings.carousel_type == 'collection' and block.settings.button_url %}
+  <a
+    href="{{ block.settings.button_url }}"
+    class="tw-rounded-full tw-bg-navy tw-px-8 tw-py-2 tw-font-semibold tw-text-white"
+  >
+    {{ block.settings.button_text | default: 'Shop All Designs' }}
+  </a>
+{% endif %}
 </div>
 
 <script>

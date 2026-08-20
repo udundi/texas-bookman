@@ -2,17 +2,17 @@
   <div class="tw-w-full tw-h-full tw-flex tw-items-center sm:tw-gap-4 tw-py-4">
     <!-- Desktop Prev Button -->
     <button
-      class="tw-bg-grey-light tw-m-2 tw-size-12 tw-aspect-square tw-rounded-full tw-border-none md:tw-flex tw-hidden tw-items-center tw-justify-center tw-cursor-pointer tw-drop-shadow-lg tw-pointer-events-auto tw-shrink-0"
+      class="tw-bg-grey-light tw-m-2 tw-size-12 tw-aspect-square tw-rounded-md tw-border-none md:tw-flex tw-hidden tw-items-center tw-justify-center tw-cursor-pointer tw-drop-shadow-lg tw-pointer-events-auto tw-shrink-0"
       id="featured-swiper-prev-{{ block.id }}"
     >
       {% render 'icon-chevron-left' %}
     </button>
     <!-- Swiper Container -->
-    <div class="tw-w-full swiper tw-border-l tw-border-offblack block-{{ block.id }}">
+    <div class="tw-w-full swiper tw-border-l tw-border-brand-grey block-{{ block.id }}">
       <div class="swiper-wrapper tw-h-full">
         {% if block.settings.product_source == 'product_list' %}
           {% for car_product in block.settings.product_list limit: 15 %}
-            <div class="swiper-slide tw-border tw-border-offblack tw-border-l-0 !tw-h-full">
+            <div class="swiper-slide tw-border tw-border-brand-grey tw-border-l-0 !tw-h-full">
               {% render 'ud-basic-product-card',
                 cur_product: car_product,
                 video_aspect: true,
@@ -47,7 +47,7 @@
     </div>
     <!-- Next Button -->
     <button
-      class="tw-bg-grey-light tw-aspect-square tw-size-12 tw-m-2 tw-rounded-full tw-border-none md:tw-flex tw-hidden tw-items-center tw-justify-center tw-cursor-pointer tw-drop-shadow-lg tw-pointer-events-auto tw-shrink-0"
+      class="tw-bg-grey-light tw-aspect-square tw-size-12 tw-m-2 tw-rounded-md tw-border-none md:tw-flex tw-hidden tw-items-center tw-justify-center tw-cursor-pointer tw-drop-shadow-lg tw-pointer-events-auto tw-shrink-0"
       id="featured-swiper-next-{{ block.id }}"
     >
       {% render 'icon-chevron-right' %}

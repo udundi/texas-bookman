@@ -24,7 +24,7 @@
         @click="quantity > 1 ? quantity-- : quantity"
         :disabled="quantity <= 1"
         :class="quantity <= 1 ? 'tw-cursor-not-allowed' : ''"
-        class="tw-bg-brand-bg-dark tw-rounded-sm tw-pl-4 tw-pr-2"
+        class="tw-bg-brand-bg-dark tw-rounded-md tw-pl-4 tw-pr-2"
       >
         {% render 'icon-minus' %}
       </button>
@@ -48,7 +48,7 @@
         id="increment-button"
         aria-label="increase quantity by 1"
         @click="quantity++"
-        class="tw-bg-brand-bg-dark tw-rounded-sm tw-pl-2 tw-pr-4"
+        class="tw-bg-brand-bg-dark tw-rounded-md tw-pl-2 tw-pr-4"
       >
         {% render 'icon-plus' %}
       </button>
@@ -57,7 +57,7 @@
     <button
       type="submit"
       @click="addToCart()"
-      class="tw-ml-2 tw-w-full tw-rounded-sm tw-bg-brand-primary tw-py-2 tw-text-sm tw-font-semibold tw-text-brand-eggshell tw-flex tw-justify-center"
+      class="tw-ml-2 tw-w-full tw-rounded-md tw-bg-brand-primary tw-py-2 tw-text-sm tw-font-semibold tw-text-brand-eggshell tw-flex tw-justify-center"
     >
       <span v-if="!addingToCart"> Add to Cart </span>
       <div v-if="addingToCart" class="tw-animate-spin tw-size-6 tw-fill-white">

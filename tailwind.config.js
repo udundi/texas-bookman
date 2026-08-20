@@ -47,6 +47,8 @@ module.exports = {
           sale: "#BD2026",
           eggshell: "#FDFBF8",
           grey: "#CCCBC7",
+          greyer: "#312F30",
+
         },
       },
       animation: {

@@ -27,7 +27,7 @@
         </div>
       {% endif %}
       {% if cur_product.tags contains 'New Product' %}
-        <div class="tw-absolute tw-top-2.5 tw-right-2 tw-text-12 tw-px-4 tw-py-1 tw-bg-black tw-rounded-full tw-text-white tw-font-semibold">
+        <div class="tw-absolute tw-top-2.5 tw-right-2 tw-text-12 tw-px-4 tw-py-1 tw-bg-black tw-rounded-md tw-text-white tw-font-semibold">
           New
         </div>
       {% endif %}
@@ -47,26 +47,28 @@
         </div>
         <!-- TB Code -->
         {% comment %}
-          <h3 class="tw-font-semibold tw-text-14 tw-text-gray-600 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
-            TB Code: XXXXXXXX
-          </h3>
+          {% if cur_product.metafields.custom.isbn != blank %}
+            <h3 class="tw-font-semibold tw-text-14 tw-text-brand-greyer/50 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
+              TB Code: XXXXXXXX
+            </h3>
+          {% endif %}
         {% endcomment %}
         <!-- ISBN -->
         {% if cur_product.metafields.custom.isbn != blank %}
-          <h3 class="tw-font-semibold tw-text-14 tw-text-gray-600 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
+          <h3 class="tw-font-semibold tw-text-14 tw-text-brand-greyer/50 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
             ISBN: XXXXXXXX
           </h3>
         {% endif %}
-        <h3 class="tw-font-semibold tw-text-14 tw-text-gray-600 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
+        <h3 class="tw-font-semibold tw-text-14 tw-text-brand-greyer tw-w-full tw-leading-tight tw-h-fit tw-m-0">
           QTY:
           <span class="tw-font-normal">{{ cur_product.selected_or_first_available_variant.inventory_quantity }}</span>
         </h3>
         <div class="tw-flex tw-flex-col">
-          <div class="tw-text-gray-600 tw-text-14 tw-font-semibold">
+          <div class="tw-text-brand-greyer tw-text-14 tw-font-semibold">
             List:
             <span class="tw-font-normal">{{ cur_product.compare_at_price | default: cur_product.price | money }}</span>
           </div>
-          <div class="tw-font-semibold tw-text-14 ">
+          <div class="tw-font-semibold tw-text-14 tw-text-black">
             Your Net Price: <span class="tw-font-normal">{{ cur_product.price | money }}</span>
           </div>
         </div>
@@ -76,7 +78,7 @@
     {% if show_button_type != 'none' %}
       {% if show_button_type == 'quick-add' %}
         <div class="tw-flex tw-gap-2 tw-items-stretch tw-w-full tw-h-full">
-          <div class="tw-flex tw-items-center tw-gap-2 tw-w-full tw-h-full">
+          <div class="tw-flex tw-items-center tw-gap-2 tw-w-full tw-h-full tw-text-brand-greyer">
             <span>QTY:</span>
             <input
               type="number"
@@ -100,7 +102,7 @@
       {% else %}
         <a
           href="{{ cur_product.url }}"
-          class="tw-bg-white tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-black tw-rounded-full tw-flex tw-justify-center tw-border-black tw-border-2 tw-py-1 tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap"
+          class="tw-bg-white tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-black tw-rounded-md tw-flex tw-justify-center tw-border-black tw-border-2 tw-py-1 tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap"
         >
           <span>{{ button_text | default: 'Shop Now' }}</span>
         </a>

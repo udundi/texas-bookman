@@ -57,12 +57,12 @@
   {% unless no_discount == true %}
     {% if compare_price > price or settings.sitewide_sale or flash_sale_live %}
       {% if settings.sitewide_sale or flash_sale_live %}
-        <div class="tw-px-4 tw-h-fit tw-rounded-full tw-text-12 tw-bg-brand-primary tw-w-fit tw-font-normal tw-text-white">
+        <div class="tw-px-4 tw-h-fit tw-rounded-md tw-text-12 tw-bg-brand-primary tw-w-fit tw-font-normal tw-text-white">
           Sale
         </div>
       {% endif %}
       <div class="tw-flex tw-flex-col tw-w-fit tw-justify-start tw-items-start tw-gap-1">
-        <div class="tw-text-blue-grey tw-font-normal tw-text-16">
+        <div class="tw-text-brand-greyer tw-font-normal tw-text-16">
           {% if compare_price %}
             List Price: {{ compare_price | money }}
           {% else %}

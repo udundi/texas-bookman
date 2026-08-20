@@ -24,7 +24,7 @@
         </div>
       {% endif %}
       {% if product.tags contains 'New Product' %}
-        <div class="tw-absolute tw-top-2.5 tw-right-2 tw-text-12 tw-px-4 tw-py-1 tw-bg-black tw-rounded-full tw-text-white tw-font-semibold">
+        <div class="tw-absolute tw-top-2.5 tw-right-2 tw-text-12 tw-px-4 tw-py-1 tw-bg-black tw-rounded-md tw-text-white tw-font-semibold">
           new
         </div>
       {% endif %}
@@ -33,10 +33,10 @@
           type="button"
           onclick="event.preventDefault(); event.stopPropagation(); window.open('https://studiov2.feltright.com/?import={{ product.metafields.custom_fields.design_id }}', '_blank');"
           aria-label="Customize {{ product.title }}"
-          class="tw-absolute tw-left-2 tw-top-2 tw-bg-white tw-rounded-full tw-p-1 tw-pr-2 tw-text-black tw-font-semibold tw-text-12 tw-flex tw-items-center tw-gap-1 tw-leading-tight hover:tw-scale-110 tw-transition-transform tw-border-none tw-cursor-pointer"
+          class="tw-absolute tw-left-2 tw-top-2 tw-bg-white tw-rounded-md tw-p-1 tw-pr-2 tw-text-black tw-font-semibold tw-text-12 tw-flex tw-items-center tw-gap-1 tw-leading-tight hover:tw-scale-110 tw-transition-transform tw-border-none tw-cursor-pointer"
         >
           <div
-            class="tw-w-5 tw-h-5 tw-rounded-full tw-flex tw-items-center tw-justify-center"
+            class="tw-w-5 tw-h-5 tw-rounded-md tw-flex tw-items-center tw-justify-center"
             style="background: conic-gradient(from 90deg, rgba(255, 0, 60, 1) 0deg, rgba(255, 0, 0, 1) 15.8083deg, rgba(246, 255, 0, 1) 101.575deg, rgba(0, 255, 17, 1) 163.447deg, rgba(0, 165, 255, 1) 207.692deg, rgba(131, 0, 255, 1) 270deg, rgba(255, 0, 212, 1) 320.474deg, rgba(255, 0, 60, 1) 360deg); opacity: 0.54;"
           ></div>
           <div>Customizable</div>
@@ -177,7 +177,7 @@
         <a
           type="submit"
           href="{{ product.metafields.custom.alt_gallery_link.value.url }}"
-          class="tw-bg-black tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-white tw-rounded-full tw-flex tw-justify-center tw-border-2 tw-py-1 tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap"
+          class="tw-bg-black tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-white tw-rounded-md tw-flex tw-justify-center tw-border-2 tw-py-1 tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap"
         >
           <span>{{ product.metafields.custom.alt_gallery_link.value.text | default: 'Shop Now' }}</span>
         </a>
@@ -185,7 +185,7 @@
         <a
           type="submit"
           href="{{ product.url }}"
-          class="tw-bg-black tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-white tw-rounded-full tw-flex tw-justify-center tw-border-2 tw-py-1 tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap"
+          class="tw-bg-black tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-white tw-rounded-md tw-flex tw-justify-center tw-border-2 tw-py-1 tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap"
         >
           <span>Shop Now</span>
         </a>

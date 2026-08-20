@@ -46,7 +46,7 @@
               <!-- Final Price -->
               <div class="tw-flex tw-flex-col tw-items-end tw-gap-1 tw-pl-1 tw-text-14 tw-font-bold tw-text-navy md:tw-text-16">
                 <template v-if="flashSaleLive && isFlashSale(item)">
-                  <div class="tw-h-fit tw-w-fit tw-rounded-full tw-bg-rust tw-px-4 tw-text-12 tw-font-normal tw-text-white">
+                  <div class="tw-h-fit tw-w-fit tw-rounded-md tw-bg-rust tw-px-4 tw-text-12 tw-font-normal tw-text-white">
                     Flash Sale
                   </div>
                   <div class="tw-flex tw-w-fit tw-flex-col tw-items-end tw-justify-center tw-gap-1 tw-pr-1">
@@ -60,7 +60,7 @@
                 </template>
 
                 <template v-else-if="sitewideSale">
-                  <div class="tw-h-fit tw-w-fit tw-rounded-full tw-bg-rust tw-px-4 tw-text-12 tw-font-normal tw-text-white">
+                  <div class="tw-h-fit tw-w-fit tw-rounded-md tw-bg-rust tw-px-4 tw-text-12 tw-font-normal tw-text-white">
                     [[ saleMessage]]
                   </div>
                   <div class="tw-flex tw-w-fit tw-flex-col tw-items-end tw-justify-center tw-gap-1 tw-pr-1">
@@ -74,7 +74,7 @@
                 </template>
 
                 <template v-else-if="productDetails[item.handle] && productDetails[item.handle].compare_at_price > item.final_price">
-                  <div class="tw-h-fit tw-w-fit tw-rounded-full tw-bg-rust tw-px-4 tw-text-12 tw-font-normal tw-text-white">
+                  <div class="tw-h-fit tw-w-fit tw-rounded-md tw-bg-rust tw-px-4 tw-text-12 tw-font-normal tw-text-white">
                     [[ saleMessage]]
                   </div>
                   <div class="tw-flex tw-w-fit tw-flex-col tw-items-start tw-justify-center tw-gap-1">
@@ -184,7 +184,7 @@
             <!-- Combined Price -->
             <div class="tw-flex tw-flex-col tw-items-end tw-gap-1 tw-pl-1 tw-text-14 tw-font-bold tw-text-navy md:tw-text-16">
               <template v-if="bundle.hasDiscount">
-                <div class="tw-h-fit tw-w-fit tw-rounded-full tw-bg-rust tw-px-4 tw-text-12 tw-font-normal tw-text-white">
+                <div class="tw-h-fit tw-w-fit tw-rounded-md tw-bg-rust tw-px-4 tw-text-12 tw-font-normal tw-text-white">
                   [[ bundle.discountLabel ]]
                 </div>
                 <div class="tw-flex tw-w-fit tw-flex-col tw-items-end tw-justify-center tw-gap-1 tw-pr-1">

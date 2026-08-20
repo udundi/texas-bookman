@@ -244,7 +244,10 @@
   }
 {% endstyle %}
 
-<section class="ud-events-{{ section.id }} tw" id="ud-events-{{ section.id }}">
+<section
+  class="ud-events-{{ section.id }} tw-border-t tw-border-solid tw-border-brand-grey"
+  id="ud-events-{{ section.id }}"
+>
   <div class="events-inner">
     {%- comment -%} Section header {%- endcomment -%}
     {%- if section.settings.heading != blank -%}
@@ -336,7 +339,7 @@
               {%- if block.settings.cta_label != blank -%}
                 <a
                   href="{{ block.settings.cta_url | default: '#' }}"
-                  class="event-cta tw-font-montserrat"
+                  class="event-cta tw-font-montserrat tw-rounded-md"
                 >
                   {{ block.settings.cta_label }}
                 </a>
@@ -352,7 +355,7 @@
       <div class="events-view-all-wrap">
         <a
           href="{{ section.settings.view_all_url | default: '#' }}"
-          class="events-view-all tw-font-montserrat"
+          class="events-view-all tw-font-montserrat tw-rounded-md"
         >
           {{ section.settings.view_all_label }}
         </a>

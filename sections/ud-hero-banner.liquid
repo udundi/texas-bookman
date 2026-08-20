@@ -39,7 +39,7 @@
 {%- comment -%} Mobile layout: image with absolute text and top gradient {%- endcomment -%}
 {%- assign mobile_img = section.settings.mobile_image | default: section.settings.image -%}
 <div
-  class="ud-hero-banner-mobile-{{ section.id }} tw-relative tw-w-full tw-overflow-hidden md:tw-hidden"
+  class="ud-hero-banner-mobile-{{ section.id }} tw-relative tw-w-full tw-overflow-hidden tw-bg-white md:tw-hidden"
 >
   {%- if mobile_img != blank -%}
     {%- assign mobile_img_alt = mobile_img.alt | default: '' | escape -%}
@@ -107,7 +107,7 @@
 {%- comment -%} Desktop layout {%- endcomment -%}
 <section
   id="ud-hero-banner-{{ section.id }}"
-  class="ud-hero-banner-{{ section.id }} tw-hidden md:tw-flex tw-relative tw-w-full tw-overflow-hidden tw-flex-row tw-items-center tw-max-w-screen-2xl tw-mx-auto"
+  class="ud-hero-banner-{{ section.id }} tw-hidden tw-bg-white md:tw-flex tw-relative tw-w-full tw-overflow-hidden tw-flex-row tw-items-center tw-max-w-screen-2xl tw-mx-auto"
   style="background-color: {{ section.settings.overlay_color }};"
 >
   {%- if section.settings.image != blank -%}
@@ -181,7 +181,7 @@
 {
   "name": "Hero Banner",
   "tag": "section",
-  "class": "section",
+  "class": "section tw-bg-white",
   "settings": [
     {
       "type": "header",

@@ -23,7 +23,7 @@
         </div>
       {% endif %}
       {% if product.tags contains 'New Product' %}
-        <div class="tw-absolute tw-top-1 tw-right-1 tw-text-10 tw-px-2 tw-py-0.5 tw-bg-black tw-rounded-full tw-text-white tw-font-semibold">
+        <div class="tw-absolute tw-top-1 tw-right-1 tw-text-10 tw-px-2 tw-py-0.5 tw-bg-black tw-rounded-md tw-text-white tw-font-semibold">
           New
         </div>
       {% endif %}
@@ -111,7 +111,7 @@
             {% else %}
               <a
                 href="{{ product.url }}"
-                class="tw-bg-white tw-cursor-pointer tw-pointer-events-auto tw-text-11 tw-text-black tw-rounded-full tw-flex tw-justify-center tw-border-black tw-border tw-py-1 tw-px-3 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap"
+                class="tw-bg-white tw-cursor-pointer tw-pointer-events-auto tw-text-11 tw-text-black tw-rounded-md tw-flex tw-justify-center tw-border-black tw-border tw-py-1 tw-px-3 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap"
               >
                 <span>{{ button_text | default: 'View' }}</span>
               </a>

@@ -27,7 +27,7 @@
       {% if product.has_only_default_variant == false
         and product.selected_or_first_available_variant.featured_image != blank
       %}
-        <div class="swiper-slide tw-rounded-lg tw-w-full">
+        <div class="swiper-slide tw-rounded-md tw-w-full">
           {{
             product.selected_or_first_available_variant.featured_image
             | image_url: width: 800
@@ -41,7 +41,7 @@
       {% for media in product.media %}
         <!-- Videos -->
         {% if media.media_type == 'video' %}
-          <div class="swiper-slide tw-rounded-lg tw-w-full" data-slide-index="{{ forloop.index }}">
+          <div class="swiper-slide tw-rounded-md tw-w-full" data-slide-index="{{ forloop.index }}">
             {{
               media
               | video_tag:
@@ -59,7 +59,7 @@
           {% for image in product.images %}
             {% if image.position == compare_media.position %}
               {% if image.attached_to_variant? != true %}
-                <div class="swiper-slide tw-rounded-lg tw-w-full" data-slide-index="{{ forloop.parentloop.index }}">
+                <div class="swiper-slide tw-rounded-md tw-w-full" data-slide-index="{{ forloop.parentloop.index }}">
                   {{ image | image_url: width: 800 | image_tag: class: image_classes }}
                 </div>
               {% endif %}
