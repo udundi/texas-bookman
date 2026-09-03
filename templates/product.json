@@ -227,9 +227,9 @@
           "name": "Collection Carousel",
           "settings": {
             "carousel_type": "collection",
-            "product_source": "product_list",
-            "collection": "",
-            "product_list": "{{ product.metafields[\"shopify--discovery--product_recommendation\"].related_products.value }}",
+            "product_source": "collection",
+            "collection": "fiction-literature",
+            "product_list": "{{ closest.product.metafields[\"shopify--discovery--product_recommendation\"].related_products.value }}",
             "button_url": "",
             "button_text": "",
             "mobile_slides": 2,
