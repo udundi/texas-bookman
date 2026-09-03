@@ -39,6 +39,7 @@
           "settings": {
             "header": "BOOKS",
             "full_width": false,
+            "dropdown_offset": 300,
             "display_header": true,
             "header_url": "",
             "alt_image_style": true,
@@ -120,6 +121,7 @@
           "settings": {
             "header": "MIND/BODY/SPIRIT",
             "full_width": false,
+            "dropdown_offset": 0,
             "display_header": true,
             "header_url": "",
             "alt_image_style": true,
@@ -189,6 +191,7 @@
           "settings": {
             "header": "GIFTS/STATIONERY",
             "full_width": false,
+            "dropdown_offset": 0,
             "display_header": true,
             "header_url": "",
             "alt_image_style": true,
@@ -258,6 +261,7 @@
           "settings": {
             "header": "GAMES/MEDIA",
             "full_width": false,
+            "dropdown_offset": 0,
             "display_header": true,
             "header_url": "",
             "alt_image_style": true,
@@ -315,6 +319,7 @@
           "settings": {
             "header": "MARKDOWNS",
             "full_width": false,
+            "dropdown_offset": 0,
             "display_header": true,
             "header_url": "",
             "alt_image_style": true,
@@ -357,6 +362,7 @@
           "settings": {
             "header": "NEW ARRIVALS",
             "full_width": false,
+            "dropdown_offset": 0,
             "display_header": true,
             "header_url": "",
             "alt_image_style": true,
@@ -399,6 +405,7 @@
           "settings": {
             "header": "RESOURCES",
             "full_width": false,
+            "dropdown_offset": 0,
             "display_header": true,
             "header_url": "",
             "alt_image_style": true,
