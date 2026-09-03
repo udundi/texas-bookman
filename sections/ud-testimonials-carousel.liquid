@@ -64,98 +64,98 @@
     height: auto !important;
   }
 {% endstyle %}
-
-<div class="ud-testimonials-{{ section.id }} tw">
+<div class="ud-testimonials-{{ section.id }} tw-w-full tw-bg-blue-400">
   {%- if section.settings.heading != blank -%}
     <{{ section.settings.heading_tag }} class="testimonials-heading tw-text-center tw-font-semibold tw-mb-8 tw-px-6">
       {{ section.settings.heading }}
     </{{ section.settings.heading_tag }}>
   {%- endif -%}
 
-  <div class="testimonials-slider-outer tw-relative tw-flex tw-items-center tw-mx-auto tw-px-4">
-    {%- comment -%} Prev arrow {%- endcomment -%}
-    <button
-      class="swiper-btn swiper-prev-{{ section.id }} tw-shrink-0 tw-flex tw-items-center tw-justify-center tw-w-8 tw-h-8 tw-cursor-pointer tw-bg-transparent tw-border-0 tw-p-0 tw-transition-opacity tw-duration-200 tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-z-10 tw-left-0 hover:tw-opacity-60"
-      aria-label="Previous testimonial"
-    >
-      <svg
-        class="tw-w-6 tw-h-6 tw-stroke-current tw-fill-none"
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+  <div class="tw-flex tw-items-center tw-justify-center tw-mx-auto tw-px-4 tw-gap-4">
+    {%- comment -%} Swiper Container {%- endcomment -%}
+    <div class="testimonials-slider-outer tw-flex tw-flex-row tw-items-center tw-w-full tw-gap-4">
+      {%- comment -%} Prev arrow {%- endcomment -%}
+      <button
+        class="swiper-btn swiper-prev-{{ section.id }} tw-shrink-0 tw-flex tw-items-center tw-justify-center tw-w-8 tw-h-8 tw-cursor-pointer tw-bg-transparent tw-border-0 tw-p-0 tw-transition-opacity tw-duration-200 hover:tw-opacity-60"
+        aria-label="Previous testimonial"
       >
-        <polyline points="15 18 9 12 15 6"></polyline>
-      </svg>
-    </button>
+        <svg
+          class="tw-w-6 tw-h-6 tw-stroke-current tw-fill-none"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      {%- comment -%} Swiper {%- endcomment -%}
+      <div class="swiper testimonials-swiper-{{ section.id }} tw-w-full tw-overflow-hidden tw-border-l tw-border-brand-grey">
+        <div class="swiper-wrapper tw-items-stretch">
+          {%- for block in section.blocks -%}
+            <div class="swiper-slide tw-border-brand-grey tw-border tw-border-l-0">
+              <div class=" tw-my-auto tw-p-4 tw-gap-2 tw-bg-white tw-flex tw-flex-col !tw-h-full tw-box-border">
+                {%- comment -%} Stars {%- endcomment -%}
+                {%- assign star_count = block.settings.star_count | default: 5 -%}
+                <div class="testimonial-stars tw-flex tw-gap-1 tw-mb-4" aria-label="{{ star_count }} out of 5 stars">
+                  {%- for i in (1..star_count) -%}
+                    <span class="testimonial-star tw-text-[1.1rem] tw-leading-none" aria-hidden="true">&#9733;</span>
+                  {%- endfor -%}
+                </div>
 
-    {%- comment -%} Swiper {%- endcomment -%}
-    <div class="swiper testimonials-swiper-{{ section.id }} tw-w-full tw-overflow-hidden tw-border-l tw-border-brand-grey">
-      <div class="swiper-wrapper tw-items-stretch">
-        {%- for block in section.blocks -%}
-          <div class="swiper-slide tw-border-brand-grey tw-border tw-border-l-0">
-            <div class=" tw-my-auto tw-p-4 tw-gap-2 tw-bg-white tw-flex tw-flex-col !tw-h-full tw-box-border">
-              {%- comment -%} Stars {%- endcomment -%}
-              {%- assign star_count = block.settings.star_count | default: 5 -%}
-              <div class="testimonial-stars tw-flex tw-gap-1 tw-mb-4" aria-label="{{ star_count }} out of 5 stars">
-                {%- for i in (1..star_count) -%}
-                  <span class="testimonial-star tw-text-[1.1rem] tw-leading-none" aria-hidden="true">&#9733;</span>
-                {%- endfor -%}
+                {%- comment -%} Title {%- endcomment -%}
+                {%- if block.settings.title != blank -%}
+                  <p class="testimonial-title tw-font-bold tw-mb-3 tw-leading-[1.3]">{{ block.settings.title }}</p>
+                {%- endif -%}
+
+                {%- comment -%} Quote {%- endcomment -%}
+                {%- if block.settings.quote != blank -%}
+                  <p class="testimonial-quote tw-leading-relaxed tw-grow tw-mb-6">{{ block.settings.quote }}</p>
+                {%- endif -%}
+
+                {%- comment -%} Logo {%- endcomment -%}
+                {%- if block.settings.logo != blank -%}
+                  {%- assign logo_alt = block.settings.logo.alt
+                    | default: block.settings.attribution
+                    | default: ''
+                    | escape
+                  -%}
+                  {{
+                    block.settings.logo
+                    | image_url: width: 300
+                    | image_tag:
+                      class: 'testimonial-logo tw-mt-auto tw-h-full tw-w-auto tw-object-contain tw-object-[left_center]',
+                      alt: logo_alt,
+                      loading: 'lazy'
+                  }}
+                {%- elsif block.settings.attribution != blank -%}
+                  <p class="testimonial-title" style="font-style: italic; font-weight: 400;">
+                    — {{ block.settings.attribution }}
+                  </p>
+                {%- endif -%}
               </div>
-
-              {%- comment -%} Title {%- endcomment -%}
-              {%- if block.settings.title != blank -%}
-                <p class="testimonial-title tw-font-bold tw-mb-3 tw-leading-[1.3]">{{ block.settings.title }}</p>
-              {%- endif -%}
-
-              {%- comment -%} Quote {%- endcomment -%}
-              {%- if block.settings.quote != blank -%}
-                <p class="testimonial-quote tw-leading-relaxed tw-grow tw-mb-6">{{ block.settings.quote }}</p>
-              {%- endif -%}
-
-              {%- comment -%} Logo {%- endcomment -%}
-              {%- if block.settings.logo != blank -%}
-                {%- assign logo_alt = block.settings.logo.alt
-                  | default: block.settings.attribution
-                  | default: ''
-                  | escape
-                -%}
-                {{
-                  block.settings.logo
-                  | image_url: width: 300
-                  | image_tag:
-                    class: 'testimonial-logo tw-mt-auto tw-h-full tw-w-auto tw-object-contain tw-object-[left_center]',
-                    alt: logo_alt,
-                    loading: 'lazy'
-                }}
-              {%- elsif block.settings.attribution != blank -%}
-                <p class="testimonial-title" style="font-style: italic; font-weight: 400;">
-                  — {{ block.settings.attribution }}
-                </p>
-              {%- endif -%}
             </div>
-          </div>
-        {%- endfor -%}
+          {%- endfor -%}
+        </div>
       </div>
-    </div>
-
-    {%- comment -%} Next arrow {%- endcomment -%}
-    <button
-      class="swiper-btn swiper-next-{{ section.id }} tw-shrink-0 tw-flex tw-items-center tw-justify-center tw-w-8 tw-h-8 tw-cursor-pointer tw-bg-transparent tw-border-0 tw-p-0 tw-transition-opacity tw-duration-200 tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-z-10 tw-right-0 hover:tw-opacity-60"
-      aria-label="Next testimonial"
-    >
-      <svg
-        class="tw-w-6 tw-h-6 tw-stroke-current tw-fill-none"
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+      {%- comment -%} Next arrow {%- endcomment -%}
+      <button
+        class="swiper-btn swiper-next-{{ section.id }} tw-shrink-0 tw-flex tw-items-center tw-justify-center tw-w-8 tw-h-8 tw-cursor-pointer tw-bg-transparent tw-border-0 tw-p-0 tw-transition-opacity tw-duration-200 hover:tw-opacity-60"
+        aria-label="Next testimonial"
       >
-        <polyline points="9 18 15 12 9 6"></polyline>
-      </svg>
-    </button>
+        <svg
+          class="tw-w-6 tw-h-6 tw-stroke-current tw-fill-none"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
   </div>
 </div>
 

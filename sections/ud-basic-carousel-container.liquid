@@ -52,7 +52,7 @@
         </a>
       </div>
     {% endif %}
-    <div class="tw-flex tw-flex-col tw-gap-4 tw-items-center">
+    <div class="tw-flex tw-flex-col tw-gap-4 tw-items-center{% if section.settings.mobile_grid_layout %} tw-hidden lg:tw-flex{% endif %}">
       <div class="tw-w-full tw-h-full tw-flex tw-items-center sm:tw-gap-4 tw-py-4">
         <!-- Desktop Prev Button -->
         <button
@@ -116,6 +116,48 @@
       </a>
     </div>
   </div>
+  {% if section.settings.mobile_grid_layout %}
+    <div class="tw-flex tw-flex-col tw-gap-4 tw-items-center lg:tw-hidden">
+      <!-- Grid Layout for Mobile/Tablet -->
+      <div class="tw-grid tw-grid-cols-2 tw-w-full tw-py-4 tw-max-w-2xl">
+        {% if section.settings.product_source == 'product_list' %}
+          {% for car_product in section.settings.product_list limit: 4 %}
+            <div class="grid-item tw-border tw-border-brand-grey">
+              {% render 'ud-basic-product-card',
+                extra_append: '-grid',
+                cur_product: car_product,
+                video_aspect: true,
+                no_border: true,
+                small_card: true,
+                button_style: section.settings.button_style,
+                product_reviews: 5,
+                show_button_type: 'quick-add',
+                button_text: section.settings.button_text,
+                show_price: section.settings.show_price
+              %}
+            </div>
+          {% endfor %}
+        {% else %}
+          {% for car_product in section.settings.collection limit: 4 %}
+            <div class="grid-item tw-border tw-border-brand-grey">
+              {% render 'ud-basic-product-card',
+                extra_append: '-grid',
+                cur_product: car_product,
+                video_aspect: true,
+                no_border: true,
+                small_card: true,
+                button_style: section.settings.button_style,
+                product_reviews: 5,
+                show_button_type: 'quick-add',
+                button_text: section.settings.button_text,
+                show_price: section.settings.show_price
+              %}
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
 </div>
 
 <script>
@@ -290,6 +332,13 @@
       "type": "collection",
       "label": "Collection for Carousel",
       "id": "collection"
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_grid_layout",
+      "label": "Display as 2x2 grid on mobile & tablet",
+      "info": "Shows the first 4 products in a 2x2 grid on mobile and tablet instead of the carousel. Desktop always shows the carousel.",
+      "default": false
     },
     {
       "type": "product_list",

@@ -99,9 +99,10 @@
             </div>
           {% endfor %}
         {% elsif block.settings.product_source == 'product_list' %}
+          {% for product in block.settings.product_list %}
             <div class="swiper-slide">
               {% render 'ud-quickadd-card',
-                cur_product: car_product,
+                cur_product: product,
                 video_aspect: true,
                 no_border: true,
                 small_card: true,
@@ -112,29 +113,26 @@
                 show_price: section.settings.show_price
               %}
             </div>
-
-{% endfor %}
-
-{% endif %}
-
-</div>
-</div>
-<!-- Next Button -->
-<button
-  class="tw-bg-grey-light tw-aspect-square tw-size-12 tw-m-2 tw-rounded-full tw-border-none md:tw-flex tw-hidden tw-items-center tw-justify-center tw-cursor-pointer tw-right-0 tw-drop-shadow-lg tw-absolute tw-pointer-events-auto"
-  id="featured-swiper-next-{{ block.id }}"
->
-  {% render 'icon-chevron-right' %}
-</button>
-</div>
-{% if block.settings.carousel_type == 'collection' and block.settings.button_url %}
-  <a
-    href="{{ block.settings.button_url }}"
-    class="tw-rounded-full tw-bg-navy tw-px-8 tw-py-2 tw-font-semibold tw-text-white"
-  >
-    {{ block.settings.button_text | default: 'Shop All Designs' }}
-  </a>
-{% endif %}
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+    <!-- Next Button -->
+    <button
+      class="tw-bg-grey-light tw-aspect-square tw-size-12 tw-m-2 tw-rounded-full tw-border-none md:tw-flex tw-hidden tw-items-center tw-justify-center tw-cursor-pointer tw-right-0 tw-drop-shadow-lg tw-absolute tw-pointer-events-auto"
+      id="featured-swiper-next-{{ block.id }}"
+    >
+      {% render 'icon-chevron-right' %}
+    </button>
+  </div>
+  {% if block.settings.carousel_type == 'collection' and block.settings.button_url %}
+    <a
+      href="{{ block.settings.button_url }}"
+      class="tw-rounded-full tw-bg-navy tw-px-8 tw-py-2 tw-font-semibold tw-text-white"
+    >
+      {{ block.settings.button_text | default: 'Shop All Designs' }}
+    </a>
+  {% endif %}
 </div>
 
 <script>

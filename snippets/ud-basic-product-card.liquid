@@ -1,4 +1,4 @@
-{% assign product_id = section.id | append: '-' | append: cur_product.handle %}
+{% assign product_id = section.id | append: '-' | append: cur_product.handle |  append: extra_append %}
 {% assign product_atc_id = product_id | append: '-atc' %}
 
 <div
