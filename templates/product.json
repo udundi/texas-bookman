@@ -172,7 +172,7 @@
                   "type": "_pdp-info-tab",
                   "name": "Info Tab",
                   "settings": {
-                    "text": "<p>Pub Date: 2021</p><p>Format: Paperback</p><p>Pages: 210</p><p>Size: 7.75 x 5.25 x 0.55 inches</p>"
+                    "text": "<p>Pub Date: {{ closest.product.metafields.custom.publication_date.value }}</p><p>Publisher: {{ closest.product.metafields.custom.publisher.value }}</p><p>Format: {{ closest.product.metafields.custom.format.value }}</p><p>Pages: {{ closest.product.metafields.custom.page_count.value }}</p><p>Size: </p>"
                   },
                   "blocks": {}
                 },
