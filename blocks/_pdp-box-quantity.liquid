@@ -11,19 +11,21 @@
     {% endif %}
   "
 >
-  {% assign case_size = 8 %}
+  {% assign case_size = product.metafields.custom.case_size | default: 1 %}
   {% assign available = product.selected_or_first_available_variant.inventory_quantity %}
   {% assign cases_available = available | divided_by: case_size %}
-  {% assign case_size_discount = 8 %}
+  {% assign case_size_discount = product.metafields.custom.case_size_discount | default: 8 %}
   <div class="tw-flex tw-flex-col tw-py-2 tw-px-3 tw-rounded-md tw-bg-brand-eggshell tw-border tw-border-brand-grey tw-items-start tw-gap-1">
     <div>
       <span class="tw-font-bold">Availability:</span>
       {{ available | default: 0 }} in stock
     </div>
-    <div>
-      <span class="tw-font-bold">Cases Available:</span> {{ cases_available | default: 0 }} |
-      <span class="tw-font-bold">Cases Include:</span> {{ case_size | default: 0 }} books
-    </div>
+    {% if product.metafields.custom.case_size %}
+      <div>
+        <span class="tw-font-bold">Cases Available:</span> {{ cases_available | default: 0 }} |
+        <span class="tw-font-bold">Cases Include:</span> {{ case_size | default: 0 }} books
+      </div>
+    {% endif %}
     <div class="tw-font-bold">
       Order in Multiples of {{ case_size | default: 0 }} for {{ case_size_discount | default: 0 }}% Off
     </div>

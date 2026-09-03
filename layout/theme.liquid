@@ -37,7 +37,55 @@
   </head>
 
   <body class="tw-flex tw-flex-col tw-min-h-screen">
-    {% sections 'header-group' %}
+    {% comment %}
+      Shopify's `sections` tag applies the `shopify-section-group-header-group` class to EACH
+      section in the group individually — there is no single wrapping element for the whole group.
+      Wrap it ourselves so the header and nav bar fade/stick together as one unit, without either
+      section moving independently.
+    {% endcomment %}
+    <div id="sticky-header-group" class="tw-sticky tw-top-0 tw-z-[100] tw-transition-opacity tw-duration-300">
+      {% sections 'header-group' %}
+    </div>
+    <style>
+      #sticky-header-group.header-group--faded {
+        opacity: 0;
+        pointer-events: none;
+      }
+    </style>
+    <script>
+      (function () {
+        var headerGroup = document.getElementById('sticky-header-group');
+        if (!headerGroup) return;
+        var lastScrollY = window.scrollY;
+        var ticking = false;
+
+        function updateHeaderVisibility() {
+          var currentScrollY = window.scrollY;
+          var scrollingDown = currentScrollY > lastScrollY;
+          // Always show near the top of the page, otherwise fade based on scroll direction
+          if (currentScrollY <= headerGroup.offsetHeight) {
+            headerGroup.classList.remove('header-group--faded');
+          } else if (scrollingDown) {
+            headerGroup.classList.add('header-group--faded');
+          } else {
+            headerGroup.classList.remove('header-group--faded');
+          }
+          lastScrollY = currentScrollY;
+          ticking = false;
+        }
+
+        window.addEventListener(
+          'scroll',
+          function () {
+            if (!ticking) {
+              window.requestAnimationFrame(updateHeaderVisibility);
+              ticking = true;
+            }
+          },
+          { passive: true }
+        );
+      })();
+    </script>
     <main id="root" class="tw-relative tw-flex-1 tw-bg-brand-eggshell" role="main">
       <div class="tw-absolute tw-z-[500] tw-size-full tw-pointer-events-none">
         {% sections 'overlay-group' %}

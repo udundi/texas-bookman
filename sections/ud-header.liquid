@@ -122,7 +122,7 @@
       <button
         aria-haspopup="true"
         aria-label="Menu"
-        @click="showMobile = !showMobile"
+        @click="toggleMobileNav()"
         class="tw-block tw-justify-center tw-px-2 tw-align-middle md:tw-hidden"
       >
         <div :style="showMobile ? 'display: none;' : 'display: contents;'">
@@ -226,7 +226,7 @@
           <div
             v-cloak
             class="tw-absolute tw-flex tw-items-center tw-justify-center tw-rounded-full tw-bg-offblack tw-text-center tw-text-12 tw-font-bold tw-text-white"
-            :class="[totalCartItems > 9 ? 'tw-w-6 tw-h-6 tw-top-6 md:tw-right-0 tw-right-12' : ' tw-w-5 tw-h-5 tw-top-2 md:tw-right-1 tw-right-14']"
+            :class="[totalCartItems > 9 ? 'tw-w-6 tw-h-6 md:tw-top-3 tw-top-1.5 md:tw-right-0 tw-right-0.5' : ' tw-w-5 tw-h-5 md:tw-top-4 tw-top-2 tw-right-1']"
             v-if="totalCartItems"
           >
             [[totalCartItems]]
@@ -245,14 +245,6 @@
   </div>
   <!-- Desktop Search Bar -->
   <div class="tw-w-full tw-max-w-2xl tw-relative tw-block md:tw-hidden tw-px-2 tw-pb-2">{{ search_bar }}</div>
-
-  <!-- Mobile Menu Backdrop -->
-  <div
-    v-cloak
-    v-if="showMobile"
-    class="tw-fixed tw-inset-0 tw-top-0 !tw-z-20 tw-h-screen tw-w-full tw-bg-black tw-bg-opacity-50 md:tw-hidden"
-    @click="showMobile = false"
-  ></div>
 </div>
 <script>
   new Vue({
@@ -315,6 +307,9 @@
       this.bus.$on('refreshCart', () => {
         this.refreshCart();
       });
+      this.bus.$on('mobileNavToggle', (isOpen) => {
+        this.showMobile = isOpen;
+      });
     },
     unmounted() {
       window.removeEventListener('resize', this.resizeSpacer);
@@ -337,6 +332,12 @@
         this.showMobile = false;
         this.selectedTab = '';
         this.selectedSubTab = '';
+      },
+
+      // Keeps this header's hamburger in sync with the separate nav-bar section's own mobile menu state
+      toggleMobileNav() {
+        this.showMobile = !this.showMobile;
+        this.bus.$emit('mobileNavToggle', this.showMobile);
       },
 
       resizeSpacer(e) {
