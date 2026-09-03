@@ -1,0 +1,40 @@
+<!-- Direct Link (no dropdown) -->
+<div class="tw-group tw-relative tw-flex tw-h-full tw-bg-brand-eggshell tw-items-center tw-justify-center">
+  <a
+    href="{{ block.settings.link_url }}"
+    class="tw-relative tw-hidden tw-border-y-2 tw-border-solid tw-border-white/0 hover:tw-border-b-brand-primary hover:tw-text-brand-primary tw-p-2 tw-font-brand-body !tw-text-12 tw-font-semibold md:tw-block lg:tw-p-2 lg:!tw-text-14 tw-text-navy tw-leading-4"
+  >
+    {{ block.settings.link_text }}
+  </a>
+  <!-- Mobile Link -->
+  <a
+    href="{{ block.settings.link_url }}"
+    class="tw-relative tw-px-3 tw-flex tw-justify-between tw-font-brand-body !tw-text-14 tw-font-semibold tw-text-navy tw-w-[70vw] tw-text-start tw-border-t tw-border-navy tw-border-solid tw-py-4 tw-border-0"
+    :class="selectedTab ? 'tw-hidden' : 'md:tw-hidden'"
+  >
+    {{ block.settings.link_text }}
+  </a>
+</div>
+
+{% schema %}
+{
+  "name": "Nav Direct Link",
+  "settings": [
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Link Text"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Nav Direct Link"
+    }
+  ]
+}
+{% endschema %}

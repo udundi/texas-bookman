@@ -98,11 +98,32 @@
           navContainer.style.height = `${this.sectionHeight}px`;
         }
         document.documentElement.style.setProperty('--site-header-height', `${this.sectionHeight}px`);
+        if (this.selectedTab) {
+          this.positionDropdown(this.selectedTab);
+        }
       },
 
       refocusMenu(event) {
         this.$refs.mobileMenuButton.focus();
         console.log(event, 'refocusing menu');
+      },
+
+      // Keeps the dropdown centered under its tab, nudging it back on screen if it would overflow the viewport
+      positionDropdown(blockId) {
+        this.$nextTick(() => {
+          const dropdown = this.$el.querySelector(`.nav-dropdown[data-tab-id="${blockId}"]`);
+          if (!dropdown) return;
+          const manualOffset = parseFloat(dropdown.dataset.offset) || 0;
+          dropdown.style.transform = manualOffset ? `translateX(calc(-50% + ${manualOffset}px))` : '';
+          if (window.innerWidth < 768) return;
+          const rect = dropdown.getBoundingClientRect();
+          const margin = 16;
+          if (rect.left < margin) {
+            dropdown.style.transform = `translateX(calc(-50% + ${manualOffset + (margin - rect.left)}px))`;
+          } else if (rect.right > window.innerWidth - margin) {
+            dropdown.style.transform = `translateX(calc(-50% + ${manualOffset - (rect.right - (window.innerWidth - margin))}px))`;
+          }
+        });
       },
 
       hoverSubTab(subTabClass) {
@@ -154,6 +175,9 @@
   "blocks": [
     {
       "type": "_header-tabbed-section"
+    },
+    {
+      "type": "_header-nav-link"
     }
   ],
   "settings": [
