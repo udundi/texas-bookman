@@ -118,7 +118,7 @@
         "body_size": 16,
         "mobile_body_size": 14,
         "button_label": "Shop Now",
-        "button_url": "",
+        "button_url": "shopify://collections",
         "button_bg": "#f0ba3a",
         "button_text_color": "#212121",
         "button_font_size": 13,
