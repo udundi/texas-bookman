@@ -337,7 +337,7 @@
           "settings": {
             "header": "RESOURCES",
             "full_width": false,
-            "dropdown_offset": -80,
+            "dropdown_offset": -20,
             "display_header": true,
             "header_url": "",
             "alt_image_style": true,
