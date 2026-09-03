@@ -122,7 +122,9 @@
           if (rect.left < margin) {
             dropdown.style.transform = `translateX(calc(-50% + ${manualOffset + (margin - rect.left)}px))`;
           } else if (rect.right > window.innerWidth - margin) {
-            dropdown.style.transform = `translateX(calc(-50% + ${manualOffset - (rect.right - (window.innerWidth - margin))}px))`;
+            dropdown.style.transform = `translateX(calc(-50% + ${
+              manualOffset - (rect.right - (window.innerWidth - margin))
+            }px))`;
           }
         });
       },

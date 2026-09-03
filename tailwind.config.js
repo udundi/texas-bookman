@@ -104,6 +104,7 @@ module.exports = {
         "container-sm": "min(43.125rem, 90%)",
       },
       fontFamily: {
+        sans: ['"proxima-nova"', 'sans-serif'],
         'brand-header': ['"proxima-nova"', 'sans-serif'],
         'brand-body': ['"proxima-nova"', 'sans-serif'],
         montserrat: ['"proxima-nova"', 'sans-serif'],
