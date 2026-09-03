@@ -440,7 +440,7 @@
               "settings": {
                 "menu_title": "My Account",
                 "header_url": "shopify://collections",
-                "menu": "",
+                "menu": "resources-header",
                 "column_layout": "2-col"
               },
               "blocks": {}
