@@ -473,7 +473,7 @@
             "date_day": "",
             "date_year": "",
             "cta_label": "{{ block.settings.blog.metafields.custom.cta_text.value }}",
-            "cta_url": "{{ block.settings.blog.metafields.custom.cta_link.value }}"
+            "cta_url": "{{ block.settings.blog.url }}"
           }
         },
         "event_nythTC": {
@@ -490,7 +490,7 @@
             "date_day": "",
             "date_year": "",
             "cta_label": "{{ block.settings.blog.metafields.custom.cta_text.value }}",
-            "cta_url": "{{ block.settings.blog.metafields.custom.cta_link.value }}"
+            "cta_url": "{{ block.settings.blog.url }}"
           }
         }
       },
