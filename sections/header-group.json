@@ -337,7 +337,7 @@
           "settings": {
             "header": "RESOURCES",
             "full_width": false,
-            "dropdown_offset": -80,
+            "dropdown_offset": -20,
             "display_header": true,
             "header_url": "",
             "alt_image_style": true,
@@ -380,7 +380,7 @@
                 "menu_title": "My Account",
                 "header_url": "shopify://collections",
                 "menu": "resources-header",
-                "column_layout": "2-col"
+                "column_layout": "1-col"
               },
               "blocks": {}
             }
