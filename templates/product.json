@@ -276,7 +276,7 @@
         "mobile_padding_left": 0,
         "mobile_padding_right": 0,
         "background_color": "#fdfbf8",
-        "container_width": "md_desktop"
+        "container_width": "lg_desktop"
       }
     }
   },
