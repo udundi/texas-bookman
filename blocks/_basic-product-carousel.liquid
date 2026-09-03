@@ -11,9 +11,17 @@
     <div class="tw-w-full swiper tw-border-l tw-border-brand-grey block-{{ block.id }}">
       <div class="swiper-wrapper tw-h-full">
         {% if block.settings.product_source == 'product_list' %}
-          {% for car_product in block.settings.product_list limit: 15 %}
+          {% if block.settings.product_list.count > 0 %}
+            {% assign carousel_products = block.settings.product_list %}
+            {% assign carousel_limit = 15 %}
+          {% else %}
+            {% comment %} Fall back to the store's most popular products when no products are selected {% endcomment %}
+            {% assign carousel_products = collections.all.products %}
+            {% assign carousel_limit = 8 %}
+          {% endif %}
+          {% for car_product in carousel_products limit: carousel_limit %}
             <div class="swiper-slide tw-border tw-border-brand-grey tw-border-l-0 !tw-h-full">
-              {% render 'ud-basic-product-card',
+              {% render 'ud-quickadd-card',
                 cur_product: car_product,
                 video_aspect: true,
                 no_border: true,
@@ -29,7 +37,7 @@
         {% else %}
           {% for car_product in block.settings.collection limit: 15 %}
             <div class="swiper-slide">
-              {% render 'ud-basic-product-card',
+              {% render 'ud-quickadd-card',
                 cur_product: car_product,
                 video_aspect: true,
                 no_border: true,

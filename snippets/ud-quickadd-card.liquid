@@ -46,17 +46,15 @@
           </a>
         </div>
         <!-- TB Code -->
-        {% comment %}
-          {% if cur_product.metafields.custom.isbn != blank %}
-            <h3 class="tw-font-semibold tw-text-14 tw-text-brand-greyer/50 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
-              TB Code: XXXXXXXX
-            </h3>
-          {% endif %}
-        {% endcomment %}
-        <!-- ISBN -->
-        {% if cur_product.metafields.custom.isbn != blank %}
+        {% if cur_product.metafields.custom.tb_code != blank %}
           <h3 class="tw-font-semibold tw-text-14 tw-text-brand-greyer/50 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
-            ISBN: XXXXXXXX
+            TB Code: {{ cur_product.metafields.custom.tb_code }}
+          </h3>
+        {% endif %}
+        <!-- ISBN -->
+        {% if cur_product.metafields.facts.isbn != blank %}
+          <h3 class="tw-font-semibold tw-text-14 tw-text-brand-greyer/50 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
+            ISBN: {{ cur_product.metafields.facts.isbn }}
           </h3>
         {% endif %}
         <h3 class="tw-font-semibold tw-text-14 tw-text-brand-greyer tw-w-full tw-leading-tight tw-h-fit tw-m-0">
