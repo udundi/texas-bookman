@@ -111,7 +111,8 @@
       // Keeps the dropdown centered under its tab, nudging it back on screen if it would overflow the viewport
       positionDropdown(blockId) {
         this.$nextTick(() => {
-          const dropdown = this.$el.querySelector(`.nav-dropdown[data-tab-id="${blockId}"]`);
+          const navBar = document.getElementById('nav-bar-{{ section.id }}');
+          const dropdown = navBar ? navBar.querySelector(`.nav-dropdown[data-tab-id="${blockId}"]`) : null;
           if (!dropdown) return;
           const manualOffset = parseFloat(dropdown.dataset.offset) || 0;
           dropdown.style.transform = manualOffset ? `translateX(calc(-50% + ${manualOffset}px))` : '';
