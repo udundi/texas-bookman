@@ -68,6 +68,7 @@
         "container_width": "lg_desktop",
         "product_source": "product_list",
         "collection": "frontpage",
+        "mobile_grid_layout": true,
         "product_list": [
           "a-cycling-lexicon-bicycle-headbadges-from-a-bygone-era-2506067",
           "1-000-places-to-see-before-you-die-used-2603095",
