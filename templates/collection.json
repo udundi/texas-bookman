@@ -47,6 +47,7 @@
             "collection_filter_zrwRdN": {
               "type": "_collection-filter",
               "name": "Collection Filter",
+              "disabled": true,
               "settings": {
                 "tag": "Piccadilly Inc.",
                 "title": "Piccadilly Inc.",

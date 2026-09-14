@@ -80,7 +80,7 @@
               "name": "Menu Links",
               "settings": {
                 "menu_title": "All Adult",
-                "header_url": "shopify://collections",
+                "header_url": "shopify://collections/all-adult-books",
                 "menu": "adult-books",
                 "column_layout": "2-col"
               },
