@@ -5,12 +5,13 @@
       @mouseleave="handleMouseLeave"
       role="navigation"
       aria-label="Main Menu"
-      class="tw-h-full tw-w-full"
-      :class="showMobile ? 'tw-block' : 'md:tw-flex tw-hidden'"
+      class="tw-w-full md:tw-h-full"
+      :class="showMobile ? 'tw-block max-md:tw-absolute max-md:tw-left-0 max-md:tw-right-0 max-md:tw-top-full max-md:tw-z-[900] max-md:tw-overflow-y-auto max-md:tw-bg-brand-eggshell max-md:tw-shadow-lg' : 'md:tw-flex tw-hidden'"
+      :style="showMobile ? { maxHeight: `calc(100vh - ${mobileMenuTop}px)` } : {}"
     >
-      <!-- Nav Container -->
+      <!-- Nav Container: max-height + overflow-y-auto live on the nav itself so scrolling doesn't depend on child percentage heights -->
       <div
-        class=" tw-p-0 max-md:tw-overflow-y-auto tw-w-full"
+        class=" tw-p-0 tw-w-full"
       >
         <!-- Nav Container -->
         <div class="tw-flex tw-h-full tw-w-full tw-flex-col tw-justify-start tw-text-12 md:tw-flex-row md:tw-justify-center md:tw-gap-2">
@@ -92,7 +93,9 @@
     },
 
     methods: {
+      // Only auto-closes on hover-out for desktop; mobile nav is click/tap driven and shouldn't close on "mouseleave"
       handleMouseLeave() {
+        if (window.innerWidth < 768) return;
         this.showMobile = false;
         this.selectedTab = '';
         this.selectedSubTab = '';
@@ -134,9 +137,13 @@
           const navBar = document.getElementById('nav-bar-{{ section.id }}');
           const dropdown = navBar ? navBar.querySelector(`.nav-dropdown[data-tab-id="${blockId}"]`) : null;
           if (!dropdown) return;
+          // Mobile dropdown is a static, full-width panel (no centering transform needed/wanted)
+          if (window.innerWidth < 768) {
+            dropdown.style.transform = '';
+            return;
+          }
           const manualOffset = parseFloat(dropdown.dataset.offset) || 0;
           dropdown.style.transform = manualOffset ? `translateX(calc(-50% + ${manualOffset}px))` : '';
-          if (window.innerWidth < 768) return;
           const rect = dropdown.getBoundingClientRect();
           const margin = 16;
           if (rect.left < margin) {
@@ -169,16 +176,12 @@
     display: none !important;
     visibility: hidden !important;
   }
-  {% assign spacing =  block.blocks | size | times: 42 | plus: 48 %}
   .ud-mobileMenuV2 {
     top: 48px;
-    height: calc(100vh - {{ spacing }}px);
     z-index: 1000;
   }
 
   .mobileMenuBG {
-    top: {{ spacing }}
-    px !important;
     z-index: -1000;
   }
 

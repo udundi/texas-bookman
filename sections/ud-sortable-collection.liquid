@@ -338,12 +338,12 @@
       <div
         v-cloak
         v-if="mobileFiltersOpen"
-        class="tw-fixed tw-inset-0 tw-z-[140] tw-bg-black/35 md:tw-hidden"
+        class="tw-fixed tw-inset-0 tw-z-10 tw-bg-black/35 md:tw-hidden"
         @click="mobileFiltersOpen = false"
       ></div>
-      <!-- Filter Container -->
+      <!-- Filter Container: stays below the sticky header group (tw-z-[100]) -->
       <div
-        class="ud-filter-container tw-fixed tw-bottom-0 tw-left-0 tw-z-[150] tw-w-full tw-flex-col tw-justify-start tw-max-h-[85vh] tw-rounded-t-2xl  tw-px-2 tw-pt-4 md:tw-sticky md:tw-bottom-auto md:tw-top-0 md:tw-max-h-none md:tw-w-96 md:tw-gap-2 md:tw-rounded-none md:tw-py-4  tw-mb-[-1px]"
+        class="ud-filter-container tw-fixed tw-bottom-0 tw-left-0 tw-z-20 tw-w-full tw-flex-col tw-justify-start tw-max-h-[85vh] tw-rounded-t-2xl  tw-px-2 tw-pt-4 md:tw-sticky md:tw-bottom-auto md:tw-top-0 md:tw-max-h-none md:tw-w-96 md:tw-gap-2 md:tw-rounded-none md:tw-py-4  tw-mb-[-1px]"
         :class="mobileFiltersOpen ? 'tw-flex' : 'md:tw-flex tw-hidden'"
       >
         <!-- Mobile Sheet Header -->
