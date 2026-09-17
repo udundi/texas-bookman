@@ -155,7 +155,7 @@
               "type": "_pdp-info-tabs",
               "name": "Tabbed Info Section",
               "settings": {
-                "tab_titles": "Details - Description",
+                "tab_titles": "Description",
                 "padding_top": 4,
                 "padding_bottom": 4,
                 "mobile_padding_top": 4,
