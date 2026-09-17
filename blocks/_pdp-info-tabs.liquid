@@ -20,7 +20,7 @@
 
 <div class="section-{{ block.id }} tw-mx-auto tw-py-4">
   <div class="vue-controler-{{ block.id }} tw-mx-auto">
-    {% if block.blocks[1] != blank %}
+    {% if block.blocks[0] != blank %}
       <div class="tw-flex tw-justify-start tw-gap-0.5">
         {% assign tab_titles = block.settings.tab_titles | append: '-' | split: '-' %}
           <button
