@@ -1423,6 +1423,13 @@ video {
   box-sizing: border-box;
 }
 
+.tw-line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
 .tw-line-clamp-2 {
   overflow: hidden;
   display: -webkit-box;
@@ -3852,6 +3859,10 @@ video {
 
   .lg\:tw-grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lg\:tw-grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .lg\:tw-flex-row {
