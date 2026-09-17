@@ -168,14 +168,6 @@
                 "container_width": "full_width"
               },
               "blocks": {
-                "pdp_info_tab_YjN6CJ": {
-                  "type": "_pdp-info-tab",
-                  "name": "Info Tab",
-                  "settings": {
-                    "text": "<p>Pub Date: {{ closest.product.metafields.custom.publication_date.value }}</p><p>Publisher:</p><p>Size: </p>"
-                  },
-                  "blocks": {}
-                },
                 "pdp_info_tab_6ENqUD": {
                   "type": "_pdp-info-tab",
                   "name": "Info Tab",
@@ -186,7 +178,6 @@
                 }
               },
               "block_order": [
-                "pdp_info_tab_YjN6CJ",
                 "pdp_info_tab_6ENqUD"
               ]
             }
