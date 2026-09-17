@@ -212,6 +212,21 @@
     },
     "ud_multi_carousel_MxPqN7": {
       "type": "ud-multi-carousel",
+      "blocks": {
+        "related_products_DWGKJM": {
+          "type": "_related-products",
+          "name": "Related Products",
+          "settings": {
+            "button_url": "",
+            "button_text": "",
+            "show_price": true
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "related_products_DWGKJM"
+      ],
       "name": "Multi Carousel",
       "settings": {
         "section_title": "Related Products",
