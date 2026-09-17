@@ -456,6 +456,15 @@
                 class="tw-hidden"
               ></span>
               {% for product in collection.products -%}
+                {% assign is_flash_sale = false %}
+                {% if settings.flash_sale  %}
+                  {% for flash_sale_product in settings.flash_sale_products %}
+                    {% if flash_sale_product.id == product.id %}
+                      {% assign is_flash_sale = true %}
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+
                 <div
                   data-product-grid-item
                   class="product-grid-card tw-items-stretch"
@@ -480,8 +489,13 @@
                           </div>
                         {% endif %}
                         {% if product.tags contains 'New Product' %}
-                          <div class="tw-absolute tw-top-2.5 tw-right-2 tw-text-12 tw-px-4 tw-py-1 tw-bg-black tw-rounded-md tw-text-white tw-font-semibold">
-                            New
+                          <div class="tw-absolute tw-top-2.5 tw-left-2 tw-text-9 tw-px-4 tw-py-1 tw-rounded-md tw-bg-brand-primary tw-text-white tw-font-semibold">
+                            NEW
+                          </div>
+                        {% endif %}
+                        {% if is_flash_sale %}
+                          <div class="tw-absolute tw-top-2.5 tw-right-2 tw-text-9 tw-px-4 tw-py-1 tw-bg-brand-sale tw-rounded-md tw-text-white tw-font-semibold">
+                            SALE
                           </div>
                         {% endif %}
                       </div>
@@ -496,12 +510,28 @@
                               </h3>
                             </a>
                           </div>
-                          <h3 class="tw-font-semibold tw-text-14 tw-text-gray-600 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
+                          {% if product.metafields.custom.tb_code != blank and customer and customer.tags contains 'Staff' %}
+                            <p class="tw-font-semibold tw-text-14 tw-text-brand-greyer/50 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
+                              TB Code:
+                              <span class="tw-font-normal">
+                                {{- product.metafields.custom.tb_code -}}
+                              </span>
+                            </p>
+                          {% endif %}
+                          {% if product.metafields.custom.isbn != blank %}
+                            <p class="tw-font-semibold tw-text-14 tw-text-brand-greyer/50 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
+                              ISBN:
+                              <span class="tw-font-normal">
+                                {{- product.metafields.custom.isbn -}}
+                              </span>
+                            </p>
+                          {% endif %}
+                          <p class="tw-font-semibold tw-text-14 tw-text-gray-600 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
                             QTY:
                             <span class="tw-font-normal">
                               {{- product.selected_or_first_available_variant.inventory_quantity -}}
                             </span>
-                          </h3>
+                          </p>
                           <div class="tw-flex tw-flex-col">
                             <div class="tw-text-gray-600 tw-text-14 tw-font-semibold">
                               List:
@@ -509,9 +539,18 @@
                                 {{- product.compare_at_price | default: product.price | money -}}
                               </span>
                             </div>
+                          {% if is_flash_sale %}
                             <div class="tw-font-semibold tw-text-14">
-                              Your Net Price: <span class="tw-font-normal">{{ product.price | money }}</span>
-                            </div>
+                              {% assign flash_sale_discount = settings.flash_sale_discount |  times: 0.01 %}
+                              {% assign flash_sale_amount = product.price | times: flash_sale_discount %}
+                                Your Net Price: <span class="tw-font-normal tw-line-through">{{ product.price | money }} </span> <span class="tw-font-normal tw-text-brand-sale">{{ product.price | minus: flash_sale_amount | money }}</span>
+                              </div>
+                              {% else %}
+                            <div class="tw-font-semibold tw-text-14">
+                                Your Net Price: <span class="tw-font-normal">{{ product.price | money }} </span>
+                              </div>
+                          {% endif %}
+                          
                           </div>
                         </div>
                       </div>
@@ -580,8 +619,12 @@
                           </div>
                         {% endif %}
                         {% if product.tags contains 'New Product' %}
-                          <div class="tw-absolute tw-top-1 tw-right-1 tw-text-10 tw-px-2 tw-py-0.5 tw-bg-black tw-rounded-md tw-text-white tw-font-semibold">
-                            New
+                          <div class="tw-absolute tw-top-1 tw-left-1 tw-text-9 tw-px-4 tw-py-1 tw-rounded-md tw-bg-brand-primary tw-text-white tw-font-semibold">
+                            NEW
+                          </div>
+                        {% elsif is_flash_sale  %}
+                          <div class="tw-absolute tw-top-1 tw-left-1 tw-text-9 tw-px-4 tw-py-1 tw-bg-brand-sale tw-rounded-md tw-text-white tw-font-semibold">
+                            SALE
                           </div>
                         {% endif %}
                       </div>
@@ -608,9 +651,17 @@
                               {{- product.metafields.custom.author.value | default: 'Author Name' -}}
                             </a>
                           </div>
-                          <div class="tw-font-semibold">
-                            Your Net Price: <span class="tw-font-semibold">{{ product.price | money }}</span>
-                          </div>
+                          {% if is_flash_sale %}
+                            <div class="tw-font-semibold tw-text-14">
+                              {% assign flash_sale_discount = settings.flash_sale_discount |  times: 0.01 %}
+                              {% assign flash_sale_amount = product.price | times: flash_sale_discount %}
+                                Your Net Price: <span class="tw-font-normal tw-line-through">{{ product.price | money }} </span> <span class="tw-font-normal tw-text-brand-sale">{{ product.price | minus: flash_sale_amount | money }}</span>
+                              </div>
+                              {% else %}
+                            <div class="tw-font-semibold tw-text-14">
+                                Your Net Price: <span class="tw-font-normal">{{ product.price | money }} </span>
+                              </div>
+                          {% endif %}
                         </div>
                         <div class="tw-grow tw-text-14 tw-line-clamp-4 tw-text-gray-500">
                           {{ product.description | default: 'No description available.' }}

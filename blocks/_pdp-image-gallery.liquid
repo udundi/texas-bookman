@@ -78,10 +78,10 @@
     {% endcomment %}
     {% comment %} {% render 'component__icon', icon: 'arrow-right', size: '14', class: 'swiper-button-next' %} {% endcomment %}
   </div>
-  <!-- Thumbs for Main Image Carousel -->
+  <!-- Thumbs for Main Image Carousel (desktop only) -->
   <div
     thumbsSlider=""
-    class="swiper swiper-thumbs tw-overflow-hidden tw-w-full tw-flex tw-items-center tw-justify-center"
+    class="swiper swiper-thumbs tw-hidden md:tw-flex tw-overflow-hidden tw-w-full tw-items-center tw-justify-center"
   >
     <div class="swiper-wrapper">
       {% assign slide_number = 0 %}
@@ -97,26 +97,24 @@
       {% endif %}
 
       <!-- Normal Thumb for Videos and Images -->
-      {% comment %}
-        {% for media in product.media %}
-          <!-- Videos -->
-          {% if media.media_type == 'video' %}
-            {% render 'ud-product-thumb-image', thumb_image: media.preview_image, thumb_number: slide_number %}
-            {% assign slide_number = slide_number | plus: 1 %}
-            <!-- Images -->
-          {% elsif media.media_type == 'image' %}
-            {% assign compare_media = media %}
-            {% for image in product.images %}
-              {% if image.position == compare_media.position %}
-                {% if image.attached_to_variant? != true %}
-                  {% render 'ud-product-thumb-image', thumb_image: image, thumb_number: slide_number %}
-                  {% assign slide_number = slide_number | plus: 1 %}
-                {% endif %}
+      {% for media in product.media %}
+        <!-- Videos -->
+        {% if media.media_type == 'video' %}
+          {% render 'ud-product-thumb-image', thumb_image: media.preview_image, thumb_number: slide_number %}
+          {% assign slide_number = slide_number | plus: 1 %}
+          <!-- Images -->
+        {% elsif media.media_type == 'image' %}
+          {% assign compare_media = media %}
+          {% for image in product.images %}
+            {% if image.position == compare_media.position %}
+              {% if image.attached_to_variant? != true %}
+                {% render 'ud-product-thumb-image', thumb_image: image, thumb_number: slide_number %}
+                {% assign slide_number = slide_number | plus: 1 %}
               {% endif %}
-            {% endfor %}
-          {% endif %}
-        {% endfor %}
-      {% endcomment %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
     </div>
   </div>
 </div>

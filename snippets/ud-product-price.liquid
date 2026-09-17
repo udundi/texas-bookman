@@ -73,7 +73,7 @@
           {% unless settings.sitewide_sale or flash_sale_live %}
             {% if customer %}Your{% endif %} Net Price: {{ price | money }}
           {% else %}
-            {% if customer %}Your{% endif %} Net Price: {{ price | minus: product_discount | money }}
+            {% if customer %}Your{% endif %} Net Price: <span class="tw-line-through">{{ price | money }}</span> <span class="tw-text-brand-sale">{{ price | minus: product_discount | money }}</span>
           {% endunless %}
         </div>
       </div>
