@@ -18,7 +18,7 @@
           "settings": {
             "visibility": "mobile",
             "mobile": "full",
-            "desktop": "33%"
+            "desktop": "50%"
           },
           "blocks": {
             "pdp_title_rating_wjMMtU": {
@@ -63,7 +63,7 @@
           "settings": {
             "visibility": "both",
             "mobile": "full",
-            "desktop": "2/5"
+            "desktop": "50%"
           },
           "blocks": {
             "pdp_image_gallery_8eyDQJ": {
@@ -83,7 +83,7 @@
           "settings": {
             "visibility": "both",
             "mobile": "full",
-            "desktop": "3/5"
+            "desktop": "50%"
           },
           "blocks": {
             "pdp_title_rating_kPwfKm": {
