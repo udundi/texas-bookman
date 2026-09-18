@@ -1818,10 +1818,6 @@ video {
   width: 2rem;
 }
 
-.tw-w-\[calc\(100\%-2rem\)\] {
-  width: calc(100% - 2rem);
-}
-
 .tw-w-auto {
   width: auto;
 }
@@ -2618,11 +2614,6 @@ video {
 .tw-px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
-}
-
-.tw-px-5 {
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
 }
 
 .tw-px-6 {
@@ -3775,16 +3766,8 @@ video {
     width: 24rem;
   }
 
-  .md\:tw-w-\[220px\] {
-    width: 220px;
-  }
-
   .md\:tw-w-\[570px\] {
     width: 570px;
-  }
-
-  .md\:tw-w-\[600px\] {
-    width: 600px;
   }
 
   .md\:tw-w-auto {

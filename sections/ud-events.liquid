@@ -52,92 +52,26 @@
 
       <div class="tw-flex tw-flex-col">
         {%- for article in blogs[selected_blog].articles -%}
-          {%- assign date_str = article.published_at | date: '%b|%d|%Y' | split: '|' -%}
-          <article
-            class="tw-flex tw-flex-col tw-items-stretch tw-overflow-hidden tw-mb-5 last:tw-mb-0 md:tw-flex-row"
-            style="border: 1px solid {{ section.settings.card_border_color }}; border-radius: {{ section.settings.card_border_radius }}px; background-color: {{ section.settings.card_bg }};"
-          >
-            {%- if article.image -%}
-              <img
-                src="{{ article.image | image_url: width: 440 }}"
-                alt="{{ article.title | escape }}"
-                class="tw-shrink-0 tw-self-start tw-rounded-md tw-object-cover tw-object-center tw-w-[calc(100%-2rem)] tw-mx-4 tw-mt-4 tw-min-h-[180px] md:tw-w-[600px] md:tw-mx-0 md:tw-ml-5 md:tw-my-5 md:tw-min-h-0"
-                loading="lazy"
-                width="220"
-                height="148"
-              >
-            {%- else -%}
-              <div
-                class="tw-shrink-0 tw-self-start tw-rounded-md tw-bg-grey-light tw-w-[calc(100%-2rem)] tw-mx-4 tw-mt-4 tw-min-h-[180px] md:tw-w-[600px] md:tw-mx-0 md:tw-ml-5 md:tw-my-5"
-                aria-hidden="true"
-              ></div>
-            {%- endif -%}
-
-            <div class="tw-flex tw-flex-1 tw-flex-col tw-gap-2 tw-min-w-0 tw-p-5 md:tw-pl-6">
-              <div class="tw-flex tw-min-w-0 tw-flex-1 tw-items-start tw-justify-between tw-gap-4 tw-flex-wrap">
-                <a
-                  href="{{ article.url }}"
-                  class="tw-block tw-font-bold tw-leading-tight tw-mb-1 tw-no-underline hover:tw-underline tw-font-montserrat"
-                  style="color: {{ section.settings.event_title_color }}; font-size: {{ section.settings.event_title_size }}px;"
-                >
-                  {{ article.title }}
-                </a>
-              </div>
-
-              {%- assign start_time = article.metafields.custom.start_time.value -%}
-              {%- assign end_time = article.metafields.custom.end_time.value -%}
-              {%- assign location = article.metafields.custom.location.value -%}
-              {%- if start_time != blank or location != blank -%}
-                <div
-                  class="tw-flex tw-items-center tw-gap-1 tw-flex-wrap tw-font-montserrat"
-                  style="color: {{ section.settings.meta_color }}; font-size: {{ section.settings.meta_size }}px;"
-                >
-                  <svg
-                    class="tw-shrink-0 tw-size-3.5 tw-fill-none"
-                    style="stroke: {{ section.settings.meta_color }}; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polyline points="12 6 12 12 16 14"></polyline>
-                  </svg>
-                  {%- if start_time != blank -%}
-                    <span>
-                      {{- start_time | date: '%I:%M %p' -}}
-                      {%- if end_time != blank %} - {{ end_time | date: '%I:%M %p' }}{% endif -%}
-                    </span>
-                  {%- endif -%}
-                  {%- if start_time != blank and location != blank -%}
-                    <span class="tw-opacity-50">|</span>
-                  {%- endif -%}
-                  {%- if location != blank -%}
-                    <span>{{ location }}</span>
-                  {%- endif -%}
-                </div>
-              {%- endif -%}
-
-              {%- if article.excerpt != blank -%}
-                <p
-                  class="tw-m-0 tw-leading-relaxed tw-font-montserrat"
-                  style="color: {{ section.settings.description_color }}; font-size: {{ section.settings.description_size }}px;"
-                >
-                  {{ article.excerpt | strip_html | truncatewords: 30 }}
-                </p>
-              {%- endif -%}
-
-              {%- assign cta_text = article.metafields.custom.cta_text.value -%}
-              {%- assign cta_link = article.metafields.custom.cta_link.value -%}
-              {%- if cta_text != blank -%}
-                <a
-                  href="{{ cta_link | default: article.url }}"
-                  class="tw-inline-block tw-self-start tw-font-bold tw-uppercase tw-tracking-wider tw-no-underline tw-mt-1 tw-py-2 tw-px-5 tw-transition-opacity hover:tw-opacity-85 tw-font-montserrat"
-                  style="background-color: {{ section.settings.cta_bg }}; color: {{ section.settings.cta_text_color }}; font-size: {{ section.settings.cta_font_size }}px; border-radius: {{ section.settings.cta_border_radius }}px;"
-                >
-                  {{ cta_text }}
-                </a>
-              {%- endif -%}
-            </div>
-          </article>
+          {%- assign start_time = article.metafields.custom.start_time.value -%}
+          {%- assign end_time = article.metafields.custom.end_time.value -%}
+          {%- assign location = article.metafields.custom.location.value -%}
+          {%- assign cta_text = article.metafields.custom.cta_text.value -%}
+          {%- assign cta_link = article.metafields.custom.cta_link.value -%}
+          {%- assign excerpt = article.excerpt | strip_html | truncatewords: 30 -%}
+          {%- assign cta_url = cta_link | default: article.url -%}
+          {%- render 'ud-event-card',
+            section: section,
+            image: article.image,
+            image_alt: article.title,
+            title: article.title,
+            title_url: article.url,
+            location: location,
+            start_time: start_time,
+            end_time: end_time,
+            description: excerpt,
+            cta_label: cta_text,
+            cta_url: cta_url
+          -%}
         {%- endfor -%}
       </div>
     {%- endif -%}
