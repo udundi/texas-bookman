@@ -2873,6 +2873,10 @@ video {
   font-size: 1.1rem;
 }
 
+.tw-text-\[10px\] {
+  font-size: 10px;
+}
+
 .tw-text-\[11px\] {
   font-size: 11px;
 }
@@ -3101,6 +3105,10 @@ video {
 
 .tw-opacity-50 {
   opacity: 0.5;
+}
+
+.tw-opacity-60 {
+  opacity: 0.6;
 }
 
 .tw-shadow-2xl {

@@ -1,0 +1,119 @@
+{%- comment -%}
+  Renders a single blog article card (visually similar to ud-event-card, minus
+  event-specific date/time/location). Accepts:
+    - section: the parent section (for settings.*)
+    - image, image_alt
+    - title, title_url
+    - author
+    - published_date: pre-formatted date string
+    - description: string
+    - cta_label, cta_url
+{%- endcomment -%}
+<article
+  class="ud-blog-card tw-flex tw-flex-col tw-items-stretch tw-overflow-hidden tw-mb-5 last:tw-mb-0 md:tw-flex-row"
+  style="border: 1px solid {{ section.settings.card_border_color }}; border-radius: {{ section.settings.card_border_radius }}px; background-color: {{ section.settings.card_bg }};"
+>
+  {%- comment -%} Thumbnail {%- endcomment -%}
+  {%- if image != blank -%}
+    {%- assign thumb_alt = image_alt | default: title | default: '' | escape -%}
+    <img
+      src="{{ image | image_url: width: 380 }}"
+      alt="{{ thumb_alt }}"
+      class="tw-shrink-0 tw-self-start tw-rounded-md tw-aspect-video tw-object-cover tw-object-center tw-mx-4 tw-mt-4 tw-min-h-[180px] md:tw-max-w-[380px] tw-w-full md:tw-mx-0 md:tw-ml-5 md:tw-my-5 md:tw-min-h-0"
+      loading="lazy"
+      width="380"
+      height="148"
+    >
+  {%- else -%}
+    <div
+      class="tw-shrink-0 tw-self-start tw-rounded-md tw-aspect-video tw-object-cover tw-object-center tw-mx-4 tw-mt-4 tw-min-h-[180px] md:tw-max-w-[380px] tw-w-full md:tw-mx-0 md:tw-ml-5 md:tw-my-5 md:tw-min-h-0"
+      aria-hidden="true"
+    ></div>
+  {%- endif -%}
+
+  <div class="tw-flex tw-flex-1 tw-flex-col tw-gap-2 tw-min-w-0 tw-p-5 md:tw-pl-6">
+    {%- if title != blank -%}
+      {%- if title_url != blank -%}
+        <a
+          href="{{ title_url }}"
+          class="tw-block tw-font-bold tw-leading-tight tw-mb-1 tw-no-underline hover:tw-underline tw-font-montserrat"
+          style="color: {{ section.settings.article_title_color }}; font-size: {{ section.settings.article_title_size }}px;"
+        >
+          {{ title }}
+        </a>
+      {%- else -%}
+        <span
+          class="tw-block tw-font-bold tw-leading-tight tw-mb-1 tw-font-montserrat"
+          style="color: {{ section.settings.article_title_color }}; font-size: {{ section.settings.article_title_size }}px;"
+        >
+          {{ title }}
+        </span>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- assign has_author = false -%}
+    {%- if author != blank -%}{%- assign has_author = true -%}{%- endif -%}
+    {%- assign has_published_date = false -%}
+    {%- if published_date != blank -%}{%- assign has_published_date = true -%}{%- endif -%}
+
+    {%- if has_author or has_published_date -%}
+      <div
+        class="tw-flex tw-items-center tw-gap-2 tw-flex-wrap tw-font-montserrat"
+        style="color: {{ section.settings.meta_color }}; font-size: {{ section.settings.meta_size }}px;"
+      >
+        {%- if has_author -%}
+          <span class="tw-flex tw-items-center tw-gap-2 tw-flex-row">
+            <svg
+              class="tw-shrink-0 tw-size-3.5 tw-fill-none"
+              style="stroke: {{ section.settings.meta_color }}; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <span>{{ author }}</span>
+          </span>
+        {%- endif -%}
+        {%- if has_author and has_published_date -%}
+          <span class="tw-opacity-50">|</span>
+        {%- endif -%}
+        {%- if has_published_date -%}
+          <span class="tw-flex tw-items-center tw-gap-2 tw-flex-row">
+            <svg
+              class="tw-shrink-0 tw-size-3.5 tw-fill-none"
+              style="stroke: {{ section.settings.meta_color }}; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span>{{ published_date }}</span>
+          </span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if description != blank -%}
+      <p
+        class="tw-m-0 tw-leading-relaxed tw-font-montserrat"
+        style="color: {{ section.settings.description_color }}; font-size: {{ section.settings.description_size }}px;"
+      >
+        {{ description }}
+      </p>
+    {%- endif -%}
+
+    {%- if cta_label != blank -%}
+      <a
+        href="{{ cta_url | default: '#' }}"
+        class="tw-inline-block tw-self-start tw-font-semibold tw-uppercase tw-tracking-wider tw-no-underline tw-mt-1 tw-py-1 tw-px-4 tw-rounded-md tw-transition-opacity hover:tw-opacity-85 tw-font-montserrat"
+        style="background-color: {{ section.settings.cta_bg }}; color: {{ section.settings.cta_text_color }}; font-size: {{ section.settings.cta_font_size }}px; border-radius: {{ section.settings.cta_border_radius }}px;"
+      >
+        {{ cta_label }}
+      </a>
+    {%- endif -%}
+  </div>
+</article>

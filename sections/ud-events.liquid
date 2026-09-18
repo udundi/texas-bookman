@@ -45,12 +45,21 @@
     {%- if selected_blog != blank -%}
       {%- assign event_count = blogs[selected_blog].articles | size -%}
       <div class="tw-flex tw-items-center tw-justify-between tw-mb-6">
-        <p class="tw-font-semibold tw-text-18 tw-text-offblack tw-m-0 tw-font-montserrat">
+        <p
+          class="tw-font-semibold tw-text-18 tw-text-offblack tw-m-0 tw-font-montserrat"
+          id="ud-events-count-{{ section.id }}"
+        >
           Showing {{ event_count }} Scheduled Event{% if event_count != 1 %}s{% endif %}
         </p>
       </div>
 
-      <div class="tw-flex tw-flex-col">
+      <div class="tw-flex tw-flex-col" id="ud-events-list-{{ section.id }}">
+        <p
+          class="tw-hidden tw-font-semibold tw-text-18 tw-text-offblack tw-m-0 tw-mb-6 tw-font-montserrat"
+          id="ud-events-past-heading-{{ section.id }}"
+        >
+          Past Events
+        </p>
         {%- for article in blogs[selected_blog].articles -%}
           {%- assign start_time = article.metafields.custom.start_time.value -%}
           {%- assign end_time = article.metafields.custom.end_time.value -%}
@@ -77,6 +86,61 @@
     {%- endif -%}
   </div>
 </section>
+
+<script>
+  (function () {
+    var list = document.getElementById('ud-events-list-{{ section.id }}');
+    if (!list) return;
+
+    var countEl = document.getElementById('ud-events-count-{{ section.id }}');
+    var pastHeading = document.getElementById('ud-events-past-heading-{{ section.id }}');
+    var cards = Array.prototype.slice.call(list.querySelectorAll(':scope > .ud-event-card'));
+    var now = Date.now();
+    var upcoming = [];
+    var past = [];
+
+    cards.forEach(function (card) {
+      var startTime = card.getAttribute('data-start-time');
+      var endTime = card.getAttribute('data-end-time');
+      var start = startTime ? new Date(startTime).getTime() : Infinity;
+      var isPast = endTime ? new Date(endTime).getTime() < now : false;
+
+      if (isPast) {
+        card.classList.add('tw-opacity-60');
+        var pastBadge = card.querySelector('.ud-event-past-badge');
+        if (pastBadge) pastBadge.classList.remove('tw-hidden');
+        past.push({ card: card, start: start });
+      } else {
+        upcoming.push({ card: card, start: start });
+      }
+    });
+
+    function byStart(a, b) {
+      return a.start - b.start;
+    }
+    upcoming.sort(byStart);
+    past.sort(byStart);
+
+    // Upcoming events first, past events pushed below them
+    upcoming.forEach(function (entry) {
+      list.appendChild(entry.card);
+    });
+
+    if (pastHeading && past.length > 0) {
+      pastHeading.classList.remove('tw-hidden');
+      list.appendChild(pastHeading);
+    }
+
+    past.forEach(function (entry) {
+      list.appendChild(entry.card);
+    });
+
+    if (countEl) {
+      var count = upcoming.length;
+      countEl.textContent = 'Showing ' + count + ' Scheduled Event' + (count !== 1 ? 's' : '');
+    }
+  })();
+</script>
 
 {% schema %}
 {

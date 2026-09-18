@@ -5,16 +5,27 @@
     - image, image_alt
     - title, title_url
     - location
-    - start_time, end_time: date/time values (metafield or similar)
+    - start_time, end_time: date/time values (metafield or similar); rendered as
+      data-start-time/data-end-time attributes for JS sorting & past-event detection
     - date_month, date_day, date_year: optional badge override (defaults derive from start_time)
     - description: rich text / HTML string
     - cta_label, cta_url
 {%- endcomment -%}
 <article
-  class="tw-flex tw-flex-col tw-items-stretch tw-overflow-hidden tw-mb-5 last:tw-mb-0 md:tw-flex-row"
+  class="ud-event-card tw-relative tw-flex tw-flex-col tw-items-stretch tw-overflow-hidden tw-mb-5 last:tw-mb-0 md:tw-flex-row"
   style="border: 1px solid {{ section.settings.card_border_color }}; border-radius: {{ section.settings.card_border_radius }}px; background-color: {{ section.settings.card_bg }};"
+  {%- if start_time != blank %}
+    data-start-time="{{ start_time | date: '%Y-%m-%dT%H:%M:%S' }}"
+  {% endif -%}
+  {%- if end_time != blank %}
+    data-end-time="{{ end_time | date: '%Y-%m-%dT%H:%M:%S' }}"
+  {% endif -%}
   {{ shopify_attributes }}
 >
+  {%- comment -%} Past event badge, revealed by JS when end_time is before now {%- endcomment -%}
+  <span class="ud-event-past-badge tw-hidden tw-absolute tw-top-2 tw-right-2 tw-z-10 tw-rounded tw-bg-offblack tw-text-white tw-text-[10px] tw-font-bold tw-uppercase tw-tracking-wide tw-px-2 tw-py-1">
+    Past Event
+  </span>
   {%- comment -%} Thumbnail {%- endcomment -%}
   {%- if image != blank -%}
     {%- assign thumb_alt = image_alt | default: title | default: '' | escape -%}
@@ -97,15 +108,20 @@
                   </defs>
                 </svg>
                 <span>
-                  {%- if start_month != end_month -%}
-                    {{ start_month }}
-                    {{ start_day }}
+                  {{ start_month }}
+                  {%- if start_month == end_month and start_day == end_day -%}
+                    {{ start_day }},
                   {%- else -%}
                     {{ start_day }}
                   {%- endif -%}
                   {%- if start_year != end_year -%}, {{ start_year }}{%- endif -%}
-                  - {{ end_month }}
-                  {{ end_day }}, {{ end_year }}
+                  {%- if start_month != end_month -%}
+                    - {{ end_month }}
+                    {{ end_day }},
+                  {%- elsif start_day != end_day -%}
+                    - {{ end_day }},
+                  {%- endif -%}
+                  {{ end_year | prepend: ' ' }}
                 </span>
               </span>
             {%- endif -%}

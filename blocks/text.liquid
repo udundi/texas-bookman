@@ -31,12 +31,6 @@
 
 {% assign text_classes = 'tw-m-0  block-' | append: block.id %}
 
-{% if block.settings.font == 'primary' %}
-  {% assign text_classes = text_classes | append: ' tw-font-playfair' %}
-{% elsif block.settings.font == 'secondary' %}
-  {% assign text_classes = text_classes | append: ' tw-font-montserrat' %}
-{% endif %}
-
 {% if block.settings['gap-border'] %}
   {% assign text_classes = text_classes | append: ' gap-border-' | append: block.id %}
 {% endif %}
@@ -48,31 +42,31 @@
 <div class="tw-w-full tw-font-montserrat tw-leading-tighter tw-h-fit tw-flex {% if block.settings.align == 'center' %} tw-text-center {% elsif block.settings.align == 'end' %} tw-text-end {% elsif block.settings.align == 'start' %} tw-text-start {% endif %} {% if block.settings.display == 'desktop' %} tw-hidden md:tw-block {% elsif block.settings.display == 'mobile' %} md:tw-hidden {% endif %} tw-relative">
   {% case block.settings.type %}
     {% when 'h1' %}
-      <h2 class="{{ text_classes }} tw-leading-tight">
+      <h2 class="{{ text_classes }} tw-font-sans tw-leading-tight">
         {{ block.settings.text }}
       </h2>
     {% when 'h2' %}
-      <h2 class="{{ text_classes }} tw-leading-tight">
+      <h2 class="{{ text_classes }} tw-font-sans tw-leading-tight">
         {{ block.settings.text }}
       </h2>
     {% when 'h3' %}
-      <h3 class="{{ text_classes }} tw-leading-tight">
+      <h3 class="{{ text_classes }} tw-font-sans tw-leading-tight">
         {{ block.settings.text }}
       </h3>
     {% when 'h4' %}
-      <h4 class="{{ text_classes }} tw-leading-tight">
+      <h4 class="{{ text_classes }} tw-font-sans tw-leading-tight">
         {{ block.settings.text }}
       </h4>
     {% when 'h5' %}
-      <h5 class="{{ text_classes }} tw-leading-tight">
+      <h5 class="{{ text_classes }} tw-font-sans tw-leading-tight">
         {{ block.settings.text }}
       </h5>
     {% when 'h6' %}
-      <h6 class="{{ text_classes }} tw-leading-tight">
+      <h6 class="{{ text_classes }} tw-font-sans tw-leading-tight">
         {{ block.settings.text }}
       </h6>
     {% when 'p' %}
-      <p class="{{ text_classes }}">
+      <p class="{{ text_classes }} tw-font-sans">
         {{ block.settings.text }}
       </p>
   {% endcase %}
@@ -143,22 +137,6 @@
         }
       ],
       "default": "center"
-    },
-    {
-      "type": "select",
-      "id": "font",
-      "label": "Font Type",
-      "options": [
-        {
-          "value": "secondary",
-          "label": "Montserrat"
-        },
-        {
-          "value": "primary",
-          "label": "Playfair Display"
-        }
-      ],
-      "default": "secondary"
     },
     {
       "type": "select",
@@ -263,50 +241,6 @@
         }
       ],
       "default": "both"
-    },
-    {
-      "type": "header",
-      "content": "Brand Guidelines"
-    },
-    {
-      "type": "header",
-      "content": "Brand Colors"
-    },
-    {
-      "type": "paragraph",
-      "content": "Primary Blue: #313558, Light Blue: #8196A9, Off Black: #212121, Off White: #F9F8F5, Moab: #94412F, Clay: #D9A590"
-    },
-    {
-      "type": "header",
-      "content": "Main Header"
-    },
-    {
-      "type": "paragraph",
-      "content": "Tag Type: Header 2, Font Type: Playfair, Font Weight: Bold, Desktop Size: 42px, Mobile Size: 42px,"
-    },
-    {
-      "type": "header",
-      "content": "Section Header"
-    },
-    {
-      "type": "paragraph",
-      "content": "Tag Type: Header 3, Font Type: Playfair, Font Weight: Bold, Desktop Size: 36px, Mobile Size: 36px,"
-    },
-    {
-      "type": "header",
-      "content": "Subheader"
-    },
-    {
-      "type": "paragraph",
-      "content": "Tag Type: Header 4, Font Type: Montserrat, Font Weight: Semibold, Desktop Size: 20px, Mobile Size: 18px,"
-    },
-    {
-      "type": "header",
-      "content": "Body Text"
-    },
-    {
-      "type": "paragraph",
-      "content": "Tag Type: Paragraph, Font Type: Montserrat, Font Weight: Normal, Desktop Size: 16px, Mobile Size: 14px,"
     }
   ],
   "presets": [
@@ -317,7 +251,6 @@
         "text": "Your Heading Here",
         "type": "h2",
         "align": "center",
-        "font": "primary",
         "weight": "700",
         "font_size": 42,
         "mobile_font_size": 42,
@@ -331,7 +264,6 @@
         "text": "Section Title",
         "type": "h3",
         "align": "center",
-        "font": "primary",
         "weight": "700",
         "font_size": 36,
         "mobile_font_size": 36,
@@ -345,7 +277,6 @@
         "text": "Subheading Text",
         "type": "h4",
         "align": "center",
-        "font": "secondary",
         "weight": "600",
         "font_size": 20,
         "mobile_font_size": 18,
@@ -359,7 +290,6 @@
         "text": "Body text content goes here.",
         "type": "p",
         "align": "center",
-        "font": "secondary",
         "weight": "400",
         "font_size": 16,
         "mobile_font_size": 14,
