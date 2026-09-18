@@ -97,7 +97,7 @@
         "mobile_image": "shopify://shop_images/Rectangle_79.png",
         "desktop_image_position": "center center",
         "mobile_image_position": "center top",
-        "mobile_image_ratio": "3 / 4",
+        "mobile_image_ratio": "1 / 1",
         "tablet_image_ratio": "4 / 3",
         "desktop_height": 550,
         "mobile_overlay_opacity": 10,
