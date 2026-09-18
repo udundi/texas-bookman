@@ -272,7 +272,7 @@
           "type": "image-text-overlay",
           "name": "Image with Text Overlay",
           "settings": {
-            "image": "shopify://shop_images/500_49d6798f-416f-4285-bb4f-f2689db66467.jpg",
+            "image": "shopify://shop_images/pages-of-a-book-curled-into-a-heart-shape.jpg",
             "overlay_text": "<p>Used Books You'll Love</p>",
             "text_position": "bottom-center",
             "text_color": "#FFFFFF",
@@ -295,7 +295,7 @@
           "type": "image-text-overlay",
           "name": "Image with Text Overlay",
           "settings": {
-            "image": "shopify://shop_images/Group_119.png",
+            "image": "shopify://shop_images/writing-in-journal.jpg",
             "overlay_text": "<p>New Flame Tree Journals</p>",
             "text_position": "bottom-center",
             "text_color": "#FFFFFF",
