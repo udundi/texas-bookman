@@ -45,7 +45,23 @@
           "type": "_faq-item",
           "settings": {
             "question": "How do I place an order?",
-            "answer": "<p><strong>ONLINE:</strong>  Ordering via our website is convenient and available 24/7, at <a href=\"https://texasbookman.com \" title=\"https://texasbookman.com \">https://texasbookman.com </a></p><p><strong>EMAIL:</strong> E-mail your order to us at orders@texasbookman.com</p>"
+            "answer": "<p><strong>ONLINE:</strong>  Ordering via our website is convenient and available 24/7, at <a href=\"https://texasbookman.com \" title=\"https://texasbookman.com \">https://texasbookman.com </a></p><p><strong>EMAIL:</strong> E-mail your order to us at <a href=\"mailto:orders@texasbookman.com\" title=\"mailto:orders@texasbookman.com\">orders@texasbookman.com</a></p>"
+          },
+          "blocks": {}
+        },
+        "faq_item_KecAMR": {
+          "type": "_faq-item",
+          "settings": {
+            "question": "How do I cancel an order?",
+            "answer": "<p>If your order is still being processed, you can cancel your order by contacting us or by Please include your order number and contact information as well as the reason you would like to cancel the order. Our customer service team will reply to your cancellation request.</p><p>Please note, if you cancel an order after the product has been processed or shipped from our warehouse, you will be responsible for the freight costs (both ways) as well as a 10% restocking fee.</p>"
+          },
+          "blocks": {}
+        },
+        "faq_item_WRnAgL": {
+          "type": "_faq-item",
+          "settings": {
+            "question": "How do I report damages on my received order?",
+            "answer": "<p>Our shipping team packs every order with care, and we have a strong reputation of low instances of damaged shipments.  However, unexpected damage may occur during shipment.   Please email us at <a href=\"mailto:orders@texasbookman.com\" title=\"mailto:orders@texasbookman.com\">orders@texasbookman.com</a> to report the damaged item(s).  Pictures are required for all damaged item(s).  Please<strong> DO NOT</strong> return any item(s) without prior approval from Texas Bookman.  Any items returned without authorization will not be issued credit and will remain on your account. <strong>Any claims for damaged or missing items must be made within 10 days of receipt of order.  </strong></p>"
           },
           "blocks": {}
         }
@@ -54,7 +70,9 @@
         "faq_item_NagCHR",
         "faq_item_9eQkjA",
         "faq_item_m37r6e",
-        "faq_item_TWWC9W"
+        "faq_item_TWWC9W",
+        "faq_item_KecAMR",
+        "faq_item_WRnAgL"
       ],
       "name": "FAQ Section",
       "settings": {
@@ -72,10 +90,61 @@
         "padding_bottom": 60,
         "max_width": 800
       }
+    },
+    "ud_faq_k8pyDz": {
+      "type": "ud-faq",
+      "blocks": {
+        "faq_item_jqdUVD": {
+          "type": "_faq-item",
+          "settings": {
+            "question": "How will my order ship to U.S.?",
+            "answer": "<p>We have very competitive rates with UPS, and a number of freight/LTL companies. If you do not have a preferred shipping method, we will ship your order with the cheapest rate we find . Our preferred parcel carrier is UPS.</p>"
+          },
+          "blocks": {}
+        },
+        "faq_item_Yx49dh": {
+          "type": "_faq-item",
+          "settings": {
+            "question": "How will my order ship internationally (outside of the U.S.)?",
+            "answer": "<p>If you are interested in shipping outside of the United States, you must ship your order through a freight forwarder. If you have a freight forwarder in the United States, we will accommodate your requested shipping arrangements. Our preferred method of UK/Europe shipping is Magnum. If you are looking for a freight forwarder, contact us for recommendations.</p><p>Please note that if this is your first time shopping with us, we may require payment by wire transfer or CC prior to your order shipping. <br/><br/></p>"
+          },
+          "blocks": {}
+        },
+        "faq_item_yNWhr6": {
+          "type": "_faq-item",
+          "settings": {
+            "question": "When will my order ship?",
+            "answer": "<p>Our average processing time for US warehouse orders is 7-10 business days.  Processing times may fluctuate based on Trade Shows, holidays, and number of orders we are receiving.  We process all orders in the order they are received.  If you have a receiving deadline, please inquire before placing your order.  We’ll always try and work with you. </p>"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "faq_item_jqdUVD",
+        "faq_item_Yx49dh",
+        "faq_item_yNWhr6"
+      ],
+      "name": "FAQ Section",
+      "settings": {
+        "heading": "Shipping FAQs",
+        "heading_size": 32,
+        "heading_color": "#322f30",
+        "heading_alignment": "center",
+        "heading_margin_bottom": 16,
+        "description": "",
+        "description_size": 18,
+        "description_color": "#626262",
+        "description_alignment": "left",
+        "description_margin_bottom": 32,
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "max_width": 800
+      }
     }
   },
   "order": [
     "main",
-    "ud_faq_zqBRAx"
+    "ud_faq_zqBRAx",
+    "ud_faq_k8pyDz"
   ]
 }
