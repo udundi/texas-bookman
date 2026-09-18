@@ -58,7 +58,7 @@
         "section_title": "Browse New Arrivals",
         "padding_top": 4,
         "padding_bottom": 4,
-        "mobile_padding_top": 4,
+        "mobile_padding_top": 1,
         "mobile_padding_bottom": 4,
         "padding_left": 2,
         "padding_right": 2,
@@ -99,7 +99,7 @@
         "mobile_image_position": "center top",
         "mobile_image_ratio": "3 / 4",
         "desktop_height": 550,
-        "mobile_overlay_opacity": 70,
+        "mobile_overlay_opacity": 10,
         "show_overlay": true,
         "overlay_color": "#000000",
         "overlay_opacity": 30,
@@ -268,16 +268,21 @@
     "ud_flexbox_DaNpeD": {
       "type": "ud-flexbox",
       "blocks": {
-        "basic_image_AwNNTK": {
-          "type": "basic-image",
-          "name": "Base Image",
+        "image_text_overlay_9VNpxw": {
+          "type": "image-text-overlay",
+          "name": "Image with Text Overlay",
           "settings": {
             "image": "shopify://shop_images/Group_118.png",
-            "aspect_ratio": "none",
-            "mobile_aspect_ratio": "none",
+            "overlay_text": "<p>Used Books You'll Love</p>",
+            "text_position": "bottom-center",
+            "text_color": "#FFFFFF",
+            "text_size": 24,
+            "mobile_text_size": 18,
+            "aspect_ratio": "3/2",
+            "mobile_aspect_ratio": "3/2",
             "object_fit": "cover",
             "rounded": "none",
-            "max_width": 1040,
+            "max_width": 480,
             "mobile_max_width": 320,
             "border": 0,
             "border_color": "",
@@ -286,16 +291,21 @@
           },
           "blocks": {}
         },
-        "basic_image_eGU4zK": {
-          "type": "basic-image",
-          "name": "Base Image",
+        "image_text_overlay_a743Di": {
+          "type": "image-text-overlay",
+          "name": "Image with Text Overlay",
           "settings": {
             "image": "shopify://shop_images/Group_119.png",
-            "aspect_ratio": "none",
-            "mobile_aspect_ratio": "none",
+            "overlay_text": "<p>New Flame Tree Journals</p>",
+            "text_position": "bottom-center",
+            "text_color": "#FFFFFF",
+            "text_size": 24,
+            "mobile_text_size": 18,
+            "aspect_ratio": "3/2",
+            "mobile_aspect_ratio": "3/2",
             "object_fit": "cover",
             "rounded": "none",
-            "max_width": 1040,
+            "max_width": 480,
             "mobile_max_width": 320,
             "border": 0,
             "border_color": "",
@@ -306,8 +316,8 @@
         }
       },
       "block_order": [
-        "basic_image_AwNNTK",
-        "basic_image_eGU4zK"
+        "image_text_overlay_9VNpxw",
+        "image_text_overlay_a743Di"
       ],
       "name": "Base Flexbox",
       "settings": {
@@ -396,7 +406,6 @@
                 "text": "Texas Bookman Homepage",
                 "type": "h2",
                 "align": "center",
-                "font": "primary",
                 "weight": "700",
                 "font_size": 42,
                 "mobile_font_size": 42,
@@ -466,6 +475,7 @@
             "image": "{{ block.settings.blog.image }}",
             "title": "{{ block.settings.blog.title }}",
             "title_url": "{{ block.settings.blog.url }}",
+            "date_range": "September 30 - October 1, 2026",
             "time": "{{ block.settings.blog.metafields.custom.start_time | metafield_text }} - {{ block.settings.blog.metafields.custom.end_time | metafield_text }}",
             "location": "{{ block.settings.blog.metafields.custom.location.value }}",
             "description": "{{ block.settings.blog.excerpt }}",
@@ -483,6 +493,7 @@
             "image": "{{ block.settings.blog.image }}",
             "title": "{{ block.settings.blog.title }}",
             "title_url": "{{ block.settings.blog.url }}",
+            "date_range": "September 30 - October 1, 2026",
             "time": "{{ block.settings.blog.metafields.custom.start_time | metafield_text }} - {{ block.settings.blog.metafields.custom.end_time | metafield_text }}",
             "location": "{{ block.settings.blog.metafields.custom.location.value }}",
             "description": "{{ block.settings.blog.excerpt }}",
