@@ -21,7 +21,7 @@
           "type": "_faq-item",
           "settings": {
             "question": "Who can order from Texas Bookman?",
-            "answer": "<p>Texas Bookman is a wholesale company and does not sell directly to consumers. We require proof of business status before fulfilling any orders.</p>"
+            "answer": "<p>We sell exclusively to qualified wholesale customers, including retailers, resellers, distributors, and other approved businesses. </p>"
           },
           "blocks": {}
         },
@@ -29,7 +29,7 @@
           "type": "_faq-item",
           "settings": {
             "question": "What do I need to place an order?",
-            "answer": "<p>U.S. Customers</p><ul><li>Completed account application</li><li>Resale certificate</li><li>Tax ID</li></ul><p>International Customers</p><ul><li>Completed account application</li></ul><p>All required documentation must be on file before your order can be shipped.<br/><br/></p>"
+            "answer": "<p>A valid business license, resale certificate, or other applicable documentation may be required to establish an account and place orders.</p>"
           },
           "blocks": {}
         },
@@ -37,7 +37,15 @@
           "type": "_faq-item",
           "settings": {
             "question": "Is there a minimum order?",
-            "answer": "<p>Yes. The minimum order is $100.</p>"
+            "answer": "<p>Initial Order Minimum: $150.00</p><p>Reorder Minimum: $100.00</p><p>Please note: Individual titles may have a minimum order quantity as designated in the product listing on our website.<br/><br/></p>"
+          },
+          "blocks": {}
+        },
+        "faq_item_TWWC9W": {
+          "type": "_faq-item",
+          "settings": {
+            "question": "How do I place an order?",
+            "answer": "<p><strong>ONLINE:</strong>  Ordering via our website is convenient and available 24/7, at <a href=\"https://texasbookman.com \" title=\"https://texasbookman.com \">https://texasbookman.com </a></p><p><strong>EMAIL:</strong> E-mail your order to us at orders@texasbookman.com</p>"
           },
           "blocks": {}
         }
@@ -45,7 +53,8 @@
       "block_order": [
         "faq_item_NagCHR",
         "faq_item_9eQkjA",
-        "faq_item_m37r6e"
+        "faq_item_m37r6e",
+        "faq_item_TWWC9W"
       ],
       "name": "FAQ Section",
       "settings": {
