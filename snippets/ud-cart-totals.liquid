@@ -1,6 +1,6 @@
 <div class="tw-my-4 sm:tw-text-16 tw-text-12 tw-text-offblack">
   <!-- Order Summary -->
-  <div class="tw-font-playfair tw-text-24 tw-font-bold tw-py-4 tw-border-t tw-border-solid tw-border-grey-dark tw-text-offblack">
+  <div class="tw-font-playfair tw-text-24 tw-font-semibold tw-py-4 tw-border-t tw-border-solid tw-border-grey-dark tw-text-offblack">
     Order Summary ([[totalCartItems]])
   </div>
   <!-- Discounts -->
@@ -22,17 +22,17 @@
     </div>
   </div>
   <!-- Shipping Total -->
-  <div class="shipping tw-flex tw-font-bold tw-my-1.5">
+  <div class="shipping tw-flex tw-font-semibold tw-my-1.5">
     <div class="label tw-flex-1">Shipping:</div>
     <div>test</div>
   </div>
   <!-- Subtotal -->
-  <div class="subTotal tw-flex tw-font-bold tw-my-1.5">
+  <div class="subTotal tw-flex tw-font-semibold tw-my-1.5">
     <div class="label tw-flex-1">Subtotal:</div>
     <div class="value tw-flex-none">[[cartData.total_price / 100 | currency]]</div>
   </div>
   <!-- Order Processing (hidden for gift card only orders) -->
-  <div class="tw-flex tw-font-bold tw-my-1.5" v-if="!isGiftCardOnlyOrder">
+  <div class="tw-flex tw-font-semibold tw-my-1.5" v-if="!isGiftCardOnlyOrder">
     <div class="label tw-flex-1">Order Processing Time:</div>
     <div class="value tw-flex-none">[[leadTime]] Business Days</div>
   </div>

@@ -23,7 +23,7 @@
   {{ shopify_attributes }}
 >
   {%- comment -%} Past event badge, revealed by JS when end_time is before now {%- endcomment -%}
-  <span class="ud-event-past-badge tw-hidden tw-absolute tw-top-2 tw-right-2 tw-z-10 tw-rounded tw-bg-offblack tw-text-white tw-text-[10px] tw-font-bold tw-uppercase tw-tracking-wide tw-px-2 tw-py-1">
+  <span class="ud-event-past-badge tw-hidden tw-absolute tw-top-2 tw-right-2 tw-z-10 tw-rounded tw-bg-offblack tw-text-white tw-text-[10px] tw-font-semibold tw-uppercase tw-tracking-wide tw-px-2 tw-py-1">
     Past Event
   </span>
   {%- comment -%} Thumbnail {%- endcomment -%}
@@ -51,14 +51,14 @@
           {%- if title_url != blank -%}
             <a
               href="{{ title_url }}"
-              class="tw-block tw-font-bold tw-leading-tight tw-mb-1 tw-no-underline hover:tw-underline tw-font-montserrat"
+              class="tw-block tw-font-semibold tw-leading-tight tw-mb-1 tw-no-underline hover:tw-underline tw-font-montserrat"
               style="color: {{ section.settings.event_title_color }}; font-size: {{ section.settings.event_title_size }}px;"
             >
               {{ title }}
             </a>
           {%- else -%}
             <span
-              class="tw-block tw-font-bold tw-leading-tight tw-mb-1 tw-font-montserrat"
+              class="tw-block tw-font-semibold tw-leading-tight tw-mb-1 tw-font-montserrat"
               style="color: {{ section.settings.event_title_color }}; font-size: {{ section.settings.event_title_size }}px;"
             >
               {{ title }}
@@ -178,7 +178,7 @@
           >
             {%- if badge_month != blank -%}
               <span
-                class="tw-text-[11px] tw-font-bold tw-uppercase tw-tracking-[0.05em] tw-leading-[1.2]"
+                class="tw-text-[11px] tw-font-semibold tw-uppercase tw-tracking-[0.05em] tw-leading-[1.2]"
                 style="color: {{ section.settings.badge_text_color }};"
               >
                 {{ badge_month }}
@@ -186,7 +186,7 @@
             {%- endif -%}
             {%- if badge_day != blank -%}
               <span
-                class="tw-text-28 tw-font-bold tw-leading-[1.1]"
+                class="tw-text-28 tw-font-semibold tw-leading-[1.1]"
                 style="color: {{ section.settings.badge_text_color }};"
               >
                 {{ badge_day }}
@@ -194,7 +194,7 @@
             {%- endif -%}
             {%- if badge_year != blank -%}
               <span
-                class="tw-text-[11px] tw-font-bold tw-leading-[1.2]"
+                class="tw-text-[11px] tw-font-semibold tw-leading-[1.2]"
                 style="color: {{ section.settings.badge_text_color }};"
               >
                 {{ badge_year }}

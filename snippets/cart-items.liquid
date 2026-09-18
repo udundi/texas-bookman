@@ -29,7 +29,7 @@
             <div class="tw-flex tw-items-start tw-justify-between">
               <div class="">
                 <!-- Title -->
-                <span class="tw-font-playfair tw-text-18 tw-font-bold tw-leading-tight tw-text-black md:tw-text-24">
+                <span class="tw-font-playfair tw-text-18 tw-font-semibold tw-leading-tight tw-text-black md:tw-text-24">
                   [[cartItemTitle(item)]]
                 </span>
 
@@ -44,13 +44,13 @@
                 </div>
               </div>
               <!-- Final Price -->
-              <div class="tw-flex tw-flex-col tw-items-end tw-gap-1 tw-pl-1 tw-text-14 tw-font-bold tw-text-navy md:tw-text-16">
+              <div class="tw-flex tw-flex-col tw-items-end tw-gap-1 tw-pl-1 tw-text-14 tw-font-semibold tw-text-navy md:tw-text-16">
                 <template v-if="flashSaleLive && isFlashSale(item)">
                   <div class="tw-h-fit tw-w-fit tw-rounded-[4px] tw-bg-rust tw-px-4 tw-text-12 tw-font-normal tw-text-white">
                     Flash Sale
                   </div>
                   <div class="tw-flex tw-w-fit tw-flex-col tw-items-end tw-justify-center tw-gap-1 tw-pr-1">
-                    <div class="tw-font-bold tw-leading-tight tw-text-navy">
+                    <div class="tw-font-semibold tw-leading-tight tw-text-navy">
                       [[ item.discounted_price * item.quantity / 100 | currency ]]
                     </div>
                     <div class="tw-text-12 tw-text-blue-grey tw-line-through">
@@ -64,7 +64,7 @@
                     [[ saleMessage]]
                   </div>
                   <div class="tw-flex tw-w-fit tw-flex-col tw-items-end tw-justify-center tw-gap-1 tw-pr-1">
-                    <div class="tw-font-bold tw-leading-tight tw-text-navy">
+                    <div class="tw-font-semibold tw-leading-tight tw-text-navy">
                       [[ item.discounted_price * item.quantity / 100 | currency ]]
                     </div>
                     <div class="tw-text-12 tw-text-blue-grey tw-line-through">
@@ -78,7 +78,7 @@
                     [[ saleMessage]]
                   </div>
                   <div class="tw-flex tw-w-fit tw-flex-col tw-items-start tw-justify-center tw-gap-1">
-                    <div class="tw-font-bold tw-leading-tight tw-text-navy">
+                    <div class="tw-font-semibold tw-leading-tight tw-text-navy">
                       [[ item.final_price * item.quantity / 100 | currency ]]
                     </div>
                     <div
@@ -177,18 +177,20 @@
         <div class="tw-flex tw-h-full tw-w-full tw-flex-col">
           <div class="tw-flex tw-items-start tw-justify-between">
             <div>
-              <span class="tw-font-playfair tw-text-18 tw-font-bold tw-leading-tight tw-text-black md:tw-text-24">
+              <span class="tw-font-playfair tw-text-18 tw-font-semibold tw-leading-tight tw-text-black md:tw-text-24">
                 [[ bundle.bundleName || 'Bundle' ]]
               </span>
             </div>
             <!-- Combined Price -->
-            <div class="tw-flex tw-flex-col tw-items-end tw-gap-1 tw-pl-1 tw-text-14 tw-font-bold tw-text-navy md:tw-text-16">
+            <div class="tw-flex tw-flex-col tw-items-end tw-gap-1 tw-pl-1 tw-text-14 tw-font-semibold tw-text-navy md:tw-text-16">
               <template v-if="bundle.hasDiscount">
                 <div class="tw-h-fit tw-w-fit tw-rounded-[4px] tw-bg-rust tw-px-4 tw-text-12 tw-font-normal tw-text-white">
                   [[ bundle.discountLabel ]]
                 </div>
                 <div class="tw-flex tw-w-fit tw-flex-col tw-items-end tw-justify-center tw-gap-1 tw-pr-1">
-                  <div class="tw-font-bold tw-leading-tight tw-text-navy">[[ bundle.totalPrice / 100 | currency ]]</div>
+                  <div class="tw-font-semibold tw-leading-tight tw-text-navy">
+                    [[ bundle.totalPrice / 100 | currency ]]
+                  </div>
                   <div class="tw-text-12 tw-text-blue-grey tw-line-through">
                     [[ bundle.originalPrice / 100 | currency ]]
                   </div>

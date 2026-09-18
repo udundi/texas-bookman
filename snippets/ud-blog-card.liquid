@@ -36,14 +36,14 @@
       {%- if title_url != blank -%}
         <a
           href="{{ title_url }}"
-          class="tw-block tw-font-bold tw-leading-tight tw-mb-1 tw-no-underline hover:tw-underline tw-font-montserrat"
+          class="tw-block tw-font-semibold tw-leading-tight tw-mb-1 tw-no-underline hover:tw-underline tw-font-montserrat"
           style="color: {{ section.settings.article_title_color }}; font-size: {{ section.settings.article_title_size }}px;"
         >
           {{ title }}
         </a>
       {%- else -%}
         <span
-          class="tw-block tw-font-bold tw-leading-tight tw-mb-1 tw-font-montserrat"
+          class="tw-block tw-font-semibold tw-leading-tight tw-mb-1 tw-font-montserrat"
           style="color: {{ section.settings.article_title_color }}; font-size: {{ section.settings.article_title_size }}px;"
         >
           {{ title }}

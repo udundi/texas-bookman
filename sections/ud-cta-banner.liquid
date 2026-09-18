@@ -29,7 +29,7 @@
   }
 
   .ud-cta-banner-{{ section.id }} .cta-heading {
-    font-weight: 700;
+    font-weight: 600;
     line-height: 1.15;
     margin-bottom: 1rem;
     color: {{ section.settings.heading_color }};
@@ -49,7 +49,7 @@
 
   .ud-cta-banner-{{ section.id }} .cta-btn {
     display: inline-block;
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     text-decoration: none;
@@ -109,7 +109,7 @@
   <div class="cta-inner">
     {%- if section.settings.eyebrow != blank -%}
       <p
-        class="tw-font-bold tw-uppercase tw-tracking-widest tw-mb-3"
+        class="tw-font-semibold tw-uppercase tw-tracking-widest tw-mb-3"
         style="color: {{ section.settings.eyebrow_color }}; font-size: {{ section.settings.eyebrow_size }}px;"
       >
         {{ section.settings.eyebrow }}

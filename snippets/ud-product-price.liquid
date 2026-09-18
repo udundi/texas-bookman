@@ -53,7 +53,7 @@
 
 {% assign product_discount = price | times: site_discount | round %}
 
-<div class="tw-font-bold tw-flex tw-flex-col tw-text-black md:tw-text-16 tw-text-16">
+<div class="tw-font-semibold tw-flex tw-flex-col tw-text-black md:tw-text-16 tw-text-16">
   {% unless no_discount == true %}
     {% if compare_price > price or settings.sitewide_sale or flash_sale_live %}
       {% if settings.sitewide_sale or flash_sale_live %}

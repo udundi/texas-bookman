@@ -22,7 +22,7 @@
     {%- comment -%} Section header {%- endcomment -%}
     {%- if section.settings.heading != blank -%}
       <{{ section.settings.heading_tag }}
-        class="tw-font-bold tw-text-center tw-mb-2 tw-font-montserrat"
+        class="tw-font-semibold tw-text-center tw-mb-2 tw-font-montserrat"
         style="color: {{ section.settings.heading_color }}; font-size: clamp({{ section.settings.heading_size_min }}px, 2.5vw, {{ section.settings.heading_size_max }}px);"
       >
         {{ section.settings.heading }}
@@ -68,7 +68,7 @@
       <div class="tw-text-center tw-mt-8">
         <a
           href="{{ section.settings.view_all_url | default: '#' }}"
-          class="tw-inline-block tw-font-bold tw-uppercase tw-tracking-[0.1em] tw-no-underline tw-py-2 tw-px-10 tw-rounded-[4px] tw-border tw-border-solid tw-bg-transparent tw-transition-colors hover:tw-bg-[var(--view-all-color)] hover:tw-text-white tw-font-montserrat"
+          class="tw-inline-block tw-font-semibold tw-uppercase tw-tracking-[0.1em] tw-no-underline tw-py-2 tw-px-10 tw-rounded-[4px] tw-border tw-border-solid tw-bg-transparent tw-transition-colors hover:tw-bg-[var(--view-all-color)] hover:tw-text-white tw-font-montserrat"
           style="
             --view-all-color: {{ section.settings.view_all_border_color }};
             border-color: {{ section.settings.view_all_border_color }};

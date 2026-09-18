@@ -1,6 +1,6 @@
 {% style %}
-  /* Dynamic desktop values */
-  @media screen and (min-width: 768px) {
+  /* Dynamic desktop values (lg and up) */
+  @media screen and (min-width: 1024px) {
     .ud-hero-banner-{{ section.id }} {
       min-height: {{ section.settings.desktop_height }}px;
       justify-content: {{ section.settings.desktop_content_alignment | replace: 'left', 'flex-start' | replace: 'right', 'flex-end' | replace: 'center', 'center' }};
@@ -16,12 +16,8 @@
     }
   }
 
-  /* Dynamic mobile values */
-  @media screen and (max-width: 767px) {
-    .ud-hero-banner-mobile-{{ section.id }} .hero-image-wrapper {
-      aspect-ratio: {{ section.settings.mobile_image_ratio }};
-    }
-
+  /* Dynamic mobile & tablet values (stacked layout, below lg) */
+  @media screen and (max-width: 1023px) {
     .ud-hero-banner-mobile-{{ section.id }} .hero-bg-mobile {
       object-position: {{ section.settings.mobile_image_position }};
     }
@@ -34,12 +30,26 @@
       color: {{ section.settings.mobile_body_color }} !important;
     }
   }
+
+  /* Phone-only aspect ratio */
+  @media screen and (max-width: 767px) {
+    .ud-hero-banner-mobile-{{ section.id }} .hero-image-wrapper {
+      aspect-ratio: {{ section.settings.mobile_image_ratio }};
+    }
+  }
+
+  /* Tablet-only aspect ratio */
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    .ud-hero-banner-mobile-{{ section.id }} .hero-image-wrapper {
+      aspect-ratio: {{ section.settings.tablet_image_ratio }};
+    }
+  }
 {% endstyle %}
 
 {%- comment -%} Mobile layout: image with absolute text and top gradient {%- endcomment -%}
 {%- assign mobile_img = section.settings.mobile_image | default: section.settings.image -%}
 <div
-  class="ud-hero-banner-mobile-{{ section.id }} tw-relative tw-w-full tw-overflow-hidden tw-bg-white md:tw-hidden"
+  class="ud-hero-banner-mobile-{{ section.id }} tw-relative tw-w-full tw-overflow-hidden tw-bg-white lg:tw-hidden"
 >
   {%- if mobile_img != blank -%}
     {%- assign mobile_img_alt = mobile_img.alt | default: '' | escape -%}
@@ -62,8 +72,8 @@
   <div class="hero-content tw-absolute tw-flex tw-flex-col tw-justify-center tw-items-center tw-top-0 tw-left-0 tw-right-0 tw-py-8 tw-px-6">
     {%- if section.settings.eyebrow != blank -%}
       <p
-        class="tw-mb-2 tw-font-bold tw-uppercase tw-tracking-widest"
-        style="color: {{ section.settings.eyebrow_color }}; font-size: {{ section.settings.mobile_eyebrow_size }}px;"
+        class="tw-mb-2 tw-font-semibold tw-uppercase tw-tracking-widest"
+        style="color: {{ section.settings.eyebrow_color }}; font-size: {{ section.settings.mobile_eyebrow_size }}px; max-width: {{ section.settings.mobile_text_max_width }}px;"
       >
         {{ section.settings.eyebrow }}
       </p>
@@ -71,8 +81,8 @@
 
     {%- if section.settings.heading != blank -%}
       <{{ section.settings.heading_tag }}
-        class="hero-heading tw-font-bold tw-text-center tw-max-w-72 tw-leading-tight tw-mb-2"
-        style="color: {{ section.settings.heading_color }}; font-size: {{ section.settings.mobile_heading_size }}px;"
+        class="hero-heading tw-font-semibold tw-text-center tw-leading-tight tw-mb-2"
+        style="color: {{ section.settings.heading_color }}; font-size: {{ section.settings.mobile_heading_size }}px; max-width: {{ section.settings.mobile_text_max_width }}px;"
       >
         {{ section.settings.heading }}
       </{{ section.settings.heading_tag }}>
@@ -81,7 +91,7 @@
     {%- if section.settings.body_text != blank -%}
       <p
         class="hero-body tw-mb-2 tw-text-center tw-leading-relaxed"
-        style="color: {{ section.settings.body_color }}; font-size: {{ section.settings.mobile_body_size }}px;"
+        style="color: {{ section.settings.body_color }}; font-size: {{ section.settings.mobile_body_size }}px; max-width: {{ section.settings.mobile_text_max_width }}px;"
       >
         {{ section.settings.body_text }}
       </p>
@@ -90,12 +100,13 @@
     {%- if section.settings.button_label != blank -%}
       <a
         href="{{ section.settings.button_url }}"
-        class="tw-inline-block tw-font-bold tw-w-full tw-max-w-72 tw-text-center tw-uppercase tw-tracking-widest tw-no-underline"
+        class="tw-inline-block tw-font-semibold tw-w-full tw-text-center tw-uppercase tw-tracking-widest tw-no-underline"
         style="
           background-color: {{ section.settings.button_bg }};
           color: {{ section.settings.button_text_color }};
           padding: {{ section.settings.button_padding_y }}px {{ section.settings.button_padding_x }}px;
           font-size: {{ section.settings.mobile_button_font_size }}px;
+          max-width: {{ section.settings.mobile_text_max_width }}px;
         "
       >
         {{ section.settings.button_label }}
@@ -107,7 +118,7 @@
 {%- comment -%} Desktop layout {%- endcomment -%}
 <section
   id="ud-hero-banner-{{ section.id }}"
-  class="ud-hero-banner-{{ section.id }} tw-hidden tw-bg-white md:tw-flex tw-relative tw-w-full tw-overflow-hidden tw-flex-row tw-items-center tw-max-w-screen-2xl tw-mx-auto"
+  class="ud-hero-banner-{{ section.id }} tw-hidden tw-bg-white lg:tw-flex tw-relative tw-w-full tw-overflow-hidden tw-flex-row tw-items-center tw-max-w-screen-2xl tw-mx-auto"
   style="background-color: {{ section.settings.overlay_color }};"
 >
   {%- if section.settings.image != blank -%}
@@ -132,10 +143,13 @@
     ></div>
   {%- endif -%}
 
-  <div class="hero-content tw-py-12 tw-relative tw-z-[1] tw-max-w-[50%]">
+  <div
+    class="hero-content tw-py-12 tw-relative tw-z-[1]"
+    style="max-width: {{ section.settings.desktop_text_max_width }}px;"
+  >
     {%- if section.settings.eyebrow != blank -%}
       <p
-        class="tw-mb-2 tw-font-bold tw-uppercase tw-tracking-widest"
+        class="tw-mb-2 tw-font-semibold tw-uppercase tw-tracking-widest"
         style="color: {{ section.settings.eyebrow_color }}; font-size: {{ section.settings.eyebrow_size }}px;"
       >
         {{ section.settings.eyebrow }}
@@ -144,8 +158,8 @@
 
     {%- if section.settings.heading != blank -%}
       <{{ section.settings.heading_tag }}
-        class="hero-heading tw-font-bold tw-leading-tight tw-mb-4"
-        style="color: {{ section.settings.heading_color }}; font-size: clamp({{ section.settings.heading_size_min }}px, 3vw, {{ section.settings.heading_size_max }}px);"
+        class="hero-heading tw-font-semibold tw-leading-tight tw-mb-4"
+        style="color: {{ section.settings.heading_color }}; font-size: {{ section.settings.heading_size }}px;"
       >
         {{ section.settings.heading }}
       </{{ section.settings.heading_tag }}>
@@ -163,7 +177,7 @@
     {%- if section.settings.button_label != blank -%}
       <a
         href="{{ section.settings.button_url }}"
-        class="tw-inline-block tw-font-bold tw-uppercase tw-tracking-widest tw-no-underline"
+        class="tw-inline-block tw-font-semibold tw-uppercase tw-tracking-widest tw-no-underline"
         style="
           background-color: {{ section.settings.button_bg }};
           color: {{ section.settings.button_text_color }};
@@ -240,6 +254,19 @@
         { "value": "9 / 16", "label": "Tall (9:16)" }
       ],
       "default": "3 / 4"
+    },
+    {
+      "type": "select",
+      "id": "tablet_image_ratio",
+      "label": "Tablet Image Aspect Ratio",
+      "options": [
+        { "value": "1 / 1", "label": "Square (1:1)" },
+        { "value": "4 / 3", "label": "Landscape (4:3)" },
+        { "value": "3 / 4", "label": "Portrait (3:4)" },
+        { "value": "16 / 9", "label": "Wide (16:9)" },
+        { "value": "9 / 16", "label": "Tall (9:16)" }
+      ],
+      "default": "4 / 3"
     },
     {
       "type": "range",
@@ -350,21 +377,12 @@
     },
     {
       "type": "range",
-      "id": "heading_size_min",
-      "label": "Heading Min Size (px)",
+      "id": "heading_size",
+      "label": "Heading Font Size — Desktop (px)",
       "min": 18,
-      "max": 48,
-      "step": 2,
-      "default": 28
-    },
-    {
-      "type": "range",
-      "id": "heading_size_max",
-      "label": "Heading Max Size (px)",
-      "min": 28,
       "max": 80,
       "step": 2,
-      "default": 48
+      "default": 42
     },
     {
       "type": "range",
@@ -495,6 +513,24 @@
       "max": 10,
       "step": 0.5,
       "default": 5
+    },
+    {
+      "type": "range",
+      "id": "desktop_text_max_width",
+      "label": "Desktop Text Max Width (px)",
+      "min": 200,
+      "max": 1000,
+      "step": 10,
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "mobile_text_max_width",
+      "label": "Mobile Text Max Width (px)",
+      "min": 200,
+      "max": 600,
+      "step": 10,
+      "default": 288
     },
     {
       "type": "color",

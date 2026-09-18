@@ -20,7 +20,8 @@
     "
     style="color: {{ block.settings.color }};"
   >
-    <span class="{% if block.settings.label_bold %}tw-font-bold{% endif %}">{{ block.settings.label }}</span>{{ author_tag }}
+    <span class="{% if block.settings.label_bold %}tw-font-semibold{% endif %}">{{ block.settings.label }}</span>
+    {{- author_tag }}
   </p>
 {%- endif -%}
 

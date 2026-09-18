@@ -1887,10 +1887,6 @@ video {
   max-width: 450px;
 }
 
-.tw-max-w-\[50\%\] {
-  max-width: 50%;
-}
-
 .tw-max-w-\[95vw\] {
   max-width: 95vw;
 }
@@ -2875,10 +2871,6 @@ video {
 
 .tw-text-\[11px\] {
   font-size: 11px;
-}
-
-.tw-font-bold {
-  font-weight: 700;
 }
 
 .tw-font-extrabold {
