@@ -22,7 +22,7 @@
           "name": "Main Header",
           "settings": {
             "text": "About Us",
-            "type": "h2",
+            "type": "h1",
             "align": "center",
             "font": "primary",
             "weight": "700",
@@ -84,8 +84,8 @@
       "settings": {
         "padding_top": 2,
         "padding_bottom": 3,
-        "mobile_padding_top": 0,
-        "mobile_padding_bottom": 0,
+        "mobile_padding_top": 2,
+        "mobile_padding_bottom": 3,
         "padding_left": 0,
         "padding_right": 0,
         "background_color": "#20438D",
@@ -107,24 +107,6 @@
     "ud_flexbox_T8gfDb": {
       "type": "ud-flexbox",
       "blocks": {
-        "basic_image_4wE9Kt": {
-          "type": "basic-image",
-          "name": "Base Image",
-          "settings": {
-            "image": "shopify://shop_images/5bf423de9306be9a089100a047181bf2ca862cbe.jpg",
-            "aspect_ratio": "square",
-            "mobile_aspect_ratio": "square",
-            "object_fit": "cover",
-            "rounded": "none",
-            "max_width": 320,
-            "mobile_max_width": 320,
-            "border": 0,
-            "border_color": "",
-            "lazy_load": true,
-            "alt_text": ""
-          },
-          "blocks": {}
-        },
         "flex_box_rPc7KX": {
           "type": "flex-box",
           "name": "Flexbox",
@@ -134,9 +116,9 @@
             "padding_bottom": 4,
             "padding_left": 2,
             "padding_right": 2,
-            "mobile_top_bottom": true,
+            "mobile_top_bottom": false,
             "mobile_padding_top": 4,
-            "mobile_padding_bottom": 4,
+            "mobile_padding_bottom": 2,
             "mobile_sides": false,
             "mobile_padding_left": 2,
             "mobile_padding_right": 2,
@@ -149,22 +131,76 @@
             "tablet_flex_direction": "column",
             "mobile_flex_direction": "column",
             "x_gap": 4,
-            "y_gap": 4,
+            "y_gap": 1,
             "mobile_gap": false,
             "mobile_x_gap": 4,
             "mobile_y_gap": 4,
-            "justify_content": "center",
-            "align_items": "center",
+            "justify_content": "flex-start",
+            "align_items": "flex-start",
             "container_width": "full_width",
             "content_overflow": "fit",
             "display": "both"
+          },
+          "blocks": {
+            "text_crkFzA": {
+              "type": "text",
+              "name": "Subheader",
+              "settings": {
+                "text": "The History",
+                "type": "h2",
+                "align": "center",
+                "font": "secondary",
+                "weight": "600",
+                "font_size": 32,
+                "mobile_font_size": 18,
+                "max_width": 600,
+                "mobile_max_width": 600,
+                "color": "#212121",
+                "list": false,
+                "gap-border": false,
+                "display": "both"
+              },
+              "blocks": {}
+            },
+            "rich_text_etAka8": {
+              "type": "rich-text",
+              "name": "Rich Text",
+              "settings": {
+                "text": "<p>Texas Bookman is a wholesale company established in 1983 and continues today with a tradition of fast and friendly customer service, delivering a world of remainders and overstocks to customers around the globe. We have expanded our product offering to include gifts, sidelines, puzzles, journals, new publications and more! With new titles arriving weekly, there's always a wide variety of products for your selection.<br/><br/>In 2023, Texas Bookman acquired The Speaking Tree focused on mind, body, and spirit and related titles. We are excited to offer this genre of books and merchandise to our current customers and look forward to meeting new customers looking for esoteric titles.<br/><br/>Can't find what you're looking for? Let us know at <a href=\"mailto:orders@texasbookman.com\" title=\"mailto:orders@texasbookman.com\">orders@texasbookman.com</a>. We are always on the hunt for titles our customers want and need!</p>",
+                "align": "start",
+                "color": "#000000",
+                "max_width": 610
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_crkFzA",
+            "rich_text_etAka8"
+          ]
+        },
+        "basic_image_4wE9Kt": {
+          "type": "basic-image",
+          "name": "Base Image",
+          "settings": {
+            "image": "shopify://shop_images/5bf423de9306be9a089100a047181bf2ca862cbe.jpg",
+            "aspect_ratio": "square",
+            "mobile_aspect_ratio": "square",
+            "object_fit": "cover",
+            "rounded": "none",
+            "max_width": 384,
+            "mobile_max_width": 320,
+            "border": 0,
+            "border_color": "",
+            "lazy_load": true,
+            "alt_text": ""
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "basic_image_4wE9Kt",
-        "flex_box_rPc7KX"
+        "flex_box_rPc7KX",
+        "basic_image_4wE9Kt"
       ],
       "name": "Base Flexbox",
       "settings": {
@@ -172,6 +208,344 @@
         "padding_bottom": 0,
         "mobile_padding_top": 0,
         "mobile_padding_bottom": 0,
+        "padding_left": 0,
+        "padding_right": 0,
+        "background_color": "#ffffff",
+        "flex_direction": "row",
+        "tablet_flex_direction": "row",
+        "mobile_flex_direction": "column",
+        "x_gap": 2,
+        "y_gap": 0,
+        "mobile_gap": false,
+        "mobile_x_gap": 0,
+        "mobile_y_gap": 0,
+        "justify_content": "space-evenly",
+        "align_items": "center",
+        "container_width": "sm_desktop",
+        "content_overflow": "fit",
+        "custom_id": ""
+      }
+    },
+    "ud_flexbox_KpPGzg": {
+      "type": "ud-flexbox",
+      "blocks": {
+        "flex_box_CgpGj8": {
+          "type": "flex-box",
+          "name": "Flexbox",
+          "settings": {
+            "optional_link": "",
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 4,
+            "padding_right": 4,
+            "mobile_top_bottom": false,
+            "mobile_padding_top": 4,
+            "mobile_padding_bottom": 4,
+            "mobile_sides": true,
+            "mobile_padding_left": 2,
+            "mobile_padding_right": 2,
+            "add_border": false,
+            "border_width": 1,
+            "border_color": "#000000",
+            "border_radius": 10,
+            "background_color": "#ffffff",
+            "flex_direction": "column",
+            "tablet_flex_direction": "column",
+            "mobile_flex_direction": "column",
+            "x_gap": 1,
+            "y_gap": 1.2,
+            "mobile_gap": false,
+            "mobile_x_gap": 4,
+            "mobile_y_gap": 4,
+            "justify_content": "center",
+            "align_items": "flex-start",
+            "container_width": "full_width",
+            "content_overflow": "fit",
+            "display": "both"
+          },
+          "blocks": {
+            "text_YVTfRC": {
+              "type": "text",
+              "name": "Section Header",
+              "settings": {
+                "text": "Publishing",
+                "type": "h2",
+                "align": "center",
+                "font": "primary",
+                "weight": "600",
+                "font_size": 36,
+                "mobile_font_size": 36,
+                "max_width": 600,
+                "mobile_max_width": 600,
+                "color": "#212121",
+                "list": false,
+                "gap-border": false,
+                "display": "both"
+              },
+              "blocks": {}
+            },
+            "text_gF9qHp": {
+              "type": "text",
+              "name": "Subheader",
+              "settings": {
+                "text": "About Lost Library",
+                "type": "h3",
+                "align": "center",
+                "font": "secondary",
+                "weight": "600",
+                "font_size": 20,
+                "mobile_font_size": 18,
+                "max_width": 600,
+                "mobile_max_width": 600,
+                "color": "#20438D",
+                "list": false,
+                "gap-border": false,
+                "display": "both"
+              },
+              "blocks": {}
+            },
+            "rich_text_KqYxxp": {
+              "type": "rich-text",
+              "name": "Rich Text",
+              "settings": {
+                "text": "<p>Founded in 2011 and specializing in bringing classic and hard-to-find esoteric texts back into print. At Lost Library, we believe that some books should never fade into obscurity. Our publishing house is dedicated to reprinting the rare, and mysterious, works that deserve another chapter in the modern world. Specializing in esoteric texts, hidden mythologies, and timeless curiosities, we carefully select titles that spark the mind and keep wisdom alive for new generations of readers.<br/><br/>Think of us as book archaeologists dusting off forgotten treasures and giving them fresh ink and new life. Whether it's a long-lost manual of ancient knowledge, an overlooked spiritual guide, or a cult classic that slipped through the cracks, Lost Library makes sure these stories aren't just remembered, but beautifully reimagined for today's shelves.</p>",
+                "align": "start",
+                "color": "#000000",
+                "max_width": 1000
+              },
+              "blocks": {}
+            },
+            "rich_text_VWVML9": {
+              "type": "rich-text",
+              "name": "Rich Text",
+              "settings": {
+                "text": "<p><em>Because sometimes the most magical discoveries aren't found in the new releases; they're rediscovered in the Lost Library.</em></p>",
+                "align": "start",
+                "color": "#20438D",
+                "max_width": 1000
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_YVTfRC",
+            "text_gF9qHp",
+            "rich_text_KqYxxp",
+            "rich_text_VWVML9"
+          ]
+        },
+        "flex_box_LAw4pT": {
+          "type": "flex-box",
+          "name": "Flexbox",
+          "settings": {
+            "optional_link": "",
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
+            "mobile_top_bottom": false,
+            "mobile_padding_top": 4,
+            "mobile_padding_bottom": 4,
+            "mobile_sides": true,
+            "mobile_padding_left": 0,
+            "mobile_padding_right": 0,
+            "add_border": false,
+            "border_width": 1,
+            "border_color": "#000000",
+            "border_radius": 10,
+            "background_color": "#ffffff",
+            "flex_direction": "column",
+            "tablet_flex_direction": "column",
+            "mobile_flex_direction": "column",
+            "x_gap": 1,
+            "y_gap": 1.2,
+            "mobile_gap": false,
+            "mobile_x_gap": 4,
+            "mobile_y_gap": 4,
+            "justify_content": "center",
+            "align_items": "flex-start",
+            "container_width": "full_width",
+            "content_overflow": "fit",
+            "display": "both"
+          },
+          "blocks": {
+            "text_3ANaTM": {
+              "type": "text",
+              "name": "Section Header",
+              "settings": {
+                "text": "Distribution",
+                "type": "h2",
+                "align": "center",
+                "font": "primary",
+                "weight": "600",
+                "font_size": 36,
+                "mobile_font_size": 36,
+                "max_width": 600,
+                "mobile_max_width": 600,
+                "color": "#212121",
+                "list": false,
+                "gap-border": false,
+                "display": "both"
+              },
+              "blocks": {}
+            },
+            "flex_box_E8TUWW": {
+              "type": "flex-box",
+              "name": "Flexbox",
+              "settings": {
+                "optional_link": "",
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0,
+                "mobile_top_bottom": false,
+                "mobile_padding_top": 4,
+                "mobile_padding_bottom": 4,
+                "mobile_sides": false,
+                "mobile_padding_left": 2,
+                "mobile_padding_right": 2,
+                "add_border": false,
+                "border_width": 1,
+                "border_color": "#000000",
+                "border_radius": 10,
+                "background_color": "#ffffff",
+                "flex_direction": "column",
+                "tablet_flex_direction": "column",
+                "mobile_flex_direction": "column",
+                "x_gap": 0,
+                "y_gap": 0.5,
+                "mobile_gap": false,
+                "mobile_x_gap": 4,
+                "mobile_y_gap": 4,
+                "justify_content": "center",
+                "align_items": "center",
+                "container_width": "full_width",
+                "content_overflow": "fit",
+                "display": "both"
+              },
+              "blocks": {
+                "flex_box_pJ4kY6": {
+                  "type": "flex-box",
+                  "name": "Flexbox",
+                  "settings": {
+                    "optional_link": "",
+                    "padding_top": 0,
+                    "padding_bottom": 0,
+                    "padding_left": 0,
+                    "padding_right": 0,
+                    "mobile_top_bottom": false,
+                    "mobile_padding_top": 4,
+                    "mobile_padding_bottom": 4,
+                    "mobile_sides": false,
+                    "mobile_padding_left": 2,
+                    "mobile_padding_right": 2,
+                    "add_border": false,
+                    "border_width": 1,
+                    "border_color": "#000000",
+                    "border_radius": 10,
+                    "background_color": "#000000",
+                    "flex_direction": "column",
+                    "tablet_flex_direction": "column",
+                    "mobile_flex_direction": "column",
+                    "x_gap": 4,
+                    "y_gap": 4,
+                    "mobile_gap": false,
+                    "mobile_x_gap": 4,
+                    "mobile_y_gap": 4,
+                    "justify_content": "center",
+                    "align_items": "center",
+                    "container_width": "full_width",
+                    "content_overflow": "fit",
+                    "display": "both"
+                  },
+                  "blocks": {
+                    "basic_image_RDURrJ": {
+                      "type": "basic-image",
+                      "name": "Base Image",
+                      "settings": {
+                        "image": "shopify://shop_images/ArcturusLogo2025_1.png",
+                        "aspect_ratio": "4/3",
+                        "mobile_aspect_ratio": "square",
+                        "object_fit": "cover",
+                        "rounded": "none",
+                        "max_width": 320,
+                        "mobile_max_width": 320,
+                        "border": 0,
+                        "border_color": "",
+                        "lazy_load": true,
+                        "alt_text": ""
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "basic_image_RDURrJ"
+                  ]
+                },
+                "text_7QeajW": {
+                  "type": "text",
+                  "name": "Subheader",
+                  "settings": {
+                    "text": "Subheading Text",
+                    "type": "h4",
+                    "align": "center",
+                    "font": "secondary",
+                    "weight": "600",
+                    "font_size": 20,
+                    "mobile_font_size": 18,
+                    "max_width": 600,
+                    "mobile_max_width": 600,
+                    "color": "#212121",
+                    "list": false,
+                    "gap-border": false,
+                    "display": "both"
+                  },
+                  "blocks": {}
+                },
+                "text_MKH7yq": {
+                  "type": "text",
+                  "name": "Simple Body Text",
+                  "settings": {
+                    "text": "Body text content goes here.",
+                    "type": "p",
+                    "align": "center",
+                    "font": "secondary",
+                    "weight": "400",
+                    "font_size": 16,
+                    "mobile_font_size": 14,
+                    "max_width": 600,
+                    "mobile_max_width": 600,
+                    "color": "#212121",
+                    "list": false,
+                    "gap-border": false,
+                    "display": "both"
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "flex_box_pJ4kY6",
+                "text_7QeajW",
+                "text_MKH7yq"
+              ]
+            }
+          },
+          "block_order": [
+            "text_3ANaTM",
+            "flex_box_E8TUWW"
+          ]
+        }
+      },
+      "block_order": [
+        "flex_box_CgpGj8",
+        "flex_box_LAw4pT"
+      ],
+      "name": "Base Flexbox",
+      "settings": {
+        "padding_top": 2,
+        "padding_bottom": 2,
+        "mobile_padding_top": 2,
+        "mobile_padding_bottom": 2,
         "padding_left": 0,
         "padding_right": 0,
         "background_color": "#ffffff",
@@ -185,7 +559,7 @@
         "mobile_y_gap": 0,
         "justify_content": "center",
         "align_items": "center",
-        "container_width": "full_width",
+        "container_width": "sm_desktop",
         "content_overflow": "fit",
         "custom_id": ""
       }
@@ -194,6 +568,7 @@
   "order": [
     "main",
     "ud_flexbox_88GGLA",
-    "ud_flexbox_T8gfDb"
+    "ud_flexbox_T8gfDb",
+    "ud_flexbox_KpPGzg"
   ]
 }
