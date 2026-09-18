@@ -302,7 +302,7 @@
               "name": "Menu Links",
               "settings": {
                 "menu_title": "All Games & Media",
-                "header_url": "shopify://collections/frontpage",
+                "header_url": "shopify://collections/games-puzzles-humor",
                 "menu": "games-media",
                 "column_layout": "1-col"
               },
