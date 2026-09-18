@@ -1,312 +1,128 @@
 {% style %}
+  /* Dynamic desktop/mobile section padding driven by theme settings */
   .ud-events-{{ section.id }} {
-    background-color: {{ section.settings.background_color }};
-    padding-top: {{ section.settings.padding_top }}px;
-    padding-bottom: {{ section.settings.padding_bottom }}px;
+    padding-top: {{ section.settings.mobile_padding_top }}px;
+    padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
   }
 
-  @media screen and (max-width: 749px) {
+  @media screen and (min-width: 750px) {
     .ud-events-{{ section.id }} {
-      padding-top: {{ section.settings.mobile_padding_top }}px;
-      padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
-    }
-  }
-
-  .ud-events-{{ section.id }} .events-inner {
-    max-width: {{ section.settings.content_max_width }}px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-  }
-
-  /* Header */
-  .ud-events-{{ section.id }} .events-heading {
-    font-weight: 700;
-    color: {{ section.settings.heading_color }};
-    font-size: clamp({{ section.settings.heading_size_min }}px, 2.5vw, {{ section.settings.heading_size_max }}px);
-    margin-bottom: 0.5rem;
-    text-align: {{ section.settings.heading_alignment }};
-  }
-
-  .ud-events-{{ section.id }} .events-subtext {
-    color: {{ section.settings.subtext_color }};
-    font-size: {{ section.settings.subtext_size }}px;
-    margin-bottom: 2.25rem;
-    text-align: {{ section.settings.subtext_alignment }};
-  }
-
-  /* Results Count Row */
-  .ud-events-{{ section.id }} .results-count-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1.5rem;
-  }
-
-  .ud-events-{{ section.id }} .results-count-text {
-    font-weight: 600;
-    font-size: 18px;
-    color: #312f30;
-    margin: 0;
-  }
-
-  /* Event Cards */
-  .ud-events-{{ section.id }} .event-card {
-    border: 1px solid {{ section.settings.card_border_color }};
-    border-radius: {{ section.settings.card_border_radius }}px;
-    display: flex;
-    align-items: stretch;
-    gap: 0;
-    margin-bottom: 1.25rem;
-    overflow: hidden;
-    background: {{ section.settings.card_bg }};
-  }
-
-  .ud-events-{{ section.id }} .event-card:last-child {
-    margin-bottom: 0;
-  }
-
-  .ud-events-{{ section.id }} .event-thumbnail {
-    flex-shrink: 0;
-    width: 220px;
-    margin: 1.25rem 0 1.25rem 1.25rem;
-    border-radius: 6px;
-    object-fit: cover;
-    object-position: center;
-    align-self: flex-start;
-  }
-
-  .ud-events-{{ section.id }} .event-thumbnail-placeholder {
-    flex-shrink: 0;
-    width: 220px;
-    margin: 1.25rem 0 1.25rem 1.25rem;
-    border-radius: 6px;
-    background: #e5e7eb;
-    align-self: flex-start;
-    min-height: 148px;
-  }
-
-  .ud-events-{{ section.id }} .event-content {
-    flex: 1;
-    padding: 1.25rem 1.25rem 1.25rem 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    min-width: 0;
-  }
-
-  .ud-events-{{ section.id }} .event-header-row {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-
-  .ud-events-{{ section.id }} .event-titles {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .ud-events-{{ section.id }} .event-title {
-    display: block;
-    font-weight: 700;
-    color: {{ section.settings.event_title_color }};
-    font-size: {{ section.settings.event_title_size }}px;
-    line-height: 1.3;
-    margin-bottom: 0.4rem;
-    text-decoration: none;
-  }
-
-  .ud-events-{{ section.id }} .event-title:hover {
-    text-decoration: underline;
-  }
-
-  .ud-events-{{ section.id }} .event-meta {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    color: {{ section.settings.meta_color }};
-    font-size: {{ section.settings.meta_size }}px;
-    flex-wrap: wrap;
-  }
-
-  .ud-events-{{ section.id }} .event-meta-icon {
-    flex-shrink: 0;
-    width: 14px;
-    height: 14px;
-    stroke: {{ section.settings.meta_color }};
-    fill: none;
-    stroke-width: 1.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .ud-events-{{ section.id }} .event-meta-divider {
-    color: {{ section.settings.meta_color }};
-    opacity: 0.5;
-  }
-
-  /* Date Badge */
-  .ud-events-{{ section.id }} .event-date-badge {
-    flex-shrink: 0;
-    background-color: {{ section.settings.badge_bg }};
-    border-radius: 4px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0.4rem 0.75rem;
-    min-width: 64px;
-    text-align: center;
-  }
-
-  .ud-events-{{ section.id }} .badge-month {
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: {{ section.settings.badge_text_color }};
-    line-height: 1.2;
-  }
-
-  .ud-events-{{ section.id }} .badge-day {
-    font-size: 28px;
-    font-weight: 700;
-    color: {{ section.settings.badge_text_color }};
-    line-height: 1.1;
-  }
-
-  .ud-events-{{ section.id }} .badge-year {
-    font-size: 11px;
-    font-weight: 700;
-    color: {{ section.settings.badge_text_color }};
-    line-height: 1.2;
-  }
-
-  /* Description */
-  .ud-events-{{ section.id }} .event-description {
-    color: {{ section.settings.description_color }};
-    font-size: {{ section.settings.description_size }}px;
-    line-height: 1.6;
-    margin: 0;
-  }
-
-  /* CTA Button */
-  .ud-events-{{ section.id }} .event-cta {
-    display: inline-block;
-    background-color: {{ section.settings.cta_bg }};
-    color: {{ section.settings.cta_text_color }};
-    font-weight: 700;
-    font-size: {{ section.settings.cta_font_size }}px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 0.5rem 1.25rem;
-    border-radius: {{ section.settings.cta_border_radius }}px;
-    margin-top: 0.25rem;
-    transition: opacity 0.2s;
-    align-self: flex-start;
-  }
-
-  .ud-events-{{ section.id }} .event-cta:hover {
-    opacity: 0.85;
-  }
-
-  /* Mobile */
-  @media screen and (max-width: 749px) {
-    .ud-events-{{ section.id }} .event-card {
-      flex-direction: column;
-    }
-
-    .ud-events-{{ section.id }} .event-thumbnail,
-    .ud-events-{{ section.id }} .event-thumbnail-placeholder {
-      width: calc(100% - 2rem);
-      margin: 1rem 1rem 0;
-      min-height: 180px;
-    }
-
-    .ud-events-{{ section.id }} .event-header-row {
-      flex-wrap: wrap;
-    }
-
-    .ud-events-{{ section.id }} .event-date-badge {
-      order: -1;
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
 {% endstyle %}
 
-<section class="ud-events-{{ section.id }} tw" id="ud-events-{{ section.id }}">
-  <div class="events-inner">
+<section
+  class="ud-events-{{ section.id }} tw-w-full"
+  id="ud-events-{{ section.id }}"
+  style="background-color: {{ section.settings.background_color }};"
+>
+  <div class="tw-mx-auto tw-px-6" style="max-width: {{ section.settings.content_max_width }}px;">
     {%- if section.settings.heading != blank -%}
-      <{{ section.settings.heading_tag }} class="events-heading font-montserrat">
+      <{{ section.settings.heading_tag }}
+        class="tw-font-bold tw-mb-2 tw-font-montserrat"
+        style="
+          color: {{ section.settings.heading_color }};
+          font-size: clamp({{ section.settings.heading_size_min }}px, 2.5vw, {{ section.settings.heading_size_max }}px);
+          text-align: {{ section.settings.heading_alignment }};
+        "
+      >
         {{ section.settings.heading }}
       </{{ section.settings.heading_tag }}>
     {%- endif -%}
 
     {%- if section.settings.subtext != blank -%}
-      <p class="events-subtext font-montserrat">{{ section.settings.subtext }}</p>
+      <p
+        class="tw-mb-9 tw-font-montserrat"
+        style="color: {{ section.settings.subtext_color }}; font-size: {{ section.settings.subtext_size }}px; text-align: {{ section.settings.subtext_alignment }};"
+      >
+        {{ section.settings.subtext }}
+      </p>
     {%- endif -%}
 
     {%- assign selected_blog = section.settings.blog -%}
     {%- if selected_blog != blank -%}
       {%- assign event_count = blogs[selected_blog].articles | size -%}
-      <div class="results-count-row">
-        <p class="results-count-text font-montserrat">
+      <div class="tw-flex tw-items-center tw-justify-between tw-mb-6">
+        <p class="tw-font-semibold tw-text-18 tw-text-offblack tw-m-0 tw-font-montserrat">
           Showing {{ event_count }} Scheduled Event{% if event_count != 1 %}s{% endif %}
         </p>
       </div>
 
-      <div class="events-list">
+      <div class="tw-flex tw-flex-col">
         {%- for article in blogs[selected_blog].articles -%}
           {%- assign date_str = article.published_at | date: '%b|%d|%Y' | split: '|' -%}
-          <article class="event-card">
+          <article
+            class="tw-flex tw-flex-col tw-items-stretch tw-overflow-hidden tw-mb-5 last:tw-mb-0 md:tw-flex-row"
+            style="border: 1px solid {{ section.settings.card_border_color }}; border-radius: {{ section.settings.card_border_radius }}px; background-color: {{ section.settings.card_bg }};"
+          >
             {%- if article.image -%}
               <img
                 src="{{ article.image | image_url: width: 440 }}"
                 alt="{{ article.title | escape }}"
-                class="event-thumbnail"
+                class="tw-shrink-0 tw-self-start tw-rounded-md tw-object-cover tw-object-center tw-w-[calc(100%-2rem)] tw-mx-4 tw-mt-4 tw-min-h-[180px] md:tw-w-[600px] md:tw-mx-0 md:tw-ml-5 md:tw-my-5 md:tw-min-h-0"
                 loading="lazy"
                 width="220"
                 height="148"
               >
             {%- else -%}
-              <div class="event-thumbnail-placeholder" aria-hidden="true"></div>
+              <div
+                class="tw-shrink-0 tw-self-start tw-rounded-md tw-bg-grey-light tw-w-[calc(100%-2rem)] tw-mx-4 tw-mt-4 tw-min-h-[180px] md:tw-w-[600px] md:tw-mx-0 md:tw-ml-5 md:tw-my-5"
+                aria-hidden="true"
+              ></div>
             {%- endif -%}
 
-            <div class="event-content">
-              <div class="event-header-row">
-                <div class="event-titles">
-                  <a href="{{ article.url }}" class="event-title font-montserrat">
-                    {{ article.title }}
-                  </a>
-
-                  {%- assign start_time = article.metafields.custom.start_time.value -%}
-                  {%- assign end_time = article.metafields.custom.end_time.value -%}
-                  {%- assign location = article.metafields.custom.location.value -%}
-                  {%- if start_time != blank or location != blank -%}
-                    <div class="event-meta font-montserrat">
-                      <svg class="event-meta-icon" viewBox="0 0 24 24" aria-hidden="true">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polyline points="12 6 12 12 16 14"></polyline>
-                      </svg>
-                      {%- if start_time != blank -%}
-                        <span>
-                          {{- start_time | date: '%I:%M %p' -}}
-                          {%- if end_time != blank %} - {{ end_time | date: '%I:%M %p' }}{% endif -%}
-                        </span>
-                      {%- endif -%}
-                      {%- if start_time != blank and location != blank -%}
-                        <span class="event-meta-divider">|</span>
-                      {%- endif -%}
-                      {%- if location != blank -%}
-                        <span>{{ location }}</span>
-                      {%- endif -%}
-                    </div>
-                  {%- endif -%}
-                </div>
+            <div class="tw-flex tw-flex-1 tw-flex-col tw-gap-2 tw-min-w-0 tw-p-5 md:tw-pl-6">
+              <div class="tw-flex tw-min-w-0 tw-flex-1 tw-items-start tw-justify-between tw-gap-4 tw-flex-wrap">
+                <a
+                  href="{{ article.url }}"
+                  class="tw-block tw-font-bold tw-leading-tight tw-mb-1 tw-no-underline hover:tw-underline tw-font-montserrat"
+                  style="color: {{ section.settings.event_title_color }}; font-size: {{ section.settings.event_title_size }}px;"
+                >
+                  {{ article.title }}
+                </a>
               </div>
 
+              {%- assign start_time = article.metafields.custom.start_time.value -%}
+              {%- assign end_time = article.metafields.custom.end_time.value -%}
+              {%- assign location = article.metafields.custom.location.value -%}
+              {%- if start_time != blank or location != blank -%}
+                <div
+                  class="tw-flex tw-items-center tw-gap-1 tw-flex-wrap tw-font-montserrat"
+                  style="color: {{ section.settings.meta_color }}; font-size: {{ section.settings.meta_size }}px;"
+                >
+                  <svg
+                    class="tw-shrink-0 tw-size-3.5 tw-fill-none"
+                    style="stroke: {{ section.settings.meta_color }}; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  {%- if start_time != blank -%}
+                    <span>
+                      {{- start_time | date: '%I:%M %p' -}}
+                      {%- if end_time != blank %} - {{ end_time | date: '%I:%M %p' }}{% endif -%}
+                    </span>
+                  {%- endif -%}
+                  {%- if start_time != blank and location != blank -%}
+                    <span class="tw-opacity-50">|</span>
+                  {%- endif -%}
+                  {%- if location != blank -%}
+                    <span>{{ location }}</span>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+
               {%- if article.excerpt != blank -%}
-                <p class="event-description font-montserrat">{{ article.excerpt | strip_html | truncatewords: 30 }}</p>
+                <p
+                  class="tw-m-0 tw-leading-relaxed tw-font-montserrat"
+                  style="color: {{ section.settings.description_color }}; font-size: {{ section.settings.description_size }}px;"
+                >
+                  {{ article.excerpt | strip_html | truncatewords: 30 }}
+                </p>
               {%- endif -%}
 
               {%- assign cta_text = article.metafields.custom.cta_text.value -%}
@@ -314,7 +130,8 @@
               {%- if cta_text != blank -%}
                 <a
                   href="{{ cta_link | default: article.url }}"
-                  class="event-cta font-montserrat"
+                  class="tw-inline-block tw-self-start tw-font-bold tw-uppercase tw-tracking-wider tw-no-underline tw-mt-1 tw-py-2 tw-px-5 tw-transition-opacity hover:tw-opacity-85 tw-font-montserrat"
+                  style="background-color: {{ section.settings.cta_bg }}; color: {{ section.settings.cta_text_color }}; font-size: {{ section.settings.cta_font_size }}px; border-radius: {{ section.settings.cta_border_radius }}px;"
                 >
                   {{ cta_text }}
                 </a>

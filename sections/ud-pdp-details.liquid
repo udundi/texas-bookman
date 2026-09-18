@@ -158,7 +158,7 @@
       :value="defaultVariantId"
     >
     <div
-      class="tw-flex tw-w-full tw-max-w-screen-xl tw-mx-auto tw-flex-col tw-justify-between tw-gap-4 tw-gap-x-10 tw-pt-4 md:tw-flex-row md:tw-items-start"
+      class="tw-flex tw-w-full tw-max-w-screen-lg tw-mx-auto tw-flex-col tw-justify-between tw-gap-4 tw-gap-x-10 tw-pt-4 md:tw-flex-row md:tw-items-start"
     >
       {% content_for 'blocks' %}
     </div>
@@ -288,10 +288,15 @@
       swiper2 = new Swiper('.swiper-container', {
         loop: true,
         spaceBetween: 10,
-        slidesPerView: 1,
+        slidesPerView: 1.3,
         navigation: {
           nextEl: '.swiper-container .swiper-button-next',
           prevEl: '.swiper-container .swiper-button-prev',
+        },
+        breakpoints: {
+          768: {
+            slidesPerView: 1,
+          }
         },
         pagination: {
           el: ".swiper-pagination",
@@ -397,7 +402,10 @@
   initModalSwiper();
 
   function goToSlide(index) {
-    if (typeof swiper2 !== 'undefined' && swiper2 && swiper2.slideTo) {
+    // Main carousel uses loop mode, so real slide indexes must be resolved with slideToLoop
+    if (typeof swiper2 !== 'undefined' && swiper2 && swiper2.slideToLoop) {
+      swiper2.slideToLoop(index);
+    } else if (typeof swiper2 !== 'undefined' && swiper2 && swiper2.slideTo) {
       swiper2.slideTo(index);
     }
   }

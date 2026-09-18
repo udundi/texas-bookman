@@ -1,313 +1,139 @@
 {% style %}
+  /* Dynamic desktop/mobile section padding driven by theme settings */
   .ud-events-{{ section.id }} {
-    background-color: {{ section.settings.background_color }};
-    padding-top: {{ section.settings.padding_top }}px;
-    padding-bottom: {{ section.settings.padding_bottom }}px;
+    padding-top: {{ section.settings.mobile_padding_top }}px;
+    padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
   }
 
-  @media screen and (max-width: 749px) {
+  @media screen and (min-width: 750px) {
     .ud-events-{{ section.id }} {
-      padding-top: {{ section.settings.mobile_padding_top }}px;
-      padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
-    }
-  }
-
-  .ud-events-{{ section.id }} .events-inner {
-    max-width: {{ section.settings.content_max_width }}px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-  }
-
-  /* Header */
-  .ud-events-{{ section.id }} .events-heading {
-    font-weight: 700;
-    text-align: center;
-    color: {{ section.settings.heading_color }};
-    font-size: clamp({{ section.settings.heading_size_min }}px, 2.5vw, {{ section.settings.heading_size_max }}px);
-    margin-bottom: 0.5rem;
-  }
-
-  .ud-events-{{ section.id }} .events-subtext {
-    text-align: center;
-    color: {{ section.settings.subtext_color }};
-    font-size: {{ section.settings.subtext_size }}px;
-    margin-bottom: 2.25rem;
-  }
-
-  /* Event Cards */
-  .ud-events-{{ section.id }} .event-card {
-    border: 1px solid {{ section.settings.card_border_color }};
-    border-radius: {{ section.settings.card_border_radius }}px;
-    display: flex;
-    align-items: stretch;
-    gap: 0;
-    margin-bottom: 1.25rem;
-    overflow: hidden;
-    background: {{ section.settings.card_bg }};
-  }
-
-  .ud-events-{{ section.id }} .event-card:last-child {
-    margin-bottom: 0;
-  }
-
-  .ud-events-{{ section.id }} .event-thumbnail {
-    flex-shrink: 0;
-    width: 220px;
-    margin: 1.25rem 0 1.25rem 1.25rem;
-    border-radius: 6px;
-    object-fit: cover;
-    object-position: center;
-    align-self: flex-start;
-  }
-
-  .ud-events-{{ section.id }} .event-thumbnail-placeholder {
-    flex-shrink: 0;
-    width: 220px;
-    margin: 1.25rem 0 1.25rem 1.25rem;
-    border-radius: 6px;
-    background: #e5e7eb;
-    align-self: flex-start;
-    min-height: 148px;
-  }
-
-  .ud-events-{{ section.id }} .event-content {
-    flex: 1;
-    padding: 1.25rem 1.25rem 1.25rem 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    min-width: 0;
-  }
-
-  .ud-events-{{ section.id }} .event-header-row {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-
-  .ud-events-{{ section.id }} .event-titles {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .ud-events-{{ section.id }} .event-title {
-    display: block;
-    font-weight: 700;
-    color: {{ section.settings.event_title_color }};
-    font-size: {{ section.settings.event_title_size }}px;
-    line-height: 1.3;
-    margin-bottom: 0.4rem;
-    text-decoration: none;
-  }
-
-  .ud-events-{{ section.id }} .event-title:hover {
-    text-decoration: underline;
-  }
-
-  .ud-events-{{ section.id }} .event-meta {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    color: {{ section.settings.meta_color }};
-    font-size: {{ section.settings.meta_size }}px;
-    flex-wrap: wrap;
-  }
-
-  .ud-events-{{ section.id }} .event-meta-icon {
-    flex-shrink: 0;
-    width: 14px;
-    height: 14px;
-    stroke: {{ section.settings.meta_color }};
-    fill: none;
-    stroke-width: 1.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .ud-events-{{ section.id }} .event-meta-divider {
-    color: {{ section.settings.meta_color }};
-    opacity: 0.5;
-  }
-
-  /* Date Badge */
-  .ud-events-{{ section.id }} .event-date-badge {
-    flex-shrink: 0;
-    background-color: {{ section.settings.badge_bg }};
-    border-radius: 4px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0.4rem 0.75rem;
-    min-width: 64px;
-    text-align: center;
-  }
-
-  .ud-events-{{ section.id }} .badge-month {
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: {{ section.settings.badge_text_color }};
-    line-height: 1.2;
-  }
-
-  .ud-events-{{ section.id }} .badge-day {
-    font-size: 28px;
-    font-weight: 700;
-    color: {{ section.settings.badge_text_color }};
-    line-height: 1.1;
-  }
-
-  .ud-events-{{ section.id }} .badge-year {
-    font-size: 11px;
-    font-weight: 700;
-    color: {{ section.settings.badge_text_color }};
-    line-height: 1.2;
-  }
-
-  /* Description */
-  .ud-events-{{ section.id }} .event-description {
-    color: {{ section.settings.description_color }};
-    font-size: {{ section.settings.description_size }}px;
-    line-height: 1.6;
-    margin: 0;
-  }
-
-  /* CTA Button */
-  .ud-events-{{ section.id }} .event-cta {
-    display: inline-block;
-    background-color: {{ section.settings.cta_bg }};
-    color: {{ section.settings.cta_text_color }};
-    font-weight: 700;
-    font-size: {{ section.settings.cta_font_size }}px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 0.5rem 1.25rem;
-    border-radius: {{ section.settings.cta_border_radius }}px;
-    margin-top: 0.25rem;
-    transition: opacity 0.2s;
-    align-self: flex-start;
-  }
-
-  .ud-events-{{ section.id }} .event-cta:hover {
-    opacity: 0.85;
-  }
-
-  /* View All Button */
-  .ud-events-{{ section.id }} .events-view-all-wrap {
-    text-align: center;
-    margin-top: 2rem;
-  }
-
-  .ud-events-{{ section.id }} .events-view-all {
-    display: inline-block;
-    border: 1.5px solid {{ section.settings.view_all_border_color }};
-    color: {{ section.settings.view_all_text_color }};
-    background: transparent;
-    font-weight: 700;
-    font-size: {{ section.settings.view_all_font_size }}px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 0.55rem 2.5rem;
-    transition: background 0.2s, color 0.2s;
-  }
-
-  .ud-events-{{ section.id }} .events-view-all:hover {
-    background: {{ section.settings.view_all_border_color }};
-    color: #fff;
-  }
-
-  /* Mobile */
-  @media screen and (max-width: 749px) {
-    .ud-events-{{ section.id }} .event-card {
-      flex-direction: column;
-    }
-
-    .ud-events-{{ section.id }} .event-thumbnail,
-    .ud-events-{{ section.id }} .event-thumbnail-placeholder {
-      width: calc(100% - 2rem);
-      margin: 1rem 1rem 0;
-      min-height: 180px;
-    }
-
-    .ud-events-{{ section.id }} .event-header-row {
-      flex-wrap: wrap;
-    }
-
-    .ud-events-{{ section.id }} .event-date-badge {
-      order: -1;
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
 {% endstyle %}
 
 <section
-  class="ud-events-{{ section.id }} tw-border-t tw-border-solid tw-border-brand-grey"
+  class="ud-events-{{ section.id }} tw-border-t tw-border-solid tw-border-brand-grey tw-w-full"
   id="ud-events-{{ section.id }}"
+  style="background-color: {{ section.settings.background_color }};"
 >
-  <div class="events-inner">
+  <div class="tw-mx-auto tw-px-6" style="max-width: {{ section.settings.content_max_width }}px;">
     {%- comment -%} Section header {%- endcomment -%}
     {%- if section.settings.heading != blank -%}
-      <{{ section.settings.heading_tag }} class="events-heading tw-font-montserrat">
+      <{{ section.settings.heading_tag }}
+        class="tw-font-bold tw-text-center tw-mb-2 tw-font-montserrat"
+        style="color: {{ section.settings.heading_color }}; font-size: clamp({{ section.settings.heading_size_min }}px, 2.5vw, {{ section.settings.heading_size_max }}px);"
+      >
         {{ section.settings.heading }}
       </{{ section.settings.heading_tag }}>
     {%- endif -%}
 
     {%- if section.settings.subtext != blank -%}
-      <p class="events-subtext tw-font-montserrat">{{ section.settings.subtext }}</p>
+      <p
+        class="tw-text-center tw-mb-9 tw-font-montserrat"
+        style="color: {{ section.settings.subtext_color }}; font-size: {{ section.settings.subtext_size }}px;"
+      >
+        {{ section.settings.subtext }}
+      </p>
     {%- endif -%}
 
     {%- comment -%} Event cards {%- endcomment -%}
     {%- if section.blocks.size > 0 -%}
-      <div class="events-list">
+      <div class="tw-flex tw-flex-col">
         {%- for block in section.blocks -%}
-          <article class="event-card" {{ block.shopify_attributes }}>
+          <article
+            class="tw-flex tw-flex-col tw-items-stretch tw-overflow-hidden tw-mb-5 last:tw-mb-0 md:tw-flex-row"
+            style="border: 1px solid {{ section.settings.card_border_color }}; border-radius: {{ section.settings.card_border_radius }}px; background-color: {{ section.settings.card_bg }};"
+            {{ block.shopify_attributes }}
+          >
             {%- comment -%} Thumbnail {%- endcomment -%}
             {%- if block.settings.image != blank -%}
               {%- assign thumb_alt = block.settings.image.alt | default: block.settings.title | default: '' | escape -%}
               <img
-                src="{{ block.settings.image | image_url: width: 440 }}"
+                src="{{ block.settings.image | image_url: width: 380 }}"
                 alt="{{ thumb_alt }}"
-                class="event-thumbnail"
+                class="tw-shrink-0 tw-self-start tw-rounded-md tw-aspect-video tw-object-cover tw-object-center tw-mx-4 tw-mt-4 tw-min-h-[180px] md:tw-max-w-[380px] tw-w-full md:tw-mx-0 md:tw-ml-5 md:tw-my-5 md:tw-min-h-0"
                 loading="lazy"
-                width="220"
+                width="380"
                 height="148"
               >
             {%- else -%}
-              <div class="event-thumbnail-placeholder" aria-hidden="true"></div>
+              <div
+                class="tw-shrink-0 tw-self-start tw-rounded-md tw-aspect-video tw-object-cover tw-object-center tw-mx-4 tw-mt-4 tw-min-h-[180px] md:tw-max-w-[380px] tw-w-full md:tw-mx-0 md:tw-ml-5 md:tw-my-5 md:tw-min-h-0"
+                aria-hidden="true"
+              ></div>
             {%- endif -%}
 
-            <div class="event-content">
-              <div class="event-header-row">
-                <div class="event-titles">
+            <div class="tw-flex tw-flex-1 tw-flex-col tw-gap-2 tw-min-w-0 tw-p-5 md:tw-pl-6">
+              <div class="tw-flex tw-items-start tw-justify-between tw-gap-4 tw-flex-wrap">
+                <div class="tw-flex-1 tw-min-w-0">
                   {%- if block.settings.title != blank -%}
                     {%- if block.settings.title_url != blank -%}
-                      <a href="{{ block.settings.title_url }}" class="event-title tw-font-montserrat">
+                      <a
+                        href="{{ block.settings.title_url }}"
+                        class="tw-block tw-font-bold tw-leading-tight tw-mb-1 tw-no-underline hover:tw-underline tw-font-montserrat"
+                        style="color: {{ section.settings.event_title_color }}; font-size: {{ section.settings.event_title_size }}px;"
+                      >
                         {{ block.settings.title }}
                       </a>
                     {%- else -%}
-                      <span class="event-title tw-font-montserrat">{{ block.settings.title }}</span>
+                      <span
+                        class="tw-block tw-font-bold tw-leading-tight tw-mb-1 tw-font-montserrat"
+                        style="color: {{ section.settings.event_title_color }}; font-size: {{ section.settings.event_title_size }}px;"
+                      >
+                        {{ block.settings.title }}
+                      </span>
                     {%- endif -%}
                   {%- endif -%}
 
-                  {%- if block.settings.time != blank or block.settings.location != blank -%}
-                    <div class="event-meta tw-font-montserrat">
-                      {%- comment -%} Clock icon {%- endcomment -%}
-                      <svg class="event-meta-icon" viewBox="0 0 24 24" aria-hidden="true">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polyline points="12 6 12 12 16 14"></polyline>
-                      </svg>
-                      {%- if block.settings.time != blank -%}
-                        <span>{{ block.settings.time }}</span>
+                  {%- comment -%} Reusable meta icon (time icon reused for all until swapped) {%- endcomment -%}
+                  {%- capture meta_icon -%}
+                    <svg
+                      class="tw-shrink-0 tw-size-3.5 tw-fill-none"
+                      style="stroke: {{ section.settings.meta_color }}; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                  {%- endcapture -%}
+                  {%- assign has_date_range = false -%}
+                  {%- if block.settings.date_range != blank -%}{%- assign has_date_range = true -%}{%- endif -%}
+                  {%- assign has_time = false -%}
+                  {%- if block.settings.time != blank -%}{%- assign has_time = true -%}{%- endif -%}
+                  {%- assign has_location = false -%}
+                  {%- if block.settings.location != blank -%}{%- assign has_location = true -%}{%- endif -%}
+
+                  {%- if has_date_range or has_time or has_location -%}
+                    <div
+                      class="tw-flex tw-items-center tw-gap-1 tw-flex-wrap tw-font-montserrat"
+                      style="color: {{ section.settings.meta_color }}; font-size: {{ section.settings.meta_size }}px;"
+                    >
+                      {%- if has_date_range -%}
+                        <span class="tw-inline-flex tw-items-center tw-gap-1">
+                          {{ meta_icon }}
+                          <span>{{ block.settings.date_range }}</span>
+                        </span>
                       {%- endif -%}
-                      {%- if block.settings.time != blank and block.settings.location != blank -%}
-                        <span class="event-meta-divider">|</span>
+                      {%- if has_time -%}
+                        {%- if has_date_range -%}
+                          <span class="tw-opacity-50">|</span>
+                        {%- endif -%}
+                        <span class="tw-inline-flex tw-items-center tw-gap-1">
+                          {{ meta_icon }}
+                          <span>{{ block.settings.time }}</span>
+                        </span>
                       {%- endif -%}
-                      {%- if block.settings.location != blank -%}
-                        <span>{{ block.settings.location }}</span>
+                      {%- if has_location -%}
+                        {%- if has_date_range or has_time -%}
+                          <span class="tw-opacity-50">|</span>
+                        {%- endif -%}
+                        <span class="tw-inline-flex tw-items-center tw-gap-1">
+                          {{ meta_icon }}
+                          <span>{{ block.settings.location }}</span>
+                        </span>
                       {%- endif -%}
                     </div>
                   {%- endif -%}
@@ -316,30 +142,52 @@
                 {%- comment -%} Date badge {%- endcomment -%}
                 {%- if block.settings.date_month != blank or block.settings.date_day != blank -%}
                   <div
-                    class="event-date-badge"
+                    class="tw-flex tw-shrink-0 tw-flex-col tw-items-center tw-justify-center tw-text-center tw-rounded tw-py-1.5 tw-px-3 tw-min-w-16 max-md:tw-order-first"
+                    style="background-color: {{ section.settings.badge_bg }};"
                     aria-label="{{ block.settings.date_month }} {{ block.settings.date_day }} {{ block.settings.date_year }}"
                   >
                     {%- if block.settings.date_month != blank -%}
-                      <span class="badge-month">{{ block.settings.date_month }}</span>
+                      <span
+                        class="tw-text-[11px] tw-font-bold tw-uppercase tw-tracking-[0.05em] tw-leading-[1.2]"
+                        style="color: {{ section.settings.badge_text_color }};"
+                      >
+                        {{ block.settings.date_month }}
+                      </span>
                     {%- endif -%}
                     {%- if block.settings.date_day != blank -%}
-                      <span class="badge-day">{{ block.settings.date_day }}</span>
+                      <span
+                        class="tw-text-28 tw-font-bold tw-leading-[1.1]"
+                        style="color: {{ section.settings.badge_text_color }};"
+                      >
+                        {{ block.settings.date_day }}
+                      </span>
                     {%- endif -%}
                     {%- if block.settings.date_year != blank -%}
-                      <span class="badge-year">{{ block.settings.date_year }}</span>
+                      <span
+                        class="tw-text-[11px] tw-font-bold tw-leading-[1.2]"
+                        style="color: {{ section.settings.badge_text_color }};"
+                      >
+                        {{ block.settings.date_year }}
+                      </span>
                     {%- endif -%}
                   </div>
                 {%- endif -%}
               </div>
 
               {%- if block.settings.description != blank -%}
-                <p class="event-description tw-font-montserrat">{{ block.settings.description }}</p>
+                <p
+                  class="tw-m-0 tw-leading-relaxed tw-font-montserrat"
+                  style="color: {{ section.settings.description_color }}; font-size: {{ section.settings.description_size }}px;"
+                >
+                  {{ block.settings.description }}
+                </p>
               {%- endif -%}
 
               {%- if block.settings.cta_label != blank -%}
                 <a
                   href="{{ block.settings.cta_url | default: '#' }}"
-                  class="event-cta tw-font-montserrat tw-rounded-md"
+                  class="tw-inline-block tw-self-start tw-font-semibold tw-uppercase tw-tracking-wider tw-no-underline tw-mt-1 tw-py-1 tw-px-4 tw-rounded-md tw-transition-opacity hover:tw-opacity-85 tw-font-montserrat"
+                  style="background-color: {{ section.settings.cta_bg }}; color: {{ section.settings.cta_text_color }}; font-size: {{ section.settings.cta_font_size }}px; border-radius: {{ section.settings.cta_border_radius }}px;"
                 >
                   {{ block.settings.cta_label }}
                 </a>
@@ -352,10 +200,16 @@
 
     {%- comment -%} View All button {%- endcomment -%}
     {%- if section.settings.view_all_label != blank -%}
-      <div class="events-view-all-wrap">
+      <div class="tw-text-center tw-mt-8">
         <a
           href="{{ section.settings.view_all_url | default: '#' }}"
-          class="events-view-all tw-font-montserrat tw-rounded-md"
+          class="tw-inline-block tw-font-bold tw-uppercase tw-tracking-[0.1em] tw-no-underline tw-py-2 tw-px-10 tw-rounded-md tw-border tw-border-solid tw-bg-transparent tw-transition-colors hover:tw-bg-[var(--view-all-color)] hover:tw-text-white tw-font-montserrat"
+          style="
+            --view-all-color: {{ section.settings.view_all_border_color }};
+            border-color: {{ section.settings.view_all_border_color }};
+            color: {{ section.settings.view_all_text_color }};
+            font-size: {{ section.settings.view_all_font_size }}px;
+          "
         >
           {{ section.settings.view_all_label }}
         </a>
@@ -677,10 +531,17 @@
         },
         {
           "type": "text",
+          "id": "date_range",
+          "label": "Date Range",
+          "default": "September 30 - October 1, 2026",
+          "info": "e.g. September 30 - October 1, 2026"
+        },
+        {
+          "type": "text",
           "id": "time",
           "label": "Time",
-          "default": "10:00 AM - 12:30 PM",
-          "info": "e.g. 10:00 AM - 12:30 PM"
+          "default": "9:00 AM - 6:00 PM",
+          "info": "e.g. 9:00 AM - 6:00 PM"
         },
         {
           "type": "text",
@@ -743,7 +604,8 @@
           "type": "event",
           "settings": {
             "title": "Wholesale Strategy Seminar",
-            "time": "10:00 AM - 12:30 PM",
+            "date_range": "September 30 - October 1, 2026",
+            "time": "9:00 AM - 6:00 PM",
             "location": "Austin Distribution Center",
             "description": "<p>Join our supply chain experts for an in-depth look at optimizing inventory for independent bookstores.</p>",
             "date_month": "OCT",
@@ -756,7 +618,8 @@
           "type": "event",
           "settings": {
             "title": "Texas Bookman Annual Tradeshow",
-            "time": "10:00 AM - 12:30 PM",
+            "date_range": "October 23 - October 24, 2026",
+            "time": "9:00 AM - 6:00 PM",
             "location": "Austin Distribution Center",
             "description": "<p>Our annual networking event for educational partners. Preview upcoming fall titles over coffee.</p>",
             "date_month": "OCT",
