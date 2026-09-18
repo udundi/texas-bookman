@@ -80,6 +80,9 @@
         "text_3PRbky",
         "button_V4FV7y"
       ],
+      "custom_css": [
+        "p {font-size: 14px;}"
+      ],
       "name": "Base Flexbox",
       "settings": {
         "padding_top": 2,
@@ -202,6 +205,9 @@
         "flex_box_rPc7KX",
         "basic_image_4wE9Kt"
       ],
+      "custom_css": [
+        "p {font-size: 14px;}"
+      ],
       "name": "Base Flexbox",
       "settings": {
         "padding_top": 0,
@@ -273,8 +279,8 @@
                 "align": "center",
                 "font": "primary",
                 "weight": "600",
-                "font_size": 36,
-                "mobile_font_size": 36,
+                "font_size": 26,
+                "mobile_font_size": 26,
                 "max_width": 600,
                 "mobile_max_width": 600,
                 "color": "#212121",
@@ -284,25 +290,86 @@
               },
               "blocks": {}
             },
-            "text_gF9qHp": {
-              "type": "text",
-              "name": "Subheader",
+            "flex_box_gTMpfW": {
+              "type": "flex-box",
+              "name": "Flexbox",
               "settings": {
-                "text": "About Lost Library",
-                "type": "h3",
-                "align": "center",
-                "font": "secondary",
-                "weight": "600",
-                "font_size": 20,
-                "mobile_font_size": 18,
-                "max_width": 600,
-                "mobile_max_width": 600,
-                "color": "#20438D",
-                "list": false,
-                "gap-border": false,
+                "optional_link": "",
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0,
+                "mobile_top_bottom": false,
+                "mobile_padding_top": 4,
+                "mobile_padding_bottom": 4,
+                "mobile_sides": false,
+                "mobile_padding_left": 2,
+                "mobile_padding_right": 2,
+                "add_border": false,
+                "border_width": 1,
+                "border_color": "#000000",
+                "border_radius": 10,
+                "background_color": "#ffffff",
+                "flex_direction": "row",
+                "tablet_flex_direction": "row",
+                "mobile_flex_direction": "column",
+                "x_gap": 0.5,
+                "y_gap": 0.2,
+                "mobile_gap": false,
+                "mobile_x_gap": 4,
+                "mobile_y_gap": 4,
+                "justify_content": "center",
+                "align_items": "flex-start",
+                "container_width": "full_width",
+                "content_overflow": "fit",
                 "display": "both"
               },
-              "blocks": {}
+              "blocks": {
+                "text_FGjyD8": {
+                  "type": "text",
+                  "name": "Subheader",
+                  "settings": {
+                    "text": "About Lost Library",
+                    "type": "h3",
+                    "align": "center",
+                    "font": "secondary",
+                    "weight": "600",
+                    "font_size": 22,
+                    "mobile_font_size": 20,
+                    "max_width": 600,
+                    "mobile_max_width": 600,
+                    "color": "#20438D",
+                    "list": false,
+                    "gap-border": false,
+                    "display": "both"
+                  },
+                  "blocks": {}
+                },
+                "text_gtQYBL": {
+                  "type": "text",
+                  "name": "Subheader",
+                  "settings": {
+                    "text": "ESTABLISHED 2011",
+                    "type": "p",
+                    "align": "center",
+                    "font": "secondary",
+                    "weight": "600",
+                    "font_size": 16,
+                    "mobile_font_size": 14,
+                    "max_width": 600,
+                    "mobile_max_width": 600,
+                    "color": "#847F81",
+                    "list": false,
+                    "gap-border": false,
+                    "display": "both"
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_FGjyD8",
+                "text_gtQYBL"
+              ]
             },
             "rich_text_KqYxxp": {
               "type": "rich-text",
@@ -329,7 +396,7 @@
           },
           "block_order": [
             "text_YVTfRC",
-            "text_gF9qHp",
+            "flex_box_gTMpfW",
             "rich_text_KqYxxp",
             "rich_text_VWVML9"
           ]
@@ -337,6 +404,9 @@
       },
       "block_order": [
         "flex_box_CgpGj8"
+      ],
+      "custom_css": [
+        "p {font-size: 14px;}"
       ],
       "name": "Base Flexbox",
       "settings": {
@@ -751,6 +821,9 @@
       "block_order": [
         "flex_box_BPYd4V"
       ],
+      "custom_css": [
+        "p {font-size: 14px;}"
+      ],
       "name": "Base Flexbox",
       "settings": {
         "padding_top": 0,
@@ -1027,7 +1100,7 @@
               "type": "rich-text",
               "name": "Rich Text",
               "settings": {
-                "text": "<p>All items are sold on a non-returnable basis, however sometimes items are damaged in shipping and we are here to make it right. Please email us at <a href=\"mailto:orders@texasbookman.com\" title=\"mailto:orders@texasbookman.com\">orders@texasbookman.com</a> to report the damaged item(s).</p>",
+                "text": "<p>All items are sold on a non-returnable basis, however sometimes items are damaged in shipping and we are here to make it right.</p>",
                 "align": "start",
                 "color": "#000000",
                 "max_width": 1000
@@ -1038,7 +1111,7 @@
               "type": "rich-text",
               "name": "Rich Text",
               "settings": {
-                "text": "<ul><li>Pictures are required for all damaged item(s). </li><li>Any claims for damaged or missing items must be made within 10 days of receipt of order.</li><li>Please DO NOT return any item(s) without prior approval from Texas Bookman.</li><li>Any items returned without authorization will not be issued credit and will remain on your account.</li></ul>",
+                "text": "<ul><li>Pictures are required.</li><li>Report within 10 days of receipt.</li><li>Please DO NOT return items without prior approval. Unauthorized returns will not be credited.</li></ul>",
                 "align": "start",
                 "color": "#000000",
                 "max_width": 1000
@@ -1056,6 +1129,9 @@
       "block_order": [
         "flex_box_JDXhBU",
         "flex_box_PFfrg4"
+      ],
+      "custom_css": [
+        "p {font-size: 14px;}"
       ],
       "name": "Base Flexbox",
       "settings": {
