@@ -11,7 +11,37 @@
   "sections": {
     "main": {
       "type": "blog",
-      "settings": {}
+      "settings": {
+        "heading": "Press",
+        "heading_tag": "h1",
+        "heading_color": "#212121",
+        "heading_alignment": "left",
+        "heading_size_min": 26,
+        "heading_size_max": 40,
+        "subtext": "Explore media coverage and press features about Texas Bookman, including trade announcements, industry trends, and company news from leading publishing and retail media outlets.",
+        "subtext_color": "#212121",
+        "subtext_alignment": "left",
+        "subtext_size": 15,
+        "card_bg": "#ffffff",
+        "card_border_color": "#e5e7eb",
+        "card_border_radius": 6,
+        "article_title_color": "#20448f",
+        "article_title_size": 18,
+        "meta_color": "#6b7280",
+        "meta_size": 13,
+        "description_color": "#212121",
+        "description_size": 14,
+        "cta_bg": "#20448f",
+        "cta_text_color": "#ffffff",
+        "cta_font_size": 12,
+        "cta_border_radius": 2,
+        "background_color": "#fdfbf8",
+        "content_max_width": 1280,
+        "padding_top": 56,
+        "padding_bottom": 56,
+        "mobile_padding_top": 36,
+        "mobile_padding_bottom": 36
+      }
     }
   },
   "order": [
