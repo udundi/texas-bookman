@@ -124,7 +124,7 @@
         "button_font_size": 13,
         "mobile_button_font_size": 13,
         "button_padding_y": 8,
-        "button_padding_x": 46,
+        "button_padding_x": 50,
         "desktop_content_alignment": "left",
         "desktop_content_padding_x": 5,
         "mobile_heading_color": "#ffffff",
