@@ -1,0 +1,1169 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {}
+    },
+    "ud_flexbox_88GGLA": {
+      "type": "ud-flexbox",
+      "blocks": {
+        "text_fqcDax": {
+          "type": "text",
+          "name": "Main Header",
+          "settings": {
+            "text": "About Us",
+            "type": "h1",
+            "align": "center",
+            "font": "primary",
+            "weight": "700",
+            "font_size": 42,
+            "mobile_font_size": 42,
+            "max_width": 600,
+            "mobile_max_width": 600,
+            "color": "#FFFFFF",
+            "list": false,
+            "gap-border": false,
+            "display": "both"
+          },
+          "blocks": {}
+        },
+        "text_3PRbky": {
+          "type": "text",
+          "name": "Simple Body Text",
+          "settings": {
+            "text": "Are you looking for beautiful, clean, high-quality books & sidelines in every category at a mere fraction of the publisher's price?",
+            "type": "p",
+            "align": "center",
+            "font": "secondary",
+            "weight": "400",
+            "font_size": 16,
+            "mobile_font_size": 14,
+            "max_width": 470,
+            "mobile_max_width": 280,
+            "color": "#FFFFFF",
+            "list": false,
+            "gap-border": false,
+            "display": "both"
+          },
+          "blocks": {}
+        },
+        "button_V4FV7y": {
+          "type": "button",
+          "name": "Default Button",
+          "settings": {
+            "text": "Start Shopping",
+            "url": "#",
+            "type": "black",
+            "align": "center",
+            "fullwidth": false,
+            "corner_style": "none",
+            "margin-left": 0,
+            "margin-right": 0,
+            "margin-top": 0,
+            "margin-bottom": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_fqcDax",
+        "text_3PRbky",
+        "button_V4FV7y"
+      ],
+      "custom_css": [
+        "p {font-size: 14px;}"
+      ],
+      "name": "Base Flexbox",
+      "settings": {
+        "padding_top": 2,
+        "padding_bottom": 3,
+        "mobile_padding_top": 2,
+        "mobile_padding_bottom": 3,
+        "padding_left": 0,
+        "padding_right": 0,
+        "background_color": "#20438D",
+        "flex_direction": "column",
+        "tablet_flex_direction": "column",
+        "mobile_flex_direction": "column",
+        "x_gap": 0,
+        "y_gap": 1,
+        "mobile_gap": false,
+        "mobile_x_gap": 0,
+        "mobile_y_gap": 0,
+        "justify_content": "center",
+        "align_items": "center",
+        "container_width": "full_width",
+        "content_overflow": "fit",
+        "custom_id": ""
+      }
+    },
+    "ud_flexbox_T8gfDb": {
+      "type": "ud-flexbox",
+      "blocks": {
+        "flex_box_rPc7KX": {
+          "type": "flex-box",
+          "name": "Flexbox",
+          "settings": {
+            "optional_link": "",
+            "padding_top": 4,
+            "padding_bottom": 4,
+            "padding_left": 2,
+            "padding_right": 2,
+            "mobile_top_bottom": true,
+            "mobile_padding_top": 1.5,
+            "mobile_padding_bottom": 2,
+            "mobile_sides": false,
+            "mobile_padding_left": 2,
+            "mobile_padding_right": 2,
+            "add_border": false,
+            "border_width": 1,
+            "border_color": "#000000",
+            "border_radius": 10,
+            "background_color": "#ffffff",
+            "flex_direction": "column",
+            "tablet_flex_direction": "column",
+            "mobile_flex_direction": "column",
+            "x_gap": 4,
+            "y_gap": 1,
+            "mobile_gap": false,
+            "mobile_x_gap": 4,
+            "mobile_y_gap": 4,
+            "justify_content": "flex-start",
+            "align_items": "flex-start",
+            "container_width": "full_width",
+            "content_overflow": "fit",
+            "display": "both"
+          },
+          "blocks": {
+            "text_crkFzA": {
+              "type": "text",
+              "name": "Subheader",
+              "settings": {
+                "text": "The History",
+                "type": "h2",
+                "align": "center",
+                "font": "secondary",
+                "weight": "600",
+                "font_size": 32,
+                "mobile_font_size": 18,
+                "max_width": 600,
+                "mobile_max_width": 600,
+                "color": "#212121",
+                "list": false,
+                "gap-border": false,
+                "display": "both"
+              },
+              "blocks": {}
+            },
+            "rich_text_etAka8": {
+              "type": "rich-text",
+              "name": "Rich Text",
+              "settings": {
+                "text": "<p>Texas Bookman is a wholesale company established in 1983 and continues today with a tradition of fast and friendly customer service, delivering a world of remainders and overstocks to customers around the globe. We have expanded our product offering to include gifts, sidelines, puzzles, journals, new publications and more! With new titles arriving weekly, there's always a wide variety of products for your selection.<br/><br/>In 2023, Texas Bookman acquired The Speaking Tree focused on mind, body, and spirit and related titles. We are excited to offer this genre of books and merchandise to our current customers and look forward to meeting new customers looking for esoteric titles.<br/><br/>Can't find what you're looking for? Let us know at <a href=\"mailto:orders@texasbookman.com\" title=\"mailto:orders@texasbookman.com\">orders@texasbookman.com</a>. We are always on the hunt for titles our customers want and need!</p>",
+                "align": "start",
+                "color": "#000000",
+                "max_width": 610
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_crkFzA",
+            "rich_text_etAka8"
+          ]
+        },
+        "basic_image_4wE9Kt": {
+          "type": "basic-image",
+          "name": "Base Image",
+          "settings": {
+            "image": "shopify://shop_images/5bf423de9306be9a089100a047181bf2ca862cbe.jpg",
+            "aspect_ratio": "square",
+            "mobile_aspect_ratio": "3/2",
+            "object_fit": "cover",
+            "rounded": "none",
+            "max_width": 384,
+            "mobile_max_width": 320,
+            "border": 0,
+            "border_color": "",
+            "lazy_load": true,
+            "alt_text": ""
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "flex_box_rPc7KX",
+        "basic_image_4wE9Kt"
+      ],
+      "custom_css": [
+        "p {font-size: 14px;}"
+      ],
+      "name": "Base Flexbox",
+      "settings": {
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0,
+        "padding_left": 0,
+        "padding_right": 0,
+        "background_color": "#ffffff",
+        "flex_direction": "row",
+        "tablet_flex_direction": "row",
+        "mobile_flex_direction": "column",
+        "x_gap": 2,
+        "y_gap": 0,
+        "mobile_gap": false,
+        "mobile_x_gap": 0,
+        "mobile_y_gap": 0,
+        "justify_content": "space-evenly",
+        "align_items": "center",
+        "container_width": "sm_desktop",
+        "content_overflow": "fit",
+        "custom_id": ""
+      }
+    },
+    "ud_flexbox_KpPGzg": {
+      "type": "ud-flexbox",
+      "blocks": {
+        "flex_box_CgpGj8": {
+          "type": "flex-box",
+          "name": "Flexbox",
+          "settings": {
+            "optional_link": "",
+            "padding_top": 0,
+            "padding_bottom": 4,
+            "padding_left": 0,
+            "padding_right": 0,
+            "mobile_top_bottom": false,
+            "mobile_padding_top": 4,
+            "mobile_padding_bottom": 4,
+            "mobile_sides": true,
+            "mobile_padding_left": 2,
+            "mobile_padding_right": 2,
+            "add_border": false,
+            "border_width": 1,
+            "border_color": "#000000",
+            "border_radius": 10,
+            "background_color": "#ffffff",
+            "flex_direction": "column",
+            "tablet_flex_direction": "column",
+            "mobile_flex_direction": "column",
+            "x_gap": 1,
+            "y_gap": 1.2,
+            "mobile_gap": false,
+            "mobile_x_gap": 4,
+            "mobile_y_gap": 4,
+            "justify_content": "center",
+            "align_items": "flex-start",
+            "container_width": "lg_desktop",
+            "content_overflow": "fit",
+            "display": "both"
+          },
+          "blocks": {
+            "text_YVTfRC": {
+              "type": "text",
+              "name": "Section Header",
+              "settings": {
+                "text": "Publishing",
+                "type": "h2",
+                "align": "center",
+                "font": "primary",
+                "weight": "600",
+                "font_size": 26,
+                "mobile_font_size": 26,
+                "max_width": 600,
+                "mobile_max_width": 600,
+                "color": "#212121",
+                "list": false,
+                "gap-border": false,
+                "display": "both"
+              },
+              "blocks": {}
+            },
+            "flex_box_gTMpfW": {
+              "type": "flex-box",
+              "name": "Flexbox",
+              "settings": {
+                "optional_link": "",
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0,
+                "mobile_top_bottom": false,
+                "mobile_padding_top": 4,
+                "mobile_padding_bottom": 4,
+                "mobile_sides": false,
+                "mobile_padding_left": 2,
+                "mobile_padding_right": 2,
+                "add_border": false,
+                "border_width": 1,
+                "border_color": "#000000",
+                "border_radius": 10,
+                "background_color": "#ffffff",
+                "flex_direction": "row",
+                "tablet_flex_direction": "row",
+                "mobile_flex_direction": "column",
+                "x_gap": 0.5,
+                "y_gap": 0.2,
+                "mobile_gap": false,
+                "mobile_x_gap": 4,
+                "mobile_y_gap": 4,
+                "justify_content": "center",
+                "align_items": "flex-start",
+                "container_width": "full_width",
+                "content_overflow": "fit",
+                "display": "both"
+              },
+              "blocks": {
+                "text_FGjyD8": {
+                  "type": "text",
+                  "name": "Subheader",
+                  "settings": {
+                    "text": "About Lost Library",
+                    "type": "h3",
+                    "align": "center",
+                    "font": "secondary",
+                    "weight": "600",
+                    "font_size": 22,
+                    "mobile_font_size": 20,
+                    "max_width": 600,
+                    "mobile_max_width": 600,
+                    "color": "#20438D",
+                    "list": false,
+                    "gap-border": false,
+                    "display": "both"
+                  },
+                  "blocks": {}
+                },
+                "text_gtQYBL": {
+                  "type": "text",
+                  "name": "Subheader",
+                  "settings": {
+                    "text": "ESTABLISHED 2011",
+                    "type": "p",
+                    "align": "center",
+                    "font": "secondary",
+                    "weight": "600",
+                    "font_size": 16,
+                    "mobile_font_size": 14,
+                    "max_width": 600,
+                    "mobile_max_width": 600,
+                    "color": "#847F81",
+                    "list": false,
+                    "gap-border": false,
+                    "display": "both"
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_FGjyD8",
+                "text_gtQYBL"
+              ]
+            },
+            "rich_text_KqYxxp": {
+              "type": "rich-text",
+              "name": "Rich Text",
+              "settings": {
+                "text": "<p>Founded in 2011 and specializing in bringing classic and hard-to-find esoteric texts back into print. At Lost Library, we believe that some books should never fade into obscurity. Our publishing house is dedicated to reprinting the rare, and mysterious, works that deserve another chapter in the modern world. Specializing in esoteric texts, hidden mythologies, and timeless curiosities, we carefully select titles that spark the mind and keep wisdom alive for new generations of readers.<br/><br/>Think of us as book archaeologists dusting off forgotten treasures and giving them fresh ink and new life. Whether it's a long-lost manual of ancient knowledge, an overlooked spiritual guide, or a cult classic that slipped through the cracks, Lost Library makes sure these stories aren't just remembered, but beautifully reimagined for today's shelves.</p>",
+                "align": "start",
+                "color": "#000000",
+                "max_width": 1000
+              },
+              "blocks": {}
+            },
+            "rich_text_VWVML9": {
+              "type": "rich-text",
+              "name": "Rich Text",
+              "settings": {
+                "text": "<p><em>Because sometimes the most magical discoveries aren't found in the new releases; they're rediscovered in the Lost Library.</em></p>",
+                "align": "start",
+                "color": "#20438D",
+                "max_width": 1000
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_YVTfRC",
+            "flex_box_gTMpfW",
+            "rich_text_KqYxxp",
+            "rich_text_VWVML9"
+          ]
+        }
+      },
+      "block_order": [
+        "flex_box_CgpGj8"
+      ],
+      "custom_css": [
+        "p {font-size: 14px;}"
+      ],
+      "name": "Base Flexbox",
+      "settings": {
+        "padding_top": 2,
+        "padding_bottom": 2,
+        "mobile_padding_top": 2,
+        "mobile_padding_bottom": 2,
+        "padding_left": 0,
+        "padding_right": 0,
+        "background_color": "#ffffff",
+        "flex_direction": "column",
+        "tablet_flex_direction": "column",
+        "mobile_flex_direction": "column",
+        "x_gap": 0,
+        "y_gap": 0,
+        "mobile_gap": false,
+        "mobile_x_gap": 0,
+        "mobile_y_gap": 0,
+        "justify_content": "center",
+        "align_items": "center",
+        "container_width": "sm_desktop",
+        "content_overflow": "fit",
+        "custom_id": ""
+      }
+    },
+    "ud_flexbox_y8ayhV": {
+      "type": "ud-flexbox",
+      "blocks": {
+        "flex_box_BPYd4V": {
+          "type": "flex-box",
+          "name": "Flexbox",
+          "settings": {
+            "optional_link": "",
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
+            "mobile_top_bottom": false,
+            "mobile_padding_top": 4,
+            "mobile_padding_bottom": 4,
+            "mobile_sides": true,
+            "mobile_padding_left": 0,
+            "mobile_padding_right": 0,
+            "add_border": false,
+            "border_width": 1,
+            "border_color": "#000000",
+            "border_radius": 10,
+            "background_color": "#ffffff",
+            "flex_direction": "column",
+            "tablet_flex_direction": "column",
+            "mobile_flex_direction": "column",
+            "x_gap": 3.5,
+            "y_gap": 1.2,
+            "mobile_gap": false,
+            "mobile_x_gap": 4,
+            "mobile_y_gap": 4,
+            "justify_content": "center",
+            "align_items": "flex-start",
+            "container_width": "full_width",
+            "content_overflow": "fit",
+            "display": "both"
+          },
+          "blocks": {
+            "text_3ANaTM": {
+              "type": "text",
+              "name": "Section Header",
+              "settings": {
+                "text": "Distribution",
+                "type": "h2",
+                "align": "center",
+                "font": "primary",
+                "weight": "600",
+                "font_size": 36,
+                "mobile_font_size": 36,
+                "max_width": 600,
+                "mobile_max_width": 600,
+                "color": "#212121",
+                "list": false,
+                "gap-border": false,
+                "display": "both"
+              },
+              "blocks": {}
+            },
+            "flex_box_Q6bRYg": {
+              "type": "flex-box",
+              "name": "Publish Container",
+              "settings": {
+                "optional_link": "",
+                "padding_top": 2,
+                "padding_bottom": 2,
+                "padding_left": 2,
+                "padding_right": 2,
+                "mobile_top_bottom": false,
+                "mobile_padding_top": 4,
+                "mobile_padding_bottom": 4,
+                "mobile_sides": false,
+                "mobile_padding_left": 2,
+                "mobile_padding_right": 2,
+                "add_border": false,
+                "border_width": 1,
+                "border_color": "#000000",
+                "border_radius": 10,
+                "background_color": "#ffffff",
+                "flex_direction": "row",
+                "tablet_flex_direction": "row",
+                "mobile_flex_direction": "column",
+                "x_gap": 7.5,
+                "y_gap": 4,
+                "mobile_gap": false,
+                "mobile_x_gap": 4,
+                "mobile_y_gap": 4,
+                "justify_content": "center",
+                "align_items": "flex-start",
+                "container_width": "full_width",
+                "content_overflow": "fit",
+                "display": "both"
+              },
+              "blocks": {
+                "flex_box_dqYGbP": {
+                  "type": "flex-box",
+                  "name": "Flame Tree Container",
+                  "settings": {
+                    "optional_link": "",
+                    "padding_top": 0,
+                    "padding_bottom": 0,
+                    "padding_left": 0,
+                    "padding_right": 0,
+                    "mobile_top_bottom": false,
+                    "mobile_padding_top": 4,
+                    "mobile_padding_bottom": 4,
+                    "mobile_sides": false,
+                    "mobile_padding_left": 2,
+                    "mobile_padding_right": 2,
+                    "add_border": false,
+                    "border_width": 1,
+                    "border_color": "#000000",
+                    "border_radius": 10,
+                    "background_color": "#ffffff",
+                    "flex_direction": "column",
+                    "tablet_flex_direction": "column",
+                    "mobile_flex_direction": "column",
+                    "x_gap": 0,
+                    "y_gap": 0.5,
+                    "mobile_gap": false,
+                    "mobile_x_gap": 4,
+                    "mobile_y_gap": 4,
+                    "justify_content": "center",
+                    "align_items": "flex-start",
+                    "container_width": "full_width",
+                    "content_overflow": "fit",
+                    "display": "both"
+                  },
+                  "blocks": {
+                    "flex_box_pJ4kY6": {
+                      "type": "flex-box",
+                      "name": "Flexbox",
+                      "settings": {
+                        "optional_link": "",
+                        "padding_top": 0,
+                        "padding_bottom": 0,
+                        "padding_left": 1,
+                        "padding_right": 1,
+                        "mobile_top_bottom": false,
+                        "mobile_padding_top": 4,
+                        "mobile_padding_bottom": 4,
+                        "mobile_sides": false,
+                        "mobile_padding_left": 2,
+                        "mobile_padding_right": 2,
+                        "add_border": true,
+                        "border_width": 1,
+                        "border_color": "#000000",
+                        "border_radius": 4,
+                        "background_color": "#131517",
+                        "flex_direction": "column",
+                        "tablet_flex_direction": "column",
+                        "mobile_flex_direction": "column",
+                        "x_gap": 4,
+                        "y_gap": 4,
+                        "mobile_gap": false,
+                        "mobile_x_gap": 4,
+                        "mobile_y_gap": 4,
+                        "justify_content": "center",
+                        "align_items": "center",
+                        "container_width": "full_width",
+                        "content_overflow": "fit",
+                        "display": "both"
+                      },
+                      "blocks": {
+                        "basic_image_RDURrJ": {
+                          "type": "basic-image",
+                          "name": "Base Image",
+                          "settings": {
+                            "image": "shopify://shop_images/ArcturusLogo2025_1.png",
+                            "aspect_ratio": "4/3",
+                            "mobile_aspect_ratio": "square",
+                            "object_fit": "cover",
+                            "rounded": "none",
+                            "max_width": 144,
+                            "mobile_max_width": 96,
+                            "border": 0,
+                            "border_color": "",
+                            "lazy_load": true,
+                            "alt_text": ""
+                          },
+                          "blocks": {}
+                        }
+                      },
+                      "block_order": [
+                        "basic_image_RDURrJ"
+                      ]
+                    },
+                    "text_7QeajW": {
+                      "type": "text",
+                      "name": "Subheader",
+                      "settings": {
+                        "text": "Flame Tree Publishing",
+                        "type": "h4",
+                        "align": "center",
+                        "font": "secondary",
+                        "weight": "600",
+                        "font_size": 20,
+                        "mobile_font_size": 18,
+                        "max_width": 600,
+                        "mobile_max_width": 600,
+                        "color": "#212121",
+                        "list": false,
+                        "gap-border": false,
+                        "display": "both"
+                      },
+                      "blocks": {}
+                    },
+                    "text_MKH7yq": {
+                      "type": "text",
+                      "name": "Simple Body Text",
+                      "settings": {
+                        "text": "Texas Bookman is honored to be the only bargain distributor for Flame Tree Publishing. Based in London, Flame Tree Publishing produces high quality illustrated books specializing in art, music, history, and reference, as well as a beautiful range of foiled and embossed journals, pocket books, and sketchbooks.",
+                        "type": "p",
+                        "align": "start",
+                        "font": "secondary",
+                        "weight": "400",
+                        "font_size": 16,
+                        "mobile_font_size": 14,
+                        "max_width": 390,
+                        "mobile_max_width": 390,
+                        "color": "#212121",
+                        "list": false,
+                        "gap-border": false,
+                        "display": "both"
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "flex_box_pJ4kY6",
+                    "text_7QeajW",
+                    "text_MKH7yq"
+                  ]
+                },
+                "flex_box_Y6Q6P9": {
+                  "type": "flex-box",
+                  "name": "Arcturus Container",
+                  "settings": {
+                    "optional_link": "",
+                    "padding_top": 0,
+                    "padding_bottom": 0,
+                    "padding_left": 0,
+                    "padding_right": 0,
+                    "mobile_top_bottom": false,
+                    "mobile_padding_top": 4,
+                    "mobile_padding_bottom": 4,
+                    "mobile_sides": false,
+                    "mobile_padding_left": 2,
+                    "mobile_padding_right": 2,
+                    "add_border": false,
+                    "border_width": 1,
+                    "border_color": "#000000",
+                    "border_radius": 10,
+                    "background_color": "#ffffff",
+                    "flex_direction": "column",
+                    "tablet_flex_direction": "column",
+                    "mobile_flex_direction": "column",
+                    "x_gap": 0,
+                    "y_gap": 0.5,
+                    "mobile_gap": false,
+                    "mobile_x_gap": 4,
+                    "mobile_y_gap": 4,
+                    "justify_content": "center",
+                    "align_items": "flex-start",
+                    "container_width": "full_width",
+                    "content_overflow": "fit",
+                    "display": "both"
+                  },
+                  "blocks": {
+                    "flex_box_wCQE8w": {
+                      "type": "flex-box",
+                      "name": "Flexbox",
+                      "settings": {
+                        "optional_link": "",
+                        "padding_top": 1,
+                        "padding_bottom": 1,
+                        "padding_left": 2,
+                        "padding_right": 2,
+                        "mobile_top_bottom": true,
+                        "mobile_padding_top": 0,
+                        "mobile_padding_bottom": 0,
+                        "mobile_sides": true,
+                        "mobile_padding_left": 1,
+                        "mobile_padding_right": 1,
+                        "add_border": true,
+                        "border_width": 1,
+                        "border_color": "#3673B5",
+                        "border_radius": 4,
+                        "background_color": "#3673B5",
+                        "flex_direction": "column",
+                        "tablet_flex_direction": "column",
+                        "mobile_flex_direction": "column",
+                        "x_gap": 4,
+                        "y_gap": 4,
+                        "mobile_gap": false,
+                        "mobile_x_gap": 4,
+                        "mobile_y_gap": 4,
+                        "justify_content": "center",
+                        "align_items": "center",
+                        "container_width": "full_width",
+                        "content_overflow": "fit",
+                        "display": "both"
+                      },
+                      "blocks": {
+                        "basic_image_xjrBFm": {
+                          "type": "basic-image",
+                          "name": "Base Image",
+                          "settings": {
+                            "image": "shopify://shop_images/Rectangle.png",
+                            "aspect_ratio": "3/2",
+                            "mobile_aspect_ratio": "square",
+                            "object_fit": "contain",
+                            "rounded": "none",
+                            "max_width": 112,
+                            "mobile_max_width": 96,
+                            "border": 0,
+                            "border_color": "",
+                            "lazy_load": true,
+                            "alt_text": ""
+                          },
+                          "blocks": {}
+                        }
+                      },
+                      "block_order": [
+                        "basic_image_xjrBFm"
+                      ]
+                    },
+                    "text_L6czJh": {
+                      "type": "text",
+                      "name": "Subheader",
+                      "settings": {
+                        "text": "Arcturus Publishing",
+                        "type": "h4",
+                        "align": "center",
+                        "font": "secondary",
+                        "weight": "600",
+                        "font_size": 20,
+                        "mobile_font_size": 18,
+                        "max_width": 600,
+                        "mobile_max_width": 600,
+                        "color": "#212121",
+                        "list": false,
+                        "gap-border": false,
+                        "display": "both"
+                      },
+                      "blocks": {}
+                    },
+                    "text_7iLdN9": {
+                      "type": "text",
+                      "name": "Simple Body Text",
+                      "settings": {
+                        "text": "Texas Bookman is delighted to be the only distributor for Arcturus Publishing. This range of beautifully stylish value-priced titles features some of the most beloved titles in classic literature, history, trending topics, metaphysics, and book sets perfect for gift giving.",
+                        "type": "p",
+                        "align": "start",
+                        "font": "secondary",
+                        "weight": "400",
+                        "font_size": 16,
+                        "mobile_font_size": 14,
+                        "max_width": 390,
+                        "mobile_max_width": 390,
+                        "color": "#212121",
+                        "list": false,
+                        "gap-border": false,
+                        "display": "both"
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "flex_box_wCQE8w",
+                    "text_L6czJh",
+                    "text_7iLdN9"
+                  ]
+                }
+              },
+              "block_order": [
+                "flex_box_dqYGbP",
+                "flex_box_Y6Q6P9"
+              ]
+            }
+          },
+          "block_order": [
+            "text_3ANaTM",
+            "flex_box_Q6bRYg"
+          ]
+        }
+      },
+      "block_order": [
+        "flex_box_BPYd4V"
+      ],
+      "custom_css": [
+        "p {font-size: 14px;}"
+      ],
+      "name": "Base Flexbox",
+      "settings": {
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0,
+        "padding_left": 0,
+        "padding_right": 0,
+        "background_color": "#ffffff",
+        "flex_direction": "column",
+        "tablet_flex_direction": "column",
+        "mobile_flex_direction": "column",
+        "x_gap": 0,
+        "y_gap": 0,
+        "mobile_gap": false,
+        "mobile_x_gap": 0,
+        "mobile_y_gap": 0,
+        "justify_content": "center",
+        "align_items": "center",
+        "container_width": "full_width",
+        "content_overflow": "fit",
+        "custom_id": ""
+      }
+    },
+    "ud_flexbox_tdqfTF": {
+      "type": "ud-flexbox",
+      "blocks": {
+        "flex_box_JDXhBU": {
+          "type": "flex-box",
+          "name": "Desktop Version",
+          "settings": {
+            "optional_link": "",
+            "padding_top": 2,
+            "padding_bottom": 2,
+            "padding_left": 2,
+            "padding_right": 2,
+            "mobile_top_bottom": true,
+            "mobile_padding_top": 0.5,
+            "mobile_padding_bottom": 0.5,
+            "mobile_sides": true,
+            "mobile_padding_left": 1,
+            "mobile_padding_right": 1,
+            "add_border": true,
+            "border_width": 1,
+            "border_color": "#E6A23C",
+            "border_radius": 10,
+            "background_color": "#ffffff",
+            "flex_direction": "column",
+            "tablet_flex_direction": "column",
+            "mobile_flex_direction": "column",
+            "x_gap": 0,
+            "y_gap": 1,
+            "mobile_gap": false,
+            "mobile_x_gap": 4,
+            "mobile_y_gap": 4,
+            "justify_content": "center",
+            "align_items": "flex-start",
+            "container_width": "full_width",
+            "content_overflow": "fit",
+            "display": "desktop"
+          },
+          "blocks": {
+            "flex_box_4pQanA": {
+              "type": "flex-box",
+              "name": "Flexbox",
+              "settings": {
+                "optional_link": "",
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0,
+                "mobile_top_bottom": false,
+                "mobile_padding_top": 4,
+                "mobile_padding_bottom": 4,
+                "mobile_sides": false,
+                "mobile_padding_left": 2,
+                "mobile_padding_right": 2,
+                "add_border": false,
+                "border_width": 1,
+                "border_color": "#000000",
+                "border_radius": 10,
+                "background_color": "#ffffff",
+                "flex_direction": "row",
+                "tablet_flex_direction": "row",
+                "mobile_flex_direction": "row",
+                "x_gap": 1,
+                "y_gap": 0,
+                "mobile_gap": false,
+                "mobile_x_gap": 4,
+                "mobile_y_gap": 4,
+                "justify_content": "center",
+                "align_items": "center",
+                "container_width": "full_width",
+                "content_overflow": "fit",
+                "display": "both"
+              },
+              "blocks": {
+                "icon_bTdWxQ": {
+                  "type": "icon",
+                  "name": "Icon",
+                  "settings": {
+                    "image": "shopify://shop_images/alert-triangle.png",
+                    "max_width": 28,
+                    "mobile_max_width": 28,
+                    "border": 0,
+                    "border_color": ""
+                  },
+                  "blocks": {}
+                },
+                "text_Gkp6EY": {
+                  "type": "text",
+                  "name": "Subheader",
+                  "settings": {
+                    "text": "Problem With Your Order?",
+                    "type": "h4",
+                    "align": "center",
+                    "font": "secondary",
+                    "weight": "600",
+                    "font_size": 20,
+                    "mobile_font_size": 18,
+                    "max_width": 600,
+                    "mobile_max_width": 600,
+                    "color": "#212121",
+                    "list": false,
+                    "gap-border": false,
+                    "display": "both"
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "icon_bTdWxQ",
+                "text_Gkp6EY"
+              ]
+            },
+            "rich_text_dK7BNe": {
+              "type": "rich-text",
+              "name": "Rich Text",
+              "settings": {
+                "text": "<p>All items are sold on a non-returnable basis, however sometimes items are damaged in shipping and we are here to make it right. Please email us at <a href=\"mailto:orders@texasbookman.com\" title=\"mailto:orders@texasbookman.com\">orders@texasbookman.com</a> to report the damaged item(s).</p>",
+                "align": "start",
+                "color": "#000000",
+                "max_width": 1000
+              },
+              "blocks": {}
+            },
+            "rich_text_CGT9DM": {
+              "type": "rich-text",
+              "name": "Rich Text",
+              "settings": {
+                "text": "<ul><li>Pictures are required for all damaged item(s). </li><li>Any claims for damaged or missing items must be made within 10 days of receipt of order.</li><li>Please DO NOT return any item(s) without prior approval from Texas Bookman.</li><li>Any items returned without authorization will not be issued credit and will remain on your account.</li></ul>",
+                "align": "start",
+                "color": "#000000",
+                "max_width": 1000
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "flex_box_4pQanA",
+            "rich_text_dK7BNe",
+            "rich_text_CGT9DM"
+          ]
+        },
+        "flex_box_PFfrg4": {
+          "type": "flex-box",
+          "name": "Mobile Version",
+          "settings": {
+            "optional_link": "",
+            "padding_top": 2,
+            "padding_bottom": 2,
+            "padding_left": 2,
+            "padding_right": 2,
+            "mobile_top_bottom": true,
+            "mobile_padding_top": 0.5,
+            "mobile_padding_bottom": 0.5,
+            "mobile_sides": true,
+            "mobile_padding_left": 1,
+            "mobile_padding_right": 1,
+            "add_border": true,
+            "border_width": 1,
+            "border_color": "#E6A23C",
+            "border_radius": 10,
+            "background_color": "#ffffff",
+            "flex_direction": "column",
+            "tablet_flex_direction": "column",
+            "mobile_flex_direction": "column",
+            "x_gap": 0,
+            "y_gap": 1,
+            "mobile_gap": false,
+            "mobile_x_gap": 4,
+            "mobile_y_gap": 4,
+            "justify_content": "center",
+            "align_items": "flex-start",
+            "container_width": "full_width",
+            "content_overflow": "fit",
+            "display": "mobile"
+          },
+          "blocks": {
+            "flex_box_QmAtGm": {
+              "type": "flex-box",
+              "name": "Flexbox",
+              "settings": {
+                "optional_link": "",
+                "padding_top": 0,
+                "padding_bottom": 0,
+                "padding_left": 0,
+                "padding_right": 0,
+                "mobile_top_bottom": false,
+                "mobile_padding_top": 4,
+                "mobile_padding_bottom": 4,
+                "mobile_sides": false,
+                "mobile_padding_left": 2,
+                "mobile_padding_right": 2,
+                "add_border": false,
+                "border_width": 1,
+                "border_color": "#000000",
+                "border_radius": 10,
+                "background_color": "#ffffff",
+                "flex_direction": "row",
+                "tablet_flex_direction": "row",
+                "mobile_flex_direction": "row",
+                "x_gap": 1,
+                "y_gap": 0,
+                "mobile_gap": false,
+                "mobile_x_gap": 4,
+                "mobile_y_gap": 4,
+                "justify_content": "center",
+                "align_items": "center",
+                "container_width": "full_width",
+                "content_overflow": "fit",
+                "display": "mobile"
+              },
+              "blocks": {
+                "icon_nj6aeJ": {
+                  "type": "icon",
+                  "name": "Icon",
+                  "settings": {
+                    "image": "shopify://shop_images/alert-triangle.png",
+                    "max_width": 28,
+                    "mobile_max_width": 28,
+                    "border": 0,
+                    "border_color": ""
+                  },
+                  "blocks": {}
+                },
+                "text_3L8TE9": {
+                  "type": "text",
+                  "name": "Subheader",
+                  "settings": {
+                    "text": "Problem With Your Order?",
+                    "type": "h4",
+                    "align": "center",
+                    "font": "secondary",
+                    "weight": "600",
+                    "font_size": 20,
+                    "mobile_font_size": 18,
+                    "max_width": 600,
+                    "mobile_max_width": 600,
+                    "color": "#212121",
+                    "list": false,
+                    "gap-border": false,
+                    "display": "both"
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "icon_nj6aeJ",
+                "text_3L8TE9"
+              ]
+            },
+            "rich_text_VjgJCz": {
+              "type": "rich-text",
+              "name": "Rich Text",
+              "settings": {
+                "text": "<p>All items are sold on a non-returnable basis, however sometimes items are damaged in shipping and we are here to make it right.</p>",
+                "align": "start",
+                "color": "#000000",
+                "max_width": 1000
+              },
+              "blocks": {}
+            },
+            "rich_text_74L8yR": {
+              "type": "rich-text",
+              "name": "Rich Text",
+              "settings": {
+                "text": "<ul><li>Pictures are required.</li><li>Report within 10 days of receipt.</li><li>Please DO NOT return items without prior approval. Unauthorized returns will not be credited.</li></ul>",
+                "align": "start",
+                "color": "#000000",
+                "max_width": 1000
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "flex_box_QmAtGm",
+            "rich_text_VjgJCz",
+            "rich_text_74L8yR"
+          ]
+        }
+      },
+      "block_order": [
+        "flex_box_JDXhBU",
+        "flex_box_PFfrg4"
+      ],
+      "custom_css": [
+        "p {font-size: 14px;}"
+      ],
+      "name": "Base Flexbox",
+      "settings": {
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0,
+        "padding_left": 1,
+        "padding_right": 1,
+        "background_color": "#ffffff",
+        "flex_direction": "column",
+        "tablet_flex_direction": "column",
+        "mobile_flex_direction": "column",
+        "x_gap": 0,
+        "y_gap": 0,
+        "mobile_gap": false,
+        "mobile_x_gap": 0,
+        "mobile_y_gap": 0,
+        "justify_content": "center",
+        "align_items": "center",
+        "container_width": "sm_desktop",
+        "content_overflow": "fit",
+        "custom_id": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "ud_flexbox_88GGLA",
+    "ud_flexbox_T8gfDb",
+    "ud_flexbox_KpPGzg",
+    "ud_flexbox_y8ayhV",
+    "ud_flexbox_tdqfTF"
+  ]
+}
