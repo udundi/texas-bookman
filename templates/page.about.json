@@ -389,16 +389,16 @@
               },
               "blocks": {}
             },
-            "flex_box_E8TUWW": {
+            "flex_box_Q6bRYg": {
               "type": "flex-box",
-              "name": "Flexbox",
+              "name": "Publish Container",
               "settings": {
                 "optional_link": "",
-                "padding_top": 0,
-                "padding_bottom": 0,
-                "padding_left": 0,
-                "padding_right": 0,
-                "mobile_top_bottom": false,
+                "padding_top": 4,
+                "padding_bottom": 4,
+                "padding_left": 2,
+                "padding_right": 2,
+                "mobile_top_bottom": true,
                 "mobile_padding_top": 4,
                 "mobile_padding_bottom": 4,
                 "mobile_sides": false,
@@ -409,24 +409,24 @@
                 "border_color": "#000000",
                 "border_radius": 10,
                 "background_color": "#ffffff",
-                "flex_direction": "column",
-                "tablet_flex_direction": "column",
+                "flex_direction": "row",
+                "tablet_flex_direction": "row",
                 "mobile_flex_direction": "column",
-                "x_gap": 0,
-                "y_gap": 0.5,
+                "x_gap": 4,
+                "y_gap": 4,
                 "mobile_gap": false,
                 "mobile_x_gap": 4,
                 "mobile_y_gap": 4,
                 "justify_content": "center",
-                "align_items": "center",
+                "align_items": "flex-start",
                 "container_width": "full_width",
                 "content_overflow": "fit",
                 "display": "both"
               },
               "blocks": {
-                "flex_box_pJ4kY6": {
+                "flex_box_dqYGbP": {
                   "type": "flex-box",
-                  "name": "Flexbox",
+                  "name": "Flame Tree Container",
                   "settings": {
                     "optional_link": "",
                     "padding_top": 0,
@@ -443,96 +443,277 @@
                     "border_width": 1,
                     "border_color": "#000000",
                     "border_radius": 10,
-                    "background_color": "#000000",
+                    "background_color": "#ffffff",
                     "flex_direction": "column",
                     "tablet_flex_direction": "column",
                     "mobile_flex_direction": "column",
-                    "x_gap": 4,
-                    "y_gap": 4,
+                    "x_gap": 0,
+                    "y_gap": 0.5,
                     "mobile_gap": false,
                     "mobile_x_gap": 4,
                     "mobile_y_gap": 4,
                     "justify_content": "center",
-                    "align_items": "center",
+                    "align_items": "flex-start",
                     "container_width": "full_width",
                     "content_overflow": "fit",
                     "display": "both"
                   },
                   "blocks": {
-                    "basic_image_RDURrJ": {
-                      "type": "basic-image",
-                      "name": "Base Image",
+                    "flex_box_pJ4kY6": {
+                      "type": "flex-box",
+                      "name": "Flexbox",
                       "settings": {
-                        "image": "shopify://shop_images/ArcturusLogo2025_1.png",
-                        "aspect_ratio": "4/3",
-                        "mobile_aspect_ratio": "square",
-                        "object_fit": "cover",
-                        "rounded": "none",
-                        "max_width": 320,
-                        "mobile_max_width": 320,
-                        "border": 0,
-                        "border_color": "",
-                        "lazy_load": true,
-                        "alt_text": ""
+                        "optional_link": "",
+                        "padding_top": 0,
+                        "padding_bottom": 0,
+                        "padding_left": 1,
+                        "padding_right": 1,
+                        "mobile_top_bottom": false,
+                        "mobile_padding_top": 4,
+                        "mobile_padding_bottom": 4,
+                        "mobile_sides": false,
+                        "mobile_padding_left": 2,
+                        "mobile_padding_right": 2,
+                        "add_border": true,
+                        "border_width": 1,
+                        "border_color": "#000000",
+                        "border_radius": 4,
+                        "background_color": "#131517",
+                        "flex_direction": "column",
+                        "tablet_flex_direction": "column",
+                        "mobile_flex_direction": "column",
+                        "x_gap": 4,
+                        "y_gap": 4,
+                        "mobile_gap": false,
+                        "mobile_x_gap": 4,
+                        "mobile_y_gap": 4,
+                        "justify_content": "center",
+                        "align_items": "center",
+                        "container_width": "full_width",
+                        "content_overflow": "fit",
+                        "display": "both"
+                      },
+                      "blocks": {
+                        "basic_image_RDURrJ": {
+                          "type": "basic-image",
+                          "name": "Base Image",
+                          "settings": {
+                            "image": "shopify://shop_images/ArcturusLogo2025_1.png",
+                            "aspect_ratio": "4/3",
+                            "mobile_aspect_ratio": "square",
+                            "object_fit": "cover",
+                            "rounded": "none",
+                            "max_width": 144,
+                            "mobile_max_width": 320,
+                            "border": 0,
+                            "border_color": "",
+                            "lazy_load": true,
+                            "alt_text": ""
+                          },
+                          "blocks": {}
+                        }
+                      },
+                      "block_order": [
+                        "basic_image_RDURrJ"
+                      ]
+                    },
+                    "text_7QeajW": {
+                      "type": "text",
+                      "name": "Subheader",
+                      "settings": {
+                        "text": "Flame Tree Publishing",
+                        "type": "h4",
+                        "align": "center",
+                        "font": "secondary",
+                        "weight": "600",
+                        "font_size": 20,
+                        "mobile_font_size": 18,
+                        "max_width": 600,
+                        "mobile_max_width": 600,
+                        "color": "#212121",
+                        "list": false,
+                        "gap-border": false,
+                        "display": "both"
+                      },
+                      "blocks": {}
+                    },
+                    "text_MKH7yq": {
+                      "type": "text",
+                      "name": "Simple Body Text",
+                      "settings": {
+                        "text": "Texas Bookman is honored to be the only bargain distributor for Flame Tree Publishing. Based in London, Flame Tree Publishing produces high quality illustrated books specializing in art, music, history, and reference, as well as a beautiful range of foiled and embossed journals, pocket books, and sketchbooks.",
+                        "type": "p",
+                        "align": "start",
+                        "font": "secondary",
+                        "weight": "400",
+                        "font_size": 16,
+                        "mobile_font_size": 14,
+                        "max_width": 390,
+                        "mobile_max_width": 390,
+                        "color": "#212121",
+                        "list": false,
+                        "gap-border": false,
+                        "display": "both"
                       },
                       "blocks": {}
                     }
                   },
                   "block_order": [
-                    "basic_image_RDURrJ"
+                    "flex_box_pJ4kY6",
+                    "text_7QeajW",
+                    "text_MKH7yq"
                   ]
                 },
-                "text_7QeajW": {
-                  "type": "text",
-                  "name": "Subheader",
+                "flex_box_Y6Q6P9": {
+                  "type": "flex-box",
+                  "name": "Arcturus Container",
                   "settings": {
-                    "text": "Subheading Text",
-                    "type": "h4",
-                    "align": "center",
-                    "font": "secondary",
-                    "weight": "600",
-                    "font_size": 20,
-                    "mobile_font_size": 18,
-                    "max_width": 600,
-                    "mobile_max_width": 600,
-                    "color": "#212121",
-                    "list": false,
-                    "gap-border": false,
+                    "optional_link": "",
+                    "padding_top": 0,
+                    "padding_bottom": 0,
+                    "padding_left": 0,
+                    "padding_right": 0,
+                    "mobile_top_bottom": false,
+                    "mobile_padding_top": 4,
+                    "mobile_padding_bottom": 4,
+                    "mobile_sides": false,
+                    "mobile_padding_left": 2,
+                    "mobile_padding_right": 2,
+                    "add_border": false,
+                    "border_width": 1,
+                    "border_color": "#000000",
+                    "border_radius": 10,
+                    "background_color": "#ffffff",
+                    "flex_direction": "column",
+                    "tablet_flex_direction": "column",
+                    "mobile_flex_direction": "column",
+                    "x_gap": 0,
+                    "y_gap": 0.5,
+                    "mobile_gap": false,
+                    "mobile_x_gap": 4,
+                    "mobile_y_gap": 4,
+                    "justify_content": "center",
+                    "align_items": "flex-start",
+                    "container_width": "full_width",
+                    "content_overflow": "fit",
                     "display": "both"
                   },
-                  "blocks": {}
-                },
-                "text_MKH7yq": {
-                  "type": "text",
-                  "name": "Simple Body Text",
-                  "settings": {
-                    "text": "Body text content goes here.",
-                    "type": "p",
-                    "align": "center",
-                    "font": "secondary",
-                    "weight": "400",
-                    "font_size": 16,
-                    "mobile_font_size": 14,
-                    "max_width": 600,
-                    "mobile_max_width": 600,
-                    "color": "#212121",
-                    "list": false,
-                    "gap-border": false,
-                    "display": "both"
+                  "blocks": {
+                    "flex_box_wCQE8w": {
+                      "type": "flex-box",
+                      "name": "Flexbox",
+                      "settings": {
+                        "optional_link": "",
+                        "padding_top": 1,
+                        "padding_bottom": 1,
+                        "padding_left": 2,
+                        "padding_right": 2,
+                        "mobile_top_bottom": false,
+                        "mobile_padding_top": 4,
+                        "mobile_padding_bottom": 4,
+                        "mobile_sides": false,
+                        "mobile_padding_left": 2,
+                        "mobile_padding_right": 2,
+                        "add_border": true,
+                        "border_width": 1,
+                        "border_color": "#000000",
+                        "border_radius": 4,
+                        "background_color": "#3673B5",
+                        "flex_direction": "column",
+                        "tablet_flex_direction": "column",
+                        "mobile_flex_direction": "column",
+                        "x_gap": 4,
+                        "y_gap": 4,
+                        "mobile_gap": false,
+                        "mobile_x_gap": 4,
+                        "mobile_y_gap": 4,
+                        "justify_content": "center",
+                        "align_items": "center",
+                        "container_width": "full_width",
+                        "content_overflow": "fit",
+                        "display": "both"
+                      },
+                      "blocks": {
+                        "basic_image_xjrBFm": {
+                          "type": "basic-image",
+                          "name": "Base Image",
+                          "settings": {
+                            "image": "shopify://shop_images/Rectangle.png",
+                            "aspect_ratio": "3/2",
+                            "mobile_aspect_ratio": "square",
+                            "object_fit": "contain",
+                            "rounded": "none",
+                            "max_width": 112,
+                            "mobile_max_width": 320,
+                            "border": 0,
+                            "border_color": "",
+                            "lazy_load": true,
+                            "alt_text": ""
+                          },
+                          "blocks": {}
+                        }
+                      },
+                      "block_order": [
+                        "basic_image_xjrBFm"
+                      ]
+                    },
+                    "text_L6czJh": {
+                      "type": "text",
+                      "name": "Subheader",
+                      "settings": {
+                        "text": "Arcturus Publishing",
+                        "type": "h4",
+                        "align": "center",
+                        "font": "secondary",
+                        "weight": "600",
+                        "font_size": 20,
+                        "mobile_font_size": 18,
+                        "max_width": 600,
+                        "mobile_max_width": 600,
+                        "color": "#212121",
+                        "list": false,
+                        "gap-border": false,
+                        "display": "both"
+                      },
+                      "blocks": {}
+                    },
+                    "text_7iLdN9": {
+                      "type": "text",
+                      "name": "Simple Body Text",
+                      "settings": {
+                        "text": "Texas Bookman is delighted to be the only distributor for Arcturus Publishing. This range of beautifully stylish value-priced titles features some of the most beloved titles in classic literature, history, trending topics, metaphysics, and book sets perfect for gift giving.",
+                        "type": "p",
+                        "align": "start",
+                        "font": "secondary",
+                        "weight": "400",
+                        "font_size": 16,
+                        "mobile_font_size": 14,
+                        "max_width": 390,
+                        "mobile_max_width": 390,
+                        "color": "#212121",
+                        "list": false,
+                        "gap-border": false,
+                        "display": "both"
+                      },
+                      "blocks": {}
+                    }
                   },
-                  "blocks": {}
+                  "block_order": [
+                    "flex_box_wCQE8w",
+                    "text_L6czJh",
+                    "text_7iLdN9"
+                  ]
                 }
               },
               "block_order": [
-                "flex_box_pJ4kY6",
-                "text_7QeajW",
-                "text_MKH7yq"
+                "flex_box_dqYGbP",
+                "flex_box_Y6Q6P9"
               ]
             }
           },
           "block_order": [
             "text_3ANaTM",
-            "flex_box_E8TUWW"
+            "flex_box_Q6bRYg"
           ]
         }
       },
