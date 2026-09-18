@@ -982,7 +982,7 @@
                 "align_items": "center",
                 "container_width": "full_width",
                 "content_overflow": "fit",
-                "display": "both"
+                "display": "mobile"
               },
               "blocks": {
                 "icon_nj6aeJ": {
