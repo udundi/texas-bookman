@@ -91,7 +91,7 @@
               "name": "Menu Links",
               "settings": {
                 "menu_title": "All Children’s",
-                "header_url": "shopify://collections/frontpage",
+                "header_url": "shopify://collections/children-s",
                 "menu": "childrens-books",
                 "column_layout": "1-col"
               },
@@ -162,7 +162,7 @@
               "name": "Menu Links",
               "settings": {
                 "menu_title": "Books",
-                "header_url": "shopify://collections",
+                "header_url": "shopify://collections/all-mind-body-spirit",
                 "menu": "mind-body-spirit-books",
                 "column_layout": "1-col"
               },
@@ -173,7 +173,7 @@
               "name": "Menu Links",
               "settings": {
                 "menu_title": "Other",
-                "header_url": "shopify://collections/frontpage",
+                "header_url": "",
                 "menu": "mind-body-spirit-other",
                 "column_layout": "1-col"
               },
@@ -232,7 +232,7 @@
               "name": "Menu Links",
               "settings": {
                 "menu_title": "All Gifts",
-                "header_url": "shopify://collections",
+                "header_url": "shopify://collections/gifts-kits",
                 "menu": "all-gifts",
                 "column_layout": "1-col"
               },
@@ -243,7 +243,7 @@
               "name": "Menu Links",
               "settings": {
                 "menu_title": "All Stationery",
-                "header_url": "shopify://collections/frontpage",
+                "header_url": "shopify://collections/stationery",
                 "menu": "stationery",
                 "column_layout": "1-col"
               },
@@ -302,7 +302,7 @@
               "name": "Menu Links",
               "settings": {
                 "menu_title": "All Games & Media",
-                "header_url": "shopify://collections/frontpage",
+                "header_url": "shopify://collections/games-puzzles-humor",
                 "menu": "games-media",
                 "column_layout": "1-col"
               },
