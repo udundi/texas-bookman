@@ -23,17 +23,17 @@
     {% if block.blocks[0] != blank %}
       <div class="tw-flex tw-justify-start tw-gap-0.5">
         {% assign tab_titles = block.settings.tab_titles | append: '-' | split: '-' %}
-          <button
-            @click="clickingTab('info')"
-            class=" tw-text-16 tw-font-montserrat tw-leading-tight tw-px-4 tw-py-2 tw-capitalize tw-text-offblack"
-            :class="
-              [
-                clickedTab == 'info' ? 'tw-border-t tw-rounded-t-md tw-border-brand-grey tw-border-x tw-bg-brand-eggshell' : 'tw-font-normal'
-              ]
-            "
-          >
-            Details
-          </button>
+        <button
+          @click="clickingTab('info')"
+          class=" tw-text-16 tw-font-montserrat tw-leading-tight tw-px-4 tw-py-2 tw-capitalize tw-text-offblack"
+          :class="
+            [
+              clickedTab == 'info' ? 'tw-border-t tw-rounded-t-md tw-border-brand-grey tw-border-x tw-bg-brand-eggshell' : 'tw-font-normal'
+            ]
+          "
+        >
+          Details
+        </button>
         {% for block in block.blocks %}
           <button
             @click="clickingTab('{{ forloop.index0 }}')"
@@ -52,16 +52,24 @@
   </div>
   <div
     v-if="clickedTab == 'info'"
-    class="tw-overflow-hidden tw-border tw-border-brand-grey tw-rounded-md tw-mt-[-1px] tw-bg-brand-eggshell info-tab-{{ block.id }}"
+    class="tw-overflow-hidden tw-border tw-border-brand-grey tw-rounded-[4px] tw-mt-[-1px] tw-bg-brand-eggshell info-tab-{{ block.id }}"
     :class="[clickedTab == 'info' ? 'tw-rounded-tl-none' : '']"
   >
     <div class="tw-flex tw-flex-col tw-gap-4 tw-items-center tw-w-full tw-justify-center tw-p-4 ">
       <div class="tw-w-full tw-gap-4 tw-flex tw-items-start tw-justify-start">
         <div class="tw-flex tw-flex-col tw-gap-0.5 tw-items-start tw-w-full tw-justify-start tw-py-4">
-          {% if product.metafields.custom.publication_date != blank %}<div>Pub Date: {{ product.metafields.custom.publication_date }}</div>{% endif %}          
-          {% if product.metafields.custom.format != blank %}<div>Format: {{ product.metafields.custom.format }}</div>{% endif %}                   
-          {% if product.metafields.custom.pages != blank %}<div>Pages: {{ product.metafields.custom.pages }}</div>{% endif %}                   
-          {% if product.metafields.custom.illustration_type != blank %}<div>Illustration Type: {{ product.metafields.custom.illustration_type }}</div>{% endif %}                   
+          {% if product.metafields.custom.publication_date != blank %}
+            <div>Pub Date: {{ product.metafields.custom.publication_date }}</div>
+          {% endif %}
+          {% if product.metafields.custom.format != blank %}
+            <div>Format: {{ product.metafields.custom.format }}</div>
+          {% endif %}
+          {% if product.metafields.custom.pages != blank %}
+            <div>Pages: {{ product.metafields.custom.pages }}</div>
+          {% endif %}
+          {% if product.metafields.custom.illustration_type != blank %}
+            <div>Illustration Type: {{ product.metafields.custom.illustration_type }}</div>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -69,11 +77,9 @@
   {% for block in block.blocks %}
     <div
       v-if="clickedTab == {{ forloop.index0 }}"
-      class="tw-overflow-hidden tw-border tw-border-brand-grey tw-rounded-md tw-mt-[-1px] tw-bg-brand-eggshell info-tab-{{ block.id }}"
+      class="tw-overflow-hidden tw-border tw-border-brand-grey tw-rounded-[4px] tw-mt-[-1px] tw-bg-brand-eggshell info-tab-{{ block.id }}"
     >
-      
       {% render block %}
-
     </div>
   {% endfor %}
 </div>

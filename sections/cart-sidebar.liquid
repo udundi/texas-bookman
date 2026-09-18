@@ -4,7 +4,7 @@
     :class="fading ? 'tw-animate-fade-out' : 'tw-animate-fade-down'"
     class="tw-bg-white tw-fixed tw-pointer-events-auto tw-z-[999] tw-top-4 tw-right-4"
   >
-    <div class="tw-absolute tw-top-0 tw-right-0 md:tw-w-[570px] tw-w-full tw-max-w-[95vw] tw-bg-brand-eggshell tw-rounded-md tw-border tw-border-brand-grey tw-flex tw-flex-col">
+    <div class="tw-absolute tw-top-0 tw-right-0 md:tw-w-[570px] tw-w-full tw-max-w-[95vw] tw-bg-brand-eggshell tw-rounded-[4px] tw-border tw-border-brand-grey tw-flex tw-flex-col">
       <!-- Recently Added Banner -->
       <div
         v-if="recentlyAddedItem"
@@ -99,14 +99,14 @@
               >
                 <button
                   :class="disableCartActions ? 'tw-opacity-50 tw-pointer-events-none' : ''"
-                  class="md:tw-block tw-hidden tw-p-2 tw-text-brand-primary tw-border tw-border-brand-primary tw-rounded-md tw-text-16 tw-text-center tw-w-full tw-uppercase tw-bg-white"
+                  class="md:tw-block tw-hidden tw-p-2 tw-text-brand-primary tw-border tw-border-brand-primary tw-rounded-[4px] tw-text-16 tw-text-center tw-w-full tw-uppercase tw-bg-white"
                   @click="hideCart"
                 >
                   Keep Shopping
                 </button>
                 <a
                   :class="disableCartActions ? 'tw-opacity-50 tw-pointer-events-none' : ''"
-                  class="md:tw-block tw-hidden tw-p-2 tw-text-white tw-rounded-md tw-text-16 tw-text-center tw-w-full tw-uppercase tw-bg-brand-primary"
+                  class="md:tw-block tw-hidden tw-p-2 tw-text-white tw-rounded-[4px] tw-text-16 tw-text-center tw-w-full tw-uppercase tw-bg-brand-primary"
                   href="{{ routes.cart_url }}"
                 >
                   View Cart

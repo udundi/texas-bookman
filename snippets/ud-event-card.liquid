@@ -32,14 +32,14 @@
     <img
       src="{{ image | image_url: width: 380 }}"
       alt="{{ thumb_alt }}"
-      class="tw-shrink-0 tw-self-start tw-rounded-md tw-aspect-video tw-object-cover tw-object-center tw-mx-4 tw-mt-4 tw-min-h-[180px] md:tw-max-w-[380px] tw-w-full md:tw-mx-0 md:tw-ml-5 md:tw-my-5 md:tw-min-h-0"
+      class="tw-shrink-0 tw-self-start tw-rounded-[4px] tw-aspect-video tw-object-cover tw-object-center tw-mx-4 tw-mt-4 tw-min-h-[180px] md:tw-max-w-[380px] tw-w-full md:tw-mx-0 md:tw-ml-5 md:tw-my-5 md:tw-min-h-0"
       loading="lazy"
       width="380"
       height="148"
     >
   {%- else -%}
     <div
-      class="tw-shrink-0 tw-self-start tw-rounded-md tw-aspect-video tw-object-cover tw-object-center tw-mx-4 tw-mt-4 tw-min-h-[180px] md:tw-max-w-[380px] tw-w-full md:tw-mx-0 md:tw-ml-5 md:tw-my-5 md:tw-min-h-0"
+      class="tw-shrink-0 tw-self-start tw-rounded-[4px] tw-aspect-video tw-object-cover tw-object-center tw-mx-4 tw-mt-4 tw-min-h-[180px] md:tw-max-w-[380px] tw-w-full md:tw-mx-0 md:tw-ml-5 md:tw-my-5 md:tw-min-h-0"
       aria-hidden="true"
     ></div>
   {%- endif -%}
@@ -217,7 +217,7 @@
     {%- if cta_label != blank -%}
       <a
         href="{{ cta_url | default: '#' }}"
-        class="tw-inline-block tw-self-start tw-font-semibold tw-uppercase tw-tracking-wider tw-no-underline tw-mt-1 tw-py-1 tw-px-4 tw-rounded-md tw-transition-opacity hover:tw-opacity-85 tw-font-montserrat"
+        class="tw-inline-block tw-self-start tw-font-semibold tw-uppercase tw-tracking-wider tw-no-underline tw-mt-1 tw-py-1 tw-px-4 tw-rounded-[4px] tw-transition-opacity hover:tw-opacity-85 tw-font-montserrat"
         style="background-color: {{ section.settings.cta_bg }}; color: {{ section.settings.cta_text_color }}; font-size: {{ section.settings.cta_font_size }}px; border-radius: {{ section.settings.cta_border_radius }}px;"
       >
         {{ cta_label }}

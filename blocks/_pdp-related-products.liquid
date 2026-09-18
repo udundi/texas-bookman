@@ -6,7 +6,7 @@
         {% for rel_product in block.settings.related_product_list %}
           <div class="swiper-slide">
             <a href="{{ rel_product.url }}" class="tw-flex tw-flex-col tw-gap-2">
-              <div class="tw-w-full tw-aspect-square tw-rounded-md tw-overflow-hidden">
+              <div class="tw-w-full tw-aspect-square tw-rounded-[4px] tw-overflow-hidden">
                 {% if product.featured_image != blank %}
                   {{
                     product.featured_image

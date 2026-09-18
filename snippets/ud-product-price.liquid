@@ -57,7 +57,7 @@
   {% unless no_discount == true %}
     {% if compare_price > price or settings.sitewide_sale or flash_sale_live %}
       {% if settings.sitewide_sale or flash_sale_live %}
-        <div class="tw-px-4 tw-h-fit tw-rounded-md tw-text-12 tw-bg-brand-primary tw-w-fit tw-font-normal tw-text-white">
+        <div class="tw-px-4 tw-h-fit tw-rounded-[4px] tw-text-12 tw-bg-brand-primary tw-w-fit tw-font-normal tw-text-white">
           Sale
         </div>
       {% endif %}
@@ -73,7 +73,8 @@
           {% unless settings.sitewide_sale or flash_sale_live %}
             {% if customer %}Your{% endif %} Net Price: {{ price | money }}
           {% else %}
-            {% if customer %}Your{% endif %} Net Price: <span class="tw-line-through">{{ price | money }}</span> <span class="tw-text-brand-sale">{{ price | minus: product_discount | money }}</span>
+            {% if customer %}Your{% endif %} Net Price: <span class="tw-line-through">{{ price | money }}</span>
+            <span class="tw-text-brand-sale">{{ price | minus: product_discount | money }}</span>
           {% endunless %}
         </div>
       </div>

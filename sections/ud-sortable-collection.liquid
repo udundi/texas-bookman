@@ -133,7 +133,7 @@
         <button
           type="button"
           @click="mobileFiltersOpen = true; openFilters = []"
-          class="tw-flex tw-flex-1 tw-items-center tw-justify-center tw-gap-2 tw-rounded-md tw-border tw-border-brand-grey tw-bg-white tw-py-2 tw-text-14 tw-text-offblack tw-transition-colors hover:tw-border-offblack"
+          class="tw-flex tw-flex-1 tw-items-center tw-justify-center tw-gap-2 tw-rounded-[4px] tw-border tw-border-brand-grey tw-bg-white tw-py-2 tw-text-14 tw-text-offblack tw-transition-colors hover:tw-border-offblack"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" style="width: 14px; height: 14px;">
             <path d="M2 4h16M5 10h10M8 16h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -143,7 +143,7 @@
           </span>
         </button>
         <div class="tw-relative tw-flex tw-flex-1">
-          <div class="tw-pointer-events-none tw-flex tw-w-full tw-items-center tw-justify-center tw-gap-2 tw-rounded-md tw-border tw-border-brand-grey tw-bg-white tw-py-2 tw-text-14 tw-text-offblack tw-transition-colors">
+          <div class="tw-pointer-events-none tw-flex tw-w-full tw-items-center tw-justify-center tw-gap-2 tw-rounded-[4px] tw-border tw-border-brand-grey tw-bg-white tw-py-2 tw-text-14 tw-text-offblack tw-transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" style="width: 14px; height: 14px;">
               <path d="M5 4v12M5 16l-3-3M5 16l3-3M15 16V4M15 4l-3 3M15 4l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -258,7 +258,7 @@
           <div class="tw-hidden tw-whitespace-nowrap tw-font-brand-primary tw-text-16 tw-font-semibold tw-text-offblack tw-leading-tight md:tw-block">
             Sort By:
           </div>
-          <div class="tw-relative tw-hidden tw-items-center tw-gap-2 tw-rounded-md tw-border tw-border-solid tw-border-brand-grey tw-bg-white tw-py-2 tw-pl-3 tw-pr-8 tw-transition-colors md:tw-flex hover:tw-border-offblack">
+          <div class="tw-relative tw-hidden tw-items-center tw-gap-2 tw-rounded-[4px] tw-border tw-border-solid tw-border-brand-grey tw-bg-white tw-py-2 tw-pl-3 tw-pr-8 tw-transition-colors md:tw-flex hover:tw-border-offblack">
             <select
               aria-label="Sort By"
               class="tw-w-44 tw-cursor-pointer tw-appearance-none tw-border-0 tw-bg-transparent tw-p-0 tw-text-14 tw-text-offblack focus:tw-outline-none"
@@ -371,7 +371,7 @@
                 {% if has_collection_filter %}
                   <a
                     href="{% if query_params != blank %}{{ routes.all_products_collection_url }}?{{ query_params | join: '&' }}{% else %}{{ routes.all_products_collection_url }}{% endif %}"
-                    class="tw-flex tw-w-fit tw-items-center tw-gap-2 tw-rounded-md tw-border tw-border-brand-grey tw-bg-white tw-px-3 tw-py-1 tw-text-12 tw-text-offblack hover:tw-border-black"
+                    class="tw-flex tw-w-fit tw-items-center tw-gap-2 tw-rounded-[4px] tw-border tw-border-brand-grey tw-bg-white tw-px-3 tw-py-1 tw-text-12 tw-text-offblack hover:tw-border-black"
                     aria-label="Remove collection filter: {{ collection.title }}"
                   >
                     <span>{{ collection.title }}</span>
@@ -403,7 +403,7 @@
                     {% endfor %}
                     <a
                       href="{% if remaining_params != blank %}{{ collection.url }}?{{ remaining_params }}{% else %}{{ collection.url }}{% endif %}"
-                      class="tw-flex tw-w-fit tw-items-center tw-gap-2 tw-rounded-md tw-border tw-border-brand-grey tw-bg-white tw-px-3 tw-py-1 tw-text-12 tw-text-offblack hover:tw-border-black"
+                      class="tw-flex tw-w-fit tw-items-center tw-gap-2 tw-rounded-[4px] tw-border tw-border-brand-grey tw-bg-white tw-px-3 tw-py-1 tw-text-12 tw-text-offblack hover:tw-border-black"
                       aria-label="Remove {{ active_filter_key }} filter: {{ active_filter_value }}"
                     >
                       <span>{{ active_filter_value }}</span>
@@ -431,7 +431,7 @@
         <div class="tw-sticky tw-bottom-0 tw-w-full tw-border-t tw-border-brand-grey tw-bg-white tw-p-3 md:tw-hidden">
           <button
             type="button"
-            class="tw-w-full tw-rounded-md tw-bg-brand-primary tw-py-3 tw-text-14 tw-font-semibold tw-uppercase tw-tracking-wide tw-text-white"
+            class="tw-w-full tw-rounded-[4px] tw-bg-brand-primary tw-py-3 tw-text-14 tw-font-semibold tw-uppercase tw-tracking-wide tw-text-white"
             @click="mobileFiltersOpen = false"
           >
             Save Selections
@@ -457,7 +457,7 @@
               ></span>
               {% for product in collection.products -%}
                 {% assign is_flash_sale = false %}
-                {% if settings.flash_sale  %}
+                {% if settings.flash_sale %}
                   {% for flash_sale_product in settings.flash_sale_products %}
                     {% if flash_sale_product.id == product.id %}
                       {% assign is_flash_sale = true %}
@@ -489,12 +489,12 @@
                           </div>
                         {% endif %}
                         {% if product.tags contains 'New Product' %}
-                          <div class="tw-absolute tw-top-2.5 tw-left-2 tw-text-9 tw-px-4 tw-py-1 tw-rounded-md tw-bg-brand-primary tw-text-white tw-font-semibold">
+                          <div class="tw-absolute tw-top-2.5 tw-left-2 tw-text-9 tw-px-4 tw-py-1 tw-rounded-[4px] tw-bg-brand-primary tw-text-white tw-font-semibold">
                             NEW
                           </div>
                         {% endif %}
                         {% if is_flash_sale %}
-                          <div class="tw-absolute tw-top-2.5 tw-right-2 tw-text-9 tw-px-4 tw-py-1 tw-bg-brand-sale tw-rounded-md tw-text-white tw-font-semibold">
+                          <div class="tw-absolute tw-top-2.5 tw-right-2 tw-text-9 tw-px-4 tw-py-1 tw-bg-brand-sale tw-rounded-[4px] tw-text-white tw-font-semibold">
                             SALE
                           </div>
                         {% endif %}
@@ -510,7 +510,10 @@
                               </h3>
                             </a>
                           </div>
-                          {% if product.metafields.custom.tb_code != blank and customer and customer.tags contains 'Staff' %}
+                          {% if product.metafields.custom.tb_code != blank
+                            and customer
+                            and customer.tags contains 'Staff'
+                          %}
                             <p class="tw-font-semibold tw-text-14 tw-text-brand-greyer/50 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
                               TB Code:
                               <span class="tw-font-normal">
@@ -539,18 +542,21 @@
                                 {{- product.compare_at_price | default: product.price | money -}}
                               </span>
                             </div>
-                          {% if is_flash_sale %}
-                            <div class="tw-font-semibold tw-text-14">
-                              {% assign flash_sale_discount = settings.flash_sale_discount |  times: 0.01 %}
-                              {% assign flash_sale_amount = product.price | times: flash_sale_discount %}
-                                Your Net Price: <span class="tw-font-normal tw-line-through">{{ product.price | money }} </span> <span class="tw-font-normal tw-text-brand-sale">{{ product.price | minus: flash_sale_amount | money }}</span>
+                            {% if is_flash_sale %}
+                              <div class="tw-font-semibold tw-text-14">
+                                {% assign flash_sale_discount = settings.flash_sale_discount | times: 0.01 %}
+                                {% assign flash_sale_amount = product.price | times: flash_sale_discount %}
+                                Your Net Price:
+                                <span class="tw-font-normal tw-line-through">{{ product.price | money }} </span>
+                                <span class="tw-font-normal tw-text-brand-sale">
+                                  {{- product.price | minus: flash_sale_amount | money -}}
+                                </span>
                               </div>
-                              {% else %}
-                            <div class="tw-font-semibold tw-text-14">
+                            {% else %}
+                              <div class="tw-font-semibold tw-text-14">
                                 Your Net Price: <span class="tw-font-normal">{{ product.price | money }} </span>
                               </div>
-                          {% endif %}
-                          
+                            {% endif %}
                           </div>
                         </div>
                       </div>
@@ -574,7 +580,7 @@
                               data-variant-id="{{ product.selected_or_first_available_variant.id }}"
                               data-tags="{{ product.tags | json }}"
                               data-isbn="{{ product.metafields.facts.isbn }}"
-                              class="tw-bg-brand-secondary tw-w-full tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-black tw-rounded-md tw-flex tw-justify-center tw-leading-none tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center"
+                              class="tw-bg-brand-secondary tw-w-full tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center"
                               @click="addToCart({{ product.selected_or_first_available_variant.id }}, $event.currentTarget)"
                               :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                             >
@@ -586,7 +592,7 @@
                         {% else %}
                           <a
                             href="{{ product.url }}"
-                            class="tw-bg-white tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-black tw-rounded-md tw-flex tw-justify-center tw-border-black tw-border-2 tw-py-1 tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap"
+                            class="tw-bg-white tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-border-black tw-border-2 tw-py-1 tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap"
                           >
                             <span>{{ section.settings.button_text | default: 'Shop Now' }}</span>
                           </a>
@@ -619,11 +625,11 @@
                           </div>
                         {% endif %}
                         {% if product.tags contains 'New Product' %}
-                          <div class="tw-absolute tw-top-1 tw-left-1 tw-text-9 tw-px-4 tw-py-1 tw-rounded-md tw-bg-brand-primary tw-text-white tw-font-semibold">
+                          <div class="tw-absolute tw-top-1 tw-left-1 tw-text-9 tw-px-4 tw-py-1 tw-rounded-[4px] tw-bg-brand-primary tw-text-white tw-font-semibold">
                             NEW
                           </div>
-                        {% elsif is_flash_sale  %}
-                          <div class="tw-absolute tw-top-1 tw-left-1 tw-text-9 tw-px-4 tw-py-1 tw-bg-brand-sale tw-rounded-md tw-text-white tw-font-semibold">
+                        {% elsif is_flash_sale %}
+                          <div class="tw-absolute tw-top-1 tw-left-1 tw-text-9 tw-px-4 tw-py-1 tw-bg-brand-sale tw-rounded-[4px] tw-text-white tw-font-semibold">
                             SALE
                           </div>
                         {% endif %}
@@ -653,14 +659,18 @@
                           </div>
                           {% if is_flash_sale %}
                             <div class="tw-font-semibold tw-text-14">
-                              {% assign flash_sale_discount = settings.flash_sale_discount |  times: 0.01 %}
+                              {% assign flash_sale_discount = settings.flash_sale_discount | times: 0.01 %}
                               {% assign flash_sale_amount = product.price | times: flash_sale_discount %}
-                                Your Net Price: <span class="tw-font-normal tw-line-through">{{ product.price | money }} </span> <span class="tw-font-normal tw-text-brand-sale">{{ product.price | minus: flash_sale_amount | money }}</span>
-                              </div>
-                              {% else %}
+                              Your Net Price:
+                              <span class="tw-font-normal tw-line-through">{{ product.price | money }} </span>
+                              <span class="tw-font-normal tw-text-brand-sale">
+                                {{- product.price | minus: flash_sale_amount | money -}}
+                              </span>
+                            </div>
+                          {% else %}
                             <div class="tw-font-semibold tw-text-14">
-                                Your Net Price: <span class="tw-font-normal">{{ product.price | money }} </span>
-                              </div>
+                              Your Net Price: <span class="tw-font-normal">{{ product.price | money }} </span>
+                            </div>
                           {% endif %}
                         </div>
                         <div class="tw-grow tw-text-14 tw-line-clamp-4 tw-text-gray-500">
@@ -702,7 +712,7 @@
                                     data-variant-id="{{ product.selected_or_first_available_variant.id }}"
                                     data-tags="{{ product.tags | json }}"
                                     data-isbn="{{ product.metafields.facts.isbn }}"
-                                    class="tw-bg-brand-secondary tw-cursor-pointer tw-pointer-events-auto tw-text-10 tw-text-black tw-rounded-md tw-flex tw-justify-center tw-leading-none tw-px-6 tw-py-1.5 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-sans hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center"
+                                    class="tw-bg-brand-secondary tw-cursor-pointer tw-pointer-events-auto tw-text-10 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-6 tw-py-1.5 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-sans hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center"
                                     @click="addToCart({{ product.selected_or_first_available_variant.id }}, $event.currentTarget)"
                                     :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                                   >
@@ -714,7 +724,7 @@
                               {% else %}
                                 <a
                                   href="{{ product.url }}"
-                                  class="tw-bg-white tw-cursor-pointer tw-pointer-events-auto tw-text-11 tw-text-black tw-rounded-md tw-flex tw-justify-center tw-border-black tw-border tw-py-1 tw-px-3 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap"
+                                  class="tw-bg-white tw-cursor-pointer tw-pointer-events-auto tw-text-11 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-border-black tw-border tw-py-1 tw-px-3 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap"
                                 >
                                   <span>{{ section.settings.button_text | default: 'View' }}</span>
                                 </a>

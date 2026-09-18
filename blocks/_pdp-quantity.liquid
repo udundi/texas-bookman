@@ -13,63 +13,63 @@
     {% endif %} tw-flex-col tw-gap-1
   "
 >
-  {% if customer == nil %}
-    <a class="tw-uppercase tw-bg-brand-primary tw-text-brand-eggshell tw-py-2 tw-px-4 tw-rounded-md tw-text-center">
+  {% if customer == null %}
+    <a class="tw-uppercase tw-bg-brand-primary tw-text-brand-eggshell tw-py-2 tw-px-4 tw-rounded-[4px] tw-text-center">
       Sign in to shop
     </a>
-    {% else %}
-  <label class="tw-font-montserrat tw-text-16 tw-font-semibold tw-text-offblack"
-    >QTY <span class="tw-font-normal">(Minimum Required {{  }})</span></label
-  >
-  <div class="tw-flex tw-w-full tw-pb-2">
-    <div class="tw-relative tw-flex tw-max-w-28 tw-items-center tw-rounded-md tw-bg-brand-eggshell tw-border tw-border-brand-grey">
+  {% else %}
+    <label class="tw-font-montserrat tw-text-16 tw-font-semibold tw-text-offblack"
+      >QTY <span class="tw-font-normal">(Minimum Required {{  }})</span></label
+    >
+    <div class="tw-flex tw-w-full tw-pb-2">
+      <div class="tw-relative tw-flex tw-max-w-28 tw-items-center tw-rounded-[4px] tw-bg-brand-eggshell tw-border tw-border-brand-grey">
+        <button
+          type="button"
+          id="decrement-button"
+          @click="quantity > 1 ? quantity-- : quantity"
+          :disabled="quantity <= 1"
+          :class="quantity <= 1 ? 'tw-cursor-not-allowed' : ''"
+          class="tw-bg-brand-bg-dark tw-rounded-[4px] tw-pl-4 tw-pr-2"
+        >
+          {% render 'icon-minus' %}
+        </button>
+        <label class="tw-hidden" for="quantity-input">Quantity</label>
+        <input
+          type="integer"
+          id="quantity-input"
+          aria-label="quantity"
+          name="quantity"
+          min="1"
+          max="100"
+          @keydown="if (isNaN(parseInt(event.key)) && event.key != 'Backspace') { event.preventDefault(); }"
+          @input="quantity < 1 ? quantity = 1 : quantity = quantity"
+          max="{{ product.selected_or_first_available_variant.inventory_quantity }}"
+          v-model="quantity"
+          class="tw-text-sm tw-block tw-h-10 tw-w-full tw-py-1 tw-text-center tw-text-offblack"
+          required
+        >
+        <button
+          type="button"
+          id="increment-button"
+          aria-label="increase quantity by 1"
+          @click="quantity++"
+          class="tw-bg-brand-bg-dark tw-rounded-[4px] tw-pl-2 tw-pr-4"
+        >
+          {% render 'icon-plus' %}
+        </button>
+      </div>
+      <!-- Add to Cart Button -->
       <button
-        type="button"
-        id="decrement-button"
-        @click="quantity > 1 ? quantity-- : quantity"
-        :disabled="quantity <= 1"
-        :class="quantity <= 1 ? 'tw-cursor-not-allowed' : ''"
-        class="tw-bg-brand-bg-dark tw-rounded-md tw-pl-4 tw-pr-2"
+        type="submit"
+        @click="addToCart()"
+        class="tw-ml-2 tw-w-full tw-rounded-[4px] tw-bg-brand-primary tw-py-2 tw-text-sm tw-font-semibold tw-text-brand-eggshell tw-flex tw-justify-center"
       >
-        {% render 'icon-minus' %}
-      </button>
-      <label class="tw-hidden" for="quantity-input">Quantity</label>
-      <input
-        type="integer"
-        id="quantity-input"
-        aria-label="quantity"
-        name="quantity"
-        min="1"
-        max="100"
-        @keydown="if (isNaN(parseInt(event.key)) && event.key != 'Backspace') { event.preventDefault(); }"
-        @input="quantity < 1 ? quantity = 1 : quantity = quantity"
-        max="{{ product.selected_or_first_available_variant.inventory_quantity }}"
-        v-model="quantity"
-        class="tw-text-sm tw-block tw-h-10 tw-w-full tw-py-1 tw-text-center tw-text-offblack"
-        required
-      >
-      <button
-        type="button"
-        id="increment-button"
-        aria-label="increase quantity by 1"
-        @click="quantity++"
-        class="tw-bg-brand-bg-dark tw-rounded-md tw-pl-2 tw-pr-4"
-      >
-        {% render 'icon-plus' %}
+        <span v-if="!addingToCart"> Add to Cart </span>
+        <div v-if="addingToCart" class="tw-animate-spin tw-size-6 tw-fill-white">
+          {% render 'icon-spin' %}
+        </div>
       </button>
     </div>
-    <!-- Add to Cart Button -->
-    <button
-      type="submit"
-      @click="addToCart()"
-      class="tw-ml-2 tw-w-full tw-rounded-md tw-bg-brand-primary tw-py-2 tw-text-sm tw-font-semibold tw-text-brand-eggshell tw-flex tw-justify-center"
-    >
-      <span v-if="!addingToCart"> Add to Cart </span>
-      <div v-if="addingToCart" class="tw-animate-spin tw-size-6 tw-fill-white">
-        {% render 'icon-spin' %}
-      </div>
-    </button>
-  </div>
   {% endif %}
 </div>
 {% schema %}
