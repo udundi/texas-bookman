@@ -18,7 +18,7 @@
   id="ud-events-{{ section.id }}"
   style="background-color: {{ section.settings.background_color }};"
 >
-  <div class="tw-mx-auto tw-px-6" style="max-width: {{ section.settings.content_max_width }}px;">
+  <div class="tw-mx-auto tw-px-6 tw-max-w-screen-2xl tw-w-full">
     {%- comment -%} Section header {%- endcomment -%}
     {%- if section.settings.heading != blank -%}
       <{{ section.settings.heading_tag }}
@@ -68,7 +68,7 @@
       <div class="tw-text-center tw-mt-8">
         <a
           href="{{ section.settings.view_all_url | default: '#' }}"
-          class="tw-inline-block tw-font-semibold tw-uppercase tw-tracking-[0.1em] tw-no-underline tw-py-2 tw-px-10 tw-rounded-[4px] tw-border tw-border-solid tw-bg-transparent tw-transition-colors hover:tw-bg-[var(--view-all-color)] hover:tw-text-white tw-font-montserrat"
+          class="tw-inline-block tw-font-semibold tw-uppercase tw-no-underline tw-py-2 tw-px-10 tw-rounded-[4px] tw-border tw-border-solid md:tw-text-12 tw-text-10 tw-bg-transparent tw-transition-colors hover:tw-bg-[var(--view-all-color)] hover:!tw-text-white tw-font-montserrat"
           style="
             --view-all-color: {{ section.settings.view_all_border_color }};
             border-color: {{ section.settings.view_all_border_color }};

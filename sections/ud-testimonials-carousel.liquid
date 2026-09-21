@@ -18,10 +18,6 @@
     font-size: clamp({{ section.settings.heading_size_min }}px, 2.5vw, {{ section.settings.heading_size_max }}px);
   }
 
-  .ud-testimonials-{{ section.id }} .testimonials-slider-outer {
-    max-width: {{ section.settings.content_max_width }}px;
-  }
-
   .ud-testimonials-{{ section.id }} .testimonial-card {
     padding: {{ section.settings.card_padding }}px;
   }
@@ -73,7 +69,7 @@
 
   <div class="tw-flex tw-items-center tw-justify-center tw-mx-auto md:tw-px-4 tw-px-1 tw-gap-4">
     {%- comment -%} Swiper Container {%- endcomment -%}
-    <div class="testimonials-slider-outer tw-flex tw-flex-row tw-items-center tw-w-full md:tw-gap-4 tw-gap-2">
+    <div class="testimonials-slider-outer tw-max-w-screen-2xl tw-flex tw-flex-row tw-items-center tw-w-full md:tw-gap-4 tw-gap-2">
       {%- comment -%} Prev arrow {%- endcomment -%}
       <button
         class="swiper-btn swiper-prev-{{ section.id }} tw-shrink-0 tw-flex tw-items-center tw-justify-center tw-w-8 tw-h-8 tw-cursor-pointer tw-bg-transparent tw-border-0 tw-p-0 tw-transition-opacity tw-duration-200 hover:tw-opacity-60"

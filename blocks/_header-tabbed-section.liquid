@@ -9,7 +9,7 @@
   </button>
   <!-- Mobile Button -->
   <button
-    class="tw-relative tw-flex tw-w-full tw-items-center tw-justify-between tw-gap-2 tw-border-0 tw-border-b tw-border-brand-grey tw-border-solid tw-bg-white tw-px-4 tw-py-4 tw-text-start tw-font-brand-body !tw-text-14 tw-font-semibold tw-uppercase tw-tracking-wide tw-text-offblack"
+    class="tw-relative tw-flex tw-w-full tw-items-center tw-justify-between tw-gap-2 tw-border-0 tw-border-b tw-border-brand-grey tw-border-solid tw-bg-white tw-px-4 tw-py-4 tw-text-start tw-font-brand-body !tw-text-14 tw-font-semibold tw-uppercase tw-text-offblack"
     @click="selectedTab = '{{ block.id }}';"
     :class="selectedTab ? 'tw-hidden' : 'md:tw-hidden'"
   >
@@ -27,7 +27,7 @@
     <div class="tw-flex tw-w-full tw-items-center tw-justify-between tw-border-0 tw-border-b tw-border-brand-grey tw-border-solid tw-bg-white tw-px-4 tw-py-4 md:tw-hidden">
       <button
         type="button"
-        class="tw-flex tw-items-center tw-gap-1 tw-text-14 tw-font-semibold tw-uppercase tw-tracking-wide tw-text-offblack"
+        class="tw-flex tw-items-center tw-gap-1 tw-text-14 tw-font-semibold tw-uppercase tw-text-offblack"
         @click="selectedTab = ''; selectedSubTab = ''"
       >
         <span class="tw-size-3 tw-fill-offblack">{% render 'icon-chevron-left' %}</span>

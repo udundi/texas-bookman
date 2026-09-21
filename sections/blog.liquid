@@ -24,7 +24,7 @@
   id="ud-blog-{{ section.id }}"
   style="background-color: {{ section.settings.background_color }};"
 >
-  <div class="tw-mx-auto tw-px-6" style="max-width: {{ section.settings.content_max_width }}px;">
+  <div class="tw-mx-auto tw-px-6 tw-max-w-screen-2xl tw-w-full">
     {%- assign heading = section.settings.heading | default: blog.title -%}
     {%- if heading != blank -%}
       <{{ section.settings.heading_tag }}

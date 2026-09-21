@@ -36,14 +36,13 @@
         <button
           @click="addUpsell(upsell)"
           v-if="upsell && upsell.title && addingUpsell != upsell.title"
-          class="primaryBTN"
+          class="tw-uppercase tw-font-semibold"
         >
           Add
         </button>
         <button
           @click="addUpsell(upsell)"
           v-if="upsell && upsell.title && addingUpsell == upsell.title"
-          class="primaryBTN"
         >
           <i class="fal fa-spin fa-spinner"></i>
         </button>

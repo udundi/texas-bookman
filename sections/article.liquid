@@ -13,7 +13,6 @@
   }
 
   .ud-article-{{ section.id }} .article-inner {
-    max-width: {{ section.settings.content_max_width }}px;
     margin: 0 auto;
     padding: 0 1.5rem;
   }
@@ -96,7 +95,7 @@
 
   .ud-article-{{ section.id }} .article-body img {
     max-width: 100%;
-    border-radius: 6px;
+    border-radius: 4px;
   }
 
   /* Event metafields */
@@ -118,7 +117,6 @@
     color: #fff;
     font-weight: 600;
     font-size: 13px;
-    letter-spacing: 0.08em;
     text-transform: uppercase;
     text-decoration: none;
     padding: 0.6rem 1.75rem;
@@ -147,7 +145,7 @@
 
   .ud-article-{{ section.id }} .comment-item {
     border: 1px solid {{ section.settings.divider_color }};
-    border-radius: 6px;
+    border-radius: 4px;
     padding: 1rem 1.25rem;
     margin-bottom: 1rem;
   }
@@ -218,7 +216,6 @@
     color: #fff;
     font-weight: 600;
     font-size: 13px;
-    letter-spacing: 0.08em;
     text-transform: uppercase;
     border: none;
     cursor: pointer;
@@ -233,7 +230,7 @@
 {% endstyle %}
 
 <section class="ud-article-{{ section.id }} tw" id="ud-article-{{ section.id }}">
-  <div class="article-inner">
+  <div class="article-inner tw-max-w-screen-2xl tw-w-full">
     <article>
       {%- if article.image -%}
         <img

@@ -109,7 +109,7 @@
     {%- if cta_label != blank -%}
       <a
         href="{{ cta_url | default: '#' }}"
-        class="tw-inline-block tw-self-start tw-font-semibold tw-uppercase tw-tracking-wider tw-no-underline tw-mt-1 tw-py-1 tw-px-4 tw-rounded-[4px] tw-transition-opacity hover:tw-opacity-85 tw-font-montserrat"
+        class="tw-inline-block tw-self-start tw-font-semibold tw-uppercase  tw-no-underline tw-mt-1 tw-py-1 tw-px-4 tw-rounded-[4px] tw-transition-opacity hover:tw-opacity-85 tw-font-montserrat"
         style="background-color: {{ section.settings.cta_bg }}; color: {{ section.settings.cta_text_color }}; font-size: {{ section.settings.cta_font_size }}px; border-radius: {{ section.settings.cta_border_radius }}px;"
       >
         {{ cta_label }}

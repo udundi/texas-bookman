@@ -72,7 +72,7 @@
   <div class="hero-content tw-absolute tw-flex tw-flex-col tw-justify-center tw-items-center tw-top-0 tw-left-0 tw-right-0 tw-py-8 tw-px-6">
     {%- if section.settings.eyebrow != blank -%}
       <p
-        class="tw-mb-2 tw-font-semibold tw-uppercase tw-tracking-widest"
+        class="tw-mb-2 tw-font-semibold tw-uppercase"
         style="color: {{ section.settings.eyebrow_color }}; font-size: {{ section.settings.mobile_eyebrow_size }}px; max-width: {{ section.settings.mobile_text_max_width }}px;"
       >
         {{ section.settings.eyebrow }}
@@ -100,7 +100,7 @@
     {%- if section.settings.button_label != blank -%}
       <a
         href="{{ section.settings.button_url }}"
-        class="tw-inline-block tw-font-semibold tw-w-full tw-text-center tw-uppercase tw-tracking-widest tw-no-underline"
+        class="tw-inline-block tw-font-semibold tw-w-full md:!tw-text-16 !tw-text-12 tw-text-center tw-uppercase tw-no-underline"
         style="
           background-color: {{ section.settings.button_bg }};
           color: {{ section.settings.button_text_color }};
@@ -149,7 +149,7 @@
   >
     {%- if section.settings.eyebrow != blank -%}
       <p
-        class="tw-mb-2 tw-font-semibold tw-uppercase tw-tracking-widest"
+        class="tw-mb-2 tw-font-semibold tw-uppercase"
         style="color: {{ section.settings.eyebrow_color }}; font-size: {{ section.settings.eyebrow_size }}px;"
       >
         {{ section.settings.eyebrow }}
@@ -177,7 +177,7 @@
     {%- if section.settings.button_label != blank -%}
       <a
         href="{{ section.settings.button_url }}"
-        class="tw-inline-block tw-font-semibold tw-uppercase tw-tracking-widest tw-no-underline"
+        class="tw-inline-block tw-font-semibold tw-uppercase tw-no-underline"
         style="
           background-color: {{ section.settings.button_bg }};
           color: {{ section.settings.button_text_color }};

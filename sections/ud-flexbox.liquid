@@ -15,20 +15,6 @@
     align-items: {{ section.settings.align_items }};
     flex-direction: {{ section.settings.flex_direction }};
 
-    {% if section.settings.container_width == 'full_width' %}
-      width: 100%;
-    {% elsif section.settings.container_width == 'lg_desktop' %}
-      max-width: var(--container-width, 1440px);
-    {% elsif section.settings.container_width == 'md_desktop' %}
-      max-width: var(--container-width, 1440px);
-    {% elsif section.settings.container_width == 'sm_desktop' %}
-      max-width: var(--container-width, 1280px);
-    {% elsif section.settings.container_width == 'tablet' %}
-      max-width: var(--container-width, 768px);
-    {% else section.settings.container_width == 'mobile' %}
-      max-width: var(--container-width, 448px);
-    {% endif %}
-
     {% if section.settings.content_overflow == "scroll" %}
       overflow-x: auto;
       white-space: nowrap;
@@ -66,7 +52,7 @@
     {% content_for 'blocks' %}
   </div>
 {% else %}
-  <div class="section-{{ section.id }} md:tw-hidden tw-flex">
+  <div class="section-{{ section.id }} tw-max-w-screen-2xl tw-w-full md:tw-hidden tw-flex">
     <div class="swiper swiper-container swiper-container-{{ section.id }} tw-w-full">
       <div class="swiper-wrapper">
         {% for block in section.blocks %}
@@ -329,38 +315,6 @@
         }
       ],
       "default": "center"
-    },
-    {
-      "type": "select",
-      "id": "container_width",
-      "label": "Max Width Of Section",
-      "options": [
-        {
-          "value": "mobile",
-          "label": "448px (Mobile)"
-        },
-        {
-          "value": "tablet",
-          "label": "768px (Tablet)"
-        },
-        {
-          "value": "sm_desktop",
-          "label": "1024px (Sm Desktop)"
-        },
-        {
-          "value": "md_desktop",
-          "label": "1280px (Md Desktop)"
-        },
-        {
-          "value": "lg_desktop",
-          "label": "1440px (Lg Desktop)"
-        },
-        {
-          "value": "full_width",
-          "label": "Full Width"
-        }
-      ],
-      "default": "full_width"
     },
     {
       "type": "select",

@@ -69,20 +69,30 @@
           '<h3 class="tw-font-semibold tw-text-14 tw-text-brand-primary tw-line-clamp-1 tw-m-0 tw-mb-2">' + escapeHtml(product.title) + '</h3>' +
           '</a>' +
           priceHtml +
-          '<button type="button" class="tw-bg-brand-secondary tw-w-full tw-cursor-pointer tw-text-12 tw-text-black tw-rounded-[4px] tw-py-2 tw-font-semibold" data-variant-id="' +
+          '<div class="tw-flex tw-gap-2 tw-items-stretch tw-w-full tw-h-full">' +
+          '<div class="tw-flex tw-items-center tw-gap-2 tw-w-full tw-h-full tw-text-brand-greyer">' +
+          '<span>QTY:</span>' +
+          '<input type="number" min="1" placeholder="1" value="1" class="tw-w-full tw-text-center tw-leading-none tw-py-1 tw-border tw-border-brand-grey tw-rounded tw-h-full tw-text-12 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none" data-quantity-input>' +
+          '</div>' +
+          '<button type="button" class="tw-bg-brand-secondary tw-w-full tw-cursor-pointer tw-pointer-events-auto md:tw-text-12 tw-text-10 tw-uppercase tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center tw-py-2" data-variant-id="' +
           (variant ? variant.id : '') +
-          '">Add to Cart</button>' +
+          '">QUICK ADD</button>' +
+          '</div>' +
           '</div>';
 
+        var quantityInput = card.querySelector('[data-quantity-input]');
         var button = card.querySelector('button[data-variant-id]');
         button.addEventListener('click', function () {
           var variantId = button.getAttribute('data-variant-id');
           if (!variantId) return;
+          var quantity = parseInt(quantityInput.value, 10) || 1;
           button.disabled = true;
+          quantityInput.disabled = true;
+          button.textContent = 'Adding...';
           fetch('/cart/add.js', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ items: [{ id: variantId, quantity: 1 }] }),
+            body: JSON.stringify({ items: [{ id: variantId, quantity: quantity }] }),
           })
             .then(function (r) { return r.json(); })
             .then(function () {
@@ -93,6 +103,8 @@
             })
             .finally(function () {
               button.disabled = false;
+              quantityInput.disabled = false;
+              button.textContent = 'QUICK ADD';
             });
         });
 

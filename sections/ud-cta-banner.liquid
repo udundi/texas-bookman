@@ -23,7 +23,6 @@
   .ud-cta-banner-{{ section.id }} .cta-inner {
     position: relative;
     z-index: 1;
-    max-width: {{ section.settings.content_max_width }}px;
     margin: 0 auto;
     padding: 0 1.5rem;
   }
@@ -50,19 +49,18 @@
   .ud-cta-banner-{{ section.id }} .cta-btn {
     display: inline-block;
     font-weight: 600;
-    letter-spacing: 0.12em;
     text-transform: uppercase;
+    border-radius: 4px;
     text-decoration: none;
     background-color: {{ section.settings.button_bg }};
     color: {{ section.settings.button_text_color }};
-    padding: {{ section.settings.button_padding_y }}px {{ section.settings.button_padding_x }}px;
-    font-size: {{ section.settings.button_font_size }}px;
-    min-width: {{ section.settings.button_min_width }}px;
-    transition: opacity 0.2s;
+    padding: 8px 40px;
+    font-size: 16px;
+    transition: opacity 0.4s;
   }
 
   .ud-cta-banner-{{ section.id }} .cta-btn:hover {
-    opacity: 0.88;
+    opacity: 0.68;
   }
 
   @media screen and (max-width: 749px) {
@@ -106,10 +104,10 @@
     }}
   {%- endif -%}
 
-  <div class="cta-inner">
+  <div class="cta-inner tw-max-w-screen-2xl tw-w-full">
     {%- if section.settings.eyebrow != blank -%}
       <p
-        class="tw-font-semibold tw-uppercase tw-tracking-widest tw-mb-3"
+        class="tw-font-semibold tw-uppercase tw-mb-3"
         style="color: {{ section.settings.eyebrow_color }}; font-size: {{ section.settings.eyebrow_size }}px;"
       >
         {{ section.settings.eyebrow }}
@@ -127,9 +125,7 @@
     {%- endif -%}
 
     {%- if section.settings.button_label != blank -%}
-      <a href="{{ section.settings.button_url }}" class="cta-btn">
-        {{ section.settings.button_label }}
-      </a>
+      <a href="{{ section.settings.button_url }}" class="cta-btn"> {{ section.settings.button_label }}</a>
     {%- endif -%}
   </div>
 </section>
@@ -320,42 +316,6 @@
       "id": "button_text_color",
       "label": "Button Text Color",
       "default": "#212121"
-    },
-    {
-      "type": "range",
-      "id": "button_font_size",
-      "label": "Button Font Size (px)",
-      "min": 10,
-      "max": 20,
-      "step": 1,
-      "default": 13
-    },
-    {
-      "type": "range",
-      "id": "button_padding_y",
-      "label": "Button Padding Vertical (px)",
-      "min": 8,
-      "max": 32,
-      "step": 2,
-      "default": 16
-    },
-    {
-      "type": "range",
-      "id": "button_padding_x",
-      "label": "Button Padding Horizontal (px)",
-      "min": 16,
-      "max": 80,
-      "step": 4,
-      "default": 48
-    },
-    {
-      "type": "range",
-      "id": "button_min_width",
-      "label": "Button Min Width (px)",
-      "min": 100,
-      "max": 500,
-      "step": 10,
-      "default": 280
     },
     {
       "type": "header",

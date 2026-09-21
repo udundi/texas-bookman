@@ -2204,6 +2204,10 @@ video {
   row-gap: 0.75rem;
 }
 
+.tw-gap-y-2 {
+  row-gap: 0.5rem;
+}
+
 .tw-self-start {
   align-self: flex-start;
 }
@@ -2280,6 +2284,10 @@ video {
 
 .tw-rounded-xl {
   border-radius: 0.75rem;
+}
+
+.tw-rounded-\[6px\] {
+  border-radius: 6px;
 }
 
 .tw-rounded-t-2xl {
@@ -2957,14 +2965,6 @@ video {
   letter-spacing: 0.025em;
 }
 
-.tw-tracking-wider {
-  letter-spacing: 0.05em;
-}
-
-.tw-tracking-widest {
-  letter-spacing: 0.1em;
-}
-
 .\!tw-text-black {
   --tw-text-opacity: 1 !important;
   color: rgb(0 0 0 / var(--tw-text-opacity, 1)) !important;
@@ -3311,6 +3311,11 @@ video {
 .hover\:tw-text-white:hover {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+
+.hover\:\!tw-text-white:hover {
+  --tw-text-opacity: 1 !important;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1)) !important;
 }
 
 .hover\:tw-underline:hover {
@@ -3902,6 +3907,10 @@ video {
     padding-top: 2rem;
   }
 
+  .md\:\!tw-text-16 {
+    font-size: 1rem !important;
+  }
+
   .md\:tw-text-12 {
     font-size: 0.75rem;
   }
@@ -3916,6 +3925,10 @@ video {
 
   .md\:tw-text-36 {
     font-size: 2.25rem;
+  }
+
+  .md\:tw-text-14 {
+    font-size: 0.875rem;
   }
 
   .md\:tw-shadow-lg {

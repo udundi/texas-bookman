@@ -23,7 +23,7 @@
   {{ shopify_attributes }}
 >
   {%- comment -%} Past event badge, revealed by JS when end_time is before now {%- endcomment -%}
-  <span class="ud-event-past-badge tw-hidden tw-absolute tw-top-2 tw-right-2 tw-z-10 tw-rounded tw-bg-offblack tw-text-white tw-text-[10px] tw-font-semibold tw-uppercase tw-tracking-wide tw-px-2 tw-py-1">
+  <span class="ud-event-past-badge tw-hidden tw-absolute tw-top-2 tw-right-2 tw-z-10 tw-rounded tw-bg-offblack tw-text-white tw-text-[10px] tw-font-semibold tw-uppercase  tw-px-2 tw-py-1">
     Past Event
   </span>
   {%- comment -%} Thumbnail {%- endcomment -%}
@@ -85,7 +85,7 @@
 
         {%- if has_date_range or has_time or has_location -%}
           <div
-            class="tw-flex tw-items-center tw-gap-4 tw-flex-wrap tw-font-montserrat"
+            class="tw-flex tw-pt-2 tw-items-center tw-gap-x-4 tw-gap-y-2 tw-flex-wrap tw-font-montserrat"
             style="color: {{ section.settings.meta_color }}; font-size: {{ section.settings.meta_size }}px;"
           >
             {%- if has_date_range -%}
@@ -178,7 +178,7 @@
           >
             {%- if badge_month != blank -%}
               <span
-                class="tw-text-[11px] tw-font-semibold tw-uppercase tw-tracking-[0.05em] tw-leading-[1.2]"
+                class="tw-text-[11px] tw-font-semibold tw-uppercase tw-leading-[1.2]"
                 style="color: {{ section.settings.badge_text_color }};"
               >
                 {{ badge_month }}
@@ -217,8 +217,8 @@
     {%- if cta_label != blank -%}
       <a
         href="{{ cta_url | default: '#' }}"
-        class="tw-inline-block tw-self-start tw-font-semibold tw-uppercase tw-tracking-wider tw-no-underline tw-mt-1 tw-py-1 tw-px-4 tw-rounded-[4px] tw-transition-opacity hover:tw-opacity-85 tw-font-montserrat"
-        style="background-color: {{ section.settings.cta_bg }}; color: {{ section.settings.cta_text_color }}; font-size: {{ section.settings.cta_font_size }}px; border-radius: {{ section.settings.cta_border_radius }}px;"
+        class="tw-inline-block tw-self-start tw-font-medium tw-uppercase tw-text-14 tw-no-underline tw-mt-1 tw-py-2 tw-px-8 tw-rounded-[4px] tw-transition-opacity hover:tw-opacity-85 tw-font-montserrat tw-tracking-wide"
+        style="background-color: {{ section.settings.cta_bg }}; color: {{ section.settings.cta_text_color }};  border-radius: {{ section.settings.cta_border_radius }}px;"
       >
         {{ cta_label }}
       </a>

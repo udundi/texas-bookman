@@ -9,7 +9,7 @@
     padding-right: {{ block.settings.padding_right }}rem;
     gap: {{ block.settings.y_gap }}rem {{ block.settings.x_gap }}rem;
     justify-content: {{ block.settings.justify_content }};
-    
+
     {% if block.settings.add_border == true %}
       border-color: {{ block.settings.border_color }};
       border-width: {{ block.settings.border_width }}px;
@@ -18,17 +18,17 @@
     align-items: {{ block.settings.align_items }};
     flex-direction: {{ block.settings.flex_direction }};
 
+    width: 100%;
     {% if block.settings.container_width == 'full_width' %}
-      width: 100%;
     {% elsif block.settings.container_width == 'lg_desktop' %}
-      max-width: var(--container-width, 1440px);
+      max-width: var(--container-width, 1440px);width: 100%;
     {% elsif block.settings.container_width == 'md_desktop' %}
       max-width: var(--container-width, 1440px);
     {% elsif block.settings.container_width == 'sm_desktop' %}
       max-width: var(--container-width, 1280px);
     {% elsif block.settings.container_width == 'tablet' %}
       max-width: var(--container-width, 768px);
-    {% else block.settings.container_width == 'mobile' %}
+    {% elsif block.settings.container_width == 'mobile' %}
       max-width: var(--container-width, 448px);
     {% endif %}
 
@@ -78,7 +78,9 @@
     class="block-{{ block.id }} {% if block.settings.display == 'desktop' %} tw-hidden md:tw-block {% elsif block.settings.display == 'mobile' %} md:tw-hidden {% endif %}"
   >
 {% else %}
-  <div class="block-{{ block.id }} {% if block.settings.display == 'desktop' %} tw-hidden md:tw-block {% elsif block.settings.display == 'mobile' %} md:tw-hidden {% endif %}">
+  <div
+    class="block-{{ block.id }} {% if block.settings.display == 'desktop' %} tw-hidden md:tw-block {% elsif block.settings.display == 'mobile' %} md:tw-hidden {% endif %}"
+  >
 {% endif %}
 <!-- Rendering Blocks -->
 {% content_for 'blocks' %}
@@ -227,7 +229,7 @@
       "default": 10,
       "visible_if": "{{ block.settings.add_border == true }}"
     },
-    
+
     {
       "type": "color",
       "id": "background_color",

@@ -100,9 +100,9 @@
       {% else %}
         <a
           href="{{ cur_product.url }}"
-          class="tw-bg-white tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-border-black tw-border-2 tw-py-1 tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap"
+          class="tw-bg-white tw-cursor-pointer tw-pointer-events-auto md:tw-text-12 tw-text-10 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-border-black tw-border-2 tw-py-1 tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap tw-uppercase"
         >
-          <span>{{ button_text | default: 'Shop Now' }}</span>
+          <span>{{ button_text | default: 'QUICK ADD' }}</span>
         </a>
       {% endif %}
     {% endif %}

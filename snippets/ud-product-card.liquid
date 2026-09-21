@@ -28,20 +28,6 @@
           New
         </div>
       {% endif %}
-      {% if product.metafields.custom_fields.design_id != blank %}
-        <button
-          type="button"
-          onclick="event.preventDefault(); event.stopPropagation(); window.open('https://studiov2.feltright.com/?import={{ product.metafields.custom_fields.design_id }}', '_blank');"
-          aria-label="Customize {{ product.title }}"
-          class="tw-absolute tw-left-2 tw-top-2 tw-bg-white tw-rounded-[4px] tw-p-1 tw-pr-2 tw-text-black tw-font-semibold tw-text-12 tw-flex tw-items-center tw-gap-1 tw-leading-tight hover:tw-scale-110 tw-transition-transform tw-border-none tw-cursor-pointer"
-        >
-          <div
-            class="tw-w-5 tw-h-5 tw-rounded-[4px] tw-flex tw-items-center tw-justify-center"
-            style="background: conic-gradient(from 90deg, rgba(255, 0, 60, 1) 0deg, rgba(255, 0, 0, 1) 15.8083deg, rgba(246, 255, 0, 1) 101.575deg, rgba(0, 255, 17, 1) 163.447deg, rgba(0, 165, 255, 1) 207.692deg, rgba(131, 0, 255, 1) 270deg, rgba(255, 0, 212, 1) 320.474deg, rgba(255, 0, 60, 1) 360deg); opacity: 0.54;"
-          ></div>
-          <div>Customizable</div>
-        </button>
-      {% endif %}
     </div>
   </a>
   <div class="tw-flex lg:tw-flex-row tw-flex-col tw-justify-between tw-h-full tw-w-full tw-gap-x-4 tw-gap-y-3 tw-items-start">

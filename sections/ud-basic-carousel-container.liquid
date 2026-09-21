@@ -7,19 +7,6 @@
 
   .section-{{ section.id }} {
     padding-left: {{ section.settings.padding_left }}rem;
-    {% if section.settings.container_width == 'full_width' %}
-      width: 100%;
-    {% elsif section.settings.container_width == 'lg_desktop' %}
-      max-width: var(--container-width, 1440px);
-    {% elsif section.settings.container_width == 'md_desktop' %}
-      max-width: var(--container-width, 1440px);
-    {% elsif section.settings.container_width == 'sm_desktop' %}
-      max-width: var(--container-width, 1280px);
-    {% elsif section.settings.container_width == 'tablet' %}
-      max-width: var(--container-width, 768px);
-    {% else section.settings.container_width == 'mobile' %}
-      max-width: var(--container-width, 448px);
-    {% endif %}
   }
 
   @media screen and (max-width: 749px) {
@@ -37,7 +24,7 @@
 {% endstyle %}
 
 <div class="section-outer-{{ section.id }}">
-  <div class="section-{{ section.id }} tw-mx-auto">
+  <div class="section-{{ section.id }} tw-max-w-screen-2xl tw-mx-auto">
     {% if section.settings.section_title != blank %}
       <div class="tw-flex tw-justify-between md:tw-px-20 tw-gap-4 tw-py-4">
         <div class=" tw-font-playfair tw-font-semibold tw-w-full md:tw-text-36 tw-text-22 tw-leading-tight max-md:tw-text-center tw-text-offblack tw-whitespace-nowrap">
@@ -46,7 +33,7 @@
         <!-- Desktop Button -->
         <a
           href="{{ section.settings.button_url }}"
-          class="tw-bg-brand-primary tw-uppercase tw-font-semibold tw-text-white tw-py-2 tw-px-4 tw-w-full tw-hidden md:tw-flex tw-items-center tw-justify-center tw-max-w-64 tw-rounded-[4px]"
+          class="tw-bg-brand-primary tw-uppercase tw-font-semibold tw-text-white tw-py-2 tw-px-10 tw-w-full tw-hidden md:tw-flex tw-items-center tw-justify-center tw-text-16 tw-max-w-64 tw-rounded-[4px]"
         >
           {{ section.settings.button_text }}
         </a>
