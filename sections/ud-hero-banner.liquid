@@ -100,12 +100,11 @@
     {%- if section.settings.button_label != blank -%}
       <a
         href="{{ section.settings.button_url }}"
-        class="tw-inline-block tw-font-semibold tw-w-full md:!tw-text-16 !tw-text-12 tw-text-center tw-uppercase tw-no-underline"
+        class="tw-inline-block tw-font-semibold tw-w-full tw-text-16 tw-text-center tw-uppercase tw-no-underline tw-rounded-[4px]"
         style="
           background-color: {{ section.settings.button_bg }};
           color: {{ section.settings.button_text_color }};
           padding: {{ section.settings.button_padding_y }}px {{ section.settings.button_padding_x }}px;
-          font-size: {{ section.settings.mobile_button_font_size }}px;
           max-width: {{ section.settings.mobile_text_max_width }}px;
         "
       >
@@ -177,12 +176,11 @@
     {%- if section.settings.button_label != blank -%}
       <a
         href="{{ section.settings.button_url }}"
-        class="tw-inline-block tw-font-semibold tw-uppercase tw-no-underline !tw-rounded-[4px]"
+        class="tw-text-16 tw-inline-block tw-font-semibold tw-uppercase tw-no-underline tw-rounded-[4px]"
         style="
           background-color: {{ section.settings.button_bg }};
           color: {{ section.settings.button_text_color }};
           padding: {{ section.settings.button_padding_y }}px {{ section.settings.button_padding_x }}px;
-          font-size: {{ section.settings.button_font_size }}px;
         "
       >
         {{ section.settings.button_label }}
@@ -456,16 +454,6 @@
     },
     {
       "type": "range",
-      "id": "button_font_size",
-      "label": "Button Font Size (px)",
-      "min": 10,
-      "max": 22,
-      "step": 1,
-      "default": 13
-    },
-    {
-      "type": "range",
-      "id": "mobile_button_font_size",
       "label": "Button Font Size — Mobile (px)",
       "min": 10,
       "max": 22,

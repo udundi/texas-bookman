@@ -7,20 +7,7 @@
 
   .section-{{ section.id }} {
     padding-left: {{ section.settings.padding_left }}rem;
-    padding-right: {{ section.settings.padding_right }}rem;
-    {% if section.settings.container_width == 'full_width' %}
-      width: 100%;
-    {% elsif section.settings.container_width == 'lg_desktop' %}
-      max-width: var(--container-width, 1440px);
-    {% elsif section.settings.container_width == 'md_desktop' %}
-      max-width: var(--container-width, 1440px);
-    {% elsif section.settings.container_width == 'sm_desktop' %}
-      max-width: var(--container-width, 1280px);
-    {% elsif section.settings.container_width == 'tablet' %}
-      max-width: var(--container-width, 768px);
-    {% else section.settings.container_width == 'mobile' %}
-      max-width: var(--container-width, 448px);
-    {% endif %}
+    padding-right: {{ section.settings.padding_right }}rem;}
   }
 
   @media screen and (max-width: 749px) {
@@ -40,11 +27,11 @@
 {% assign selected_block = '' %}
 <div class="section-outer-{{ section.id }} tw-border-b tw-border-brand-grey">
   {% if section.settings.section_title != blank %}
-    <div class="tw-font-playfair width-control-{{ section.id }} tw-font-normal tw-text-36 tw-leading-tight tw-text-offblack tw-w-full tw-text-center tw-border-y tw-border-brand-grey tw-py-4">
+    <div class="tw-font-playfair width-control-{{ section.id }} tw-font-normal md:tw-text-32 tw-text-22 tw-leading-tight tw-text-offblack tw-w-full tw-text-center tw-border-t tw-border-brand-grey tw-py-4">
       {{ section.settings.section_title }}
     </div>
   {% endif %}
-  <div class="section-{{ section.id }} tw-mx-auto tw-py-6">
+  <div class="section-{{ section.id }} tw-w-full tw-max-w-screen-2xl tw-mx-auto tw-py-6">
     <div class="vue-controler-{{ section.id }}">
       {% if section.blocks[1] != blank %}
         <div class="">
