@@ -2961,6 +2961,22 @@ video {
   line-height: 1.25;
 }
 
+.tw-leading-\[\] {
+  line-height: ;
+}
+
+.tw-leading-\[60px\] {
+  line-height: 60px;
+}
+
+.tw-leading-\[50px\] {
+  line-height: 50px;
+}
+
+.tw-leading-\[55px\] {
+  line-height: 55px;
+}
+
 .tw-tracking-\[0\.05em\] {
   letter-spacing: 0.05em;
 }

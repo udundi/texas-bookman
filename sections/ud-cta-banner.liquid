@@ -23,6 +23,7 @@
   .ud-cta-banner-{{ section.id }} .cta-inner {
     position: relative;
     z-index: 1;
+    max-width: {{ section.settings.content_max_width }}px;
     margin: 0 auto;
     padding: 0 1.5rem;
   }
@@ -104,7 +105,7 @@
     }}
   {%- endif -%}
 
-  <div class="cta-inner tw-max-w-screen-2xl tw-w-full">
+  <div class="cta-inner">
     {%- if section.settings.eyebrow != blank -%}
       <p
         class="tw-font-semibold tw-uppercase tw-mb-3"
