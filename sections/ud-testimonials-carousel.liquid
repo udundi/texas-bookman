@@ -15,7 +15,7 @@
 
   .ud-testimonials-{{ section.id }} .testimonials-heading {
     color: {{ section.settings.heading_color }};
-    font-size: clamp({{ section.settings.heading_size_min }}px, 2.5vw, {{ section.settings.heading_size_max }}px);
+
   }
 
   .ud-testimonials-{{ section.id }} .testimonial-card {
@@ -62,7 +62,7 @@
 {% endstyle %}
 <div class="ud-testimonials-{{ section.id }} tw-w-full tw-bg-blue-400">
   {%- if section.settings.heading != blank -%}
-    <{{ section.settings.heading_tag }} class="testimonials-heading tw-text-center tw-font-semibold tw-mb-8 tw-px-6">
+    <{{ section.settings.heading_tag }} class="testimonials-heading md:tw-text-32 tw-text-22 tw-text-center tw-font-semibold tw-mb-8 tw-px-6">
       {{ section.settings.heading }}
     </{{ section.settings.heading_tag }}>
   {%- endif -%}
@@ -227,24 +227,6 @@
       "id": "heading_color",
       "label": "Heading Color",
       "default": "#212121"
-    },
-    {
-      "type": "range",
-      "id": "heading_size_min",
-      "label": "Heading Min Size (px)",
-      "min": 18,
-      "max": 48,
-      "step": 2,
-      "default": 24
-    },
-    {
-      "type": "range",
-      "id": "heading_size_max",
-      "label": "Heading Max Size (px)",
-      "min": 24,
-      "max": 72,
-      "step": 2,
-      "default": 40
     },
     {
       "type": "header",

@@ -14,16 +14,16 @@
 {% endstyle %}
 
 <section
-  class="ud-events-{{ section.id }} tw-border-t tw-border-solid tw-border-brand-grey tw-w-full"
+  class="ud-events-{{ section.id }} tw-border-t tw-border-solid tw-border-brand-grey tw-w-full tw-px-6"
   id="ud-events-{{ section.id }}"
   style="background-color: {{ section.settings.background_color }};"
 >
-  <div class="tw-mx-auto tw-px-6 tw-max-w-screen-2xl tw-w-full">
+  <div class="tw-mx-auto tw-max-w-screen-2xl tw-w-full">
     {%- comment -%} Section header {%- endcomment -%}
     {%- if section.settings.heading != blank -%}
       <{{ section.settings.heading_tag }}
-        class="tw-font-semibold tw-text-center tw-mb-2 tw-font-montserrat"
-        style="color: {{ section.settings.heading_color }}; font-size: clamp({{ section.settings.heading_size_min }}px, 2.5vw, {{ section.settings.heading_size_max }}px);"
+        class="tw-font-semibold tw-text-center tw-mb-2 md:tw-text-32 tw-text-22 tw-font-montserrat"
+        style="color: {{ section.settings.heading_color }}; {{ section.settings.heading_size_max }}px);"
       >
         {{ section.settings.heading }}
       </{{ section.settings.heading_tag }}>

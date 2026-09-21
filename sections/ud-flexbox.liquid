@@ -48,7 +48,7 @@
 {% endstyle %}
 
 {% if section.settings.mobile_flex_direction != 'carousel' %}
-  <div id="{{ section.settings.custom_id}}" class="section-{{ section.id }}">
+  <div id="{{ section.settings.custom_id}}" class="section-{{ section.id }} tw-max-w-screen-2xl tw-w-full">
     {% content_for 'blocks' %}
   </div>
 {% else %}

@@ -1911,6 +1911,14 @@ video {
   max-width: 640px;
 }
 
+.tw-max-w-screen-xl {
+  max-width: 1280px;
+}
+
+.tw-max-w-48 {
+  max-width: 12rem;
+}
+
 .tw-flex-1 {
   flex: 1 1 0%;
 }
@@ -2288,6 +2296,10 @@ video {
 
 .tw-rounded-\[6px\] {
   border-radius: 6px;
+}
+
+.\!tw-rounded-\[4px\] {
+  border-radius: 4px !important;
 }
 
 .tw-rounded-t-2xl {
@@ -3929,6 +3941,10 @@ video {
 
   .md\:tw-text-14 {
     font-size: 0.875rem;
+  }
+
+  .md\:tw-text-32 {
+    font-size: 2rem;
   }
 
   .md\:tw-shadow-lg {
