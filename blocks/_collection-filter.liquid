@@ -41,7 +41,7 @@
         {%- assign new_params = '' -%}
         {%- for param in query_params -%}
           {%- if param == filter_change -%}{%- continue -%}{%- endif -%}
-          {%- if new_params != blank -%}{%- assign new_params = new_params | append: '&' -%}{%- endif -%}
+          {%- if new_params != blank -%}{%- assign new_params = new_params | append: '&' -%}{%- endif -%}\
           {%- assign new_params = new_params | append: param -%}
         {%- endfor -%}
         {%- if new_params != blank -%}
@@ -49,11 +49,11 @@
         {%- else -%}
           {%- assign filter_href = collection.url -%}
         {%- endif -%}
-      {%- elsif filter_change contains 'filter.v.price' -%}
+      {%- elsif filter_change contains 'filter.v.price' -%}\
         {%- assign new_params = '' -%}
         {%- for param in query_params -%}
           {%- if param contains 'filter.v.price' -%}{%- continue -%}{%- endif -%}
-          {%- if new_params != blank -%}{%- assign new_params = new_params | append: '&' -%}{%- endif -%}
+          {%- if new_params != blank -%}{%- assign new_params = new_params | append: '&' -%}{%- endif -%}\
           {%- assign new_params = new_params | append: param -%}
         {%- endfor -%}
         {%- if new_params != blank -%}
@@ -69,8 +69,13 @@
       {%- else -%}
         {%- assign new_params = '' -%}
         {%- for param in query_params -%}
-          {%- if new_params != blank -%}{%- assign new_params = new_params | append: '&' -%}{%- endif -%}
-          {%- assign new_params = new_params | append: param -%}
+          {%- if param != blank -%}
+            {%- if param contains 'filter.' and filter_change contains 'filter.p.tag' and param == filter_change -%}
+              {%- continue -%}
+            {%- endif -%}
+            {%- if new_params != blank -%}{%- assign new_params = new_params | append: '&' -%}{%- endif -%}\
+            {%- assign new_params = new_params | append: param -%}
+          {%- endif -%}
         {%- endfor -%}
         {%- if new_params != blank -%}
           {%- assign filter_href = collection.url
@@ -115,11 +120,11 @@
           <button
             type="button"
             class="tw-flex-shrink-0 tw-fill-offblack tw-size-3 tw-cursor-pointer tw-bg-transparent tw-border-0 tw-p-0 tw-m-0"
-            @click="openFilters.includes('{{ block.id }}') ? openFilters.splice(openFilters.indexOf('{{ block.id }}'), 1) : openFilters.push('{{ block.id }}')"
+            @click="toggleFilter('{{ block.id }}', {{ block.settings.children_collapsed | default: false }})"
           >
             <div
               class="tw-fill-offblack tw-size-3"
-              v-if="{% if block.settings.children_collapsed %}openFilters.includes('{{ block.id }}'){% else %}!openFilters.includes('{{ block.id }}'){% endif %}"
+              v-if="isFilterOpen('{{ block.id }}', {{ block.settings.children_collapsed | default: false }})"
             >
               {% render 'icon-arrow-up' %}
             </div>
@@ -130,7 +135,7 @@
       {%- unless child_blocks == blank -%}
         <div
           class="tw-pl-4 tw-pt-1 tw-flex tw-flex-col tw-gap-[1px]"
-          v-show="{% if block.settings.children_collapsed %}openFilters.includes('{{ block.id }}'){% else %}!openFilters.includes('{{ block.id }}'){% endif %}"
+          v-show="isFilterOpen('{{ block.id }}', {{ block.settings.children_collapsed | default: false }})"
         >
           {{ child_blocks }}
         </div>
@@ -140,7 +145,7 @@
     <div class="tw-flex tw-flex-wrap tw-gap-2 tw-w-full ">
       {% for color in metaobjects.tile_colors.values %}
         {% assign color_index = forloop.index %}
-        {% for ref in metaobjects.tile_colors.values %}
+        {% for ref in metaobjects.tile_colors.values %}\
           {% if color_index == ref.position %}
             {% assign color_ref = ref %}
           {% endif %}
@@ -201,42 +206,24 @@
     {
       "type": "text",
       "id": "title",
-      "label": "Link Title",
-      "default": "Filter Title"
+      "label": "Tag Title"
     },
     {
-      "type": "select",
+      "type": "text",
       "id": "filter_type",
       "label": "Filter Type",
-      "default": "filter.p.tag=",
-      "options": [
-        {
-          "value": "filter.p.tag=",
-          "label": "Product Tag"
-        },
-        {
-          "value": "filter.v.price.lte=",
-          "label": "Product Price (Less Than)"
-        },
-        {
-          "value": "color",
-          "label": "Color"
-        }
-      ]
+      "default": "filter.p.tag="
     },
     {
       "type": "checkbox",
       "id": "children_collapsed",
-      "label": "Nested filters collapsed by default?",
-      "default": false
+      "label": "Children Collapsed",
+      "default": true
     }
   ],
   "blocks": [
     {
       "type": "_collection-filter"
-    },
-    {
-      "type": "_collection-filter-box-v2"
     }
   ],
   "presets": [

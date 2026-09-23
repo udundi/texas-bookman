@@ -1,29 +1,34 @@
 {% capture search_bar %}  
-  <!-- Search Input Icon -->
-  <div class="tw-absolute tw-left-4 tw-top-2">
-    {% render 'icon-search' %}
-  </div>
-  <!-- Search Input -->
-  <input
-    type="text"
-    v-model="search"
-    class="searchInput tw-h-full tw-w-full tw-border tw-border-brand-grey tw-pl-10 tw-p-2 tw-font-montserrat tw-text-16"
-    @input="startSearch()"
-    placeholder="Search for anything..."
-  >
-  <!-- Clear Search Icon -->
-  <button
-    v-if="search"
-    class="tw-absolute tw-right-0.5 tw-top-2.5 tw-z-[2] tw-flex tw-h-6 tw-cursor-pointer tw-items-center tw-justify-center tw-bg-white tw-p-2 tw-font-montserrat tw-text-16 tw-leading-none"
-    @click="
-      () => {
-        search = ''
-        showSearch = false
-      }
-    "
-  >
-    {% render 'icon-times' %}
-  </button>
+  <form action="{{ routes.search_url }}" method="get" role="search" class="tw-relative tw-w-full">
+    <!-- Search Input Icon -->
+    <div class="tw-absolute tw-left-4 tw-top-2.5 tw-pointer-events-none tw-z-[1]">
+      {% render 'icon-search' %}
+    </div>
+    <!-- Search Input -->
+    <input
+      type="search"
+      name="q"
+      v-model="search"
+      class="searchInput tw-h-full tw-w-full tw-border tw-border-brand-grey tw-pl-10 tw-p-2 tw-font-montserrat tw-text-16"
+      @input="startSearch()"
+      placeholder="Search for anything..."
+      autocomplete="off"
+    >
+    <!-- Clear Search Icon -->
+    <button
+      type="button"
+      v-if="search"
+      class="tw-absolute tw-right-0.5 tw-top-2.5 tw-z-[2] tw-flex tw-h-6 tw-cursor-pointer tw-items-center tw-justify-center tw-bg-white tw-p-2 tw-font-montserrat tw-text-16 tw-leading-none"
+      @click="
+        () => {
+          search = ''
+          showSearch = false
+        }
+      "
+    >
+      {% render 'icon-times' %}
+    </button>
+  </form>
   <!-- Search Results -->
   <div
     v-cloak

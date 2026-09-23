@@ -14,7 +14,10 @@
   "
 >
   {% if customer == null %}
-    <a class="tw-uppercase tw-bg-brand-primary tw-text-brand-eggshell tw-py-2 tw-px-4 tw-rounded-[4px] tw-text-center">
+    <a
+      href="{{ routes.account_login_url }}"
+      class="tw-uppercase tw-bg-brand-primary tw-text-brand-eggshell tw-py-2.5 tw-px-4 tw-rounded-[4px] tw-text-center tw-font-semibold tw-text-14 tw-transition-all hover:tw-brightness-95 tw-block"
+    >
       Sign in to shop
     </a>
   {% else %}

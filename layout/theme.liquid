@@ -51,6 +51,12 @@
         opacity: 0;
         pointer-events: none;
       }
+      @media (max-width: 767px) {
+        body.mobile-nav-open,
+        body.mobile-filter-open {
+          overflow: hidden !important;
+        }
+      }
     </style>
     <script>
       (function () {
@@ -62,6 +68,13 @@
         function updateHeaderVisibility() {
           var currentScrollY = window.scrollY;
           var scrollingDown = currentScrollY > lastScrollY;
+          // Never fade out if mobile nav or filter drawer is open
+          if (headerGroup.classList.contains('mobile-menu--open') || document.body.classList.contains('mobile-nav-open') || document.body.classList.contains('mobile-filter-open')) {
+            headerGroup.classList.remove('header-group--faded');
+            lastScrollY = currentScrollY;
+            ticking = false;
+            return;
+          }
           // Always show near the top of the page, otherwise fade based on scroll direction
           if (currentScrollY <= headerGroup.offsetHeight) {
             headerGroup.classList.remove('header-group--faded');

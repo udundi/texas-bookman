@@ -1,70 +1,461 @@
-{% comment %}
-  This section is used in the search template to render search results for
-  products, articles, and pages.
+{%- assign search_terms = search.terms | default: '' -%}
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/search
-{% endcomment %}
+<div
+  class="section-search-{{ section.id }} tw-w-full tw-min-h-[60vh] tw-bg-brand-eggshell tw-pb-16"
+  v-cloak
+>
+  <!-- Top Bar / Breadcrumb & Header -->
+  <div class="tw-w-full tw-bg-white tw-border-b tw-border-brand-grey tw-py-4 tw-px-4 md:tw-px-8">
+    <div class="tw-max-w-screen-2xl tw-mx-auto tw-flex tw-flex-col md:tw-flex-row md:tw-items-center md:tw-justify-between tw-gap-4">
+      <div class="tw-flex tw-flex-col tw-gap-1">
+        <h1 class="tw-m-0 tw-font-brand-primary tw-text-24 md:tw-text-28 tw-font-semibold tw-text-offblack">
+          {% if search.performed and search_terms != blank %}
+            Search Results for &ldquo;{{ search_terms }}&rdquo;
+            <span class="tw-text-18 tw-font-normal tw-text-gray-500">({{ search.results_count }})</span>
+          {% else %}
+            Search Catalog
+          {% endif %}
+        </h1>
+        <span class="tw-text-14 tw-text-gray-500">
+          <a href="/" class="hover:tw-underline tw-text-gray-600 tw-no-underline">Home</a>
+          / Search
+          {% if search.performed and search_terms != blank %}
+            / &ldquo;{{ search_terms }}&rdquo;
+          {% endif %}
+        </span>
+      </div>
 
-<h1>{{ 'search.title' | t }}</h1>
-
-<form action="{{ routes.search_url }}" method="get" role="search">
-  <input
-    type="search"
-    size="50"
-    name="q"
-    value="{{ search.terms | escape }}"
-    placeholder="{{ 'search.placeholder' | t }}"
-  >
-  <button type="submit">{{ 'search.submit' | t }}</button>
-</form>
-
-{% if search.performed %}
-  {% if search.results_count == 0 %}
-    <p>{{ 'search.no_results_html' | t: terms: search.terms }}</p>
-  {% else %}
-    <p>{{ 'search.results_for_html' | t: terms: search.terms, count: search.results_count }}</p>
-
-    <div class="search-results">
-      {% paginate search.results by 20 %}
-        {% # Search result items may be an article, a page, or a product. %}
-        {% for result in search.results %}
-          <div class="search-result">
-            {% assign featured_image = result.featured_image | default: result.image %}
-            {% if featured_image %}
-              {% render 'image', class: 'search-result__image', image: featured_image, url: result.url, width: 400 %}
-            {% endif %}
-            <div class="search-result__content">
-              <p>
-                {{ result.title | link_to: result.url }}
-                {% if result.price %}
-                  {{ result.price | money_with_currency }}
-                {% endif %}
-              </p>
-            </div>
-          </div>
-        {% endfor %}
-
-        {{ paginate | default_pagination }}
-      {% endpaginate %}
+      {% if search.performed and search.results_count > 0 %}
+        <!-- View Mode Toggle Buttons -->
+        <div class="tw-flex tw-items-center tw-gap-2">
+          <button
+            type="button"
+            @click="toggleViewMode('grid')"
+            :class="viewMode === 'grid' ? 'tw-border-offblack' : 'tw-border-brand-grey'"
+            class="tw-duration-200 tw-size-9 md:tw-size-10 tw-rounded tw-transition-colors tw-flex tw-text-black tw-items-center tw-justify-center tw-border tw-bg-white hover:tw-bg-gray-100"
+            title="Grid View"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 19" fill="none" class="tw-size-4 md:tw-size-5">
+              <path d="M7.46388 1.7561H2.48808C2.08396 1.7561 1.75635 2.08371 1.75635 2.48784V7.46364C1.75635 7.86776 2.08396 8.19537 2.48808 8.19537H7.46388C7.86801 8.19537 8.19562 7.86776 8.19562 7.46364V2.48784C8.19562 2.08371 7.86801 1.7561 7.46388 1.7561Z" stroke="currentColor" stroke-width="1.17" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16.2446 1.7561H11.2688C10.8647 1.7561 10.5371 2.08371 10.5371 2.48784V7.46364C10.5371 7.86776 10.8647 8.19537 11.2688 8.19537H16.2446C16.6488 8.19537 16.9764 7.86776 16.9764 7.46364V2.48784C16.9764 2.08371 16.6488 1.7561 16.2446 1.7561Z" stroke="currentColor" stroke-width="1.17" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M7.46388 10.5371H2.48808C2.08396 10.5371 1.75635 10.8647 1.75635 11.2688V16.2446C1.75635 16.6488 2.08396 16.9764 2.48808 16.9764H7.46388C7.86801 16.9764 8.19562 16.6488 8.19562 16.2446V11.2688C8.19562 10.8647 7.86801 10.5371 7.46388 10.5371Z" stroke="currentColor" stroke-width="1.17" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16.2446 10.5371H11.2688C10.8647 10.5371 10.5371 10.8647 10.5371 11.2688V16.2446C10.5371 16.6488 10.8647 16.9764 11.2688 16.9764H16.2446C16.6488 16.9764 16.9764 16.6488 16.9764 16.2446V11.2688C16.9764 10.8647 16.6488 10.5371 16.2446 10.5371Z" stroke="currentColor" stroke-width="1.17" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button
+            type="button"
+            @click="toggleViewMode('list')"
+            :class="viewMode === 'list' ? 'tw-border-offblack' : 'tw-border-brand-grey'"
+            class="tw-duration-200 tw-size-9 md:tw-size-10 tw-rounded tw-text-black tw-transition-colors tw-flex tw-items-center tw-justify-center tw-border tw-bg-white hover:tw-bg-gray-100"
+            title="List View"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 27" fill="none" class="tw-size-4 md:tw-size-5">
+              <path d="M19.5335 13.2323H10.7119M19.5335 18.2733H10.7119M19.5335 8.19141H10.7119" stroke="currentColor" stroke-width="1.26" stroke-linecap="round" stroke-linejoin="round"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M6.92987 9.45161C7.55998 9.45161 8.1901 8.8215 8.1901 8.19138C8.1901 7.56127 7.55998 6.93115 6.92987 6.93115C6.29975 6.93115 5.6709 7.56127 5.6709 8.19138C5.6709 8.8215 6.29975 9.45161 6.92987 9.45161ZM6.92987 14.4925C7.55998 14.4925 8.1901 13.8624 8.1901 13.2323C8.1901 12.6022 7.55998 11.9721 6.92987 11.9721C6.29975 11.9721 5.6709 12.6022 5.6709 13.2323C5.6709 13.8624 6.29975 14.4925 6.92987 14.4925ZM6.92987 19.5335C7.55998 19.5335 8.1901 18.9033 8.1901 18.2732C8.1901 17.6431 7.55998 17.013 6.92987 17.013C6.29975 17.013 5.6709 17.6431 5.6709 18.2732C5.6709 18.9033 6.29975 19.5335 6.92987 19.5335Z" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+      {% endif %}
     </div>
-  {% endif %}
-{% endif %}
+  </div>
 
-{% stylesheet %}
-  .search-results {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  }
-  .search-results .prev,
-  .search-results .page,
-  .search-results .next {
-    grid-column: 1 / -1;
-  }
-{% endstylesheet %}
+  <!-- Search Input Bar -->
+  <div class="tw-max-w-2xl tw-mx-auto tw-px-4 tw-pt-8 tw-pb-6">
+    <form action="{{ routes.search_url }}" method="get" role="search" class="tw-flex tw-gap-2">
+      <div class="tw-relative tw-flex-1">
+        <div class="tw-pointer-events-none tw-absolute tw-left-3 tw-top-1/2 -tw-translate-y-1/2 tw-text-gray-400">
+          {% render 'icon-search' %}
+        </div>
+        <input
+          type="search"
+          name="q"
+          value="{{ search_terms | escape }}"
+          placeholder="Search by title, author, ISBN..."
+          class="tw-w-full tw-rounded-[4px] tw-border tw-border-brand-grey tw-bg-white tw-py-3 tw-pl-10 tw-pr-4 tw-text-16 tw-font-montserrat focus:tw-border-brand-primary focus:tw-outline-none"
+          required
+        >
+      </div>
+      <button
+        type="submit"
+        class="tw-bg-brand-primary tw-text-white tw-font-semibold tw-text-14 tw-uppercase tw-px-6 tw-py-3 tw-rounded-[4px] tw-transition-all hover:tw-brightness-95 tw-whitespace-nowrap"
+      >
+        Search
+      </button>
+    </form>
+  </div>
+
+  <!-- Search Results Content -->
+  <div class="tw-max-w-screen-2xl tw-mx-auto tw-px-4 md:tw-px-8">
+    {% if search.performed %}
+      {% if search.results_count == 0 %}
+        <!-- Empty State -->
+        <div class="tw-flex tw-flex-col tw-items-center tw-justify-center tw-py-16 tw-text-center tw-gap-4">
+          <p class="tw-text-20 tw-font-semibold tw-font-brand-header tw-text-offblack tw-m-0">
+            No results found for &ldquo;{{ search_terms }}&rdquo;
+          </p>
+          <p class="tw-text-14 tw-text-gray-600 tw-max-w-md tw-m-0">
+            Check the spelling or try searching for another term, author, or ISBN.
+          </p>
+          <a
+            href="{{ routes.all_products_collection_url }}"
+            class="tw-bg-brand-primary tw-text-white tw-font-semibold tw-text-14 tw-uppercase tw-py-3 tw-px-8 tw-rounded-[4px] tw-transition-all hover:tw-brightness-95 tw-no-underline tw-mt-4"
+          >
+            Browse All Books
+          </a>
+        </div>
+      {% else %}
+        {% paginate search.results by 24 %}
+          <!-- Grid View -->
+          <div
+            v-show="viewMode === 'grid'"
+            class="tw-grid tw-grid-cols-2 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-4 tw-gap-[-1px] tw-items-stretch"
+          >
+            {% for item in search.results %}
+              {% if item.object_type == 'product' %}
+                {% assign product = item %}
+                <div class="tw-flex tw-flex-col tw-justify-between tw-p-4 tw-border tw-border-brand-grey tw-bg-white tw-mr-[-1px] tw-mb-[-1px] tw-h-full">
+                  <a href="{{ product.url }}">
+                    <div class="tw-w-full tw-aspect-square tw-object-contain tw-mb-2 md:tw-mb-3 tw-relative">
+                      {% if product.featured_image != blank %}
+                        {{
+                          product.featured_image
+                          | image_url: width: 400
+                          | image_tag: loading: 'lazy', class: 'tw-size-full tw-aspect-square tw-object-contain'
+                        }}
+                      {% else %}
+                        <div class="tw-size-full">
+                          {{ 'product-1' | placeholder_svg_tag: 'tw-w-full tw-max-w-[450px] tw-mx-auto tw-object-cover' }}
+                        </div>
+                      {% endif %}
+                      {% if product.tags contains 'New Product' %}
+                        <div class="tw-absolute tw-top-2.5 tw-left-2 tw-text-9 tw-px-4 tw-py-1 tw-rounded-[4px] tw-bg-brand-primary tw-text-white tw-font-semibold">
+                          NEW
+                        </div>
+                      {% endif %}
+                    </div>
+                  </a>
+
+                  <div class="tw-flex tw-flex-col tw-justify-between tw-h-full tw-w-full tw-gap-x-4 tw-gap-y-1 tw-items-start">
+                    <div class="tw-w-full">
+                      <div class="tw-flex tw-gap-x-4 tw-gap-y-1 tw-pb-2 tw-items-center tw-flex-wrap tw-w-full tw-justify-between">
+                        <div class="tw-flex tw-w-full tw-flex-row tw-gap-2 tw-items-start tw-justify-between">
+                          <a class="tw-w-full tw-h-fit" href="{{ product.url }}">
+                            <h3 class="tw-font-semibold tw-text-14 tw-text-brand-primary tw-w-full tw-leading-tight tw-h-fit tw-m-0">
+                              {{ product.title }}
+                            </h3>
+                          </a>
+                        </div>
+                        {% if product.metafields.custom.tb_code != blank and customer and customer.tags contains 'Staff' %}
+                          <p class="tw-font-semibold tw-text-14 tw-text-brand-greyer/50 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
+                            TB Code: <span class="tw-font-normal">{{ product.metafields.custom.tb_code }}</span>
+                          </p>
+                        {% endif %}
+                        {% if product.metafields.custom.isbn != blank %}
+                          <p class="tw-font-semibold tw-text-14 tw-text-brand-greyer/50 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
+                            ISBN: <span class="tw-font-normal">{{ product.metafields.custom.isbn }}</span>
+                          </p>
+                        {% endif %}
+                        <p class="tw-font-semibold tw-text-14 tw-text-gray-600 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
+                          QTY: <span class="tw-font-normal">{{ product.selected_or_first_available_variant.inventory_quantity }}</span>
+                        </p>
+                        <div class="tw-flex tw-flex-col">
+                          <div class="tw-text-gray-600 tw-text-14 tw-font-semibold">
+                            List: <span class="tw-font-normal">{{ product.compare_at_price | default: product.price | money }}</span>
+                          </div>
+                          <div class="tw-font-semibold tw-text-14">
+                            {% if customer %}Your{% endif %} Net Price: <span class="tw-font-normal">{{ product.price | money }}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {% if customer == null %}
+                      <a
+                        href="{{ routes.account_login_url }}"
+                        class="tw-bg-brand-primary tw-w-full tw-cursor-pointer tw-text-12 tw-text-white tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-py-2 tw-px-3 tw-transition-all duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-brightness-95 tw-whitespace-nowrap tw-items-center tw-uppercase tw-mt-auto tw-no-underline"
+                      >
+                        Sign in to shop
+                      </a>
+                    {% else %}
+                      <div class="tw-flex tw-gap-2 tw-w-full tw-mt-auto">
+                        <div class="tw-flex tw-items-center tw-gap-2 tw-w-full">
+                          <span class="tw-text-12 tw-font-semibold">QTY:</span>
+                          <input
+                            type="number"
+                            min="1"
+                            placeholder="1"
+                            :value="getQty({{ product.selected_or_first_available_variant.id }})"
+                            @input="setQty({{ product.selected_or_first_available_variant.id }}, $event.target.value)"
+                            class="tw-w-full tw-text-center tw-leading-none tw-py-0.5 tw-border tw-border-brand-grey tw-rounded tw-h-full tw-text-12 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
+                            :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
+                          >
+                        </div>
+                        <button
+                          type="button"
+                          class="tw-bg-brand-secondary tw-w-full tw-cursor-pointer tw-text-12 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4 tw-py-2 tw-font-semibold tw-font-montserrat hover:tw-brightness-95 tw-whitespace-nowrap tw-items-center tw-uppercase"
+                          @click="addToCart({{ product.selected_or_first_available_variant.id }})"
+                          :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
+                        >
+                          [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : 'Add to Cart' ]]
+                        </button>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              {% else %}
+                <!-- Non-product result (e.g. Page or Article) -->
+                <div class="tw-flex tw-flex-col tw-justify-between tw-p-4 tw-border tw-border-brand-grey tw-bg-white tw-mr-[-1px] tw-mb-[-1px]">
+                  <div>
+                    <span class="tw-text-11 tw-uppercase tw-text-gray-400 tw-font-semibold">{{ item.object_type }}</span>
+                    <a href="{{ item.url }}" class="tw-no-underline">
+                      <h3 class="tw-font-semibold tw-text-16 tw-text-brand-primary tw-mt-1">{{ item.title }}</h3>
+                    </a>
+                    <p class="tw-text-13 tw-text-gray-600 tw-line-clamp-3 tw-mt-2">{{ item.content | strip_html | truncatewords: 25 }}</p>
+                  </div>
+                  <a href="{{ item.url }}" class="tw-text-13 tw-text-brand-link tw-font-semibold hover:tw-underline tw-mt-4">
+                    View {{ item.object_type | capitalize }} &rarr;
+                  </a>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+
+          <!-- List View -->
+          <div
+            v-show="viewMode === 'list'"
+            class="tw-flex tw-flex-col tw-w-full"
+          >
+            {% for item in search.results %}
+              {% if item.object_type == 'product' %}
+                {% assign product = item %}
+                <div class="tw-flex tw-flex-row tw-items-center tw-border tw-mb-[-1px] tw-border-brand-grey tw-bg-white tw-p-4 tw-gap-4 tw-w-full">
+                  <a href="{{ product.url }}" class="tw-flex-shrink-0">
+                    <div class="tw-h-36 tw-object-cover tw-aspect-5/6 tw-relative">
+                      {% if product.featured_image != blank %}
+                        {{
+                          product.featured_image
+                          | image_url: width: 200
+                          | image_tag: loading: 'lazy', class: 'tw-size-full tw-aspect-5/6 tw-object-cover'
+                        }}
+                      {% else %}
+                        <div class="tw-size-full">
+                          {{ 'product-1' | placeholder_svg_tag: 'tw-w-full tw-h-full tw-object-cover' }}
+                        </div>
+                      {% endif %}
+                      {% if product.tags contains 'New Product' %}
+                        <div class="tw-absolute tw-top-1 tw-left-1 tw-text-9 tw-px-4 tw-py-1 tw-rounded-[4px] tw-bg-brand-primary tw-text-white tw-font-semibold">
+                          NEW
+                        </div>
+                      {% endif %}
+                    </div>
+                  </a>
+
+                  <div class="tw-py-1 tw-w-full tw-flex tw-flex-col tw-justify-between tw-gap-2 tw-min-w-0 tw-grow">
+                    <div class="tw-flex tw-grow tw-flex-col tw-justify-between tw-gap-1">
+                      <div class="tw-flex tw-w-full tw-flex-row tw-justify-between tw-gap-x-3 tw-gap-y-0.5 tw-text-12">
+                        <a href="{{ product.url }}" class="tw-no-underline">
+                          <h3 class="tw-font-semibold tw-text-14 tw-text-brand-primary tw-leading-tight tw-m-0 tw-truncate">
+                            {{ product.title }}
+                          </h3>
+                        </a>
+                        <div class="tw-text-gray-500 tw-text-14 tw-font-normal">
+                          List: <span class="tw-font-normal">{{ product.compare_at_price | default: product.price | money }}</span>
+                        </div>
+                      </div>
+                      <div class="tw-flex tw-w-full tw-flex-wrap tw-justify-between tw-gap-x-3 tw-gap-y-0.5 tw-text-14">
+                        {% if product.metafields.custom.author.value != blank %}
+                          <div>
+                            <span class="tw-font-medium">by</span>
+                            <span class="tw-font-medium tw-capitalize">{{ product.metafields.custom.author.value }}</span>
+                          </div>
+                        {% endif %}
+                        <div class="tw-font-semibold tw-text-14">
+                          {% if customer %}Your{% endif %} Net Price: <span class="tw-font-normal">{{ product.price | money }}</span>
+                        </div>
+                      </div>
+                      <div class="tw-grow tw-text-14 tw-line-clamp-3 tw-text-gray-500">
+                        {{ product.description | strip_html | truncatewords: 30 | default: 'No description available.' }}
+                      </div>
+                      <div class="tw-flex tw-w-full tw-justify-between tw-items-end tw-gap-x-3 tw-gap-y-0.5 tw-text-14 tw-pt-2">
+                        <div class="tw-flex tw-w-full tw-flex-wrap tw-text-gray-700 tw-font-semibold tw-gap-x-4 tw-gap-y-0.5 tw-text-14">
+                          <div>
+                            ISBN: <span class="tw-font-normal">{{ product.metafields.facts.isbn | default: 'XXXXXXXX' }}</span>
+                          </div>
+                          <div>
+                            QTY: <span class="tw-font-normal">{{ product.selected_or_first_available_variant.inventory_quantity }}</span>
+                          </div>
+                        </div>
+                        <div class="tw-flex-shrink-0">
+                          {% if customer == null %}
+                            <a
+                              href="{{ routes.account_login_url }}"
+                              class="tw-bg-brand-primary tw-cursor-pointer tw-text-11 tw-text-white tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4 tw-py-2 tw-transition-all duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-brightness-95 tw-whitespace-nowrap tw-items-center tw-uppercase tw-no-underline"
+                            >
+                              Sign in to shop
+                            </a>
+                          {% else %}
+                            <div class="tw-flex tw-items-center tw-gap-2 tw-h-full">
+                              <div class="tw-flex tw-items-center tw-gap-1">
+                                <label class="tw-text-14 tw-font-semibold">QTY:</label>
+                                <input
+                                  type="number"
+                                  min="1"
+                                  placeholder="1"
+                                  :value="getQty({{ product.selected_or_first_available_variant.id }})"
+                                  @input="setQty({{ product.selected_or_first_available_variant.id }}, $event.target.value)"
+                                  class="tw-w-14 tw-text-center tw-leading-none tw-py-0.5 tw-px-1 tw-border tw-border-brand-grey tw-rounded tw-text-14 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
+                                  :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
+                                >
+                              </div>
+                              <button
+                                type="button"
+                                class="tw-bg-brand-secondary tw-cursor-pointer tw-text-11 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-5 tw-py-2 tw-font-semibold tw-font-montserrat hover:tw-brightness-95 tw-whitespace-nowrap tw-items-center tw-uppercase"
+                                @click="addToCart({{ product.selected_or_first_available_variant.id }})"
+                                :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
+                              >
+                                [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : 'Add to Cart' ]]
+                              </button>
+                            </div>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% else %}
+                <div class="tw-flex tw-flex-col tw-border tw-mb-[-1px] tw-border-brand-grey tw-bg-white tw-p-4 tw-w-full">
+                  <span class="tw-text-11 tw-uppercase tw-text-gray-400 tw-font-semibold">{{ item.object_type }}</span>
+                  <a href="{{ item.url }}" class="tw-no-underline">
+                    <h3 class="tw-font-semibold tw-text-16 tw-text-brand-primary tw-mt-1">{{ item.title }}</h3>
+                  </a>
+                  <p class="tw-text-13 tw-text-gray-600 tw-line-clamp-2 tw-mt-1">{{ item.content | strip_html | truncatewords: 35 }}</p>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+
+          <!-- Pagination Bar -->
+          {% if paginate.pages > 1 %}
+            <div class="tw-flex tw-items-center tw-justify-center tw-gap-2 tw-py-10">
+              <nav aria-label="Pagination" class="tw-flex tw-items-center tw-gap-1">
+                {% if paginate.previous %}
+                  <a
+                    href="{{ paginate.previous.url }}"
+                    class="tw-flex tw-size-9 tw-items-center tw-justify-center tw-rounded tw-border tw-border-brand-grey tw-bg-white tw-text-offblack hover:tw-bg-gray-100 tw-no-underline"
+                    aria-label="Previous page"
+                  >
+                    &larr;
+                  </a>
+                {% endif %}
+
+                {% for part in paginate.parts %}
+                  {% if part.is_link %}
+                    <a
+                      href="{{ part.url }}"
+                      class="tw-flex tw-size-9 tw-items-center tw-justify-center tw-rounded tw-border tw-border-brand-grey tw-bg-white tw-text-14 tw-text-offblack hover:tw-bg-gray-100 tw-no-underline"
+                    >
+                      {{ part.title }}
+                    </a>
+                  {% else %}
+                    {% if part.title == paginate.current_page %}
+                      <span
+                        aria-current="page"
+                        class="tw-flex tw-size-9 tw-items-center tw-justify-center tw-rounded tw-border tw-border-brand-primary tw-bg-brand-primary tw-text-14 tw-font-semibold tw-text-white"
+                      >
+                        {{ part.title }}
+                      </span>
+                    {% else %}
+                      <span class="tw-flex tw-size-9 tw-items-center tw-justify-center tw-text-14 tw-text-gray-400">
+                        {{ part.title }}
+                      </span>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+
+                {% if paginate.next %}
+                  <a
+                    href="{{ paginate.next.url }}"
+                    class="tw-flex tw-size-9 tw-items-center tw-justify-center tw-rounded tw-border tw-border-brand-grey tw-bg-white tw-text-offblack hover:tw-bg-gray-100 tw-no-underline"
+                    aria-label="Next page"
+                  >
+                    &rarr;
+                  </a>
+                {% endif %}
+              </nav>
+            </div>
+          {% endif %}
+        {% endpaginate %}
+      {% endif %}
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  new Vue({
+    el: '.section-search-{{ section.id }}',
+    delimiters: ['[[', ']]'],
+    mixins: [global],
+    data() {
+      return {
+        viewMode: 'grid',
+        quantities: {},
+        addingToCartMap: {},
+      };
+    },
+    mounted() {
+      const savedViewMode = localStorage.getItem('productViewMode');
+      if (savedViewMode) {
+        this.viewMode = savedViewMode;
+      }
+    },
+    methods: {
+      toggleViewMode(mode) {
+        this.viewMode = mode;
+        localStorage.setItem('productViewMode', mode);
+      },
+      getQty(variantId) {
+        return this.quantities[variantId] || 1;
+      },
+      setQty(variantId, val) {
+        this.$set(this.quantities, variantId, parseInt(val, 10) || 1);
+      },
+      isAdding(variantId) {
+        return !!this.addingToCartMap[variantId];
+      },
+      addToCart(variantId) {
+        const qty = this.getQty(variantId);
+        this.$set(this.addingToCartMap, variantId, true);
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            items: [{ id: variantId, quantity: qty }],
+          }),
+        })
+          .then(async (r) => {
+            const data = await r.json();
+            if (!r.ok) throw data;
+            return data;
+          })
+          .then((data) => {
+            const recentItem = data.items?.[0];
+            this.bus.$emit('refreshCart');
+            this.bus.$emit('cartItemAdded', recentItem);
+          })
+          .catch((error) => {
+            this.bus.$emit('cartFailedToAdd', error);
+          })
+          .finally(() => {
+            this.$set(this.addingToCartMap, variantId, false);
+          });
+      },
+    },
+  });
+</script>
 
 {% schema %}
 {
-  "name": "t:general.search",
+  "name": "Search Results",
   "settings": []
 }
 {% endschema %}

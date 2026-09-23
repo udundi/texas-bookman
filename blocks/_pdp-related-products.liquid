@@ -1,24 +1,30 @@
 {% if block.settings.related_product_list != blank %}
-  <div class="tw-overflow-hidden">
-    <div class="swiper related-swiper">
-      <h3 class="tw-text-24 tw-font-semibold">Also Available:</h3>
+  <div class="tw-w-full tw-overflow-hidden tw-py-4">
+    <h3 class="tw-text-20 md:tw-text-24 tw-font-semibold tw-text-offblack tw-mb-3">Also Available:</h3>
+    <div class="swiper related-swiper tw-w-full">
       <div class="swiper-wrapper">
         {% for rel_product in block.settings.related_product_list %}
           <div class="swiper-slide">
-            <a href="{{ rel_product.url }}" class="tw-flex tw-flex-col tw-gap-2">
-              <div class="tw-w-full tw-aspect-square tw-rounded-[4px] tw-overflow-hidden">
-                {% if product.featured_image != blank %}
+            <a href="{{ rel_product.url }}" class="tw-flex tw-flex-col tw-gap-2 tw-group tw-no-underline">
+              <div class="tw-w-full tw-aspect-square tw-rounded-[4px] tw-border tw-border-brand-grey tw-bg-white tw-overflow-hidden tw-flex tw-items-center tw-justify-center">
+                {% if rel_product.featured_image != blank %}
                   {{
-                    product.featured_image
+                    rel_product.featured_image
                     | image_url: width: 400
-                    | image_tag: class: 'tw-w-full tw-h-full tw-object-cover'
+                    | image_tag: class: 'tw-w-full tw-h-full tw-object-contain tw-transition-transform tw-duration-300 group-hover:tw-scale-105'
                   }}
                 {% else %}
                   {{ 'product-1' | placeholder_svg_tag: 'tw-w-full tw-h-full tw-object-cover' }}
                 {% endif %}
               </div>
-              <div class="tw-text-16 tw-font-semibold tw-text-offblack">{{ product.title }}</div>
-              <div class="tw-text-14 tw-text-black">{{ product.price | money }}</div>
+              <div class="tw-text-14 md:tw-text-16 tw-font-semibold tw-text-offblack group-hover:tw-underline tw-line-clamp-2">{{ rel_product.title }}</div>
+              <div class="tw-text-13 md:tw-text-14 tw-text-offblack">
+                {% if customer %}
+                  <span class="tw-font-semibold">{{ rel_product.price | money }}</span>
+                {% else %}
+                  <span class="tw-text-brand-primary tw-font-semibold tw-text-12 tw-uppercase">Sign in to shop</span>
+                {% endif %}
+              </div>
             </a>
           </div>
         {% endfor %}

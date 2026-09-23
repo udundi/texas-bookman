@@ -17,13 +17,26 @@
     </div>
     <!-- Mobile Continue Shopping -->
     <a
-      href="/"
-      class="tw-bg-brand-primary tw-px-4 tw-py-2 tw-text-white tw-uppercase tw-text-12 tw-font-semibold  tw-text-center tw-rounded-[4px] md:tw-hidden"
+      v-if="cartItems.length > 0"
+      href="{{ routes.all_products_collection_url }}"
+      class="tw-bg-brand-primary tw-px-4 tw-py-2 tw-text-white tw-uppercase tw-text-14 tw-font-semibold tw-text-center tw-rounded-[4px] tw-transition-all duration-200 hover:tw-brightness-95 tw-no-underline md:tw-hidden"
     >
       Continue Shopping
     </a>
   </div>
-  <div class="tw-flex tw-flex-col md:tw-flex-row tw-relative tw-text-14 tw-w-full tw-gap-6 md:tw-gap-12 tw-mx-auto">
+
+  <!-- Empty Cart State -->
+  <div v-if="cartItems.length === 0" class="tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-6 tw-py-16 tw-text-center">
+    <p class="tw-text-20 tw-font-semibold tw-font-brand-header tw-text-gray-700 tw-m-0">Your cart is currently empty.</p>
+    <a
+      href="{{ routes.all_products_collection_url }}"
+      class="tw-bg-brand-primary tw-text-white tw-font-semibold tw-text-16 tw-uppercase tw-py-3 tw-px-8 tw-rounded-[4px] tw-transition-all duration-200 hover:tw-brightness-95 tw-no-underline"
+    >
+      Start Shopping
+    </a>
+  </div>
+
+  <div v-else class="tw-flex tw-flex-col md:tw-flex-row tw-relative tw-text-14 tw-w-full tw-gap-6 md:tw-gap-12 tw-mx-auto">
     <!-- Cart Items -->
     <div class="tw-w-full tw-flex tw-flex-col tw-gap-2">
       <div class="tw-bg-brand-eggshell tw-border tw-border-brand-grey tw-rounded-[4px]">
@@ -118,8 +131,8 @@
         </div>
       </div>
       <a
-        href="/"
-        class="tw-bg-brand-primary tw-p-1.5 tw-text-white tw-uppercase tw-text-18 tw-w-full tw-max-w-72 tw-text-center tw-rounded-[4px] tw-mt-4 max-md:tw-hidden"
+        href="{{ routes.all_products_collection_url }}"
+        class="tw-bg-brand-primary tw-text-white tw-font-semibold tw-text-16 tw-uppercase tw-py-3 tw-px-6 tw-w-full tw-max-w-72 tw-text-center tw-rounded-[4px] tw-mt-4 tw-transition-all duration-200 hover:tw-brightness-95 tw-no-underline max-md:tw-hidden"
       >
         Continue Shopping
       </a>
@@ -157,14 +170,14 @@
       <a
         v-if="!updatingCart"
         href="{{ routes.checkout_url }}"
-        class="tw-flex tw-gap-3 tw-rounded-[4px] tw-items-center tw-justify-center tw-bg-brand-secondary tw-p-1.5 tw-text-offblack tw-uppercase tw-text-20 tw-w-full tw-text-center tw-mt-4"
+        class="tw-flex tw-gap-3 tw-rounded-[4px] tw-items-center tw-justify-center tw-bg-brand-secondary tw-py-3 tw-px-6 tw-text-offblack tw-font-semibold tw-uppercase tw-text-16 tw-w-full tw-text-center tw-mt-4 tw-transition-all duration-200 hover:tw-brightness-95 tw-no-underline"
       >
-        <span class="tw-size-4 tw-mb-1">{% render 'icon-lock' %}</span>
+        <span class="tw-size-4 tw-flex tw-items-center">{% render 'icon-lock' %}</span>
         Checkout
       </a>
       <div
         v-else
-        class="tw-bg-brand-secondary tw-rounded-[4px] tw-p-1.5 tw-cursor-wait tw-flex tw-items-center tw-justify-center tw-mt-4"
+        class="tw-bg-brand-secondary tw-rounded-[4px] tw-py-3 tw-px-6 tw-cursor-wait tw-flex tw-items-center tw-justify-center tw-mt-4"
       >
         <div class="tw-size-6 tw-animate-spin">
           {% render 'icon-spin' %}

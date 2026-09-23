@@ -132,7 +132,7 @@
       <div class="tw-flex tw-w-full tw-gap-2 max-md:tw-px-4 md:tw-hidden">
         <button
           type="button"
-          @click="mobileFiltersOpen = true; openFilters = []"
+          @click="mobileFiltersOpen = true"
           class="tw-flex tw-flex-1 tw-items-center tw-justify-center tw-gap-2 tw-rounded-[4px] tw-border tw-border-brand-grey tw-bg-white tw-py-2 tw-text-14 tw-text-offblack tw-transition-colors hover:tw-border-offblack"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" style="width: 14px; height: 14px;">
@@ -338,12 +338,12 @@
       <div
         v-cloak
         v-if="mobileFiltersOpen"
-        class="tw-fixed tw-inset-0 tw-z-10 tw-bg-black/35 md:tw-hidden"
+        class="tw-fixed tw-inset-0 tw-z-[940] tw-bg-black/40 md:tw-hidden"
         @click="mobileFiltersOpen = false"
       ></div>
-      <!-- Filter Container: stays below the sticky header group (tw-z-[100]) -->
+      <!-- Filter Container: on mobile acts as bottom sheet with eggshell bg, rounded top, high z-index -->
       <div
-        class="ud-filter-container tw-fixed tw-bottom-0 tw-left-0 tw-z-20 tw-w-full tw-flex-col tw-justify-start tw-max-h-[85vh] tw-rounded-t-2xl  tw-px-2 tw-pt-4 md:tw-sticky md:tw-bottom-auto md:tw-top-0 md:tw-max-h-none md:tw-w-96 md:tw-gap-2 md:tw-rounded-none md:tw-py-4  tw-mb-[-1px]"
+        class="ud-filter-container tw-fixed tw-bottom-0 tw-left-0 tw-z-[950] tw-w-full tw-flex-col tw-justify-start tw-max-h-[85vh] tw-rounded-t-2xl tw-bg-brand-eggshell tw-shadow-2xl tw-px-2 tw-pt-4 md:tw-sticky md:tw-bottom-auto md:tw-top-0 md:tw-max-h-none md:tw-w-96 md:tw-gap-2 md:tw-rounded-none md:tw-py-4 md:tw-bg-transparent md:tw-shadow-none tw-mb-[-1px]"
         :class="mobileFiltersOpen ? 'tw-flex' : 'md:tw-flex tw-hidden'"
       >
         <!-- Mobile Sheet Header -->
@@ -428,10 +428,10 @@
           </div>
         </div>
         <!-- Mobile Sticky Apply Button -->
-        <div class="tw-sticky tw-bottom-0 tw-w-full tw-border-t tw-border-brand-grey tw-bg-white tw-p-3 md:tw-hidden">
+        <div class="tw-sticky tw-bottom-0 tw-w-full tw-border-t tw-border-brand-grey tw-bg-brand-eggshell tw-p-3 md:tw-hidden">
           <button
             type="button"
-            class="tw-w-full tw-rounded-[4px] tw-bg-brand-primary tw-py-3 tw-text-14 tw-font-semibold tw-uppercase  tw-text-white"
+            class="tw-w-full tw-rounded-[4px] tw-bg-brand-primary tw-py-3 tw-text-14 tw-font-semibold tw-uppercase tw-text-white tw-transition-all hover:tw-brightness-95"
             @click="mobileFiltersOpen = false"
           >
             Save Selections
@@ -546,7 +546,7 @@
                               <div class="tw-font-semibold tw-text-14">
                                 {% assign flash_sale_discount = settings.flash_sale_discount | times: 0.01 %}
                                 {% assign flash_sale_amount = product.price | times: flash_sale_discount %}
-                                Your Net Price:
+                                {% if customer %}Your{% endif %} Net Price:
                                 <span class="tw-font-normal tw-line-through">{{ product.price | money }} </span>
                                 <span class="tw-font-normal tw-text-brand-sale">
                                   {{- product.price | minus: flash_sale_amount | money -}}
@@ -554,13 +554,20 @@
                               </div>
                             {% else %}
                               <div class="tw-font-semibold tw-text-14">
-                                Your Net Price: <span class="tw-font-normal">{{ product.price | money }} </span>
+                                {% if customer %}Your{% endif %} Net Price: <span class="tw-font-normal">{{ product.price | money }} </span>
                               </div>
                             {% endif %}
                           </div>
                         </div>
                       </div>
-                      {% if section.settings.button_type != 'none' %}
+                      {% if customer == null %}
+                        <a
+                          href="{{ routes.account_login_url }}"
+                          class="tw-bg-brand-primary tw-w-full tw-cursor-pointer tw-text-12 tw-text-white tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-py-2 tw-px-3 tw-transition-all duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-brightness-95 tw-whitespace-nowrap tw-items-center tw-uppercase tw-mt-auto tw-no-underline"
+                        >
+                          Sign in to shop
+                        </a>
+                      {% elsif section.settings.button_type != 'none' %}
                         {% if section.settings.button_type == 'quick-add' %}
                           <div class="tw-flex tw-gap-2 tw-w-full tw-mt-auto">
                             <div class="tw-flex tw-items-center tw-gap-2 tw-w-full">
@@ -661,7 +668,7 @@
                             <div class="tw-font-semibold tw-text-14">
                               {% assign flash_sale_discount = settings.flash_sale_discount | times: 0.01 %}
                               {% assign flash_sale_amount = product.price | times: flash_sale_discount %}
-                              Your Net Price:
+                              {% if customer %}Your{% endif %} Net Price:
                               <span class="tw-font-normal tw-line-through">{{ product.price | money }} </span>
                               <span class="tw-font-normal tw-text-brand-sale">
                                 {{- product.price | minus: flash_sale_amount | money -}}
@@ -669,7 +676,7 @@
                             </div>
                           {% else %}
                             <div class="tw-font-semibold tw-text-14">
-                              Your Net Price: <span class="tw-font-normal">{{ product.price | money }} </span>
+                              {% if customer %}Your{% endif %} Net Price: <span class="tw-font-normal">{{ product.price | money }} </span>
                             </div>
                           {% endif %}
                         </div>
@@ -692,7 +699,14 @@
                             </div>
                           </div>
                           <div class="tw-flex-shrink-0">
-                            {% if section.settings.button_type != 'none' %}
+                            {% if customer == null %}
+                              <a
+                                href="{{ routes.account_login_url }}"
+                                class="tw-bg-brand-primary tw-cursor-pointer tw-text-11 tw-text-white tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4 tw-py-2 tw-transition-all duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-brightness-95 tw-whitespace-nowrap tw-items-center tw-uppercase tw-no-underline"
+                              >
+                                Sign in to shop
+                              </a>
+                            {% elsif section.settings.button_type != 'none' %}
                               {% if section.settings.button_type == 'quick-add' %}
                                 <div class="tw-flex tw-items-center tw-gap-2 tw-h-full">
                                   <div class="tw-flex tw-items-center tw-gap-1">
@@ -736,16 +750,16 @@
                     </div>
                   </div>
                 </div>
-              {%- endfor %}
-              {% if section.settings.enable_infinite_scroll %}
-                {% if paginate.next %}
+              {%- endfor %}\
+              {% if section.settings.enable_infinite_scroll %}\
+                {% if paginate.next %}\
                   <div
                     id="infinite-scroll-sentinel-{{ section.id }}"
                     data-next-url="{{ paginate.next.url }}"
                     class="md:tw-col-span-2 xl:tw-col-span-3 tw-h-4"
                   ></div>
-                {% endif %}
-              {% endif %}
+                {% endif %}\
+              {% endif %}\
             {%- endpaginate %}
           </div>
           {% if section.settings.enable_infinite_scroll %}
@@ -816,11 +830,20 @@
       return {
         mobileFiltersOpen: false,
         sectionHeight: 0,
-        openFilters: [],
+        openFilters: {},
         viewMode: 'grid',
         quantities: {},
         addingToCartMap: {},
       };
+    },
+    watch: {
+      mobileFiltersOpen(val) {
+        if (val) {
+          document.body.classList.add('mobile-filter-open');
+        } else {
+          document.body.classList.remove('mobile-filter-open');
+        }
+      },
     },
     mounted() {
       console.log('Mounted Sortable Collections')
@@ -848,6 +871,16 @@
       window.addEventListener('resize', this.getNavHeight);
     },
     methods: {
+      isFilterOpen(id, defaultCollapsed) {
+        if (this.openFilters.hasOwnProperty(id)) {
+          return this.openFilters[id];
+        }
+        return !defaultCollapsed;
+      },
+      toggleFilter(id, defaultCollapsed) {
+        const current = this.isFilterOpen(id, defaultCollapsed);
+        this.$set(this.openFilters, id, !current);
+      },
       getNavHeight() {
         const newHeight = document.querySelector('.shopify-section-group-header-group').offsetHeight;
         // If different then change and update Filter Container
@@ -859,6 +892,10 @@
       changeFilterSpace() {
         const filterContainer = document.querySelector('.ud-filter-container');
         const filterCarousel = document.querySelector('.ud-filter-carousel');
+        if (window.innerWidth < 768) {
+          if (filterContainer) filterContainer.style.height = '';
+          return;
+        }
         if (filterContainer) {
           // console.log('got Filter Container')
           const windowHeight = window.innerHeight;

@@ -67,13 +67,20 @@
             <span class="tw-font-normal">{{ cur_product.compare_at_price | default: cur_product.price | money }}</span>
           </div>
           <div class="tw-font-semibold tw-text-14 tw-text-black">
-            Your Net Price: <span class="tw-font-normal">{{ cur_product.price | money }}</span>
+            {% if customer %}Your{% endif %} Net Price: <span class="tw-font-normal">{{ cur_product.price | money }}</span>
           </div>
         </div>
       </div>
     </div>
 
-    {% if show_button_type != 'none' %}
+    {% if customer == null %}
+      <a
+        href="{{ routes.account_login_url }}"
+        class="tw-bg-brand-primary tw-w-full tw-cursor-pointer tw-text-12 tw-text-white tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-py-2 tw-px-3 tw-transition-all duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-brightness-95 tw-whitespace-nowrap tw-items-center tw-uppercase tw-no-underline"
+      >
+        Sign in to shop
+      </a>
+    {% elsif show_button_type != 'none' %}
       {% if show_button_type == 'quick-add' %}
         <div class="tw-flex tw-gap-2 tw-items-stretch tw-w-full tw-h-full">
           <div class="tw-flex tw-items-center tw-gap-2 tw-w-full tw-h-full tw-text-brand-greyer">
@@ -127,7 +134,7 @@
       addToCart() {
         this.addingToCart = true;
         let items = [
-          {
+          {\
             quantity: this.quantity,
             'properties': {
               '_tags': {{ cur_product.tags | json }},
@@ -143,7 +150,7 @@
           body: JSON.stringify({ items: items }),
         }).then(async (r) => {
           const data = await r.json();
-          if (!r.ok) throw data;
+          if (!r.ok) throw data;\
           return data;
         }).then((data) => {
           console.log(data);
@@ -164,6 +171,6 @@
           this.addingToCart = false;
         });
       },
-    },
+    },\
   });
 </script>
