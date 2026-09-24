@@ -117,8 +117,7 @@
         "button_url": "shopify://collections/all",
         "button_bg": "#f0ba3a",
         "button_text_color": "#212121",
-        "button_font_size": 13,
-        "mobile_button_font_size": 13,
+        "mobile_button_size": 13,
         "button_padding_y": 8,
         "button_padding_x": 46,
         "desktop_content_alignment": "left",
@@ -268,7 +267,10 @@
           "type": "image-text-overlay",
           "name": "Image with Text Overlay",
           "settings": {
-            "image": "shopify://shop_images/pages-of-a-book-curled-into-a-heart-shape.jpg",
+            "image": "shopify://shop_images/Used-Books.webp",
+            "object_fit": "cover",
+            "link": "shopify://collections/used-books",
+            "open_in_new_tab": false,
             "overlay_text": "<p>Used Books You'll Love</p>",
             "text_position": "bottom-center",
             "text_color": "#ffffff",
@@ -276,15 +278,13 @@
             "mobile_text_size": 22,
             "aspect_ratio": "3/2",
             "mobile_aspect_ratio": "3/2",
-            "object_fit": "cover",
             "rounded": "sm",
             "max_width": 800,
             "mobile_max_width": 320,
             "border": 0,
             "border_color": "",
             "lazy_load": true,
-            "alt_text": "",
-            "link": "shopify://collections/used-books"
+            "alt_text": ""
           },
           "blocks": {}
         },
@@ -292,7 +292,10 @@
           "type": "image-text-overlay",
           "name": "Image with Text Overlay",
           "settings": {
-            "image": "shopify://shop_images/writing-in-journal.jpg",
+            "image": "shopify://shop_images/Flame-Tree-Journals.webp",
+            "object_fit": "cover",
+            "link": "shopify://collections/journals",
+            "open_in_new_tab": false,
             "overlay_text": "<p>New Flame Tree Journals</p>",
             "text_position": "bottom-center",
             "text_color": "#ffffff",
@@ -300,15 +303,13 @@
             "mobile_text_size": 22,
             "aspect_ratio": "3/2",
             "mobile_aspect_ratio": "3/2",
-            "object_fit": "cover",
             "rounded": "sm",
             "max_width": 800,
             "mobile_max_width": 320,
             "border": 0,
             "border_color": "",
             "lazy_load": true,
-            "alt_text": "",
-            "link": "shopify://collections/journals"
+            "alt_text": ""
           },
           "blocks": {}
         }
