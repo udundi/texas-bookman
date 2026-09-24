@@ -277,13 +277,14 @@
             "aspect_ratio": "3/2",
             "mobile_aspect_ratio": "3/2",
             "object_fit": "cover",
-            "rounded": "none",
+            "rounded": "sm",
             "max_width": 800,
             "mobile_max_width": 320,
             "border": 0,
             "border_color": "",
             "lazy_load": true,
-            "alt_text": ""
+            "alt_text": "",
+            "link": "shopify://collections/used-books"
           },
           "blocks": {}
         },
@@ -300,13 +301,14 @@
             "aspect_ratio": "3/2",
             "mobile_aspect_ratio": "3/2",
             "object_fit": "cover",
-            "rounded": "none",
+            "rounded": "sm",
             "max_width": 800,
             "mobile_max_width": 320,
             "border": 0,
             "border_color": "",
             "lazy_load": true,
-            "alt_text": ""
+            "alt_text": "",
+            "link": "shopify://collections/journals"
           },
           "blocks": {}
         }
