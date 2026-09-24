@@ -114,7 +114,7 @@
         "body_size": 18,
         "mobile_body_size": 14,
         "button_label": "Shop Now",
-        "button_url": "shopify://collections/all",
+        "button_url": "shopify://collections/children-s",
         "button_bg": "#f0ba3a",
         "button_text_color": "#212121",
         "mobile_button_size": 13,
