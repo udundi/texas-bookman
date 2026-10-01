@@ -213,7 +213,7 @@
               "name": "Menu Links",
               "settings": {
                 "menu_title": "My Account",
-                "header_url": "shopify://collections",
+                "header_url": "/account",
                 "menu": "resources-header",
                 "column_layout": "1-col"
               },
