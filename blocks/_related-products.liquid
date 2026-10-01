@@ -14,12 +14,76 @@
 </div>
 
 {% if product %}
+  {% comment %}
+    Shopify's related recommendations fall back to the same few unrelated products on this store,
+    so build the list here: first from the product's most specific (smallest) genre collections,
+    then from its broad collections, keeping only the same product type (and publisher, for books).
+  {% endcomment %}
+  {%- liquid
+    assign related_limit = 4
+    assign ignored_handles = block.settings.ignored_collections | strip_newlines | remove: ' ' | split: ','
+    assign seen_ids = ',' | append: product.id | append: ','
+    assign seen_titles = '|' | append: product.title | append: '|'
+    assign related_count = 0
+    assign sorted_collections = product.collections | sort: 'products_count'
+  -%}
+  <script type="application/json" id="related-products-data-{{ block.id }}">
+    [
+      {%- for pass in (1..2) -%}
+        {%- for rel_collection in sorted_collections -%}
+          {%- if related_count >= related_limit -%}{%- break -%}{%- endif -%}
+          {%- liquid
+            assign is_ignored = false
+            if ignored_handles contains rel_collection.handle
+              assign is_ignored = true
+            endif
+            if pass == 1 and is_ignored
+              continue
+            elsif pass == 2 and is_ignored == false
+              continue
+            endif
+          -%}
+          {%- paginate rel_collection.products by 250 -%}
+            {%- for rel_product in rel_collection.products -%}
+              {%- if related_count >= related_limit -%}{%- break -%}{%- endif -%}
+              {%- assign rel_id_key = ',' | append: rel_product.id | append: ',' -%}
+              {%- assign rel_title_key = '|' | append: rel_product.title | append: '|' -%}
+              {%- if rel_product.available == false or seen_ids contains rel_id_key or seen_titles contains rel_title_key -%}{%- continue -%}{%- endif -%}
+              {%- liquid
+                if pass == 2
+                  if rel_product.type != product.type
+                    continue
+                  endif
+                  if product.type == 'Book' and rel_product.vendor != product.vendor
+                    continue
+                  endif
+                endif
+              -%}
+              {%- assign seen_ids = seen_ids | append: rel_product.id | append: ',' -%}
+              {%- assign seen_titles = seen_titles | append: rel_product.title | append: '|' -%}
+              {%- if related_count > 0 -%},{%- endif -%}
+              {
+                "title": {{ rel_product.title | json }},
+                "url": {{ rel_product.url | json }},
+                "featured_image": {% if rel_product.featured_image %}{{ rel_product.featured_image | image_url: width: 600 | json }}{% else %}""{% endif %},
+                "price": {{ rel_product.price | json }},
+                "compare_at_price": {{ rel_product.compare_at_price | json }},
+                "variants": [{ "id": {{ rel_product.selected_or_first_available_variant.id | json }} }]
+              }
+              {%- assign related_count = related_count | plus: 1 -%}
+            {%- endfor -%}
+          {%- endpaginate -%}
+        {%- endfor -%}
+      {%- endfor -%}
+    ]
+  </script>
   <script>
     (function () {
       var wrapper = document.getElementById('related-products-{{ block.id }}');
       var slidesContainer = document.getElementById('related-products-slides-{{ block.id }}');
       var moneyFormat = {{ shop.money_format | json }};
       var showPrice = {{ block.settings.show_price | json }};
+      var useRecommendations = {{ block.settings.use_recommendations | json }};
       var isCustomer = {% if customer %}true{% else %}false{% endif %};
 
       if (!slidesContainer) return;
@@ -135,21 +199,31 @@
         return card;
       }
 
+      function renderProducts(products) {
+        if (!products.length) {
+          if (wrapper) wrapper.style.display = 'none';
+          return;
+        }
+
+        products.forEach(function (product) {
+          slidesContainer.appendChild(buildCard(product));
+        });
+      }
+
+      var dataEl = document.getElementById('related-products-data-{{ block.id }}');
+      var sameGenreProducts = dataEl ? JSON.parse(dataEl.textContent) : [];
+      if (sameGenreProducts.length || !useRecommendations) {
+        renderProducts(sameGenreProducts);
+        return;
+      }
+
       fetch(
         window.Shopify.routes.root +
           'recommendations/products.json?product_id={{ product.id }}&intent=related&limit=4'
       )
         .then(function (response) { return response.json(); })
         .then(function (data) {
-          var products = (data && data.products) || [];
-          if (!products.length) {
-            if (wrapper) wrapper.style.display = 'none';
-            return;
-          }
-
-          products.forEach(function (product) {
-            slidesContainer.appendChild(buildCard(product));
-          });
+          renderProducts((data && data.products) || []);
         })
         .catch(function (error) {
           console.error('Unable to load related products', error);
@@ -172,6 +246,20 @@
       "type": "text",
       "label": "Button Text",
       "id": "button_text"
+    },
+    {
+      "type": "textarea",
+      "id": "ignored_collections",
+      "label": "Collections to ignore",
+      "info": "Comma-separated collection handles that aren't a genre. Related products come from the product's smallest remaining collections, falling back to Shopify recommendations.",
+      "default": "all-adult-books, all-childrens-books, all-games-media, all-gifts, all-mind-body-spirit, all-stationery, markdowns, uk-markdowns, used-books, new-arrivals, homepage, holiday-picks, for-your-holiday-display, stocking-stuffers, new-years-self-care, gifts-for-busy-hands, gifts-for-game-and-puzzle-enthusiasts, gifts-for-kids, gifts-for-readers, collector-editions, foiled, other"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_recommendations",
+      "label": "Fall back to Shopify recommendations",
+      "info": "Used only when no related products are found in the product's collections. Off by default: until the store has sales history Shopify shows the same few products everywhere.",
+      "default": false
     },
     {
       "type": "header",
