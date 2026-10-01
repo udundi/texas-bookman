@@ -105,6 +105,10 @@
                 {% render 'icon-trash' %}
               </button>
             </div>
+            <!-- Quantity Error -->
+            <div v-if="qtyErrors[item.key]" class="tw-text-12 tw-font-semibold tw-text-brand-sale" role="alert">
+              [[ qtyErrors[item.key] ]]
+            </div>
             <!-- Prices -->
             <div
               class="tw-flex tw-flex-wrap tw-gap-x-4 tw-gap-y-0.5"
@@ -202,6 +206,7 @@
         totalSavings: {{ cart.total_discount | default: 0 }},
         updatingCart: false,
         debounceTimers: {},
+        qtyErrors: {},
         moneyFmt: {{ shop.money_format | json }},
       };
     },
@@ -233,33 +238,44 @@
       onQtyInput(item, event) {
         const qty = parseInt(event.target.value, 10);
         if (isNaN(qty) || qty < 0) return;
+        delete this.qtyErrors[item.key];
         clearTimeout(this.debounceTimers[item.key]);
         this.debounceTimers[item.key] = setTimeout(() => this.updateQuantity(item, qty), 800);
       },
-      updateQuantity(item, qty) {
+      // Take items and totals from Shopify's cart rather than the requested qty,
+      // since Shopify may reject or clamp quantities above available stock.
+      applyCart(updatedCart) {
+        this.cartItems = updatedCart.items;
+        this.cartData = updatedCart;
+        this.subtotal = updatedCart.items_subtotal_price;
+        this.total = updatedCart.total_price;
+        this.totalSavings = updatedCart.total_discount;
+      },
+      async updateQuantity(item, qty) {
         this.updatingCart = true;
-        fetch('/cart/change.js', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id: item.key, quantity: qty }),
-        })
-          .then((r) => r.json())
-          .then((updatedCart) => {
-            // Take the whole line from the response so original_line_price
-            // stays in step with line_price and no stale strike-through shows.
-            const updatedItem = updatedCart.items.find((i) => i.key === item.key);
-            if (updatedItem) {
-              Object.assign(item, updatedItem);
-            } else {
-              this.cartItems = this.cartItems.filter((i) => i.key !== item.key);
+        try {
+          const response = await fetch('/cart/change.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: item.key, quantity: qty }),
+          });
+          const body = await response.json();
+          if (response.ok) {
+            this.applyCart(body);
+            const line = body.items.find((i) => i.key === item.key);
+            if (line && line.quantity < qty) {
+              this.qtyErrors[item.key] = `Only ${line.quantity} available. Quantity updated to ${line.quantity}.`;
             }
-            this.subtotal = updatedCart.items_subtotal_price;
-            this.total = updatedCart.total_price;
-            this.totalSavings = updatedCart.total_discount;
-            this.bus.$emit('refreshCart');
-          })
-          .catch(() => {})
-          .finally(() => { this.updatingCart = false; });
+          } else {
+            this.qtyErrors[item.key] = body.description || body.message || 'Sorry, that quantity is not available.';
+            this.applyCart(await fetch('/cart.js').then((r) => r.json()));
+          }
+          this.bus.$emit('refreshCart');
+        } catch (e) {
+          console.error('Cart quantity update failed:', e);
+        } finally {
+          this.updatingCart = false;
+        }
       },
       removeItem(item) {
         this.updatingCart = true;
