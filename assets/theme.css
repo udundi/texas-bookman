@@ -2754,6 +2754,10 @@ video {
   padding-bottom: 2rem;
 }
 
+.tw-pb-1 {
+  padding-bottom: 0.25rem;
+}
+
 .tw-pb-16 {
   padding-bottom: 4rem;
 }
