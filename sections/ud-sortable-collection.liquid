@@ -386,14 +386,11 @@
                     {% assign active_filter_key = active_param_parts[0]
                       | replace: 'filter.p.', ''
                       | replace: 'filter.v.', ''
+                      | replace: 'm.custom.', ''
                       | replace: '.', ' '
                       | replace: '_', ' '
                     %}
-                    {% assign active_filter_value = active_param_parts[1]
-                      | replace: '+', ' '
-                      | replace: '%20', ' '
-                      | replace: '%26', '&'
-                    %}
+                    {% assign active_filter_value = active_param_parts[1] | url_decode %}
                     {% assign remaining_params = '' %}
                     {% for param in query_params %}
                       {% unless param == active_param %}
