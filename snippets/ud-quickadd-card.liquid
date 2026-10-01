@@ -134,7 +134,7 @@
       addToCart() {
         this.addingToCart = true;
         let items = [
-          {\
+          {
             quantity: this.quantity,
             'properties': {
               '_tags': {{ cur_product.tags | json }},
@@ -150,7 +150,7 @@
           body: JSON.stringify({ items: items }),
         }).then(async (r) => {
           const data = await r.json();
-          if (!r.ok) throw data;\
+          if (!r.ok) throw data;
           return data;
         }).then((data) => {
           console.log(data);
@@ -171,6 +171,6 @@
           this.addingToCart = false;
         });
       },
-    },\
+    },
   });
 </script>
