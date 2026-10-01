@@ -1,8 +1,25 @@
 <div class="tw-flex tw-flex-col tw-gap-4 tw-items-center" id="related-products-{{ block.id }}">
-  <div
-    class="tw-grid tw-grid-cols-2 tw-justify-center tw-items-center lg:tw-grid-cols-4 tw-gap-4 tw-w-full tw-py-4"
-    id="related-products-slides-{{ block.id }}"
-  ></div>
+  <div class="tw-w-full tw-flex tw-items-center tw-gap-1 sm:tw-gap-4 tw-py-4">
+    <button
+      type="button"
+      aria-label="Previous products"
+      class="tw-bg-white tw-size-10 md:tw-size-12 tw-aspect-square tw-rounded-[4px] tw-border tw-border-solid tw-border-brand-grey tw-flex tw-items-center tw-justify-center tw-cursor-pointer tw-drop-shadow-lg tw-shrink-0 tw-transition-opacity [&.swiper-button-disabled]:tw-opacity-30 [&.swiper-button-disabled]:tw-cursor-default [&.swiper-button-lock]:tw-hidden"
+      id="related-products-prev-{{ block.id }}"
+    >
+      {% render 'icon-chevron-left' %}
+    </button>
+    <div class="swiper tw-w-full" id="related-products-swiper-{{ block.id }}">
+      <div class="swiper-wrapper" id="related-products-slides-{{ block.id }}"></div>
+    </div>
+    <button
+      type="button"
+      aria-label="Next products"
+      class="tw-bg-white tw-size-10 md:tw-size-12 tw-aspect-square tw-rounded-[4px] tw-border tw-border-solid tw-border-brand-grey tw-flex tw-items-center tw-justify-center tw-cursor-pointer tw-drop-shadow-lg tw-shrink-0 tw-transition-opacity [&.swiper-button-disabled]:tw-opacity-30 [&.swiper-button-disabled]:tw-cursor-default [&.swiper-button-lock]:tw-hidden"
+      id="related-products-next-{{ block.id }}"
+    >
+      {% render 'icon-chevron-right' %}
+    </button>
+  </div>
   {% if block.settings.button_url %}
     <a
       href="{{ block.settings.button_url }}"
@@ -23,6 +40,24 @@
       var isCustomer = {% if customer %}true{% else %}false{% endif %};
 
       if (!slidesContainer) return;
+
+      // Observer lets Swiper pick up the cards whenever they're appended below.
+      // Fractional slide counts let the next card peek in as a cue to scroll.
+      new Swiper('#related-products-swiper-{{ block.id }}', {
+        slidesPerView: 1.3,
+        spaceBetween: 8,
+        watchOverflow: true,
+        observer: true,
+        breakpoints: {
+          425: { slidesPerView: 2.3 },
+          768: { slidesPerView: 3.3 },
+          1024: { slidesPerView: 4.3 },
+        },
+        navigation: {
+          nextEl: '#related-products-next-{{ block.id }}',
+          prevEl: '#related-products-prev-{{ block.id }}',
+        },
+      });
 
       function escapeHtml(value) {
         var div = document.createElement('div');
@@ -74,10 +109,11 @@
         }
 
         var card = document.createElement('div');
+        card.className = 'swiper-slide !tw-h-auto';
         card.innerHTML =
           '<div class="tw-flex tw-flex-col tw-p-4 tw-h-full">' +
           '<a href="' + escapeHtml(product.url) + '">' +
-          '<div class="tw-aspect-3/4 tw-h-96 tw-relative tw-mb-2">' +
+          '<div class="tw-aspect-3/4 tw-w-full tw-relative tw-mb-2">' +
           (image
             ? '<img src="' + escapeHtml(image) + '" loading="lazy" alt="' + escapeHtml(product.title) + '" class="tw-w-full tw-object-contain tw-aspect-3/4">'
             : '') +
@@ -137,7 +173,7 @@
 
       fetch(
         window.Shopify.routes.root +
-          'recommendations/products.json?product_id={{ product.id }}&intent=related&limit=4'
+          'recommendations/products.json?product_id={{ product.id }}&intent=related&limit=10'
       )
         .then(function (response) { return response.json(); })
         .then(function (data) {
