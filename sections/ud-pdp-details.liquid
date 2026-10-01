@@ -37,6 +37,17 @@
     text-decoration: underline;
   }
 
+  /* Main image zoom trigger */
+  .pdp-zoom-trigger {
+    cursor: zoom-in;
+  }
+
+  .pdp-zoom-trigger:focus-visible,
+  .image-modal-close:focus-visible {
+    outline: 2px solid #313558;
+    outline-offset: 2px;
+  }
+
   /* Image Modal Styles */
   .image-modal {
     display: none;
@@ -68,6 +79,9 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    border: 0;
+    padding: 0;
+    color: white;
     transition: background-color 0.2s;
     z-index: 10001;
   }
@@ -94,12 +108,11 @@
     cursor: default;
   }
 
+  /* Fill the viewport so small source images still enlarge past the page image */
   .modal-swiper-container .swiper-slide img,
   .modal-swiper-container .swiper-slide video {
-    max-width: 90vw;
-    max-height: 90vh;
-    width: auto;
-    height: auto;
+    width: 90vw;
+    height: 90vh;
     object-fit: contain;
   }
 
@@ -234,6 +247,14 @@
       },
       clickingTab(id) {
         this.clickedTab = id;
+      },
+      goToSlide(index) {
+        window.goToSlide(index);
+      },
+      openZoom(event) {
+        const trigger = event.target.closest('[data-zoom-index]');
+        if (!trigger) return;
+        window.openImageModal(Number(trigger.dataset.zoomIndex), trigger);
       },
       async addToCart() {
         this.addingToCart = true;
@@ -430,7 +451,8 @@
       }
 
       modalSwiper = new Swiper('.modal-swiper-container', {
-        loop: true,
+        // Loop mode needs more than one slide, and single-image products hide the arrows
+        loop: newSlideCount > 1,
         spaceBetween: 10,
         slidesPerView: 1,
         navigation: {
@@ -458,31 +480,74 @@
   }
 
   // Image Modal Functions
-  function openImageModal(slideIndex) {
-    const modal = document.getElementById('imageModal-{{ section.id }}');
+  var imageModalReturnFocus = null;
+
+  function getImageModal() {
+    return document.getElementById('imageModal-{{ section.id }}');
+  }
+
+  function openImageModal(slideIndex, returnFocusTo) {
+    const modal = getImageModal();
+    if (!modal || !modal.querySelector('.swiper-slide')) return;
+    imageModalReturnFocus = returnFocusTo || document.activeElement;
     modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
 
-    // Go to the clicked slide - ensure modalSwiper is initialized
-    if (slideIndex !== undefined && typeof modalSwiper !== 'undefined' && modalSwiper) {
-      // Use setTimeout to ensure swiper is ready
-      setTimeout(() => {
-        if (modalSwiper && modalSwiper.slideTo) {
-          modalSwiper.slideTo(slideIndex);
-        }
-      }, 100);
+    // The modal swiper was built while hidden, so measure it now that it is visible
+    if (modalSwiper && modalSwiper.update) {
+      modalSwiper.update();
+      const index = Number(slideIndex) || 0;
+      if (modalSwiper.params.loop) {
+        modalSwiper.slideToLoop(index, 0);
+      } else {
+        modalSwiper.slideTo(index, 0);
+      }
     }
+    modal.querySelector('.image-modal-close').focus();
   }
 
   function closeImageModal() {
-    const modal = document.getElementById('imageModal-{{ section.id }}');
+    const modal = getImageModal();
+    if (!modal || !modal.classList.contains('active')) return;
     modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    modal.querySelectorAll('video').forEach((video) => video.pause());
+    if (imageModalReturnFocus && imageModalReturnFocus.focus) {
+      imageModalReturnFocus.focus();
+    }
+    imageModalReturnFocus = null;
   }
 
-  // Close modal on escape key
+  // Escape closes the modal, and Tab stays inside it while open
   document.addEventListener('keydown', function(e) {
+    const modal = getImageModal();
+    if (!modal || !modal.classList.contains('active')) return;
     if (e.key === 'Escape') {
+      closeImageModal();
+    } else if (e.key === 'Tab') {
+      const focusable = Array.from(
+        modal.querySelectorAll('button, [tabindex="0"], video[controls]')
+      ).filter((el) => el.offsetParent !== null && !el.classList.contains('swiper-button-lock'));
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && (document.activeElement === first || !modal.contains(document.activeElement))) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  });
+
+  // Clicking the backdrop around the image closes the modal
+  document.addEventListener('click', function(e) {
+    const modal = getImageModal();
+    if (!modal || !modal.classList.contains('active')) return;
+    if (e.target === modal || e.target.classList.contains('swiper-slide')) {
       closeImageModal();
     }
   });
