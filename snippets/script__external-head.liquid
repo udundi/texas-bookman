@@ -52,6 +52,15 @@
 
   // Shared event bus used across all Vue instances for cross-component communication
   Vue.prototype.bus = new Vue();
+
+  // Rounds a quantity up to one a B2B catalog quantity rule accepts: at least
+  // `min` and a multiple of `step` (Shopify requires min to be a multiple of step).
+  window.validQuantity = function (qty, min, step) {
+    min = min || 1;
+    step = step || 1;
+    return Math.ceil(Math.max(parseInt(qty, 10) || 0, min) / step) * step;
+  };
+  Vue.prototype.validQuantity = window.validQuantity;
 </script>
 <script src="{{ 'vue-tools.js' | asset_url }}"></script>
 {% render 'vue-mix-global' %}

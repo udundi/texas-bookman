@@ -170,6 +170,8 @@
 <!-- Setting Price variables for vue -->
 {% assign product_price = product.selected_or_first_available_variant.price %}
 {% assign sitewide_discount = settings.sitewide_sale | default: false %}
+{% assign min_qty = product.selected_or_first_available_variant.quantity_rule.min | default: 1 %}
+{% assign qty_step = product.selected_or_first_available_variant.quantity_rule.increment | default: 1 %}
 
 <!-- Vue Main script -->
 <script>
@@ -178,7 +180,9 @@
     mixins: [global, pdpdata],
     data() {
       return {
-        quantity: 1,
+        quantity: {{ min_qty }},
+        minQty: {{ min_qty }},
+        qtyStep: {{ qty_step }},
         currentVariantId: '{{ product.selected_or_first_available_variant.id }}',
         productPrice: '{{ product_price }}',
         openedBlocks: {% if section.blocks.size > 0 %}[String('block-{{ section.blocks[0].id }}').slice(0, -2)]{% else %}[]{% endif %},
@@ -197,7 +201,8 @@
         const params = new URLSearchParams(window.location.search);
         const urlVariant = params.get('variant');
         let variantIdToAdd = Number(this.currentVariantId || urlVariant || '{{ product.selected_or_first_available_variant.id }}');
-        let finalQuantity = this.quantity || 1;
+        let finalQuantity = this.validQuantity(this.quantity, this.minQty, this.qtyStep);
+        this.quantity = finalQuantity;
         let mainItem = {
           quantity: finalQuantity,
           id: variantIdToAdd,

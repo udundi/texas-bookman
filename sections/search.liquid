@@ -113,6 +113,8 @@
             {% for item in search.results %}
               {% if item.object_type == 'product' %}
                 {% assign product = item %}
+                {% assign min_qty = product.selected_or_first_available_variant.quantity_rule.min | default: 1 %}
+                {% assign qty_step = product.selected_or_first_available_variant.quantity_rule.increment | default: 1 %}
                 <div class="tw-flex tw-flex-col tw-justify-between tw-p-4 tw-border tw-border-brand-grey tw-bg-white tw-mr-[-1px] tw-mb-[-1px] tw-h-full">
                   <a href="{{ product.url }}">
                     <div class="tw-w-full tw-aspect-square tw-object-contain tw-mb-2 md:tw-mb-3 tw-relative">
@@ -179,13 +181,14 @@
                     {% else %}
                       <div class="tw-flex tw-gap-2 tw-w-full tw-mt-auto">
                         <div class="tw-flex tw-items-center tw-gap-2 tw-w-full">
-                          <span class="tw-text-12 tw-font-semibold">QTY:</span>
+                          <span class="tw-text-12 tw-font-semibold tw-whitespace-nowrap">QTY{% if min_qty > 1 %} (Min {{ min_qty }}{% if qty_step > 1 %}, x{{ qty_step }}{% endif %}){% elsif qty_step > 1 %} (x{{ qty_step }}){% endif %}:</span>
                           <input
                             type="number"
-                            min="1"
-                            placeholder="1"
-                            :value="getQty({{ product.selected_or_first_available_variant.id }})"
+                            min="{{ min_qty }}"
+                            step="{{ qty_step }}"                            placeholder="{{ min_qty }}"
+                            :value="getQty({{ product.selected_or_first_available_variant.id }}, {{ min_qty }})"
                             @input="setQty({{ product.selected_or_first_available_variant.id }}, $event.target.value)"
+                            @change="clampQty({{ product.selected_or_first_available_variant.id }}, {{ min_qty }}, {{ qty_step }})"
                             class="tw-w-full tw-text-center tw-leading-none tw-py-0.5 tw-border tw-border-brand-grey tw-rounded tw-h-full tw-text-12 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
                             :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                           >
@@ -193,7 +196,7 @@
                         <button
                           type="button"
                           class="tw-bg-brand-secondary tw-w-full tw-cursor-pointer tw-text-12 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4 tw-py-2 tw-font-semibold tw-font-montserrat hover:tw-brightness-95 tw-whitespace-nowrap tw-items-center tw-uppercase"
-                          @click="addToCart({{ product.selected_or_first_available_variant.id }})"
+                          @click="addToCart({{ product.selected_or_first_available_variant.id }}, {{ min_qty }}, {{ qty_step }})"
                           :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                         >
                           [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : 'Add to Cart' ]]
@@ -228,6 +231,8 @@
             {% for item in search.results %}
               {% if item.object_type == 'product' %}
                 {% assign product = item %}
+                {% assign min_qty = product.selected_or_first_available_variant.quantity_rule.min | default: 1 %}
+                {% assign qty_step = product.selected_or_first_available_variant.quantity_rule.increment | default: 1 %}
                 <div class="tw-flex tw-flex-row tw-items-center tw-border tw-mb-[-1px] tw-border-brand-grey tw-bg-white tw-p-4 tw-gap-4 tw-w-full">
                   <a href="{{ product.url }}" class="tw-flex-shrink-0">
                     <div class="tw-h-36 tw-object-cover tw-aspect-5/6 tw-relative">
@@ -296,13 +301,14 @@
                           {% else %}
                             <div class="tw-flex tw-items-center tw-gap-2 tw-h-full">
                               <div class="tw-flex tw-items-center tw-gap-1">
-                                <label class="tw-text-14 tw-font-semibold">QTY:</label>
+                                <label class="tw-text-14 tw-font-semibold tw-whitespace-nowrap">QTY{% if min_qty > 1 %} (Min {{ min_qty }}{% if qty_step > 1 %}, x{{ qty_step }}{% endif %}){% elsif qty_step > 1 %} (x{{ qty_step }}){% endif %}:</label>
                                 <input
                                   type="number"
-                                  min="1"
-                                  placeholder="1"
-                                  :value="getQty({{ product.selected_or_first_available_variant.id }})"
+                                  min="{{ min_qty }}"
+                                  step="{{ qty_step }}"                                  placeholder="{{ min_qty }}"
+                                  :value="getQty({{ product.selected_or_first_available_variant.id }}, {{ min_qty }})"
                                   @input="setQty({{ product.selected_or_first_available_variant.id }}, $event.target.value)"
+                                  @change="clampQty({{ product.selected_or_first_available_variant.id }}, {{ min_qty }}, {{ qty_step }})"
                                   class="tw-w-14 tw-text-center tw-leading-none tw-py-0.5 tw-px-1 tw-border tw-border-brand-grey tw-rounded tw-text-14 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
                                   :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                                 >
@@ -310,7 +316,7 @@
                               <button
                                 type="button"
                                 class="tw-bg-brand-secondary tw-cursor-pointer tw-text-11 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-5 tw-py-2 tw-font-semibold tw-font-montserrat hover:tw-brightness-95 tw-whitespace-nowrap tw-items-center tw-uppercase"
-                                @click="addToCart({{ product.selected_or_first_available_variant.id }})"
+                                @click="addToCart({{ product.selected_or_first_available_variant.id }}, {{ min_qty }}, {{ qty_step }})"
                                 :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                               >
                                 [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : 'Add to Cart' ]]
@@ -413,17 +419,21 @@
         this.viewMode = mode;
         localStorage.setItem('productViewMode', mode);
       },
-      getQty(variantId) {
-        return this.quantities[variantId] || 1;
+      getQty(variantId, minQty = 1) {
+        return this.quantities[variantId] || minQty;
       },
       setQty(variantId, val) {
-        this.$set(this.quantities, variantId, parseInt(val, 10) || 1);
+        this.$set(this.quantities, variantId, parseInt(val, 10) || 0);
+      },
+      clampQty(variantId, minQty, qtyStep) {
+        this.$set(this.quantities, variantId, this.validQuantity(this.quantities[variantId], minQty, qtyStep));
       },
       isAdding(variantId) {
         return !!this.addingToCartMap[variantId];
       },
-      addToCart(variantId) {
-        const qty = this.getQty(variantId);
+      addToCart(variantId, minQty = 1, qtyStep = 1) {
+        const qty = this.validQuantity(this.getQty(variantId, minQty), minQty, qtyStep);
+        this.$set(this.quantities, variantId, qty);
         this.$set(this.addingToCartMap, variantId, true);
         fetch('/cart/add.js', {
           method: 'POST',

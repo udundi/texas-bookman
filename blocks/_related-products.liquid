@@ -38,8 +38,16 @@
           .replace(/\{\{\s*amount_with_comma_separator\s*\}\}/g, amount.replace('.', ','));
       }
 
+      function quantityHint(minQty, qtyStep) {
+        if (minQty > 1) return ' (Min ' + minQty + (qtyStep > 1 ? ', x' + qtyStep : '') + ')';
+        return qtyStep > 1 ? ' (x' + qtyStep + ')' : '';
+      }
+
       function buildCard(product) {
         var variant = product.variants && product.variants[0];
+        var rule = (variant && variant.quantity_rule) || {};
+        var minQty = rule.min || 1;
+        var qtyStep = rule.increment || 1;
         var image = product.featured_image || (product.images && product.images[0] && product.images[0].src) || '';
         var priceHtml = '';
 
@@ -61,8 +69,8 @@
           actionHtml =
             '<div class="tw-flex tw-gap-2 tw-items-stretch tw-w-full tw-h-full">' +
             '<div class="tw-flex tw-items-center tw-gap-2 tw-w-full tw-h-full tw-text-brand-greyer">' +
-            '<span>QTY:</span>' +
-            '<input type="number" min="1" placeholder="1" value="1" class="tw-w-full tw-text-center tw-leading-none tw-py-1 tw-border tw-border-brand-grey tw-rounded tw-h-full tw-text-12 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none" data-quantity-input>' +
+            '<span class="tw-whitespace-nowrap">QTY' + quantityHint(minQty, qtyStep) + ':</span>' +
+            '<input type="number" min="' + minQty + '" step="' + qtyStep + '" placeholder="' + minQty + '" value="' + minQty + '" class="tw-w-full tw-text-center tw-leading-none tw-py-1 tw-border tw-border-brand-grey tw-rounded tw-h-full tw-text-12 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none" data-quantity-input>' +
             '</div>' +
             '<button type="button" class="tw-bg-brand-secondary tw-w-full tw-cursor-pointer tw-pointer-events-auto md:tw-text-12 tw-text-10 tw-uppercase tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center tw-py-2" data-variant-id="' +
             (variant ? variant.id : '') +
@@ -96,7 +104,8 @@
           button.addEventListener('click', function () {
             var variantId = button.getAttribute('data-variant-id');
             if (!variantId) return;
-            var quantity = parseInt(quantityInput.value, 10) || 1;
+            var quantity = validQuantity(quantityInput.value, minQty, qtyStep);
+            quantityInput.value = quantity;
             button.disabled = true;
             quantityInput.disabled = true;
             button.textContent = 'Adding...';

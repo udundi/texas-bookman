@@ -96,7 +96,8 @@
               <input
                 type="number"
                 :value="item.quantity"
-                min="0"
+                :min="minQty(item)"
+                :step="qtyStep(item)"
                 :disabled="isOutOfStock(item)"
                 class="tw-p-0.5 tw-px-2 tw-border tw-border-brand-grey tw-w-16 tw-text-center disabled:tw-bg-gray-100 disabled:tw-text-gray-400 [appearance:textfield] [&::-webkit-outer-spin-button]:tw-appearance-none [&::-webkit-inner-spin-button]:tw-appearance-none"
                 @input="onQtyInput(item, $event)"
@@ -104,6 +105,11 @@
               <button class="tw-size-4 tw-ml-4 tw-flex-shrink-0" @click="removeItem(item)" aria-label="Remove item">
                 {% render 'icon-trash' %}
               </button>
+            </div>
+            <div v-if="minQty(item) > 1 || qtyStep(item) > 1" class="tw-text-gray-600">
+              <span v-if="minQty(item) > 1">Minimum Required: [[ minQty(item) ]]</span>
+              <span v-if="minQty(item) > 1 && qtyStep(item) > 1">, multiples of [[ qtyStep(item) ]]</span>
+              <span v-else-if="qtyStep(item) > 1">Multiples of [[ qtyStep(item) ]]</span>
             </div>
             <!-- Prices -->
             <div
@@ -201,6 +207,11 @@
         updatingCart: false,
         debounceTimers: {},
         moneyFmt: {{ shop.money_format | json }},
+        quantityRules: {
+          {%- for item in cart.items -%}
+            {{ item.key | json }}: { min: {{ item.variant.quantity_rule.min | default: 1 }}, step: {{ item.variant.quantity_rule.increment | default: 1 }} }{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        },
       };
     },
     computed: {
@@ -228,11 +239,23 @@
           : this.formatMoney(allocation.amount);
         return `-${amountLabel} ${application.title} Applied`;
       },
+      minQty(item) {
+        return (this.quantityRules[item.key] || {}).min || 1;
+      },
+      qtyStep(item) {
+        return (this.quantityRules[item.key] || {}).step || 1;
+      },
       onQtyInput(item, event) {
-        const qty = parseInt(event.target.value, 10);
+        const input = event.target;
+        const qty = parseInt(input.value, 10);
         if (isNaN(qty) || qty < 0) return;
         clearTimeout(this.debounceTimers[item.key]);
-        this.debounceTimers[item.key] = setTimeout(() => this.updateQuantity(item, qty), 800);
+        this.debounceTimers[item.key] = setTimeout(() => {
+          // 0 still removes the line; anything else is rounded up to a valid quantity
+          const finalQty = qty > 0 ? this.validQuantity(qty, this.minQty(item), this.qtyStep(item)) : 0;
+          input.value = finalQty;
+          this.updateQuantity(item, finalQty);
+        }, 800);
       },
       updateQuantity(item, qty) {
         this.updatingCart = true;

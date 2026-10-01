@@ -21,17 +21,24 @@
       Sign in to shop
     </a>
   {% else %}
+    {% assign min_qty = product.selected_or_first_available_variant.quantity_rule.min | default: 1 %}
+    {% assign qty_step = product.selected_or_first_available_variant.quantity_rule.increment | default: 1 %}
     <label class="tw-font-montserrat tw-text-16 tw-font-semibold tw-text-offblack"
-      >QTY <span class="tw-font-normal">(Minimum Required {{  }})</span></label
-    >
+      >QTY
+      {%- if min_qty > 1 or qty_step > 1 %}
+        <span class="tw-font-normal">
+          {%- if min_qty > 1 %}(Minimum Required {{ min_qty }}{% if qty_step > 1 %}, multiples of {{ qty_step }}{% endif %}){% else %}(Multiples of {{ qty_step }}){% endif -%}
+        </span>
+      {%- endif -%}
+    </label>
     <div class="tw-flex tw-w-full tw-pb-2">
       <div class="tw-relative tw-flex tw-max-w-28 tw-items-center tw-rounded-[4px] tw-bg-brand-eggshell tw-border tw-border-brand-grey">
         <button
           type="button"
           id="decrement-button"
-          @click="quantity > 1 ? quantity-- : quantity"
-          :disabled="quantity <= 1"
-          :class="quantity <= 1 ? 'tw-cursor-not-allowed' : ''"
+          @click="quantity = validQuantity(quantity - qtyStep, minQty, qtyStep)"
+          :disabled="quantity <= minQty"
+          :class="quantity <= minQty ? 'tw-cursor-not-allowed' : ''"
           class="tw-bg-brand-bg-dark tw-rounded-[4px] tw-pl-4 tw-pr-2"
         >
           {% render 'icon-minus' %}
@@ -42,10 +49,12 @@
           id="quantity-input"
           aria-label="quantity"
           name="quantity"
-          min="1"
+          min="{{ min_qty }}"
+          step="{{ qty_step }}"
           max="100"
           @keydown="if (isNaN(parseInt(event.key)) && event.key != 'Backspace') { event.preventDefault(); }"
           @input="quantity < 1 ? quantity = 1 : quantity = quantity"
+          @change="quantity = validQuantity(quantity, minQty, qtyStep)"
           max="{{ product.selected_or_first_available_variant.inventory_quantity }}"
           v-model="quantity"
           class="tw-text-sm tw-block tw-h-10 tw-w-full tw-py-1 tw-text-center tw-text-offblack"
@@ -55,7 +64,7 @@
           type="button"
           id="increment-button"
           aria-label="increase quantity by 1"
-          @click="quantity++"
+          @click="quantity = validQuantity(Number(quantity) + qtyStep, minQty, qtyStep)"
           class="tw-bg-brand-bg-dark tw-rounded-[4px] tw-pl-2 tw-pr-4"
         >
           {% render 'icon-plus' %}

@@ -464,6 +464,8 @@
                     {% endif %}
                   {% endfor %}
                 {% endif %}
+                {% assign min_qty = product.selected_or_first_available_variant.quantity_rule.min | default: 1 %}
+                {% assign qty_step = product.selected_or_first_available_variant.quantity_rule.increment | default: 1 %}
 
                 <div
                   data-product-grid-item
@@ -571,13 +573,14 @@
                         {% if section.settings.button_type == 'quick-add' %}
                           <div class="tw-flex tw-gap-2 tw-w-full tw-mt-auto">
                             <div class="tw-flex tw-items-center tw-gap-2 tw-w-full">
-                              <span>QTY:</span>
+                              <span class="tw-whitespace-nowrap">QTY{% if min_qty > 1 %} (Min {{ min_qty }}{% if qty_step > 1 %}, x{{ qty_step }}{% endif %}){% elsif qty_step > 1 %} (x{{ qty_step }}){% endif %}:</span>
                               <input
                                 type="number"
-                                min="1"
-                                placeholder="1"
-                                :value="getQty({{ product.selected_or_first_available_variant.id }})"
+                                min="{{ min_qty }}"
+                                step="{{ qty_step }}"                                placeholder="{{ min_qty }}"
+                                :value="getQty({{ product.selected_or_first_available_variant.id }}, {{ min_qty }})"
                                 @input="setQty({{ product.selected_or_first_available_variant.id }}, $event.target.value)"
+                                @change="clampQty({{ product.selected_or_first_available_variant.id }}, {{ min_qty }}, {{ qty_step }})"
                                 class="tw-w-full tw-text-center tw-leading-none tw-py-0.5 tw-border tw-border-brand-grey tw-rounded tw-h-full tw-text-12 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
                                 :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                               >
@@ -587,7 +590,8 @@
                               data-variant-id="{{ product.selected_or_first_available_variant.id }}"
                               data-tags="{{ product.tags | json }}"
                               data-isbn="{{ product.metafields.facts.isbn }}"
-                              class="tw-bg-brand-secondary tw-w-full tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center"
+                              data-min-qty="{{ min_qty }}"
+                              data-qty-step="{{ qty_step }}"                              class="tw-bg-brand-secondary tw-w-full tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center"
                               @click="addToCart({{ product.selected_or_first_available_variant.id }}, $event.currentTarget)"
                               :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                             >
@@ -710,13 +714,14 @@
                               {% if section.settings.button_type == 'quick-add' %}
                                 <div class="tw-flex tw-items-center tw-gap-2 tw-h-full">
                                   <div class="tw-flex tw-items-center tw-gap-1">
-                                    <label class="tw-text-14 tw-font-semibold">QTY:</label>
+                                    <label class="tw-text-14 tw-font-semibold tw-whitespace-nowrap">QTY{% if min_qty > 1 %} (Min {{ min_qty }}{% if qty_step > 1 %}, x{{ qty_step }}{% endif %}){% elsif qty_step > 1 %} (x{{ qty_step }}){% endif %}:</label>
                                     <input
                                       type="number"
-                                      min="1"
-                                      placeholder="1"
-                                      :value="getQty({{ product.selected_or_first_available_variant.id }})"
+                                      min="{{ min_qty }}"
+                                      step="{{ qty_step }}"                                      placeholder="{{ min_qty }}"
+                                      :value="getQty({{ product.selected_or_first_available_variant.id }}, {{ min_qty }})"
                                       @input="setQty({{ product.selected_or_first_available_variant.id }}, $event.target.value)"
+                                      @change="clampQty({{ product.selected_or_first_available_variant.id }}, {{ min_qty }}, {{ qty_step }})"
                                       class="tw-w-14 tw-text-center tw-leading-none tw-py-0.5 tw-px-1 tw-border tw-border-brand-grey tw-rounded tw-text-14 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
                                       :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                                     >
@@ -726,7 +731,8 @@
                                     data-variant-id="{{ product.selected_or_first_available_variant.id }}"
                                     data-tags="{{ product.tags | json }}"
                                     data-isbn="{{ product.metafields.facts.isbn }}"
-                                    class="tw-bg-brand-secondary tw-cursor-pointer tw-pointer-events-auto tw-text-10 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-6 tw-py-1.5 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-sans hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center"
+                                    data-min-qty="{{ min_qty }}"
+                                    data-qty-step="{{ qty_step }}"                                    class="tw-bg-brand-secondary tw-cursor-pointer tw-pointer-events-auto tw-text-10 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-6 tw-py-1.5 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-sans hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center"
                                     @click="addToCart({{ product.selected_or_first_available_variant.id }}, $event.currentTarget)"
                                     :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                                   >
@@ -931,17 +937,22 @@
         this.viewMode = mode;
         localStorage.setItem('productViewMode', mode);
       },
-      getQty(variantId) {
-        return this.quantities[variantId] || 1;
+      getQty(variantId, minQty = 1) {
+        return this.quantities[variantId] || minQty;
       },
       setQty(variantId, val) {
-        this.$set(this.quantities, variantId, parseInt(val, 10) || 1);
+        this.$set(this.quantities, variantId, parseInt(val, 10) || 0);
+      },
+      clampQty(variantId, minQty, qtyStep) {
+        this.$set(this.quantities, variantId, this.validQuantity(this.quantities[variantId], minQty, qtyStep));
       },
       isAdding(variantId) {
         return !!this.addingToCartMap[variantId];
       },
       addToCart(variantId, btn) {
-        const qty = this.getQty(variantId);
+        const minQty = parseInt(btn.dataset.minQty, 10) || 1;
+        const qty = this.validQuantity(this.getQty(variantId, minQty), minQty, parseInt(btn.dataset.qtyStep, 10));
+        this.$set(this.quantities, variantId, qty);
         const tags = JSON.parse(btn.dataset.tags || '[]');
         const isbn = btn.dataset.isbn || null;
         this.$set(this.addingToCartMap, variantId, true);

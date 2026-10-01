@@ -1,5 +1,7 @@
 {% assign product_id = section.id | append: '-' | append: cur_product.handle %}
 {% assign product_atc_id = product_id | append: '-atc' %}
+{% assign min_qty = cur_product.selected_or_first_available_variant.quantity_rule.min | default: 1 %}
+{% assign qty_step = cur_product.selected_or_first_available_variant.quantity_rule.increment | default: 1 %}
 
 <div
   id="{{ product_id }}"
@@ -84,12 +86,14 @@
       {% if show_button_type == 'quick-add' %}
         <div class="tw-flex tw-gap-2 tw-items-stretch tw-w-full tw-h-full">
           <div class="tw-flex tw-items-center tw-gap-2 tw-w-full tw-h-full tw-text-brand-greyer">
-            <span>QTY:</span>
+            <span class="tw-whitespace-nowrap">QTY{% if min_qty > 1 %} (Min {{ min_qty }}{% if qty_step > 1 %}, x{{ qty_step }}{% endif %}){% elsif qty_step > 1 %} (x{{ qty_step }}){% endif %}:</span>
             <input
               type="number"
-              min="1"
-              placeholder="1"
+              min="{{ min_qty }}"
+              step="{{ qty_step }}"
+              placeholder="{{ min_qty }}"
               v-model.number="quantity"
+              @change="quantity = validQuantity(quantity, {{ min_qty }}, {{ qty_step }})"
               class="tw-w-full tw-text-center tw-leading-none tw-py-0.5 tw-border tw-border-brand-grey tw-rounded tw-h-full tw-text-12 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
               :disabled="addingToCart"
             >
@@ -124,7 +128,7 @@
       return {
         addingToCart: false,
         productPrice: '{{ cur_product.price }}',
-        quantity: 1,
+        quantity: {{ min_qty }},
       };
     },
     mounted() {
@@ -133,6 +137,7 @@
     methods: {
       addToCart() {
         this.addingToCart = true;
+        this.quantity = this.validQuantity(this.quantity, {{ min_qty }}, {{ qty_step }});
         let items = [
           {\
             quantity: this.quantity,
