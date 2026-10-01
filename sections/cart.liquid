@@ -245,8 +245,14 @@
         })
           .then((r) => r.json())
           .then((updatedCart) => {
-            item.quantity = qty;
-            item.line_price = item.price * qty;
+            // Take the whole line from the response so original_line_price
+            // stays in step with line_price and no stale strike-through shows.
+            const updatedItem = updatedCart.items.find((i) => i.key === item.key);
+            if (updatedItem) {
+              Object.assign(item, updatedItem);
+            } else {
+              this.cartItems = this.cartItems.filter((i) => i.key !== item.key);
+            }
             this.subtotal = updatedCart.items_subtotal_price;
             this.total = updatedCart.total_price;
             this.totalSavings = updatedCart.total_discount;
