@@ -121,7 +121,7 @@
         "type": "textarea",
         "id": "seo_default_description",
         "label": "Default meta description",
-        "default": "Texas Bookman sells clean, high-quality wholesale books and sidelines in every category at a fraction of the publisher's price, with low minimums and fast fulfillment."
+        "default": "Texas Bookman offers wholesale books and sidelines in every category at a fraction of the publisher's price, with low minimums and fast fulfillment."
       },
       {
         "type": "image_picker",
