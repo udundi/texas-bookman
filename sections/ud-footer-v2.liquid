@@ -26,7 +26,11 @@
               rel="home"
             >
               {% assign footer_logo_alt = section.settings.logo.alt | default: shop.name %}
-              {{ section.settings.logo | image_url: width: 600 | image_tag: alt: footer_logo_alt, class: 'tw-w-36 tw-h-auto tw-object-contain' }}
+              {{
+                section.settings.logo
+                | image_url: width: 600
+                | image_tag: alt: footer_logo_alt, class: 'tw-w-36 tw-h-auto tw-object-contain'
+              }}
             </a>
           {% endif %}
         </div>
@@ -34,13 +38,13 @@
         <!-- Social Links Container -->
         <div class="tw-flex tw-gap-3 tw-w-full tw-justify-center">
           <!-- X Logo -->
-          <a href="/">
+          <a href="https://x.com/txbookman">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path d="M17.6873 3.06299L12.6913 8.77399L8.3713 3.06299H2.1123L9.5893 12.839L2.5033 20.938H5.5373L11.0063 14.688L15.7863 20.938H21.8883L14.0943 10.634L20.7193 3.06299H17.6873ZM16.6233 19.123L5.6543 4.78199H7.4573L18.3033 19.122L16.6233 19.123Z" fill="#312F30"/>
             </svg>
           </a>
           <!-- Facebook Logo -->
-          <a href="/">
+          <a href="http://www.facebook.com/txbookman">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
               <g clip-path="url(#clip0_242_1580)">
               <path d="M22.0028 11.0673C22.0028 4.95404 17.0775 -0.00146484 11.0027 -0.00146484C4.92525 -8.98436e-05 0 4.95404 0 11.0687C0 16.592 4.02325 21.1708 9.28125 22.0013V14.2669H6.49V11.0687H9.284V8.62804C9.284 5.85466 10.9271 4.32291 13.4392 4.32291C14.6438 4.32291 15.9019 4.53878 15.9019 4.53878V7.26129H14.5145C13.1491 7.26129 12.7229 8.11516 12.7229 8.99104V11.0673H15.7726L15.2859 14.2655H12.7215V21.9999C17.9795 21.1694 22.0028 16.5907 22.0028 11.0673Z" fill="#312F30"/>
