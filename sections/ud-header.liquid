@@ -40,7 +40,8 @@
     {% render 'ud-search-v2' %}
   </div>
 {% endcapture %}
-{% capture region_dropdown %}  
+{% assign country_form_id = 'CountryForm-' | append: section.id | append: '-__PLACEMENT__' %}
+{% capture region_dropdown %}
   <button
     type="button"
     class="tw-flex tw-items-center tw-gap-1.5 tw-cursor-pointer"
@@ -73,7 +74,7 @@
     class="tw-absolute md:tw-right-0 max-md:tw-left-0 tw-top-full tw-z-[20] tw-mt-1 tw-max-h-72 tw-overflow-y-auto tw-bg-white tw-border tw-border-brand-grey tw-shadow-lg tw-min-w-[210px]"
     @click.stop
   >
-    {% form 'localization', id: 'CountryForm-{{ section.id }}' %}
+    {% form 'localization', id: country_form_id %}
       {% for country in localization.available_countries %}
         <button
           type="submit"
@@ -196,7 +197,7 @@
       <div class="tw-my-auto tw-flex tw-h-fit tw-items-end md:tw-gap-4 tw-gap-2 tw-pl-2 lg:tw-gap-6" role="search">
         <!-- Desktop Region / Market Selector -->
         <div class="tw-relative tw-my-auto max-md:tw-hidden">
-          {{ region_dropdown }}
+          {{ region_dropdown | replace: '__PLACEMENT__', 'desktop' }}
         </div>
 
         <!-- Account Icon -->

@@ -3,6 +3,8 @@
     <nav
       v-cloak
       @mouseleave="handleMouseLeave"
+      @keydown.esc="handleEscape"
+      @focusout="handleFocusOut"
       role="navigation"
       aria-label="Main Menu"
       class="tw-w-full md:tw-h-full"
@@ -107,6 +109,30 @@
       handleMouseLeave() {
         if (window.innerWidth < 768) return;
         this.showMobile = false;
+        this.selectedTab = '';
+        this.selectedSubTab = '';
+      },
+
+      // Escape closes the open dropdown and returns focus to its tab; with no dropdown open it closes the mobile nav
+      handleEscape() {
+        if (this.selectedTab) {
+          const tabId = this.selectedTab;
+          this.selectedTab = '';
+          this.selectedSubTab = '';
+          const navBar = document.getElementById('nav-bar-{{ section.id }}');
+          const tabButton = navBar ? navBar.querySelector(`[data-tab-button="${tabId}"]`) : null;
+          if (tabButton && tabButton.offsetParent) tabButton.focus();
+        } else if (this.showMobile) {
+          this.closeMobileNav();
+        }
+      },
+
+      // Closes the desktop dropdown once keyboard focus moves out of its tab group (to another tab or out of the nav)
+      handleFocusOut(event) {
+        if (window.innerWidth < 768 || !this.selectedTab || !event.relatedTarget) return;
+        const dropdown = event.currentTarget.querySelector(`.nav-dropdown[data-tab-id="${this.selectedTab}"]`);
+        const tabGroup = dropdown ? dropdown.parentElement : null;
+        if (tabGroup && tabGroup.contains(event.relatedTarget)) return;
         this.selectedTab = '';
         this.selectedSubTab = '';
       },
