@@ -23,33 +23,37 @@
       endfor
     endunless
   -%}
-  {%- if filter_found -%}
-    {%- liquid
+  {%- capture child_blocks -%}{%- content_for 'blocks' -%}{%- endcapture -%}
+  {%- liquid
+    # Nested gates and filters mark themselves active so this gate stays visible and opens
+    assign child_blocks = child_blocks | strip
+    assign has_active_child = false
+    if child_blocks contains 'data-filter-active'
+      assign has_active_child = true
+    endif
+
+    assign show_gate = false
+    assign gate_active = false
+    if filter_found
       # Hide subcategories with no results, unless already selected.
-      assign show_gate = false
       if gate_value
-        if gate_value.active or gate_value.count > 0
+        assign gate_active = gate_value.active
+        if gate_value.active or gate_value.count > 0 or has_active_child
           assign show_gate = true
         endif
+        if gate_value.active
+          assign gate_href = gate_value.url_to_remove
+        else
+          assign gate_href = gate_value.url_to_add
+        endif
+        assign gate_count = gate_value.count
       endif
-    -%}
-    {%- if show_gate -%}
-      <div class="tw-p-1">
-        {%- if gate_value.active -%}
-          {%- assign gate_href = gate_value.url_to_remove -%}
-        {%- else -%}
-          {%- assign gate_href = gate_value.url_to_add -%}
-        {%- endif -%}
-        {% render 'collection-filter-checkbox',
-          href: gate_href,
-          checked: gate_value.active,
-          label: block.settings.title,
-          count: gate_value.count
-        %}
-      </div>
-    {%- endif -%}
-  {%- elsif collection == gate or gate.all_products_count > 0 -%}
-    <div class="tw-p-1">
+    elsif collection == gate or gate.all_products_count > 0 or has_active_child
+      assign show_gate = true
+    endif
+  -%}
+  {%- if show_gate -%}
+    {%- unless filter_found -%}
       {%- liquid
         # theme-check-disable
         capture content_for_query_string
@@ -72,9 +76,8 @@
       %}
       {% assign query_params = get_full_url | replace: '?', '' | replace: '_fd=0&pb=0&', '' | split: '&' %}
       {%- liquid
-        assign is_current_gate = false
         if collection == gate
-          assign is_current_gate = true
+          assign gate_active = true
           assign gate_href = routes.all_products_collection_url
           assign gate_count = collection.all_products_count
         else
@@ -86,12 +89,49 @@
           assign gate_href = gate_href | append: '?' | append: joined_params
         endif
       -%}
-      {% render 'collection-filter-checkbox',
-        href: gate_href,
-        checked: is_current_gate,
-        label: block.settings.title,
-        count: gate_count
-      %}
+    {%- endunless -%}
+    {%- liquid
+      assign children_collapsed = true
+      if gate_active or has_active_child
+        assign children_collapsed = false
+      endif
+      assign gate_label = block.settings.title | default: gate.title
+    -%}
+    <div class="tw-p-1">
+      <div class="tw-flex tw-w-full tw-flex-col"{% if gate_active %} data-filter-active{% endif %}>
+        <div class="tw-flex tw-w-full tw-items-center tw-gap-1">
+          {% render 'collection-filter-checkbox',
+            href: gate_href,
+            checked: gate_active,
+            label: gate_label,
+            count: gate_count
+          %}
+          {%- if child_blocks != blank -%}
+            <button
+              type="button"
+              class="tw-flex-shrink-0 tw-fill-offblack tw-size-3 tw-cursor-pointer tw-bg-transparent tw-border-0 tw-p-0 tw-m-0"
+              aria-label="Show subcategories of {{ gate_label | escape }}"
+              @click="toggleFilter('{{ block.id }}', {{ children_collapsed }})"
+            >
+              <div
+                class="tw-fill-offblack tw-size-3"
+                v-if="isFilterOpen('{{ block.id }}', {{ children_collapsed }})"
+              >
+                {% render 'icon-arrow-up' %}
+              </div>
+              <div v-else class="tw-fill-offblack tw-size-3">{% render 'icon-arrow-down' %}</div>
+            </button>
+          {%- endif -%}
+        </div>
+        {%- if child_blocks != blank -%}
+          <div
+            class="tw-pl-4 tw-pt-1 tw-flex tw-flex-col tw-gap-[1px]"
+            v-show="isFilterOpen('{{ block.id }}', {{ children_collapsed }})"
+          >
+            {{ child_blocks }}
+          </div>
+        {%- endif -%}
+      </div>
     </div>
   {%- endif -%}
 {%- endif -%}
@@ -124,6 +164,14 @@
       "label": "Filter value",
       "info": "Defaults to the linked collection's title.",
       "placeholder": "Art"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "_collection-gate"
+    },
+    {
+      "type": "_collection-filter"
     }
   ],
   "presets": [

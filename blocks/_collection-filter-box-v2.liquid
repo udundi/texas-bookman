@@ -1,35 +1,42 @@
 {% capture blocks %}  
   {% content_for 'blocks' %}
 {% endcapture %}
+{%- comment -%} Hide the group when every entry in it hid itself; open it when it holds the active filter. {%- endcomment -%}
+{%- assign blocks = blocks | strip -%}
+{%- assign box_collapsed = block.settings.collapsed | default: false -%}
+{%- if blocks contains 'data-filter-active' -%}
+  {%- assign box_collapsed = false -%}
+{%- endif -%}
+{%- if blocks != blank -%}
 <div
   class="block-{{ block.id }} tw-py-1 {% if block.settings.nested %}tw-pl-6{% endif %}"
   {% if block.settings.nested %}
-    :class="{ ' tw-pt-1 tw-border-l-2 tw-border-brand-grey': isFilterOpen('{{ block.id }}', {{ block.settings.collapsed | default: false }}) }"
+    :class="{ ' tw-pt-1 tw-border-l-2 tw-border-brand-grey': isFilterOpen('{{ block.id }}', {{ box_collapsed }}) }"
   {% endif %}
 >
   {% if block.settings.collapsible %}
     <button
       type="button"
       class="tw-flex tw-w-full tw-justify-between tw-items-middle tw-cursor-pointer tw-bg-transparent tw-border-0 tw-p-0 tw-text-left"
-      @click="toggleFilter('{{ block.id }}', {{ block.settings.collapsed | default: false }})"
+      @click="toggleFilter('{{ block.id }}', {{ box_collapsed }})"
     >
       <div
         class="tw-my-auto tw-font-brand-header tw-text-offblack tw-text-14 tw-leading-tight{% unless block.settings.nested %} tw-font-semibold{% endunless %}"
-        :class="{ 'tw-font-semibold': isFilterOpen('{{ block.id }}', {{ block.settings.collapsed | default: false }}) }"
+        :class="{ 'tw-font-semibold': isFilterOpen('{{ block.id }}', {{ box_collapsed }}) }"
       >
         {{ block.settings.title | default: 'Filter Section' }}
       </div>
       <div
         class="tw-fill-offblack tw-size-3"
         v-cloak
-        v-if="isFilterOpen('{{ block.id }}', {{ block.settings.collapsed | default: false }})"
+        v-if="isFilterOpen('{{ block.id }}', {{ box_collapsed }})"
       >
         {% render 'icon-arrow-up' %}
       </div>
       <div v-else class="tw-fill-offblack tw-size-3">{% render 'icon-arrow-down' %}</div>
     </button>
     <div
-      v-show="isFilterOpen('{{ block.id }}', {{ block.settings.collapsed | default: false }})"
+      v-show="isFilterOpen('{{ block.id }}', {{ box_collapsed }})"
       class="tw-flex tw-flex-col tw-pt-2 tw-justify-start tw-gap-[1px]"
     >
       {{ blocks }}
@@ -47,6 +54,7 @@
     </div>
   {% endif %}
 </div>
+{%- endif -%}
 
 {% schema %}
 {
