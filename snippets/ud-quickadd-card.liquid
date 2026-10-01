@@ -3,6 +3,7 @@
 {% assign min_qty = cur_product.selected_or_first_available_variant.quantity_rule.min | default: 1 %}
 {% assign qty_step = cur_product.selected_or_first_available_variant.quantity_rule.increment | default: 1 %}
 {% assign qty_max = cur_product.selected_or_first_available_variant.quantity_rule.max | default: 'Infinity' %}
+{% assign isbn = cur_product.metafields.facts.isbn | default: cur_product.metafields.custom.isbn %}
 
 <div
   id="{{ product_id }}"
@@ -55,9 +56,9 @@
           </h3>
         {% endif %}
         <!-- ISBN -->
-        {% if cur_product.metafields.facts.isbn != blank %}
+        {% if isbn != blank %}
           <h3 class="tw-font-semibold tw-text-14 tw-text-brand-greyer/50 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
-            ISBN: {{ cur_product.metafields.facts.isbn }}
+            ISBN: {{ isbn }}
           </h3>
         {% endif %}
         <h3 class="tw-font-semibold tw-text-14 tw-text-brand-greyer tw-w-full tw-leading-tight tw-h-fit tw-m-0">
@@ -144,6 +145,9 @@
             quantity: this.quantity,
             'properties': {
               '_tags': {{ cur_product.tags | json }},
+              {%- if isbn != blank %}
+              '_isbn': {{ isbn | append: '' | json }},
+              {%- endif %}
             },
             id: '{{ cur_product.selected_or_first_available_variant.id }}',
           },

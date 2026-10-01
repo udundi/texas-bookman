@@ -1,5 +1,6 @@
 {% assign product_id = section.id | append: '-' | append: cur_product.handle | append: extra_append %}
 {% assign product_atc_id = product_id | append: '-atc' %}
+{% assign isbn = cur_product.metafields.facts.isbn | default: cur_product.metafields.custom.isbn %}
 
 <div
   id="{{ product_id }}"
@@ -82,6 +83,9 @@
             quantity: this.quantity,
             'properties': {
               '_tags': {{ cur_product.tags | json }},
+              {%- if isbn != blank %}
+              '_isbn': {{ isbn | append: '' | json }},
+              {%- endif %}
             },
             id: '{{ cur_product.selected_or_first_available_variant.id }}',
           },

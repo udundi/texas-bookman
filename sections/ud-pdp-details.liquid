@@ -266,7 +266,10 @@
         };
 
         mainItemProperties['_tags'] = {{ product.tags | json }};
-        mainItemProperties['_isbn'] = {{ product.metafields.facts.isbn | json }};
+        {%- assign isbn = product.metafields.facts.isbn | default: product.metafields.custom.isbn -%}
+        {%- if isbn != blank %}
+        mainItemProperties['_isbn'] = {{ isbn | append: '' | json }};
+        {%- endif %}
         mainItemProperties['_tb'] = {{ product.metafields.custom.tb_code | json }};
         // Only add properties if there are any
         if (Object.keys(mainItemProperties).length > 0) {

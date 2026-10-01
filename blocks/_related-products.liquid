@@ -85,6 +85,7 @@
                 "featured_image": {% if rel_product.featured_image %}{{ rel_product.featured_image | image_url: width: 600 | json }}{% else %}""{% endif %},
                 "price": {{ rel_product.price | json }},
                 "compare_at_price": {{ rel_product.compare_at_price | json }},
+                "isbn": {{ rel_product.metafields.facts.isbn | default: rel_product.metafields.custom.isbn | append: '' | json }},
                 {%- assign rel_variant = rel_product.selected_or_first_available_variant %}
                 "variants": [{
                   "id": {{ rel_variant.id | json }},
@@ -220,7 +221,9 @@
             fetch('/cart/add.js', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ items: [{ id: variantId, quantity: quantity }] }),
+              body: JSON.stringify({
+                items: [{ id: variantId, quantity: quantity, properties: product.isbn ? { _isbn: product.isbn } : undefined }],
+              }),
             })
               .then(async function (r) {
                 var data = await r.json();
