@@ -750,16 +750,16 @@
                     </div>
                   </div>
                 </div>
-              {%- endfor %}\
-              {% if section.settings.enable_infinite_scroll %}\
-                {% if paginate.next %}\
+              {%- endfor %}
+              {% if section.settings.enable_infinite_scroll %}
+                {% if paginate.next %}
                   <div
                     id="infinite-scroll-sentinel-{{ section.id }}"
                     data-next-url="{{ paginate.next.url }}"
                     class="md:tw-col-span-2 xl:tw-col-span-3 tw-h-4"
                   ></div>
-                {% endif %}\
-              {% endif %}\
+                {% endif %}
+              {% endif %}
             {%- endpaginate %}
           </div>
           {% if section.settings.enable_infinite_scroll %}

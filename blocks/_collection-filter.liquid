@@ -41,7 +41,7 @@
         {%- assign new_params = '' -%}
         {%- for param in query_params -%}
           {%- if param == filter_change -%}{%- continue -%}{%- endif -%}
-          {%- if new_params != blank -%}{%- assign new_params = new_params | append: '&' -%}{%- endif -%}\
+          {%- if new_params != blank -%}{%- assign new_params = new_params | append: '&' -%}{%- endif -%}
           {%- assign new_params = new_params | append: param -%}
         {%- endfor -%}
         {%- if new_params != blank -%}
@@ -49,11 +49,11 @@
         {%- else -%}
           {%- assign filter_href = collection.url -%}
         {%- endif -%}
-      {%- elsif filter_change contains 'filter.v.price' -%}\
+      {%- elsif filter_change contains 'filter.v.price' -%}
         {%- assign new_params = '' -%}
         {%- for param in query_params -%}
           {%- if param contains 'filter.v.price' -%}{%- continue -%}{%- endif -%}
-          {%- if new_params != blank -%}{%- assign new_params = new_params | append: '&' -%}{%- endif -%}\
+          {%- if new_params != blank -%}{%- assign new_params = new_params | append: '&' -%}{%- endif -%}
           {%- assign new_params = new_params | append: param -%}
         {%- endfor -%}
         {%- if new_params != blank -%}
@@ -73,7 +73,7 @@
             {%- if param contains 'filter.' and filter_change contains 'filter.p.tag' and param == filter_change -%}
               {%- continue -%}
             {%- endif -%}
-            {%- if new_params != blank -%}{%- assign new_params = new_params | append: '&' -%}{%- endif -%}\
+            {%- if new_params != blank -%}{%- assign new_params = new_params | append: '&' -%}{%- endif -%}
             {%- assign new_params = new_params | append: param -%}
           {%- endif -%}
         {%- endfor -%}
@@ -145,7 +145,7 @@
     <div class="tw-flex tw-flex-wrap tw-gap-2 tw-w-full ">
       {% for color in metaobjects.tile_colors.values %}
         {% assign color_index = forloop.index %}
-        {% for ref in metaobjects.tile_colors.values %}\
+        {% for ref in metaobjects.tile_colors.values %}
           {% if color_index == ref.position %}
             {% assign color_ref = ref %}
           {% endif %}
