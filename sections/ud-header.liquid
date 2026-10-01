@@ -140,7 +140,7 @@
       </button>
       <!-- Mobile Region / Market Selector -->
       <div class="tw-relative tw-my-auto ">
-        {{ region_dropdown }}
+        {{ region_dropdown | replace: '__PLACEMENT__', 'mobile' }}
       </div>
     </div>
     <!-- Logo -->
