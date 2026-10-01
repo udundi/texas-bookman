@@ -53,7 +53,7 @@
           </a>
         </div>
         <div class="tw-font-semibold ">
-          Your Net Price: <span class="tw-font-semibold">{{ product.price | money }}</span>
+          {% if customer %}Your{% endif %} Net Price: <span class="tw-font-semibold">{{ product.price | money }}</span>
         </div>
       </div>
       <!-- Product Description Row -->
@@ -83,7 +83,14 @@
         </div>
         <!-- Action Section -->
         <div class="tw-flex-shrink-0">
-          {% if show_button_type != 'none' %}
+          {% if customer == null %}
+            <a
+              href="{{ routes.account_login_url }}"
+              class="tw-bg-brand-primary tw-cursor-pointer tw-text-11 tw-text-white tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4 tw-py-2 tw-transition-all duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-brightness-95 tw-whitespace-nowrap tw-items-center tw-uppercase tw-no-underline"
+            >
+              Sign in to shop
+            </a>
+          {% elsif show_button_type != 'none' %}
             {% if show_button_type == 'quick-add' %}
               <div class="tw-flex tw-items-center tw-gap-2 tw-h-full">
                 <div class="tw-flex tw-items-center tw-gap-1">
@@ -148,6 +155,7 @@
             id: {{ product.selected_or_first_available_variant.id }},
           },
         ];
+
         fetch('/cart/add.js', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -157,13 +165,19 @@
           if (!r.ok) throw data;
           return data;
         }).then((data) => {
-          const recentItem = data.items?.[0];
+          console.log(data);
+          this.bus.$emit('showCart');
           this.bus.$emit('refreshCart');
-          this.bus.$emit('cartItemAdded', recentItem);
           this.addingToCart = false;
+          const recentItem = data.items?.[0];
+          this.bus.$emit('cartItemAdded', recentItem);
           this.$forceUpdate();
         }).catch((error) => {
-          this.bus.$emit('cartFailedToAdd', error);
+          console.log(error, 'caught error');
+          Swal.fire({
+            icon: 'error',
+            text: error && error.description ? error.description : 'Unable to add item to cart.',
+          });
           this.addingToCart = false;
         }).finally(() => {
           this.addingToCart = false;

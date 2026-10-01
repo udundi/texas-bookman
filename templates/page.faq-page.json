@@ -77,6 +77,7 @@
       "name": "FAQ Section",
       "settings": {
         "heading": "Frequently Asked Questions",
+        "heading_tag": "h1",
         "heading_size": 32,
         "heading_color": "#322f30",
         "heading_alignment": "center",

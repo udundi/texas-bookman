@@ -365,9 +365,9 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "*MARKDOWNS*",
+                "tag": "MARKDOWNS",
                 "title": "Books on Sale",
-                "filter_type": "filter.p.tag=",
+                "filter_type": "filter.p.m.custom.category=",
                 "children_collapsed": false
               },
               "blocks": {}
@@ -412,9 +412,9 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "Arcturus",
+                "tag": "Arcturus Publishing",
                 "title": "Arcturus",
-                "filter_type": "filter.p.tag=",
+                "filter_type": "filter.p.vendor=",
                 "children_collapsed": false
               },
               "blocks": {}
@@ -423,9 +423,9 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "Flame Tree",
+                "tag": "Flame Tree Publishing",
                 "title": "Flame Tree",
-                "filter_type": "filter.p.tag=",
+                "filter_type": "filter.p.vendor=",
                 "children_collapsed": false
               },
               "blocks": {}
@@ -436,7 +436,7 @@
               "settings": {
                 "tag": "Yale University Press",
                 "title": "Yale University Press",
-                "filter_type": "filter.p.tag=",
+                "filter_type": "filter.p.vendor=",
                 "children_collapsed": false
               },
               "blocks": {}

@@ -14,13 +14,33 @@
   "
 >
   {% if customer == null %}
-    <a class="tw-uppercase tw-bg-brand-primary tw-text-brand-eggshell tw-py-2 tw-px-4 tw-rounded-[4px] tw-text-center">
+    <a
+      href="{{ routes.account_login_url }}"
+      class="tw-uppercase tw-bg-brand-primary tw-text-brand-eggshell tw-py-2.5 tw-px-4 tw-rounded-[4px] tw-text-center tw-font-semibold tw-text-14 tw-transition-all hover:tw-brightness-95 tw-block"
+    >
       Sign in to shop
     </a>
   {% else %}
-    <label class="tw-font-montserrat tw-text-16 tw-font-semibold tw-text-offblack"
-      >QTY <span class="tw-font-normal">(Minimum Required {{  }})</span></label
-    >
+    {%- liquid
+      # Cap at stock only when Shopify refuses to oversell this variant
+      assign qty_variant = product.selected_or_first_available_variant
+      assign qty_max = nil
+      assign qty_sold_out = false
+      if qty_variant.inventory_management == 'shopify' and qty_variant.inventory_policy == 'deny'
+        assign qty_max = qty_variant.inventory_quantity | at_least: 1
+        if qty_variant.inventory_quantity < 1
+          assign qty_sold_out = true
+        endif
+      endif
+    -%}
+    <label class="tw-font-montserrat tw-text-16 tw-font-semibold tw-text-offblack">
+      QTY
+      {%- if qty_sold_out %}
+        <span class="tw-font-normal">(Out of stock)</span>
+      {%- elsif qty_max %}
+        <span class="tw-font-normal">(Max {{ qty_max }})</span>
+      {%- endif -%}
+    </label>
     <div class="tw-flex tw-w-full tw-pb-2">
       <div class="tw-relative tw-flex tw-max-w-28 tw-items-center tw-rounded-[4px] tw-bg-brand-eggshell tw-border tw-border-brand-grey">
         <button
@@ -40,10 +60,9 @@
           aria-label="quantity"
           name="quantity"
           min="1"
-          max="100"
+          {% if qty_max %}max="{{ qty_max }}"{% endif %}
           @keydown="if (isNaN(parseInt(event.key)) && event.key != 'Backspace') { event.preventDefault(); }"
-          @input="quantity < 1 ? quantity = 1 : quantity = quantity"
-          max="{{ product.selected_or_first_available_variant.inventory_quantity }}"
+          @input="quantity = Math.min(Math.max(parseInt(quantity, 10) || 1, 1), {{ qty_max | default: 'Infinity' }})"
           v-model="quantity"
           class="tw-text-sm tw-block tw-h-10 tw-w-full tw-py-1 tw-text-center tw-text-offblack"
           required
@@ -52,7 +71,11 @@
           type="button"
           id="increment-button"
           aria-label="increase quantity by 1"
-          @click="quantity++"
+          @click="quantity = Math.min(Number(quantity) + 1, {{ qty_max | default: 'Infinity' }})"
+          {% if qty_max %}
+            :disabled="quantity >= {{ qty_max }}"
+            :class="quantity >= {{ qty_max }} ? 'tw-cursor-not-allowed' : ''"
+          {% endif %}
           class="tw-bg-brand-bg-dark tw-rounded-[4px] tw-pl-2 tw-pr-4"
         >
           {% render 'icon-plus' %}

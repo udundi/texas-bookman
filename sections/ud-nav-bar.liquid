@@ -3,18 +3,20 @@
     <nav
       v-cloak
       @mouseleave="handleMouseLeave"
+      @keydown.esc="handleEscape"
+      @focusout="handleFocusOut"
       role="navigation"
       aria-label="Main Menu"
       class="tw-w-full md:tw-h-full"
       :class="showMobile ? 'tw-block max-md:tw-absolute max-md:tw-left-0 max-md:tw-right-0 max-md:tw-top-full max-md:tw-z-[900] max-md:tw-overflow-y-auto max-md:tw-bg-brand-eggshell max-md:tw-shadow-lg' : 'md:tw-flex tw-hidden'"
-      :style="showMobile ? { maxHeight: `calc(100vh - ${mobileMenuTop}px)` } : {}"
+      :style="showMobile ? { maxHeight: `calc(100dvh - ${mobileMenuTop}px)`, WebkitOverflowScrolling: 'touch', overscrollBehavior: 'contain' } : {}"
     >
       <!-- Nav Container: max-height + overflow-y-auto live on the nav itself so scrolling doesn't depend on child percentage heights -->
       <div
         class=" tw-p-0 tw-w-full"
       >
-        <!-- Nav Container -->
-        <div class="tw-flex tw-h-full tw-w-full tw-flex-col tw-justify-start tw-text-12 md:tw-flex-row md:tw-justify-center md:tw-gap-2">
+        <!-- Nav Container: Centered horizontal AutoLayout with exact 30px gap matching Figma node 92:1483 / Frame 1 -->
+        <div class="tw-flex tw-h-full tw-w-full tw-flex-col tw-justify-start tw-text-12 md:tw-flex-row md:tw-justify-center md:tw-items-center md:tw-gap-[30px]">
           {% for block in section.blocks %}
             {% render block %}
           {% endfor %}
@@ -67,10 +69,20 @@
       window.addEventListener('resize', this.resizeSpacer);
       this.bus.$on('mobileNavToggle', (isOpen) => {
         this.showMobile = isOpen;
+        const stickyHeader = document.getElementById('sticky-header-group');
         if (isOpen) {
+          document.body.classList.add('mobile-nav-open');
+          if (stickyHeader) {
+            stickyHeader.classList.add('mobile-menu--open');
+            stickyHeader.classList.remove('header-group--faded');
+          }
           const el = document.getElementById('nav-bar-{{ section.id }}');
           this.mobileMenuTop = el ? el.getBoundingClientRect().bottom : 0;
         } else {
+          document.body.classList.remove('mobile-nav-open');
+          if (stickyHeader) {
+            stickyHeader.classList.remove('mobile-menu--open');
+          }
           this.selectedTab = '';
           this.selectedSubTab = '';
         }
@@ -101,15 +113,47 @@
         this.selectedSubTab = '';
       },
 
+      // Escape closes the open dropdown and returns focus to its tab; with no dropdown open it closes the mobile nav
+      handleEscape() {
+        if (this.selectedTab) {
+          const tabId = this.selectedTab;
+          this.selectedTab = '';
+          this.selectedSubTab = '';
+          const navBar = document.getElementById('nav-bar-{{ section.id }}');
+          const tabButton = navBar ? navBar.querySelector(`[data-tab-button="${tabId}"]`) : null;
+          if (tabButton && tabButton.offsetParent) tabButton.focus();
+        } else if (this.showMobile) {
+          this.closeMobileNav();
+        }
+      },
+
+      // Closes the desktop dropdown once keyboard focus moves out of its tab group (to another tab or out of the nav)
+      handleFocusOut(event) {
+        if (window.innerWidth < 768 || !this.selectedTab || !event.relatedTarget) return;
+        const dropdown = event.currentTarget.querySelector(`.nav-dropdown[data-tab-id="${this.selectedTab}"]`);
+        const tabGroup = dropdown ? dropdown.parentElement : null;
+        if (tabGroup && tabGroup.contains(event.relatedTarget)) return;
+        this.selectedTab = '';
+        this.selectedSubTab = '';
+      },
+
       // Closes the mobile menu here and tells the header's hamburger/backdrop to close too
       closeMobileNav() {
         this.showMobile = false;
         this.selectedTab = '';
         this.selectedSubTab = '';
+        document.body.classList.remove('mobile-nav-open');
+        const stickyHeader = document.getElementById('sticky-header-group');
+        if (stickyHeader) {
+          stickyHeader.classList.remove('mobile-menu--open');
+        }
         this.bus.$emit('mobileNavToggle', false);
       },
 
       resizeSpacer(e) {
+        if (window.innerWidth >= 768 && this.showMobile) {
+          this.closeMobileNav();
+        }
         const el = document.getElementById('nav-bar-{{ section.id }}');
         this.sectionHeight = el ? el.offsetHeight : 0;
         const spacer = document.getElementById('header-spacer-{{ section.id }}');
@@ -121,6 +165,9 @@
           navContainer.style.height = `${this.sectionHeight}px`;
         }
         document.documentElement.style.setProperty('--site-header-height', `${this.sectionHeight}px`);
+        if (this.showMobile) {
+          this.mobileMenuTop = el ? el.getBoundingClientRect().bottom : 0;
+        }
         if (this.selectedTab) {
           this.positionDropdown(this.selectedTab);
         }

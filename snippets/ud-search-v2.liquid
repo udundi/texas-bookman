@@ -59,6 +59,16 @@
                 </template>
               </div>
             </div>
+            <!-- View all results link -->
+            <div v-if="search && !searchingDesigns" class="tw-pt-3 tw-border-t tw-border-brand-grey tw-text-center">
+              <a
+                :href="'{{ routes.search_url }}?q=' + encodeURIComponent(search)"
+                class="tw-text-14 tw-font-semibold tw-text-brand-primary hover:tw-underline tw-inline-flex tw-items-center tw-gap-1 tw-no-underline"
+              >
+                <span>View all search results for "[[ search ]]"</span>
+                <span>&rarr;</span>
+              </a>
+            </div>
           </div>
         </div>
         <div class="tw-text-64 tw-animate-spin tw-m-4 tw-h-10 tw-w-10" v-show="search && searchingDesigns">

@@ -21,11 +21,12 @@
           <!-- Logo -->
           {% if section.settings.logo != blank %}
             <a
-              class="tw-w-full"
+              class="tw-w-full tw-block"
               href="/"
               rel="home"
             >
-              {{ section.settings.logo | image_url: width: '150' | image_tag: alt: 'Felt Right Logo' }}
+              {% assign footer_logo_alt = section.settings.logo.alt | default: shop.name %}
+              {{ section.settings.logo | image_url: width: 600 | image_tag: alt: footer_logo_alt, class: 'tw-w-36 tw-h-auto tw-object-contain' }}
             </a>
           {% endif %}
         </div>

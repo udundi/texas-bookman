@@ -1,8 +1,25 @@
 <div class="tw-flex tw-flex-col tw-gap-4 tw-items-center" id="related-products-{{ block.id }}">
-  <div
-    class="tw-grid tw-grid-cols-2 tw-justify-center tw-items-center lg:tw-grid-cols-4 tw-gap-4 tw-w-full tw-py-4"
-    id="related-products-slides-{{ block.id }}"
-  ></div>
+  <div class="tw-w-full tw-flex tw-items-center tw-gap-1 sm:tw-gap-4 tw-py-4">
+    <button
+      type="button"
+      aria-label="Previous products"
+      class="tw-bg-white tw-size-10 md:tw-size-12 tw-aspect-square tw-rounded-[4px] tw-border tw-border-solid tw-border-brand-grey tw-flex tw-items-center tw-justify-center tw-cursor-pointer tw-drop-shadow-lg tw-shrink-0 tw-transition-opacity [&.swiper-button-disabled]:tw-opacity-30 [&.swiper-button-disabled]:tw-cursor-default [&.swiper-button-lock]:tw-hidden"
+      id="related-products-prev-{{ block.id }}"
+    >
+      {% render 'icon-chevron-left' %}
+    </button>
+    <div class="swiper tw-w-full" id="related-products-swiper-{{ block.id }}">
+      <div class="swiper-wrapper" id="related-products-slides-{{ block.id }}"></div>
+    </div>
+    <button
+      type="button"
+      aria-label="Next products"
+      class="tw-bg-white tw-size-10 md:tw-size-12 tw-aspect-square tw-rounded-[4px] tw-border tw-border-solid tw-border-brand-grey tw-flex tw-items-center tw-justify-center tw-cursor-pointer tw-drop-shadow-lg tw-shrink-0 tw-transition-opacity [&.swiper-button-disabled]:tw-opacity-30 [&.swiper-button-disabled]:tw-cursor-default [&.swiper-button-lock]:tw-hidden"
+      id="related-products-next-{{ block.id }}"
+    >
+      {% render 'icon-chevron-right' %}
+    </button>
+  </div>
   {% if block.settings.button_url %}
     <a
       href="{{ block.settings.button_url }}"
@@ -14,14 +31,97 @@
 </div>
 
 {% if product %}
+  {% comment %}
+    Shopify's related recommendations fall back to the same few unrelated products on this store,
+    so build the list here: first from the product's most specific (smallest) genre collections,
+    then from its broad collections, keeping only the same product type (and publisher, for books).
+  {% endcomment %}
+  {%- liquid
+    assign related_limit = 4
+    assign ignored_handles = block.settings.ignored_collections | strip_newlines | remove: ' ' | split: ','
+    assign seen_ids = ',' | append: product.id | append: ','
+    assign seen_titles = '|' | append: product.title | append: '|'
+    assign related_count = 0
+    assign sorted_collections = product.collections | sort: 'products_count'
+  -%}
+  <script type="application/json" id="related-products-data-{{ block.id }}">
+    [
+      {%- for pass in (1..2) -%}
+        {%- for rel_collection in sorted_collections -%}
+          {%- if related_count >= related_limit -%}{%- break -%}{%- endif -%}
+          {%- liquid
+            assign is_ignored = false
+            if ignored_handles contains rel_collection.handle
+              assign is_ignored = true
+            endif
+            if pass == 1 and is_ignored
+              continue
+            elsif pass == 2 and is_ignored == false
+              continue
+            endif
+          -%}
+          {%- paginate rel_collection.products by 250 -%}
+            {%- for rel_product in rel_collection.products -%}
+              {%- if related_count >= related_limit -%}{%- break -%}{%- endif -%}
+              {%- assign rel_id_key = ',' | append: rel_product.id | append: ',' -%}
+              {%- assign rel_title_key = '|' | append: rel_product.title | append: '|' -%}
+              {%- if rel_product.available == false or seen_ids contains rel_id_key or seen_titles contains rel_title_key -%}{%- continue -%}{%- endif -%}
+              {%- liquid
+                if pass == 2
+                  if rel_product.type != product.type
+                    continue
+                  endif
+                  if product.type == 'Book' and rel_product.vendor != product.vendor
+                    continue
+                  endif
+                endif
+              -%}
+              {%- assign seen_ids = seen_ids | append: rel_product.id | append: ',' -%}
+              {%- assign seen_titles = seen_titles | append: rel_product.title | append: '|' -%}
+              {%- if related_count > 0 -%},{%- endif -%}
+              {
+                "title": {{ rel_product.title | json }},
+                "url": {{ rel_product.url | json }},
+                "featured_image": {% if rel_product.featured_image %}{{ rel_product.featured_image | image_url: width: 600 | json }}{% else %}""{% endif %},
+                "price": {{ rel_product.price | json }},
+                "compare_at_price": {{ rel_product.compare_at_price | json }},
+                "variants": [{ "id": {{ rel_product.selected_or_first_available_variant.id | json }} }]
+              }
+              {%- assign related_count = related_count | plus: 1 -%}
+            {%- endfor -%}
+          {%- endpaginate -%}
+        {%- endfor -%}
+      {%- endfor -%}
+    ]
+  </script>
   <script>
     (function () {
       var wrapper = document.getElementById('related-products-{{ block.id }}');
       var slidesContainer = document.getElementById('related-products-slides-{{ block.id }}');
       var moneyFormat = {{ shop.money_format | json }};
       var showPrice = {{ block.settings.show_price | json }};
+      var useRecommendations = {{ block.settings.use_recommendations | json }};
+      var isCustomer = {% if customer %}true{% else %}false{% endif %};
 
       if (!slidesContainer) return;
+
+      // Observer lets Swiper pick up the cards whenever they're appended below.
+      // Fractional slide counts let the next card peek in as a cue to scroll.
+      new Swiper('#related-products-swiper-{{ block.id }}', {
+        slidesPerView: 1.3,
+        spaceBetween: 8,
+        watchOverflow: true,
+        observer: true,
+        breakpoints: {
+          425: { slidesPerView: 2.3 },
+          768: { slidesPerView: 3.3 },
+          1024: { slidesPerView: 4.3 },
+        },
+        navigation: {
+          nextEl: '#related-products-next-{{ block.id }}',
+          prevEl: '#related-products-prev-{{ block.id }}',
+        },
+      });
 
       function escapeHtml(value) {
         var div = document.createElement('div');
@@ -55,11 +155,29 @@
             '</div>';
         }
 
+        var actionHtml = '';
+        if (isCustomer) {
+          actionHtml =
+            '<div class="tw-flex tw-gap-2 tw-items-stretch tw-w-full tw-h-full">' +
+            '<div class="tw-flex tw-items-center tw-gap-2 tw-w-full tw-h-full tw-text-brand-greyer">' +
+            '<span>QTY:</span>' +
+            '<input type="number" min="1" placeholder="1" value="1" class="tw-w-full tw-text-center tw-leading-none tw-py-1 tw-border tw-border-brand-grey tw-rounded tw-h-full tw-text-12 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none" data-quantity-input>' +
+            '</div>' +
+            '<button type="button" class="tw-bg-brand-secondary tw-w-full tw-cursor-pointer tw-pointer-events-auto md:tw-text-12 tw-text-10 tw-uppercase tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center tw-py-2" data-variant-id="' +
+            (variant ? variant.id : '') +
+            '">QUICK ADD</button>' +
+            '</div>';
+        } else {
+          actionHtml =
+            '<a href="{{ routes.account_login_url }}" class="tw-bg-brand-secondary tw-w-full tw-cursor-pointer tw-pointer-events-auto md:tw-text-12 tw-text-10 tw-uppercase tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center tw-py-2 tw-no-underline">SIGN IN TO SHOP</a>';
+        }
+
         var card = document.createElement('div');
+        card.className = 'swiper-slide !tw-h-auto';
         card.innerHTML =
           '<div class="tw-flex tw-flex-col tw-p-4 tw-h-full">' +
           '<a href="' + escapeHtml(product.url) + '">' +
-          '<div class="tw-aspect-3/4 tw-h-96 tw-relative tw-mb-2">' +
+          '<div class="tw-aspect-3/4 tw-w-full tw-relative tw-mb-2">' +
           (image
             ? '<img src="' + escapeHtml(image) + '" loading="lazy" alt="' + escapeHtml(product.title) + '" class="tw-w-full tw-object-contain tw-aspect-3/4">'
             : '') +
@@ -69,63 +187,79 @@
           '<h3 class="tw-font-semibold tw-text-14 tw-text-brand-primary tw-line-clamp-1 tw-m-0 tw-mb-2">' + escapeHtml(product.title) + '</h3>' +
           '</a>' +
           priceHtml +
-          '<div class="tw-flex tw-gap-2 tw-items-stretch tw-w-full tw-h-full">' +
-          '<div class="tw-flex tw-items-center tw-gap-2 tw-w-full tw-h-full tw-text-brand-greyer">' +
-          '<span>QTY:</span>' +
-          '<input type="number" min="1" placeholder="1" value="1" class="tw-w-full tw-text-center tw-leading-none tw-py-1 tw-border tw-border-brand-grey tw-rounded tw-h-full tw-text-12 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none" data-quantity-input>' +
-          '</div>' +
-          '<button type="button" class="tw-bg-brand-secondary tw-w-full tw-cursor-pointer tw-pointer-events-auto md:tw-text-12 tw-text-10 tw-uppercase tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center tw-py-2" data-variant-id="' +
-          (variant ? variant.id : '') +
-          '">QUICK ADD</button>' +
-          '</div>' +
+          actionHtml +
           '</div>';
 
         var quantityInput = card.querySelector('[data-quantity-input]');
         var button = card.querySelector('button[data-variant-id]');
-        button.addEventListener('click', function () {
-          var variantId = button.getAttribute('data-variant-id');
-          if (!variantId) return;
-          var quantity = parseInt(quantityInput.value, 10) || 1;
-          button.disabled = true;
-          quantityInput.disabled = true;
-          button.textContent = 'Adding...';
-          fetch('/cart/add.js', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ items: [{ id: variantId, quantity: quantity }] }),
-          })
-            .then(function (r) { return r.json(); })
-            .then(function () {
-              document.dispatchEvent(new CustomEvent('cart:refresh'));
+        if (button && quantityInput) {
+          button.addEventListener('click', function () {
+            var variantId = button.getAttribute('data-variant-id');
+            if (!variantId) return;
+            var quantity = parseInt(quantityInput.value, 10) || 1;
+            button.disabled = true;
+            quantityInput.disabled = true;
+            button.textContent = 'Adding...';
+            fetch('/cart/add.js', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ items: [{ id: variantId, quantity: quantity }] }),
             })
-            .catch(function (error) {
-              console.error('Unable to add item to cart', error);
-            })
-            .finally(function () {
-              button.disabled = false;
-              quantityInput.disabled = false;
-              button.textContent = 'QUICK ADD';
-            });
-        });
+              .then(async function (r) {
+                var data = await r.json();
+                if (!r.ok) throw data;
+                return data;
+              })
+              .then(function (data) {
+                var bus = window.Vue && window.Vue.prototype && window.Vue.prototype.bus;
+                if (bus) {
+                  bus.$emit('cartItemAdded', (data.items && data.items[0]) || data);
+                  bus.$emit('refreshCart');
+                }
+              })
+              .catch(function (error) {
+                console.error('Unable to add item to cart', error);
+                var bus = window.Vue && window.Vue.prototype && window.Vue.prototype.bus;
+                if (bus) {
+                  bus.$emit('cartFailedToAdd', error);
+                }
+              })
+              .finally(function () {
+                button.disabled = false;
+                quantityInput.disabled = false;
+                button.textContent = 'QUICK ADD';
+              });
+          });
+        }
 
         return card;
       }
 
+      function renderProducts(products) {
+        if (!products.length) {
+          if (wrapper) wrapper.style.display = 'none';
+          return;
+        }
+
+        products.forEach(function (product) {
+          slidesContainer.appendChild(buildCard(product));
+        });
+      }
+
+      var dataEl = document.getElementById('related-products-data-{{ block.id }}');
+      var sameGenreProducts = dataEl ? JSON.parse(dataEl.textContent) : [];
+      if (sameGenreProducts.length || !useRecommendations) {
+        renderProducts(sameGenreProducts);
+        return;
+      }
+
       fetch(
         window.Shopify.routes.root +
-          'recommendations/products.json?product_id={{ product.id }}&intent=related&limit=4'
+          'recommendations/products.json?product_id={{ product.id }}&intent=related&limit=10'
       )
         .then(function (response) { return response.json(); })
         .then(function (data) {
-          var products = (data && data.products) || [];
-          if (!products.length) {
-            if (wrapper) wrapper.style.display = 'none';
-            return;
-          }
-
-          products.forEach(function (product) {
-            slidesContainer.appendChild(buildCard(product));
-          });
+          renderProducts((data && data.products) || []);
         })
         .catch(function (error) {
           console.error('Unable to load related products', error);
@@ -148,6 +282,20 @@
       "type": "text",
       "label": "Button Text",
       "id": "button_text"
+    },
+    {
+      "type": "textarea",
+      "id": "ignored_collections",
+      "label": "Collections to ignore",
+      "info": "Comma-separated collection handles that aren't a genre. Related products come from the product's smallest remaining collections, falling back to Shopify recommendations.",
+      "default": "all-adult-books, all-childrens-books, all-games-media, all-gifts, all-mind-body-spirit, all-stationery, markdowns, uk-markdowns, used-books, new-arrivals, homepage, holiday-picks, for-your-holiday-display, stocking-stuffers, new-years-self-care, gifts-for-busy-hands, gifts-for-game-and-puzzle-enthusiasts, gifts-for-kids, gifts-for-readers, collector-editions, foiled, other"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_recommendations",
+      "label": "Fall back to Shopify recommendations",
+      "info": "Used only when no related products are found in the product's collections. Off by default: until the store has sales history Shopify shows the same few products everywhere.",
+      "default": false
     },
     {
       "type": "header",

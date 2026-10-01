@@ -2,121 +2,130 @@
   class="tw-h-fit md:tw-sticky tw-relative md:tw-top-8 tw-w-full tw-flex-grow tw-flex tw-flex-col max-md:tw-items-center max-md:tw-justify-center lg:tw-justify-center tw-gap-2"
   data-pdp-images
 >
-  <!-- Main Image Carousel -->
-  <div class=" swiper swiper-container tw-h-full lg:tw-h-auto tw-w-full tw-cursor-pointer tw-text-black">
-    <div class="swiper-wrapper tw-h-fit tw-max-w-96 ">
-      <!-- ---------------------- Image Classes ---------------------- -->
-      {% if block.settings.image_aspect == '4x3' %}
-        {% assign size_classes = 'tw-w-full tw-aspect-4/3 tw-h-fit ' %}
-      {% elsif block.settings.image_aspect == '3x8' %}
-        {% assign size_classes = 'lg:tw-max-w-[30rem] md:tw-max-w-[20rem] sm:tw-max-w-[25rem] tw-aspect-3/5 tw-mx-auto' %}
-      {% elsif block.settings.image_aspect == 'square' %}
-        {% assign size_classes = 'tw-aspect-square md:tw-max-h-[30rem] tw-max-h-[20rem] tw-h-fit tw-w-fit ' %}
+  {% if product.media.size <= 1 %}
+    <!-- Single Image Mobile Treatment: larger image, no carousel card container -->
+    {% assign single_image = product.featured_media | default: product.featured_image %}
+    <div class="tw-w-full tw-flex tw-items-center tw-justify-center tw-py-2 md:tw-py-4">
+      {% if single_image != blank %}
+        {{
+          single_image
+          | image_url: width: 1000
+          | image_tag:
+            preload: true,
+            class: 'tw-w-full max-md:tw-max-w-[22rem] sm:max-md:tw-max-w-[26rem] md:tw-max-w-md lg:tw-max-w-lg tw-h-auto tw-object-contain tw-rounded-[4px] tw-drop-shadow-sm md:tw-border md:tw-border-brand-grey',
+            alt: product.title
+        }}
       {% else %}
-        {% assign size_classes = 'tw-w-full tw-aspect-3/4' %}
+        {{ 'product-1' | placeholder_svg_tag: 'tw-w-full max-md:tw-max-w-xs md:tw-max-w-md tw-h-auto tw-object-contain' }}
       {% endif %}
-      {% if block.settings.contain %}
-        {% assign contain_classes = ' tw-object-contain tw-p-2 tw-border tw-rounded-[4px]' %}
-      {% else %}
-        {% assign contain_classes = ' tw-border tw-object-cover tw-rounded-[4px]' %}
-      {% endif %}
-      {% assign image_classes = size_classes | append: contain_classes %}
-      <!-- --------------------- End Classes --------------------- -->
+    </div>
+  {% else %}
+    <!-- Main Image Carousel (Multiple Images) -->
+    <div class="swiper swiper-container tw-h-full lg:tw-h-auto tw-w-full tw-cursor-pointer tw-text-black">
+      <div class="swiper-wrapper tw-h-fit tw-max-w-96 ">
+        <!-- ---------------------- Image Classes ---------------------- -->
+        {% if block.settings.image_aspect == '4x3' %}
+          {% assign size_classes = 'tw-w-full tw-aspect-4/3 tw-h-fit ' %}
+        {% elsif block.settings.image_aspect == '3x8' %}
+          {% assign size_classes = 'lg:tw-max-w-[30rem] md:tw-max-w-[20rem] sm:tw-max-w-[25rem] tw-aspect-3/5 tw-mx-auto' %}
+        {% elsif block.settings.image_aspect == 'square' %}
+          {% assign size_classes = 'tw-aspect-square md:tw-max-h-[30rem] tw-max-h-[20rem] tw-h-fit tw-w-fit ' %}
+        {% else %}
+          {% assign size_classes = 'tw-w-full tw-aspect-3/4' %}
+        {% endif %}
+        {% if block.settings.contain %}
+          {% assign contain_classes = ' tw-object-contain tw-p-2 tw-border tw-rounded-[4px]' %}
+        {% else %}
+          {% assign contain_classes = ' tw-border tw-object-cover tw-rounded-[4px]' %}
+        {% endif %}
+        {% assign image_classes = size_classes | append: contain_classes %}
+        <!-- --------------------- End Classes --------------------- -->
 
-      <!-- Variant Image -->
-      {% if product.has_only_default_variant == false
-        and product.selected_or_first_available_variant.featured_image != blank
-      %}
-        <div class="swiper-slide tw-rounded-[4px] tw-w-full">
-          {{
-            product.selected_or_first_available_variant.featured_image
-            | image_url: width: 800
-            | image_tag: preload: true, class: image_classes
-          }}
-        </div>
-      {% endif %}
-
-      <!-- All Normal Images & Videos -->
-
-      {% for media in product.media %}
-        <!-- Videos -->
-        {% if media.media_type == 'video' %}
-          <div class="swiper-slide tw-rounded-[4px] tw-w-full" data-slide-index="{{ forloop.index }}">
+        <!-- Variant Image -->
+        {% if product.has_only_default_variant == false
+          and product.selected_or_first_available_variant.featured_image != blank
+        %}
+          <div class="swiper-slide tw-rounded-[4px] tw-w-full">
             {{
-              media
-              | video_tag:
-                image_size: '400x',
-                class: image_classes,
-                autoplay: true,
-                loop: true,
-                muted: true,
-                controls: true
+              product.selected_or_first_available_variant.featured_image
+              | image_url: width: 800
+              | image_tag: preload: true, class: image_classes
             }}
           </div>
-          <!-- Images -->
-        {% elsif media.media_type == 'image' %}
-          {% assign compare_media = media %}
-          {% for image in product.images %}
-            {% if image.position == compare_media.position %}
-              {% if image.attached_to_variant? != true %}
-                <div class="swiper-slide tw-rounded-[4px] tw-w-full" data-slide-index="{{ forloop.parentloop.index }}">
-                  {{ image | image_url: width: 800 | image_tag: class: image_classes }}
-                </div>
-              {% endif %}
-            {% endif %}
-          {% endfor %}
         {% endif %}
-      {% endfor %}
-    </div>
-    <!-- Navigation Buttons -->
-    {% comment %}
-      {% render 'component__icon',
-        icon: 'arrow-left',
-        size: '132',
-        class: 'ct-swiper-button-prev !tw-text-black tw-size-12'
-      %}
-    {% endcomment %}
-    {% comment %} {% render 'component__icon', icon: 'arrow-right', size: '14', class: 'swiper-button-next' %} {% endcomment %}
-  </div>
-  <!-- Thumbs for Main Image Carousel (desktop only) -->
-  <div
-    thumbsSlider=""
-    class="swiper swiper-thumbs tw-hidden md:tw-flex tw-overflow-hidden tw-w-full tw-items-center tw-justify-center"
-  >
-    <div class="swiper-wrapper">
-      {% assign slide_number = 0 %}
-      <!-- Main Thumb -->
-      {% if product.has_only_default_variant == false
-        and product.selected_or_first_available_variant.featured_image != blank
-      %}
-        {% render 'ud-product-thumb-image',
-          thumb_image: product.selected_or_first_available_variant.featured_image,
-          thumb_number: slide_number
-        %}
-        {% assign slide_number = slide_number | plus: 1 %}
-      {% endif %}
 
-      <!-- Normal Thumb for Videos and Images -->
-      {% for media in product.media %}
-        <!-- Videos -->
-        {% if media.media_type == 'video' %}
-          {% render 'ud-product-thumb-image', thumb_image: media.preview_image, thumb_number: slide_number %}
-          {% assign slide_number = slide_number | plus: 1 %}
-          <!-- Images -->
-        {% elsif media.media_type == 'image' %}
-          {% assign compare_media = media %}
-          {% for image in product.images %}
-            {% if image.position == compare_media.position %}
-              {% if image.attached_to_variant? != true %}
-                {% render 'ud-product-thumb-image', thumb_image: image, thumb_number: slide_number %}
-                {% assign slide_number = slide_number | plus: 1 %}
+        <!-- All Normal Images & Videos -->
+        {% for media in product.media %}
+          <!-- Videos -->
+          {% if media.media_type == 'video' %}
+            <div class="swiper-slide tw-rounded-[4px] tw-w-full" data-slide-index="{{ forloop.index }}">
+              {{
+                media
+                | video_tag:
+                  image_size: '400x',
+                  class: image_classes,
+                  autoplay: true,
+                  loop: true,
+                  muted: true,
+                  controls: true
+              }}
+            </div>
+            <!-- Images -->
+          {% elsif media.media_type == 'image' %}
+            {% assign compare_media = media %}
+            {% for image in product.images %}
+              {% if image.position == compare_media.position %}
+                {% if image.attached_to_variant? != true %}
+                  <div class="swiper-slide tw-rounded-[4px] tw-w-full" data-slide-index="{{ forloop.parentloop.index }}">
+                    {{ image | image_url: width: 800 | image_tag: class: image_classes }}
+                  </div>
+                {% endif %}
               {% endif %}
-            {% endif %}
-          {% endfor %}
-        {% endif %}
-      {% endfor %}
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+      </div>
     </div>
-  </div>
+    <!-- Thumbs for Main Image Carousel (desktop only) -->
+    <div
+      thumbsSlider=""
+      class="swiper swiper-thumbs tw-hidden md:tw-flex tw-overflow-hidden tw-w-full tw-items-center tw-justify-center"
+    >
+      <div class="swiper-wrapper">
+        {% assign slide_number = 0 %}
+        <!-- Main Thumb -->
+        {% if product.has_only_default_variant == false
+          and product.selected_or_first_available_variant.featured_image != blank
+        %}
+          {% render 'ud-product-thumb-image',
+            thumb_image: product.selected_or_first_available_variant.featured_image,
+            thumb_number: slide_number
+          %}
+          {% assign slide_number = slide_number | plus: 1 %}
+        {% endif %}
+
+        <!-- Normal Thumb for Videos and Images -->
+        {% for media in product.media %}
+          <!-- Videos -->
+          {% if media.media_type == 'video' %}
+            {% render 'ud-product-thumb-image', thumb_image: media.preview_image, thumb_number: slide_number %}
+            {% assign slide_number = slide_number | plus: 1 %}
+            <!-- Images -->
+          {% elsif media.media_type == 'image' %}
+            {% assign compare_media = media %}
+            {% for image in product.images %}
+              {% if image.position == compare_media.position %}
+                {% if image.attached_to_variant? != true %}
+                  {% render 'ud-product-thumb-image', thumb_image: image, thumb_number: slide_number %}
+                  {% assign slide_number = slide_number | plus: 1 %}
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
 </div>
 
 {% schema %}

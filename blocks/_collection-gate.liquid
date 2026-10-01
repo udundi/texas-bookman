@@ -1,64 +1,100 @@
-<div class="tw-p-1">
+{%- if block.settings.collection_gate != blank -%}
   {%- liquid
-    # theme-check-disable
-    capture content_for_query_string
-      echo content_for_header
-    endcapture
+    assign gate = block.settings.collection_gate
+
+    # When the store has a storefront filter for this subcategory (Search & Discovery,
+    # e.g. the custom.category metafield), the gate is a multi-select checkbox on the
+    # current collection. Otherwise it links to the gate's own collection.
+    assign filter_param = block.settings.filter_param | default: 'filter.p.m.custom.category'
+    assign filter_value = block.settings.filter_value | default: gate.title
+    assign filter_found = false
+    assign gate_value = nil
+    unless collection == gate
+      for filter in collection.filters
+        if filter.param_name == filter_param
+          assign filter_found = true
+          for value in filter.values
+            if value.value == filter_value
+              assign gate_value = value
+              break
+            endif
+          endfor
+        endif
+      endfor
+    endunless
   -%}
+  {%- if filter_found -%}
+    {%- liquid
+      # Hide subcategories with no results, unless already selected.
+      assign show_gate = false
+      if gate_value
+        if gate_value.active or gate_value.count > 0
+          assign show_gate = true
+        endif
+      endif
+    -%}
+    {%- if show_gate -%}
+      <div class="tw-p-1">
+        {%- if gate_value.active -%}
+          {%- assign gate_href = gate_value.url_to_remove -%}
+        {%- else -%}
+          {%- assign gate_href = gate_value.url_to_add -%}
+        {%- endif -%}
+        {% render 'collection-filter-checkbox',
+          href: gate_href,
+          checked: gate_value.active,
+          label: block.settings.title,
+          count: gate_value.count
+        %}
+      </div>
+    {%- endif -%}
+  {%- elsif collection == gate or gate.all_products_count > 0 -%}
+    <div class="tw-p-1">
+      {%- liquid
+        # theme-check-disable
+        capture content_for_query_string
+          echo content_for_header
+        endcapture
+      -%}
 
-  {% assign get_full_url = content_for_query_string
-    | split: '"pageurl":"'
-    | last
-    | split: '"'
-    | first
-    | split: '.myshopify.com'
-    | last
-    | replace: '\/', '/'
-    | replace: '%20', ' '
-    | replace: '\u0026', '&'
-    | replace: collection.url, ''
-    | replace: 'feltright.com', ''
-  %}
-  {% assign gate_collection = block.settings.collection_gate %}
-  {% if collection == block.settings.collection_gate %}
-    {% assign gate_collection = collections.all %}
-  {% endif %}
-  <a
-    {% assign query_params = get_full_url | replace: '?', '' | replace: '_fd=0&pb=0&', '' | split: '&' %}
-    {% if query_params != blank %}
-      {% if collection == block.settings.collection_gate %}
-        href="{{ routes.all_products_collection_url }}?{{ query_params |  join: '&' }}"
-      {% else %}
-        href="{{ block.settings.collection_gate.url }}?{{ query_params |  join: '&' }}"
-      {% endif %}
-    {% else %}
-      {% if collection == block.settings.collection_gate %}
-        href="{{ routes.all_products_collection_url }}"
-      {% else %}
-        href="{{ block.settings.collection_gate.url }}"
-      {% endif %}
-    {% endif %}
-    class="tw-flex tw-justify-center tw-w-full tw-items-center tw-gap-2 tw-group"
-  >
-    <div class="tw-border group-hover:tw-border-black  tw-border-offblack tw-size-4 tw-aspect-square tw-rounded-[4px] tw-p-0.5 tw-my-auto{% if collection == block.settings.collection_gate %} tw-bg-black {% endif %}">
-      <svg
-        class=" tw-fill-white {% unless collection == block.settings.collection_gate %} tw-hidden  {% endunless %}"
-        viewBox="0 0 448 512"
-      >
-        <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
-      </svg>
+      {% assign get_full_url = content_for_query_string
+        | split: '"pageurl":"'
+        | last
+        | split: '"'
+        | first
+        | split: '.myshopify.com'
+        | last
+        | replace: '\/', '/'
+        | replace: '%20', ' '
+        | replace: '\u0026', '&'
+        | replace: collection.url, ''
+        | replace: 'feltright.com', ''
+      %}
+      {% assign query_params = get_full_url | replace: '?', '' | replace: '_fd=0&pb=0&', '' | split: '&' %}
+      {%- liquid
+        assign is_current_gate = false
+        if collection == gate
+          assign is_current_gate = true
+          assign gate_href = routes.all_products_collection_url
+          assign gate_count = collection.all_products_count
+        else
+          assign gate_href = gate.url
+          assign gate_count = gate.all_products_count
+        endif
+        if query_params != blank
+          assign joined_params = query_params | join: '&'
+          assign gate_href = gate_href | append: '?' | append: joined_params
+        endif
+      -%}
+      {% render 'collection-filter-checkbox',
+        href: gate_href,
+        checked: is_current_gate,
+        label: block.settings.title,
+        count: gate_count
+      %}
     </div>
-
-    <p class=" group-hover:tw-underline tw-text-offblack tw-text-14 tw-w-full !tw-m-0">
-      {{ block.settings.title -}}
-      {% unless collection == block.settings.collection_gate %}
-        ({{ gate_collection.all_products_count }})
-      {% else %}
-        ({{ collection.all_products_count }})
-      {% endunless %}
-    </p>
-  </a>
-</div>
+  {%- endif -%}
+{%- endif -%}
 
 {% schema %}
 {
@@ -74,6 +110,20 @@
       "id": "title",
       "label": "Link Title",
       "default": "Filter Title"
+    },
+    {
+      "type": "text",
+      "id": "filter_param",
+      "label": "Storefront filter",
+      "info": "Search & Discovery filter that selects this subcategory. When the store has it enabled, the gate becomes a multi-select checkbox instead of a link to the collection.",
+      "placeholder": "filter.p.m.custom.category"
+    },
+    {
+      "type": "text",
+      "id": "filter_value",
+      "label": "Filter value",
+      "info": "Defaults to the linked collection's title.",
+      "placeholder": "Art"
     }
   ],
   "presets": [
