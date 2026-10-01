@@ -1416,6 +1416,10 @@ video {
   margin-right: -1px;
 }
 
+.tw-mt-0 {
+  margin-top: 0px;
+}
+
 .tw-mt-0\.5 {
   margin-top: 0.125rem;
 }
@@ -2746,6 +2750,10 @@ video {
   padding-bottom: 2rem;
 }
 
+.tw-pb-1 {
+  padding-bottom: 0.25rem;
+}
+
 .tw-pb-16 {
   padding-bottom: 4rem;
 }
@@ -2824,10 +2832,6 @@ video {
 
 .tw-pt-8 {
   padding-top: 2rem;
-}
-
-.tw-pb-1 {
-  padding-bottom: 0.25rem;
 }
 
 .tw-text-left {
