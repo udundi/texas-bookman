@@ -462,6 +462,14 @@
                 class="tw-hidden"
               ></span>
               {% for product in collection.products -%}
+                {%- liquid
+                  # Cap the quick-add input at stock only when Shopify refuses to oversell
+                  assign qty_variant = product.selected_or_first_available_variant
+                  assign qty_max = nil
+                  if qty_variant.inventory_management == 'shopify' and qty_variant.inventory_policy == 'deny'
+                    assign qty_max = qty_variant.inventory_quantity | at_least: 1
+                  endif
+                -%}
                 {% assign is_flash_sale = false %}
                 {% if settings.flash_sale %}
                   {% for flash_sale_product in settings.flash_sale_products %}
@@ -581,9 +589,10 @@
                               <input
                                 type="number"
                                 min="1"
+                                {% if qty_max %}max="{{ qty_max }}"{% endif %}
                                 placeholder="1"
                                 :value="getQty({{ product.selected_or_first_available_variant.id }})"
-                                @input="setQty({{ product.selected_or_first_available_variant.id }}, $event.target.value)"
+                                @input="setQty({{ product.selected_or_first_available_variant.id }}, $event.target, {{ qty_max | default: 'Infinity' }})"
                                 class="tw-w-full tw-text-center tw-leading-none tw-py-0.5 tw-border tw-border-brand-grey tw-rounded tw-h-full tw-text-12 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
                                 :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                               >
@@ -720,9 +729,10 @@
                                     <input
                                       type="number"
                                       min="1"
+                                      {% if qty_max %}max="{{ qty_max }}"{% endif %}
                                       placeholder="1"
                                       :value="getQty({{ product.selected_or_first_available_variant.id }})"
-                                      @input="setQty({{ product.selected_or_first_available_variant.id }}, $event.target.value)"
+                                      @input="setQty({{ product.selected_or_first_available_variant.id }}, $event.target, {{ qty_max | default: 'Infinity' }})"
                                       class="tw-w-14 tw-text-center tw-leading-none tw-py-0.5 tw-px-1 tw-border tw-border-brand-grey tw-rounded tw-text-14 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
                                       :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                                     >
@@ -913,8 +923,11 @@
       getQty(variantId) {
         return this.quantities[variantId] || 1;
       },
-      setQty(variantId, val) {
-        this.$set(this.quantities, variantId, parseInt(val, 10) || 1);
+      setQty(variantId, input, max) {
+        const qty = Math.min(parseInt(input.value, 10) || 1, max);
+        // Write the cap back, since Vue won't re-render when the stored qty doesn't change
+        if (Number(input.value) > max) input.value = qty;
+        this.$set(this.quantities, variantId, qty);
       },
       isAdding(variantId) {
         return !!this.addingToCartMap[variantId];

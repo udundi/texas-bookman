@@ -11,13 +11,14 @@
         class="tw-mb-2 tw-flex tw-items-center tw-gap-3 tw-p-3 tw-text-sm"
       >
         <div
-          :class="failed ? 'tw-bg-red-500 tw-rotate-45 tw-text-white' : 'tw-bg-amber-400 tw-text-offblack'"
+          :class="failed && !partial ? 'tw-bg-red-500 tw-rotate-45 tw-text-white' : 'tw-bg-amber-400 tw-text-offblack'"
           class="tw-p-2 tw-rounded-full"
         >
           {% render 'icon-plus' %}
         </div>
         <div class="tw-min-w-0 tw-flex-1">
           <p v-if="!failed" class="tw-text-16 tw-text-black">Added to cart</p>
+          <p v-else-if="partial" class="tw-text-16 tw-text-black tw-font-semibold">Partially added to cart</p>
           <p v-else class="tw-text-16 tw-text-black tw-font-semibold">Unable to add to cart</p>
         </div>
         <button
@@ -144,6 +145,7 @@
         cartItems: {{ cart.items | json }},
         cartData: {{ cart | json  }},
         failed: false,
+        partial: false,
         errorMessage: '',
         testVariant: '',
         recentlyAddedItem: null,
@@ -163,6 +165,7 @@
         clearTimeout(this.fadingTimeout);
         clearTimeout(this.hideCartTimeout);
         this.failed = false;
+        this.partial = false;
         this.errorMessage = '';
         this.fading = false;
         this.recentlyAddedItem = item;
@@ -176,6 +179,9 @@
         clearTimeout(this.hideCartTimeout);
         this.failed = true;
         this.errorMessage = error?.description || error?.message || error?.error || 'This item could not be added to your cart.';
+        // Shopify's 422 for over-stock ("Only N items were added to your cart due to availability.") still adds the N
+        this.partial = /added to your cart/i.test(this.errorMessage);
+        if (this.partial) this.bus.$emit('refreshCart');
         this.fading = false;
         this.recentlyAddedItem = {};
         this.showCartSidebar = true;
