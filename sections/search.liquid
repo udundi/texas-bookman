@@ -1,5 +1,57 @@
 {%- assign search_terms = search.terms | default: '' -%}
 
+{%- comment -%}
+  Shopify's search also returns semantic "close" matches, so nonsense terms
+  like "xqzvbnm" still bring back dozens of products. Treat the search as
+  unmatched when nothing on the first page contains any of the search words.
+{%- endcomment -%}
+{%- liquid
+  assign has_exact_match = true
+  if search.performed and search.results_count > 0
+    assign search_words = search_terms | downcase | remove: '"' | remove: '*' | split: ' '
+    assign searchable_word_count = 0
+    for word in search_words
+      if word.size > 1
+        assign searchable_word_count = searchable_word_count | plus: 1
+      endif
+    endfor
+
+    if searchable_word_count > 0
+      assign has_exact_match = false
+      for item in search.results limit: 24
+        if item.object_type == 'product'
+          capture haystack
+            echo item.title
+            echo ' ' | append: item.vendor | append: ' ' | append: item.type
+            echo item.tags | join: ' ' | prepend: ' '
+            for variant in item.variants
+              echo ' ' | append: variant.sku | append: ' ' | append: variant.barcode
+            endfor
+            echo ' ' | append: item.metafields.custom.isbn | append: ' ' | append: item.metafields.facts.isbn
+            echo ' ' | append: item.metafields.custom.author.value
+            echo ' ' | append: item.description | strip_html
+          endcapture
+        else
+          capture haystack
+            echo item.title | append: ' ' | append: item.content | strip_html
+          endcapture
+        endif
+        assign haystack = haystack | downcase
+
+        for word in search_words
+          if word.size > 1 and haystack contains word
+            assign has_exact_match = true
+            break
+          endif
+        endfor
+        if has_exact_match
+          break
+        endif
+      endfor
+    endif
+  endif
+-%}
+
 <div
   class="section-search-{{ section.id }} tw-w-full tw-min-h-[60vh] tw-bg-brand-eggshell tw-pb-16"
   v-cloak
@@ -11,7 +63,9 @@
         <h1 class="tw-m-0 tw-font-brand-primary tw-text-24 md:tw-text-28 tw-font-semibold tw-text-offblack">
           {% if search.performed and search_terms != blank %}
             Search Results for &ldquo;{{ search_terms }}&rdquo;
-            <span class="tw-text-18 tw-font-normal tw-text-gray-500">({{ search.results_count }})</span>
+            {% if has_exact_match %}
+              <span class="tw-text-18 tw-font-normal tw-text-gray-500">({{ search.results_count }})</span>
+            {% endif %}
           {% else %}
             Search Catalog
           {% endif %}
@@ -87,7 +141,7 @@
   <!-- Search Results Content -->
   <div class="tw-max-w-screen-2xl tw-mx-auto tw-px-4 md:tw-px-8">
     {% if search.performed %}
-      {% if search.results_count == 0 %}
+      {% if search.results_count == 0 or has_exact_match == false %}
         <!-- Empty State -->
         <div class="tw-flex tw-flex-col tw-items-center tw-justify-center tw-py-16 tw-text-center tw-gap-4">
           <p class="tw-text-20 tw-font-semibold tw-font-brand-header tw-text-offblack tw-m-0">
@@ -103,7 +157,14 @@
             Browse All Books
           </a>
         </div>
-      {% else %}
+      {% endif %}
+
+      {% if search.results_count > 0 %}
+        {% unless has_exact_match %}
+          <h2 class="tw-text-18 tw-font-semibold tw-font-brand-header tw-text-offblack tw-mt-0 tw-mb-4">
+            Closest matches
+          </h2>
+        {% endunless %}
         {% paginate search.results by 24 %}
           <!-- Grid View -->
           <div
