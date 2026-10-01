@@ -214,6 +214,16 @@
             </option>
           </select>
         </div>
+        {% if customer %}
+          <button
+            type="button"
+            @click="exportCsv"
+            :disabled="exportingCsv"
+            class="tw-flex tw-flex-1 tw-items-center tw-justify-center tw-rounded-[4px] tw-border tw-border-brand-grey tw-bg-white tw-py-2 tw-text-14 tw-text-offblack tw-transition-colors hover:tw-border-offblack disabled:tw-cursor-wait disabled:tw-opacity-60"
+          >
+            [[ exportingCsv ? 'Exporting...' : 'Export CSV' ]]
+          </button>
+        {% endif %}
       </div>
       <div class="tw-hidden md:tw-block">
         <!-- Sort By Selector -->
@@ -327,6 +337,17 @@
               {% render 'icon-arrow-down' %}
             </div>
           </div>
+          {% if customer %}
+            <!-- Export CSV -->
+            <button
+              type="button"
+              @click="exportCsv"
+              :disabled="exportingCsv"
+              class="tw-whitespace-nowrap tw-rounded-[4px] tw-border tw-border-solid tw-border-brand-grey tw-bg-white tw-px-3 tw-py-2 tw-text-14 tw-text-offblack tw-transition-colors hover:tw-border-offblack disabled:tw-cursor-wait disabled:tw-opacity-60"
+            >
+              [[ exportingCsv ? 'Exporting...' : 'Export CSV' ]]
+            </button>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -856,6 +877,7 @@
         viewMode: 'grid',
         quantities: {},
         addingToCartMap: {},
+        exportingCsv: false,
       };
     },
     watch: {
@@ -982,6 +1004,65 @@
           })
           .catch((error) => { this.bus.$emit('cartFailedToAdd', error); })
           .finally(() => { this.$set(this.addingToCartMap, variantId, false); });
+      },
+      // Fetches every page of templates/collection.csv.liquid with the current
+      // filters and sort, then downloads the products as a CSV.
+      async exportCsv() {
+        if (this.exportingCsv) return;
+        this.exportingCsv = true;
+        try {
+          const url = new URL(window.location.href);
+          url.searchParams.delete('limit');
+          url.searchParams.set('view', 'csv');
+          const products = [];
+          let pages = 1;
+          for (let page = 1; page <= pages; page++) {
+            url.searchParams.set('page', page);
+            const res = await fetch(url.toString(), { credentials: 'same-origin' });
+            if (!res.ok) throw new Error(`Export failed on page ${page}: ${res.status}`);
+            const data = await res.json();
+            pages = data.pages;
+            products.push(...data.products);
+          }
+
+          const columns = [
+            ['Title', 'title'],
+            ['Author', 'author'],
+            ['Publisher', 'publisher'],
+            ['ISBN', 'isbn'],
+            {%- if customer.tags contains 'Staff' %}
+            ['TB Code', 'tb_code'],
+            {%- endif %}
+            ['List Price', 'list_price'],
+            ['Net Price', 'net_price'],
+            ['QTY', 'qty'],
+            ['URL', 'url'],
+          ];
+          const cell = (value) => {
+            let text = value == null ? '' : String(value);
+            // Stop spreadsheets from treating cells as formulas
+            if (/^[=+\-@\t\r]/.test(text)) text = `'${text}`;
+            return `"${text.replace(/"/g, '""')}"`;
+          };
+          const lines = [columns.map(([label]) => cell(label)).join(',')];
+          products.forEach((product) => {
+            lines.push(columns.map(([, key]) => cell(product[key])).join(','));
+          });
+
+          const blob = new Blob(['\uFEFF' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = {{ collection.handle | json }} + `-${new Date().toISOString().slice(0, 10)}.csv`;
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          setTimeout(() => URL.revokeObjectURL(link.href), 0);
+        } catch (error) {
+          console.error(error);
+          alert('Sorry, the CSV export failed. Please try again.');
+        } finally {
+          this.exportingCsv = false;
+        }
       },
     },
   });
