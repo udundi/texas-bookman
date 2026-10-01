@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -22,8 +31,7 @@
                 "filter_type": "filter.p.vendor=",
                 "children_collapsed": false
               },
-              "blocks": {},
-              "disabled": false
+              "blocks": {}
             },
             "collection_filter_8gptDV": {
               "type": "_collection-filter",
@@ -34,8 +42,7 @@
                 "filter_type": "filter.p.vendor=",
                 "children_collapsed": false
               },
-              "blocks": {},
-              "disabled": false
+              "blocks": {}
             },
             "collection_filter_PCNbGn": {
               "type": "_collection-filter",
@@ -46,8 +53,7 @@
                 "filter_type": "filter.p.vendor=",
                 "children_collapsed": false
               },
-              "blocks": {},
-              "disabled": false
+              "blocks": {}
             }
           },
           "block_order": [
@@ -79,7 +85,7 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "games-puzzles",
+                "collection_gate": "games-toys-puzzles",
                 "title": "{{ closest.collection.title }}"
               },
               "blocks": {}
@@ -115,7 +121,7 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "notecards",
+                "collection_gate": "stationery-notecards",
                 "title": "{{ closest.collection.title }}"
               },
               "blocks": {}
@@ -142,7 +148,7 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "bby-decorative-books",
+                "collection_gate": "decorative-books",
                 "title": "Decorative Books"
               },
               "blocks": {}
@@ -192,7 +198,7 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "picture-story-books",
+                "collection_gate": "childrens-picture-story-books",
                 "title": "{{ closest.collection.title }}"
               },
               "blocks": {}
@@ -201,7 +207,7 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "educational-nonfiction",
+                "collection_gate": "childrens-educational-nonfiction",
                 "title": "{{ closest.collection.title }}"
               },
               "blocks": {}
@@ -231,50 +237,7 @@
                 "collection_gate": "art",
                 "title": "Art"
               },
-              "blocks": {
-                "collection_gate_pO7WPf": {
-                  "type": "_collection-gate",
-                  "name": "Collection Gate",
-                  "settings": {
-                    "collection_gate": "artists",
-                    "title": ""
-                  },
-                  "blocks": {}
-                },
-                "collection_gate_VTtRKg": {
-                  "type": "_collection-gate",
-                  "name": "Collection Gate",
-                  "settings": {
-                    "collection_gate": "art-instruction",
-                    "title": ""
-                  },
-                  "blocks": {}
-                },
-                "collection_gate_3UGgab": {
-                  "type": "_collection-gate",
-                  "name": "Collection Gate",
-                  "settings": {
-                    "collection_gate": "design-decorative-arts",
-                    "title": ""
-                  },
-                  "blocks": {}
-                },
-                "collection_gate_nZ05FF": {
-                  "type": "_collection-gate",
-                  "name": "Collection Gate",
-                  "settings": {
-                    "collection_gate": "fashion",
-                    "title": ""
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "collection_gate_pO7WPf",
-                "collection_gate_VTtRKg",
-                "collection_gate_3UGgab",
-                "collection_gate_nZ05FF"
-              ]
+              "blocks": {}
             },
             "collection_gate_3n3UgU": {
               "type": "_collection-gate",
@@ -338,50 +301,7 @@
                 "collection_gate": "history",
                 "title": "History"
               },
-              "blocks": {
-                "collection_gate_l9NM84": {
-                  "type": "_collection-gate",
-                  "name": "Collection Gate",
-                  "settings": {
-                    "collection_gate": "archaeology-ancient-history",
-                    "title": ""
-                  },
-                  "blocks": {}
-                },
-                "collection_gate_ACIBl7": {
-                  "type": "_collection-gate",
-                  "name": "Collection Gate",
-                  "settings": {
-                    "collection_gate": "military-history",
-                    "title": ""
-                  },
-                  "blocks": {}
-                },
-                "collection_gate_aKPEy4": {
-                  "type": "_collection-gate",
-                  "name": "Collection Gate",
-                  "settings": {
-                    "collection_gate": "united-states-history",
-                    "title": ""
-                  },
-                  "blocks": {}
-                },
-                "collection_gate_mWDXLx": {
-                  "type": "_collection-gate",
-                  "name": "Collection Gate",
-                  "settings": {
-                    "collection_gate": "world-history",
-                    "title": ""
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "collection_gate_l9NM84",
-                "collection_gate_ACIBl7",
-                "collection_gate_aKPEy4",
-                "collection_gate_mWDXLx"
-              ]
+              "blocks": {}
             },
             "collection_gate_9gn7mC": {
               "type": "_collection-gate",
@@ -396,7 +316,7 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "mythology-folktales",
+                "collection_gate": "",
                 "title": "Mythology & Folktales"
               },
               "blocks": {}
@@ -547,8 +467,7 @@
                 "filter_type": "filter.p.vendor=",
                 "children_collapsed": false
               },
-              "blocks": {},
-              "disabled": false
+              "blocks": {}
             },
             "collection_filter_njxfRV": {
               "type": "_collection-filter",
@@ -559,8 +478,7 @@
                 "filter_type": "filter.p.vendor=",
                 "children_collapsed": false
               },
-              "blocks": {},
-              "disabled": false
+              "blocks": {}
             },
             "collection_filter_7z4XAQ": {
               "type": "_collection-filter",
@@ -571,8 +489,7 @@
                 "filter_type": "filter.p.vendor=",
                 "children_collapsed": false
               },
-              "blocks": {},
-              "disabled": false
+              "blocks": {}
             }
           },
           "block_order": [

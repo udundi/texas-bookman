@@ -2826,10 +2826,6 @@ video {
   padding-top: 2rem;
 }
 
-.tw-pb-1 {
-  padding-bottom: 0.25rem;
-}
-
 .tw-text-left {
   text-align: left;
 }
@@ -3689,10 +3685,6 @@ video {
 
   .md\:tw-left-1\/2 {
     left: 50%;
-  }
-
-  .md\:tw-left-auto {
-    left: auto;
   }
 
   .md\:tw-right-0 {

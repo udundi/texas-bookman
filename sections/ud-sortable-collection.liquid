@@ -499,39 +499,6 @@
                     {% endif %}
                   {% endfor %}
                 {% endif %}
-                {% comment %} Case-pack products: see blocks/_pdp-box-quantity.liquid {% endcomment %}
-                {% assign single_variant = product.selected_or_first_available_variant %}
-                {% assign case_variant = nil %}
-                {% for variant in product.variants %}
-                  {% if variant.option1 == 'Case' %}
-                    {% assign case_variant = variant %}
-                  {% elsif single_variant.option1 == 'Case' %}
-                    {% assign single_variant = variant %}
-                  {% endif %}
-                {% endfor %}
-                {% assign case_size = product.metafields.custom.case_size.value
-                  | default: case_variant.metafields.custom.case_quantity.value
-                  | default: 1
-                %}
-                {% assign cases_available = 0 %}
-                {% assign case_saving_pct = 0 %}
-                {% if case_variant and case_size > 1 %}
-                  {% assign cases_available = single_variant.inventory_quantity | at_least: 0 | divided_by: case_size %}
-                  {% assign case_full_price = single_variant.price | times: case_size %}
-                  {% assign case_saving_pct = case_full_price
-                    | minus: case_variant.price
-                    | times: 100.0
-                    | divided_by: case_full_price
-                    | round
-                  %}
-                {% endif %}
-                {% capture pack_select_options %}
-                  <option value="{{ single_variant.id }}">Single &middot; {{ single_variant.price | money }}</option>
-                  <option value="{{ case_variant.id }}">
-                    Case of {{ case_size }} &middot; {{ case_variant.price | money }}
-                    {%- if case_saving_pct > 0 %} ({{ case_saving_pct }}% off){% endif %}
-                  </option>
-                {% endcapture %}
 
                 <div
                   data-product-grid-item
@@ -600,7 +567,7 @@
                           <p class="tw-font-semibold tw-text-14 tw-text-gray-600 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
                             QTY:
                             <span class="tw-font-normal">
-                              {{- single_variant.inventory_quantity -}}
+                              {{- product.selected_or_first_available_variant.inventory_quantity -}}
                             </span>
                           </p>
                           <div class="tw-flex tw-flex-col">
@@ -637,41 +604,30 @@
                         </a>
                       {% elsif section.settings.button_type != 'none' %}
                         {% if section.settings.button_type == 'quick-add' %}
-                          {% if cases_available > 0 %}
-                            <select
-                              aria-label="Pack size"
-                              @change="setPack({{ single_variant.id }}, $event.target.value)"
-                              class="tw-w-full tw-mt-auto tw-mb-2 tw-py-1 tw-px-1 tw-border tw-border-brand-grey tw-rounded tw-text-12 tw-font-semibold"
-                            >
-                              {{ pack_select_options }}
-                            </select>
-                          {% endif %}
                           <div class="tw-flex tw-gap-2 tw-w-full tw-mt-auto">
                             <div class="tw-flex tw-items-center tw-gap-2 tw-w-full">
                               <span>QTY:</span>
                               <input
                                 type="number"
                                 min="1"
-                                :max="variantFor({{ single_variant.id }}) === {{ single_variant.id }} ? {{ qty_max | default: 'null' }} : {{ cases_available }}"
+                                {% if qty_max %}max="{{ qty_max }}"{% endif %}
                                 placeholder="1"
-                                :value="getQty(variantFor({{ single_variant.id }}))"
-                                @input="setQty(variantFor({{ single_variant.id }}), $event.target, variantFor({{ single_variant.id }}) === {{ single_variant.id }} ? {{ qty_max | default: 'Infinity' }} : {{ cases_available }})"
+                                :value="getQty({{ product.selected_or_first_available_variant.id }})"
+                                @input="setQty({{ product.selected_or_first_available_variant.id }}, $event.target, {{ qty_max | default: 'Infinity' }})"
                                 class="tw-w-full tw-text-center tw-leading-none tw-py-0.5 tw-border tw-border-brand-grey tw-rounded tw-h-full tw-text-12 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
-                                :disabled="isAdding(variantFor({{ single_variant.id }}))"
+                                :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                               >
                             </div>
                             <button
                               type="button"
-                              data-variant-id="{{ single_variant.id }}"
-                              data-case-variant-id="{{ case_variant.id }}"
-                              data-cases-available="{{ cases_available }}"
+                              data-variant-id="{{ product.selected_or_first_available_variant.id }}"
                               data-tags="{{ product.tags | json }}"
                               data-isbn="{{ product.metafields.facts.isbn }}"
                               class="tw-bg-brand-secondary tw-w-full tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center"
-                              @click="addToCart(variantFor({{ single_variant.id }}), $event.currentTarget)"
-                              :disabled="isAdding(variantFor({{ single_variant.id }}))"
+                              @click="addToCart({{ product.selected_or_first_available_variant.id }}, $event.currentTarget)"
+                              :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                             >
-                              [[ isAdding(variantFor({{ single_variant.id }})) ? 'Adding...' : '
+                              [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : '
                               {{- section.settings.button_text | default: 'Add to Cart' -}}
                               ' ]]
                             </button>
@@ -774,7 +730,7 @@
                             <div>
                               QTY:
                               <span class="tw-font-normal">
-                                {{- single_variant.inventory_quantity -}}
+                                {{- product.selected_or_first_available_variant.inventory_quantity -}}
                               </span>
                             </div>
                           </div>
@@ -789,40 +745,29 @@
                             {% elsif section.settings.button_type != 'none' %}
                               {% if section.settings.button_type == 'quick-add' %}
                                 <div class="tw-flex tw-items-center tw-gap-2 tw-h-full">
-                                  {% if cases_available > 0 %}
-                                    <select
-                                      aria-label="Pack size"
-                                      @change="setPack({{ single_variant.id }}, $event.target.value)"
-                                      class="tw-py-0.5 tw-px-1 tw-border tw-border-brand-grey tw-rounded tw-text-14 tw-font-semibold"
-                                    >
-                                      {{ pack_select_options }}
-                                    </select>
-                                  {% endif %}
                                   <div class="tw-flex tw-items-center tw-gap-1">
                                     <label class="tw-text-14 tw-font-semibold">QTY:</label>
                                     <input
                                       type="number"
                                       min="1"
-                                      :max="variantFor({{ single_variant.id }}) === {{ single_variant.id }} ? {{ qty_max | default: 'null' }} : {{ cases_available }}"
+                                      {% if qty_max %}max="{{ qty_max }}"{% endif %}
                                       placeholder="1"
-                                      :value="getQty(variantFor({{ single_variant.id }}))"
-                                      @input="setQty(variantFor({{ single_variant.id }}), $event.target, variantFor({{ single_variant.id }}) === {{ single_variant.id }} ? {{ qty_max | default: 'Infinity' }} : {{ cases_available }})"
+                                      :value="getQty({{ product.selected_or_first_available_variant.id }})"
+                                      @input="setQty({{ product.selected_or_first_available_variant.id }}, $event.target, {{ qty_max | default: 'Infinity' }})"
                                       class="tw-w-14 tw-text-center tw-leading-none tw-py-0.5 tw-px-1 tw-border tw-border-brand-grey tw-rounded tw-text-14 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
-                                      :disabled="isAdding(variantFor({{ single_variant.id }}))"
+                                      :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                                     >
                                   </div>
                                   <button
                                     type="button"
-                                    data-variant-id="{{ single_variant.id }}"
-                              data-case-variant-id="{{ case_variant.id }}"
-                              data-cases-available="{{ cases_available }}"
+                                    data-variant-id="{{ product.selected_or_first_available_variant.id }}"
                                     data-tags="{{ product.tags | json }}"
                                     data-isbn="{{ product.metafields.facts.isbn }}"
                                     class="tw-bg-brand-secondary tw-cursor-pointer tw-pointer-events-auto tw-text-10 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-6 tw-py-1.5 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-sans hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center"
-                                    @click="addToCart(variantFor({{ single_variant.id }}), $event.currentTarget)"
-                                    :disabled="isAdding(variantFor({{ single_variant.id }}))"
+                                    @click="addToCart({{ product.selected_or_first_available_variant.id }}, $event.currentTarget)"
+                                    :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                                   >
-                                    [[ isAdding(variantFor({{ single_variant.id }})) ? 'Adding...' : '
+                                    [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : '
                                     {{- section.settings.button_text | default: 'QUICK ADD' -}}
                                     ' ]]
                                   </button>
@@ -898,8 +843,6 @@
         openFilters: {},
         viewMode: 'grid',
         quantities: {},
-        // Single variant id -> the variant (Single or Case) picked in the pack size select
-        packs: {},
         addingToCartMap: {},
         exportingCsv: false,
       };
@@ -999,12 +942,6 @@
         this.viewMode = mode;
         localStorage.setItem('productViewMode', mode);
       },
-      variantFor(singleVariantId) {
-        return this.packs[singleVariantId] || singleVariantId;
-      },
-      setPack(singleVariantId, variantId) {
-        this.$set(this.packs, singleVariantId, Number(variantId));
-      },
       getQty(variantId) {
         return this.quantities[variantId] || 1;
       },
@@ -1018,10 +955,7 @@
         return !!this.addingToCartMap[variantId];
       },
       addToCart(variantId, btn) {
-        let qty = this.getQty(variantId);
-        if (String(variantId) === btn.dataset.caseVariantId) {
-          qty = Math.min(qty, Number(btn.dataset.casesAvailable));
-        }
+        const qty = this.getQty(variantId);
         const tags = JSON.parse(btn.dataset.tags || '[]');
         const isbn = btn.dataset.isbn || null;
         this.$set(this.addingToCartMap, variantId, true);
