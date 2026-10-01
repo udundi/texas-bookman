@@ -1636,6 +1636,10 @@ video {
   height: 100%;
 }
 
+.\!tw-h-auto {
+  height: auto !important;
+}
+
 .\!tw-h-full {
   height: 100% !important;
 }
@@ -3823,6 +3827,11 @@ video {
     height: 2.5rem;
   }
 
+  .md\:tw-size-12 {
+    width: 3rem;
+    height: 3rem;
+  }
+
   .md\:tw-size-40 {
     width: 10rem;
     height: 10rem;
@@ -4195,6 +4204,18 @@ video {
   .xl\:tw-grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
+}
+
+.\[\&\.swiper-button-disabled\]\:tw-cursor-default.swiper-button-disabled {
+  cursor: default;
+}
+
+.\[\&\.swiper-button-disabled\]\:tw-opacity-30.swiper-button-disabled {
+  opacity: 0.3;
+}
+
+.\[\&\.swiper-button-lock\]\:tw-hidden.swiper-button-lock {
+  display: none;
 }
 
 .\[\&\:\:-webkit-details-marker\]\:tw-hidden::-webkit-details-marker {
