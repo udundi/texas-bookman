@@ -301,6 +301,13 @@
         this.totalSavings = updatedCart.total_discount;
       },
       async updateQuantity(item, qty) {
+        // Shopify can't cap Case lines (they share the Single variant's stock), so cap them here
+        const caseInfo = this.caseInfo[item.variant_id];
+        let caseCapped = false;
+        if (caseInfo && caseInfo.cases_available != null && qty > caseInfo.cases_available) {
+          qty = caseInfo.cases_available;
+          caseCapped = true;
+        }
         this.updatingCart = true;
         try {
           const response = await fetch('/cart/change.js', {
@@ -312,7 +319,9 @@
           if (response.ok) {
             this.applyCart(body);
             const line = body.items.find((i) => i.key === item.key);
-            if (line && line.quantity < qty) {
+            if (caseCapped) {
+              this.qtyErrors[item.key] = `Only ${qty} cases available. Quantity updated to ${qty}.`;
+            } else if (line && line.quantity < qty) {
               this.qtyErrors[item.key] = `Only ${line.quantity} available. Quantity updated to ${line.quantity}.`;
             }
           } else {
