@@ -2,22 +2,23 @@
   <div
     v-if="showCartSidebar"
     :class="fading ? 'tw-animate-fade-out' : 'tw-animate-fade-down'"
-    class="tw-bg-white tw-fixed tw-pointer-events-auto tw-z-[999] tw-top-4 tw-right-4"
+    class="tw-fixed tw-pointer-events-auto tw-z-[999] tw-top-4 tw-right-4 tw-left-4 md:tw-left-auto"
   >
-    <div class="tw-absolute tw-top-0 tw-right-0 md:tw-w-[570px] tw-w-full tw-max-w-[95vw] tw-bg-brand-eggshell tw-rounded-[4px] tw-border tw-border-brand-grey tw-flex tw-flex-col">
+    <div class="md:tw-w-[570px] tw-w-full tw-bg-brand-eggshell tw-rounded-[4px] tw-border tw-border-brand-grey tw-flex tw-flex-col">
       <!-- Recently Added Banner -->
       <div
         v-if="recentlyAddedItem"
         class="tw-mb-2 tw-flex tw-items-center tw-gap-3 tw-p-3 tw-text-sm"
       >
         <div
-          :class="failed ? 'tw-bg-red-500 tw-rotate-45 tw-text-white' : 'tw-bg-amber-400 tw-text-offblack'"
+          :class="failed && !partial ? 'tw-bg-red-500 tw-rotate-45 tw-text-white' : 'tw-bg-amber-400 tw-text-offblack'"
           class="tw-p-2 tw-rounded-full"
         >
           {% render 'icon-plus' %}
         </div>
         <div class="tw-min-w-0 tw-flex-1">
           <p v-if="!failed" class="tw-text-16 tw-text-black">Added to cart</p>
+          <p v-else-if="partial" class="tw-text-16 tw-text-black tw-font-semibold">Partially added to cart</p>
           <p v-else class="tw-text-16 tw-text-black tw-font-semibold">Unable to add to cart</p>
         </div>
         <button
@@ -84,7 +85,7 @@
       </div>
 
       <div
-        v-if="!failed && (visibleCartItems.length > 0 || cartBundles.length > 0) && !cartStillLoading"
+        v-if="!failed"
         class="tw-px-4 tw-pb-8"
       >
         <div class="tw-w-full tw-block">
@@ -99,14 +100,14 @@
               >
                 <button
                   :class="disableCartActions ? 'tw-opacity-50 tw-pointer-events-none' : ''"
-                  class="md:tw-block tw-hidden tw-p-2 tw-text-brand-primary tw-border tw-border-brand-primary tw-rounded-[4px] tw-text-16 tw-text-center tw-w-full tw-uppercase tw-bg-white"
+                  class="tw-block tw-p-2 tw-text-brand-primary tw-border tw-border-brand-primary tw-rounded-[4px] tw-text-16 tw-text-center tw-w-full tw-uppercase tw-bg-white"
                   @click="hideCart"
                 >
                   Keep Shopping
                 </button>
                 <a
                   :class="disableCartActions ? 'tw-opacity-50 tw-pointer-events-none' : ''"
-                  class="md:tw-block tw-hidden tw-p-2 tw-text-white tw-rounded-[4px] tw-text-16 tw-text-center tw-w-full tw-uppercase tw-bg-brand-primary"
+                  class="tw-block tw-p-2 tw-text-white tw-rounded-[4px] tw-text-16 tw-text-center tw-w-full tw-uppercase tw-bg-brand-primary"
                   href="{{ routes.cart_url }}"
                 >
                   View Cart
@@ -144,6 +145,7 @@
         cartItems: {{ cart.items | json }},
         cartData: {{ cart | json  }},
         failed: false,
+        partial: false,
         errorMessage: '',
         testVariant: '',
         recentlyAddedItem: null,
@@ -163,6 +165,7 @@
         clearTimeout(this.fadingTimeout);
         clearTimeout(this.hideCartTimeout);
         this.failed = false;
+        this.partial = false;
         this.errorMessage = '';
         this.fading = false;
         this.recentlyAddedItem = item;
@@ -176,6 +179,9 @@
         clearTimeout(this.hideCartTimeout);
         this.failed = true;
         this.errorMessage = error?.description || error?.message || error?.error || 'This item could not be added to your cart.';
+        // Shopify's 422 for over-stock ("Only N items were added to your cart due to availability.") still adds the N
+        this.partial = /added to your cart/i.test(this.errorMessage);
+        if (this.partial) this.bus.$emit('refreshCart');
         this.fading = false;
         this.recentlyAddedItem = {};
         this.showCartSidebar = true;

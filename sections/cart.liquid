@@ -106,10 +106,15 @@
                 {% render 'icon-trash' %}
               </button>
             </div>
+            <!-- Quantity Rule -->
             <div v-if="minQty(item) > 1 || qtyStep(item) > 1" class="tw-text-gray-600">
               <span v-if="minQty(item) > 1">Minimum Required: [[ minQty(item) ]]</span>
               <span v-if="minQty(item) > 1 && qtyStep(item) > 1">, multiples of [[ qtyStep(item) ]]</span>
               <span v-else-if="qtyStep(item) > 1">Multiples of [[ qtyStep(item) ]]</span>
+            </div>
+            <!-- Quantity Error -->
+            <div v-if="qtyErrors[item.key]" class="tw-text-12 tw-font-semibold tw-text-brand-sale" role="alert">
+              [[ qtyErrors[item.key] ]]
             </div>
             <!-- Prices -->
             <div
@@ -173,14 +178,16 @@
         </div>
       </div>
       <!-- Checkout button / spinner -->
-      <a
-        v-if="!updatingCart"
-        href="{{ routes.checkout_url }}"
-        class="tw-flex tw-gap-3 tw-rounded-[4px] tw-items-center tw-justify-center tw-bg-brand-secondary tw-py-3 tw-px-6 tw-text-offblack tw-font-semibold tw-uppercase tw-text-16 tw-w-full tw-text-center tw-mt-4 tw-transition-all duration-200 hover:tw-brightness-95 tw-no-underline"
-      >
-        <span class="tw-size-4 tw-flex tw-items-center">{% render 'icon-lock' %}</span>
-        Checkout
-      </a>
+      <form v-if="!updatingCart" action="{{ routes.cart_url }}" method="post">
+        <button
+          type="submit"
+          name="checkout"
+          class="tw-flex tw-gap-3 tw-rounded-[4px] tw-items-center tw-justify-center tw-bg-brand-secondary tw-py-3 tw-px-6 tw-text-offblack tw-font-semibold tw-uppercase tw-text-16 tw-w-full tw-text-center tw-mt-4 tw-transition-all duration-200 hover:tw-brightness-95 tw-no-underline"
+        >
+          <span class="tw-size-4 tw-flex tw-items-center">{% render 'icon-lock' %}</span>
+          Checkout
+        </button>
+      </form>
       <div
         v-else
         class="tw-bg-brand-secondary tw-rounded-[4px] tw-py-3 tw-px-6 tw-cursor-wait tw-flex tw-items-center tw-justify-center tw-mt-4"
@@ -206,10 +213,12 @@
         totalSavings: {{ cart.total_discount | default: 0 }},
         updatingCart: false,
         debounceTimers: {},
+        qtyErrors: {},
         moneyFmt: {{ shop.money_format | json }},
+        // B2B catalog quantity rules by variant; /cart.js lines also carry quantity_rule
         quantityRules: {
           {%- for item in cart.items -%}
-            {{ item.key | json }}: { min: {{ item.variant.quantity_rule.min | default: 1 }}, step: {{ item.variant.quantity_rule.increment | default: 1 }} }{% unless forloop.last %},{% endunless %}
+            '{{ item.variant_id }}': { min: {{ item.variant.quantity_rule.min | default: 1 }}, increment: {{ item.variant.quantity_rule.increment | default: 1 }}, max: {{ item.variant.quantity_rule.max | default: 'null' }} }{% unless forloop.last %},{% endunless %}
           {%- endfor -%}
         },
       };
@@ -239,42 +248,64 @@
           : this.formatMoney(allocation.amount);
         return `-${amountLabel} ${application.title} Applied`;
       },
+      quantityRule(item) {
+        return item.quantity_rule || this.quantityRules[item.variant_id] || {};
+      },
       minQty(item) {
-        return (this.quantityRules[item.key] || {}).min || 1;
+        return this.quantityRule(item).min || 1;
       },
       qtyStep(item) {
-        return (this.quantityRules[item.key] || {}).step || 1;
+        return this.quantityRule(item).increment || 1;
       },
       onQtyInput(item, event) {
         const input = event.target;
         const qty = parseInt(input.value, 10);
         if (isNaN(qty) || qty < 0) return;
+        delete this.qtyErrors[item.key];
         clearTimeout(this.debounceTimers[item.key]);
         this.debounceTimers[item.key] = setTimeout(() => {
           // 0 still removes the line; anything else is rounded up to a valid quantity
-          const finalQty = qty > 0 ? this.validQuantity(qty, this.minQty(item), this.qtyStep(item)) : 0;
+          const finalQty = qty > 0
+            ? this.validQuantity(qty, this.minQty(item), this.qtyStep(item), this.quantityRule(item).max)
+            : 0;
           input.value = finalQty;
           this.updateQuantity(item, finalQty);
         }, 800);
       },
-      updateQuantity(item, qty) {
+      // Take items and totals from Shopify's cart rather than the requested qty,
+      // since Shopify may reject or clamp quantities above available stock.
+      applyCart(updatedCart) {
+        this.cartItems = updatedCart.items;
+        this.cartData = updatedCart;
+        this.subtotal = updatedCart.items_subtotal_price;
+        this.total = updatedCart.total_price;
+        this.totalSavings = updatedCart.total_discount;
+      },
+      async updateQuantity(item, qty) {
         this.updatingCart = true;
-        fetch('/cart/change.js', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id: item.key, quantity: qty }),
-        })
-          .then((r) => r.json())
-          .then((updatedCart) => {
-            item.quantity = qty;
-            item.line_price = item.price * qty;
-            this.subtotal = updatedCart.items_subtotal_price;
-            this.total = updatedCart.total_price;
-            this.totalSavings = updatedCart.total_discount;
-            this.bus.$emit('refreshCart');
-          })
-          .catch(() => {})
-          .finally(() => { this.updatingCart = false; });
+        try {
+          const response = await fetch('/cart/change.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: item.key, quantity: qty }),
+          });
+          const body = await response.json();
+          if (response.ok) {
+            this.applyCart(body);
+            const line = body.items.find((i) => i.key === item.key);
+            if (line && line.quantity < qty) {
+              this.qtyErrors[item.key] = `Only ${line.quantity} available. Quantity updated to ${line.quantity}.`;
+            }
+          } else {
+            this.qtyErrors[item.key] = body.description || body.message || 'Sorry, that quantity is not available.';
+            this.applyCart(await fetch('/cart.js').then((r) => r.json()));
+          }
+          this.bus.$emit('refreshCart');
+        } catch (e) {
+          console.error('Cart quantity update failed:', e);
+        } finally {
+          this.updatingCart = false;
+        }
       },
       removeItem(item) {
         this.updatingCart = true;

@@ -54,11 +54,17 @@
   Vue.prototype.bus = new Vue();
 
   // Rounds a quantity up to one a B2B catalog quantity rule accepts: at least
-  // `min` and a multiple of `step` (Shopify requires min to be a multiple of step).
-  window.validQuantity = function (qty, min, step) {
+  // `min` and a multiple of `step` (Shopify requires min and max to be
+  // multiples of step). An optional `max` (stock cap or rule max) wins over the
+  // rounding: the result drops to the largest valid multiple under it, but
+  // never below `min`.
+  window.validQuantity = function (qty, min, step, max) {
     min = min || 1;
     step = step || 1;
-    return Math.ceil(Math.max(parseInt(qty, 10) || 0, min) / step) * step;
+    if (max == null || isNaN(max)) max = Infinity;
+    var q = Math.ceil(Math.max(parseInt(qty, 10) || 0, min) / step) * step;
+    if (q > max) q = Math.max(Math.floor(max / step) * step, min);
+    return q;
   };
   Vue.prototype.validQuantity = window.validQuantity;
 </script>

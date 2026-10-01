@@ -32,9 +32,10 @@
 >
   <div class="faq-container tw-w-full tw-max-w-screen-2xl">
     {% if section.settings.heading != blank %}
-      <h2 class="faq-heading md:tw-text-32 tw-text-22">
+      {%- assign heading_tag = section.settings.heading_tag | default: 'h2' -%}
+      <{{ heading_tag }} class="faq-heading md:tw-text-32 tw-text-22">
         {{ section.settings.heading }}
-      </h2>
+      </{{ heading_tag }}>
     {% endif %}
 
     {% if section.settings.description != blank %}
@@ -71,6 +72,17 @@
       "id": "heading",
       "label": "Heading",
       "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading Tag",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" }
+      ],
+      "default": "h2",
+      "info": "Use H1 for the first FAQ section on a page that has no other H1."
     },
     {
       "type": "range",

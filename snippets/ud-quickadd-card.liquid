@@ -2,6 +2,7 @@
 {% assign product_atc_id = product_id | append: '-atc' %}
 {% assign min_qty = cur_product.selected_or_first_available_variant.quantity_rule.min | default: 1 %}
 {% assign qty_step = cur_product.selected_or_first_available_variant.quantity_rule.increment | default: 1 %}
+{% assign qty_max = cur_product.selected_or_first_available_variant.quantity_rule.max | default: 'Infinity' %}
 
 <div
   id="{{ product_id }}"
@@ -93,7 +94,7 @@
               step="{{ qty_step }}"
               placeholder="{{ min_qty }}"
               v-model.number="quantity"
-              @change="quantity = validQuantity(quantity, {{ min_qty }}, {{ qty_step }})"
+              @change="quantity = validQuantity(quantity, {{ min_qty }}, {{ qty_step }}, {{ qty_max }})"
               class="tw-w-full tw-text-center tw-leading-none tw-py-0.5 tw-border tw-border-brand-grey tw-rounded tw-h-full tw-text-12 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
               :disabled="addingToCart"
             >
@@ -137,9 +138,9 @@
     methods: {
       addToCart() {
         this.addingToCart = true;
-        this.quantity = this.validQuantity(this.quantity, {{ min_qty }}, {{ qty_step }});
+        this.quantity = this.validQuantity(this.quantity, {{ min_qty }}, {{ qty_step }}, {{ qty_max }});
         let items = [
-          {\
+          {
             quantity: this.quantity,
             'properties': {
               '_tags': {{ cur_product.tags | json }},
@@ -155,7 +156,7 @@
           body: JSON.stringify({ items: items }),
         }).then(async (r) => {
           const data = await r.json();
-          if (!r.ok) throw data;\
+          if (!r.ok) throw data;
           return data;
         }).then((data) => {
           console.log(data);
@@ -176,6 +177,6 @@
           this.addingToCart = false;
         });
       },
-    },\
+    },
   });
 </script>

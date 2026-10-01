@@ -21,15 +21,59 @@
       Sign in to shop
     </a>
   {% else %}
-    {% assign min_qty = product.selected_or_first_available_variant.quantity_rule.min | default: 1 %}
-    {% assign qty_step = product.selected_or_first_available_variant.quantity_rule.increment | default: 1 %}
-    <label class="tw-font-montserrat tw-text-16 tw-font-semibold tw-text-offblack"
-      >QTY
-      {%- if min_qty > 1 or qty_step > 1 %}
-        <span class="tw-font-normal">
-          {%- if min_qty > 1 %}(Minimum Required {{ min_qty }}{% if qty_step > 1 %}, multiples of {{ qty_step }}{% endif %}){% else %}(Multiples of {{ qty_step }}){% endif -%}
-        </span>
-      {%- endif -%}
+    {% comment %} Case-pack products: see blocks/_pdp-box-quantity.liquid {% endcomment %}
+    {% assign single_variant = product.selected_or_first_available_variant %}
+    {% assign case_variant = nil %}
+    {% for variant in product.variants %}
+      {% if variant.option1 == 'Case' %}
+        {% assign case_variant = variant %}
+      {% elsif single_variant.option1 == 'Case' %}
+        {% assign single_variant = variant %}
+      {% endif %}
+    {% endfor %}
+    {% assign case_size = product.metafields.custom.case_size.value
+      | default: case_variant.metafields.custom.case_quantity.value
+      | default: 1
+    %}
+    {% assign cases_available = 0 %}
+    {% if case_variant and case_size > 1 %}
+      {% assign cases_available = single_variant.inventory_quantity | at_least: 0 | divided_by: case_size %}
+    {% endif %}
+    {% if cases_available > 0 %}
+      <fieldset class="tw-flex tw-flex-col tw-gap-1 tw-pb-2">
+        <legend class="tw-font-montserrat tw-text-16 tw-font-semibold tw-text-offblack tw-pb-1">Pack Size</legend>
+        <div class="tw-flex tw-flex-wrap tw-gap-2">
+          <button
+            type="button"
+            @click="selectPack(singleVariantId)"
+            :aria-pressed="!buyingCase"
+            :class="!buyingCase ? 'tw-border-2 tw-border-black' : 'tw-border tw-border-brand-grey'"
+            class="tw-rounded-[4px] tw-bg-brand-eggshell tw-py-2 tw-px-3 tw-text-14 tw-text-offblack"
+          >
+            Single &middot; {{ single_variant.price | money }}
+          </button>
+          <button
+            type="button"
+            @click="selectPack(caseVariantId)"
+            :aria-pressed="buyingCase"
+            :class="buyingCase ? 'tw-border-2 tw-border-black' : 'tw-border tw-border-brand-grey'"
+            class="tw-rounded-[4px] tw-bg-brand-eggshell tw-py-2 tw-px-3 tw-text-14 tw-text-offblack"
+          >
+            Case of {{ case_size }} &middot; {{ case_variant.price | money }}
+          </button>
+        </div>
+      </fieldset>
+    {% endif %}
+    <label class="tw-font-montserrat tw-text-16 tw-font-semibold tw-text-offblack">
+      <span v-if="buyingCase">CASES</span><span v-else>QTY</span>
+      <span v-if="soldOut" class="tw-font-normal">(Out of stock)</span>
+      <template v-else>
+        <span v-if="minQty > 1" class="tw-font-normal"
+          >(Minimum Required [[ minQty ]]<template v-if="qtyStep > 1">, multiples of [[ qtyStep ]]</template>)</span
+        >
+        <span v-else-if="qtyStep > 1" class="tw-font-normal">(Multiples of [[ qtyStep ]])</span>
+        <span v-if="qtyMax !== Infinity" class="tw-font-normal">(Max [[ qtyMax ]])</span>
+      </template>
     </label>
     <div class="tw-flex tw-w-full tw-pb-2">
       <div class="tw-relative tw-flex tw-max-w-28 tw-items-center tw-rounded-[4px] tw-bg-brand-eggshell tw-border tw-border-brand-grey">
@@ -49,13 +93,12 @@
           id="quantity-input"
           aria-label="quantity"
           name="quantity"
-          min="{{ min_qty }}"
-          step="{{ qty_step }}"
-          max="100"
+          :min="minQty"
+          :step="qtyStep"
+          :max="qtyMax === Infinity ? null : qtyMax"
           @keydown="if (isNaN(parseInt(event.key)) && event.key != 'Backspace') { event.preventDefault(); }"
-          @input="quantity < 1 ? quantity = 1 : quantity = quantity"
-          @change="quantity = validQuantity(quantity, minQty, qtyStep)"
-          max="{{ product.selected_or_first_available_variant.inventory_quantity }}"
+          @input="quantity = Math.min(Math.max(parseInt(quantity, 10) || 1, 1), qtyMax)"
+          @change="quantity = validQuantity(quantity, minQty, qtyStep, qtyMax)"
           v-model="quantity"
           class="tw-text-sm tw-block tw-h-10 tw-w-full tw-py-1 tw-text-center tw-text-offblack"
           required
@@ -63,8 +106,10 @@
         <button
           type="button"
           id="increment-button"
-          aria-label="increase quantity by 1"
-          @click="quantity = validQuantity(Number(quantity) + qtyStep, minQty, qtyStep)"
+          aria-label="increase quantity"
+          @click="quantity = validQuantity(Number(quantity) + qtyStep, minQty, qtyStep, qtyMax)"
+          :disabled="Number(quantity) + qtyStep > qtyMax"
+          :class="Number(quantity) + qtyStep > qtyMax ? 'tw-cursor-not-allowed' : ''"
           class="tw-bg-brand-bg-dark tw-rounded-[4px] tw-pl-2 tw-pr-4"
         >
           {% render 'icon-plus' %}
