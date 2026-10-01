@@ -1,5 +1,6 @@
 {% assign product_id = section.id | append: '-' | append: product.handle | append: '-list-atc' %}
 {% assign product_atc_id = product_id | append: '-atc' %}
+{% assign isbn = product.metafields.facts.isbn | default: product.metafields.custom.isbn %}
 
 <div
   id="{{ product_id }}"
@@ -10,7 +11,7 @@
     href="{% if product.metafields.custom.alt_gallery_link != blank %}{{ product.metafields.custom.alt_gallery_link.value.url }}{% else %}{{ product.url | default: "/" }}{% endif %}"
     class="tw-flex-shrink-0"
   >
-    <div class="tw-h-36 tw-object-cover tw-aspect-5/6 tw-relative">
+    <div class="tw-h-28 md:tw-h-36 tw-object-cover tw-aspect-5/6 tw-relative">
       {% if product.featured_image != blank %}
         {{
           product.featured_image
@@ -34,8 +35,8 @@
   <div class=" tw-py-1 tw-w-full tw-flex tw-flex-col tw-justify-between tw-gap-2 tw-min-w-0 tw-grow">
     <!-- Title and Product Details -->
     <div class="tw-flex tw-grow tw-flex-col tw-justify-between tw-gap-1">
-      <div class="tw-flex tw-w-full tw-flex-row tw-justify-between tw-gap-x-3 tw-gap-y-0.5 tw-text-12">
-        <a href="{{ product.url | default: "/" }}" class="">
+      <div class="tw-flex tw-w-full tw-flex-row max-md:tw-flex-wrap tw-justify-between tw-gap-x-3 tw-gap-y-0.5 tw-text-12">
+        <a href="{{ product.url | default: "/" }}" class="tw-min-w-0 max-md:tw-w-full">
           <h3 class="tw-font-semibold tw-text-13 tw-text-brand-primary tw-text-14 tw-leading-tight tw-m-0 tw-truncate">
             {{ product.title | default: 'Product title' }}
           </h3>
@@ -65,12 +66,14 @@
       </div>
 
       <!-- Product Details and Action Row -->
-      <div class="tw-flex tw-w-full tw-justify-between tw-items-end tw-gap-x-3 tw-gap-y-0.5 tw-text-14">
+      <div class="tw-flex tw-w-full max-md:tw-flex-col max-md:tw-items-stretch tw-justify-between md:tw-items-end tw-gap-x-3 tw-gap-y-2 md:tw-gap-y-0.5 tw-text-14">
         <!-- Product Details Section -->
         <div class="tw-flex tw-w-full tw-flex-wrap tw-text-gray-700 tw-font-semibold tw-gap-x-3 tw-gap-y-0.5 tw-text-14">
-          <div>
-            ISBN: <span class="tw-font-normal">{{ product.metafields.facts.isbn | default: 'XXXXXXXX' }}</span>
-          </div>
+          {% if isbn != blank %}
+            <div>
+              ISBN: <span class="tw-font-normal">{{ isbn }}</span>
+            </div>
+          {% endif %}
           {% comment %}
             <div>
               TB CODE: <span class="tw-font-normal">{{ product.metafields.custom.tb.value | default: 'XXXXXXXX' }}</span>
@@ -82,7 +85,7 @@
           </div>
         </div>
         <!-- Action Section -->
-        <div class="tw-flex-shrink-0">
+        <div class="tw-flex-shrink-0 max-md:tw-w-full">
           {% if customer == null %}
             <a
               href="{{ routes.account_login_url }}"
@@ -92,7 +95,7 @@
             </a>
           {% elsif show_button_type != 'none' %}
             {% if show_button_type == 'quick-add' %}
-              <div class="tw-flex tw-items-center tw-gap-2 tw-h-full">
+              <div class="tw-flex max-md:tw-flex-wrap tw-items-center tw-gap-2 tw-h-full">
                 <div class="tw-flex tw-items-center tw-gap-1">
                   <label for="{{ product_id }}-qty" class="tw-text-14 tw-font-semibold">QTY:</label>
                   <input
@@ -150,7 +153,9 @@
             quantity: this.quantity,
             properties: {
               '_tags': {{ product.tags | json }},
-              '_isbn': {{ product.metafields.facts.isbn | json }},
+              {%- if isbn != blank %}
+              '_isbn': {{ isbn | append: '' | json }},
+              {%- endif %}
             },
             id: {{ product.selected_or_first_available_variant.id }},
           },

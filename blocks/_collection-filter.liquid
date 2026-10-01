@@ -1,4 +1,3 @@
-<div class="tw-p-0.5">
   {%- liquid
     # theme-check-disable
     capture content_for_query_string
@@ -132,6 +131,14 @@
     -%}
 
     {%- capture child_blocks -%}{%- content_for 'blocks' -%}{%- endcapture -%}
+    {%- liquid
+      # Nested filters mark themselves active so their parent stays visible and opens
+      assign child_blocks = child_blocks | strip
+      assign children_collapsed = block.settings.children_collapsed | default: false
+      if child_blocks contains 'data-filter-active'
+        assign children_collapsed = false
+      endif
+    -%}
 
     {%- liquid
       # Hide values with no results, unless already selected or they hold sub-filters.
@@ -146,7 +153,8 @@
     -%}
 
     {%- unless hide_filter -%}
-    <div class="tw-flex tw-w-full tw-flex-col">
+    <div class="tw-p-0.5">
+    <div class="tw-flex tw-w-full tw-flex-col"{% if filter_active %} data-filter-active{% endif %}>
       <div class="tw-flex tw-w-full tw-items-center tw-gap-1">
         {% render 'collection-filter-checkbox',
           href: filter_href,
@@ -158,11 +166,11 @@
           <button
             type="button"
             class="tw-flex-shrink-0 tw-fill-offblack tw-size-3 tw-cursor-pointer tw-bg-transparent tw-border-0 tw-p-0 tw-m-0"
-            @click="toggleFilter('{{ block.id }}', {{ block.settings.children_collapsed | default: false }})"
+            @click="toggleFilter('{{ block.id }}', {{ children_collapsed }})"
           >
             <div
               class="tw-fill-offblack tw-size-3"
-              v-if="isFilterOpen('{{ block.id }}', {{ block.settings.children_collapsed | default: false }})"
+              v-if="isFilterOpen('{{ block.id }}', {{ children_collapsed }})"
             >
               {% render 'icon-arrow-up' %}
             </div>
@@ -173,14 +181,16 @@
       {%- unless child_blocks == blank -%}
         <div
           class="tw-pl-4 tw-pt-1 tw-flex tw-flex-col tw-gap-[1px]"
-          v-show="isFilterOpen('{{ block.id }}', {{ block.settings.children_collapsed | default: false }})"
+          v-show="isFilterOpen('{{ block.id }}', {{ children_collapsed }})"
         >
           {{ child_blocks }}
         </div>
       {%- endunless -%}
     </div>
+    </div>
     {%- endunless -%}
   {% else %}
+    <div class="tw-p-0.5">
     <div class="tw-flex tw-flex-wrap tw-gap-2 tw-w-full ">
       {% for color in metaobjects.tile_colors.values %}
         {% assign color_index = forloop.index %}
@@ -230,8 +240,8 @@
         </a>
       {% endfor %}
     </div>
+    </div>
   {% endif %}
-</div>
 
 {% schema %}
 {

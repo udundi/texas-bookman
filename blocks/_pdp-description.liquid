@@ -1,4 +1,24 @@
-{% if block.settings.body != blank or block.settings.body_default != blank %}
+{%- comment -%}
+  A "Label: {{ dynamic value }}" body (e.g. "By: <author>") is hidden when the value is empty or
+  the import's "Not available" placeholder, instead of showing a bare or placeholder label.
+{%- endcomment -%}
+{%- liquid
+  if block.settings.body != blank
+    assign body_text = block.settings.body | strip_html | strip
+  else
+    assign body_text = block.settings.body_default | strip_html | strip
+  endif
+  assign body_value = body_text
+  if body_text contains ':'
+    assign body_value = body_text | split: ':' | last | strip
+    assign body_last_char = body_text | slice: -1
+    if body_last_char == ':'
+      assign body_value = ''
+    endif
+  endif
+  assign body_value_lower = body_value | downcase
+-%}
+{% if body_value != blank and body_value_lower != 'not available' %}
   <div
     class="
       {% if block.settings.visibility contains 'mobile' %}

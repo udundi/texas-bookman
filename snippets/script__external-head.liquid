@@ -52,6 +52,35 @@
 
   // Shared event bus used across all Vue instances for cross-component communication
   Vue.prototype.bus = new Vue();
+
+  // Rounds a quantity up to one a B2B catalog quantity rule accepts: at least
+  // `min` and a multiple of `step` (Shopify requires min and max to be
+  // multiples of step). An optional `max` (stock cap or rule max) wins over the
+  // rounding: the result drops to the largest valid multiple under it, but
+  // never below `min`.
+  window.validQuantity = function (qty, min, step, max) {
+    min = min || 1;
+    step = step || 1;
+    if (max == null || isNaN(max)) max = Infinity;
+    var q = Math.ceil(Math.max(parseInt(qty, 10) || 0, min) / step) * step;
+    if (q > max) q = Math.max(Math.floor(max / step) * step, min);
+    return q;
+  };
+  Vue.prototype.validQuantity = window.validQuantity;
+
+  // Pack size and saving for a Case cart line, from snippets/case-pack-info.liquid facts
+  // ({size, single_price}) and the price charged per case, e.g. "Case of 10 · You save $9.99 (5%)".
+  window.caseSavingLabel = function (info, casePrice, formatMoney) {
+    if (!info || !(info.size > 1)) return '';
+    var label = 'Case of ' + info.size;
+    var singlesPrice = info.single_price * info.size;
+    var saving = singlesPrice - casePrice;
+    if (saving > 0 && singlesPrice > 0) {
+      label += ' \u00b7 You save ' + formatMoney(saving) + ' (' + Math.round((saving * 100) / singlesPrice) + '%)';
+    }
+    return label;
+  };
+  Vue.prototype.caseSavingLabel = window.caseSavingLabel;
 </script>
 <script src="{{ 'vue-tools.js' | asset_url }}"></script>
 {% render 'vue-mix-global' %}

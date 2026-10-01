@@ -82,6 +82,14 @@
             >
               <p class="tw-m-0 tw-truncate">[[ item.title ]]</p>
             </a>
+            <!-- Case Pack Size and Saving -->
+            <div
+              v-if="caseLabel(item)"
+              class="tw-font-semibold"
+              :class="isOutOfStock(item) ? 'tw-text-gray-400' : 'tw-text-brand-sale'"
+            >
+              [[ caseLabel(item) ]]
+            </div>
             <!-- Item Identifiers -->
             <div
               class="tw-flex tw-flex-wrap tw-gap-x-4 tw-gap-y-0.5"
@@ -96,7 +104,8 @@
               <input
                 type="number"
                 :value="item.quantity"
-                min="0"
+                :min="minQty(item)"
+                :step="qtyStep(item)"
                 :disabled="isOutOfStock(item)"
                 class="tw-p-0.5 tw-px-2 tw-border tw-border-brand-grey tw-w-16 tw-text-center disabled:tw-bg-gray-100 disabled:tw-text-gray-400 [appearance:textfield] [&::-webkit-outer-spin-button]:tw-appearance-none [&::-webkit-inner-spin-button]:tw-appearance-none"
                 @input="onQtyInput(item, $event)"
@@ -104,6 +113,12 @@
               <button class="tw-size-4 tw-ml-4 tw-flex-shrink-0" @click="removeItem(item)" aria-label="Remove item">
                 {% render 'icon-trash' %}
               </button>
+            </div>
+            <!-- Quantity Rule -->
+            <div v-if="minQty(item) > 1 || qtyStep(item) > 1" class="tw-text-gray-600">
+              <span v-if="minQty(item) > 1">Minimum Required: [[ minQty(item) ]]</span>
+              <span v-if="minQty(item) > 1 && qtyStep(item) > 1">, multiples of [[ qtyStep(item) ]]</span>
+              <span v-else-if="qtyStep(item) > 1">Multiples of [[ qtyStep(item) ]]</span>
             </div>
             <!-- Quantity Error -->
             <div v-if="qtyErrors[item.key]" class="tw-text-12 tw-font-semibold tw-text-brand-sale" role="alert">
@@ -208,6 +223,20 @@
         debounceTimers: {},
         qtyErrors: {},
         moneyFmt: {{ shop.money_format | json }},
+        // Case-pack facts by Case variant (snippets/case-pack-info.liquid)
+        caseInfo: {
+          {%- for item in cart.items -%}
+            {%- if item.variant.option1 == 'Case' -%}
+              '{{ item.variant_id }}': {% render 'case-pack-info', product: item.product %},
+            {%- endif -%}
+          {%- endfor -%}
+        },
+        // B2B catalog quantity rules by variant; /cart.js lines also carry quantity_rule
+        quantityRules: {
+          {%- for item in cart.items -%}
+            '{{ item.variant_id }}': { min: {{ item.variant.quantity_rule.min | default: 1 }}, increment: {{ item.variant.quantity_rule.increment | default: 1 }}, max: {{ item.variant.quantity_rule.max | default: 'null' }} }{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        },
       };
     },
     computed: {
@@ -223,6 +252,9 @@
           .replace(/\{\{amount_no_decimals\}\}/g, String(Math.round(cents / 100)))
           .replace(/\{\{amount_with_comma_separator\}\}/g, amount.replace('.', ','));
       },
+      caseLabel(item) {
+        return this.caseSavingLabel(this.caseInfo[item.variant_id], item.original_price, this.formatMoney);
+      },
       isOutOfStock(item) {
         return !!(item.variant && item.variant.available === false);
       },
@@ -235,12 +267,29 @@
           : this.formatMoney(allocation.amount);
         return `-${amountLabel} ${application.title} Applied`;
       },
+      quantityRule(item) {
+        return item.quantity_rule || this.quantityRules[item.variant_id] || {};
+      },
+      minQty(item) {
+        return this.quantityRule(item).min || 1;
+      },
+      qtyStep(item) {
+        return this.quantityRule(item).increment || 1;
+      },
       onQtyInput(item, event) {
-        const qty = parseInt(event.target.value, 10);
+        const input = event.target;
+        const qty = parseInt(input.value, 10);
         if (isNaN(qty) || qty < 0) return;
         delete this.qtyErrors[item.key];
         clearTimeout(this.debounceTimers[item.key]);
-        this.debounceTimers[item.key] = setTimeout(() => this.updateQuantity(item, qty), 800);
+        this.debounceTimers[item.key] = setTimeout(() => {
+          // 0 still removes the line; anything else is rounded up to a valid quantity
+          const finalQty = qty > 0
+            ? this.validQuantity(qty, this.minQty(item), this.qtyStep(item), this.quantityRule(item).max)
+            : 0;
+          input.value = finalQty;
+          this.updateQuantity(item, finalQty);
+        }, 800);
       },
       // Take items and totals from Shopify's cart rather than the requested qty,
       // since Shopify may reject or clamp quantities above available stock.
@@ -252,6 +301,13 @@
         this.totalSavings = updatedCart.total_discount;
       },
       async updateQuantity(item, qty) {
+        // Shopify can't cap Case lines (they share the Single variant's stock), so cap them here
+        const caseInfo = this.caseInfo[item.variant_id];
+        let caseCapped = false;
+        if (caseInfo && caseInfo.cases_available != null && qty > caseInfo.cases_available) {
+          qty = caseInfo.cases_available;
+          caseCapped = true;
+        }
         this.updatingCart = true;
         try {
           const response = await fetch('/cart/change.js', {
@@ -263,7 +319,9 @@
           if (response.ok) {
             this.applyCart(body);
             const line = body.items.find((i) => i.key === item.key);
-            if (line && line.quantity < qty) {
+            if (caseCapped) {
+              this.qtyErrors[item.key] = `Only ${qty} cases available. Quantity updated to ${qty}.`;
+            } else if (line && line.quantity < qty) {
               this.qtyErrors[item.key] = `Only ${line.quantity} available. Quantity updated to ${line.quantity}.`;
             }
           } else {

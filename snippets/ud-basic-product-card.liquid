@@ -1,5 +1,22 @@
 {% assign product_id = section.id | append: '-' | append: cur_product.handle | append: extra_append %}
 {% assign product_atc_id = product_id | append: '-atc' %}
+{% assign isbn = cur_product.metafields.facts.isbn | default: cur_product.metafields.custom.isbn %}
+{%- liquid
+  # Same quantity rules as the related-products quick add: B2B min/increment, and a max at stock
+  # (only when Shopify refuses to oversell) or the rule max, whichever is lower.
+  assign qty_variant = cur_product.selected_or_first_available_variant
+  assign min_qty = qty_variant.quantity_rule.min | default: 1
+  assign qty_step = qty_variant.quantity_rule.increment | default: 1
+  assign qty_max = nil
+  if qty_variant.inventory_management == 'shopify' and qty_variant.inventory_policy == 'deny'
+    assign qty_max = qty_variant.inventory_quantity | at_least: 1
+  endif
+  if qty_variant.quantity_rule.max
+    if qty_max == nil or qty_variant.quantity_rule.max < qty_max
+      assign qty_max = qty_variant.quantity_rule.max
+    endif
+  endif
+-%}
 
 <div
   id="{{ product_id }}"
@@ -57,6 +74,46 @@
         </div>
       </div>
     </div>
+    {% if customer == null %}
+      <a
+        href="{{ routes.account_login_url }}"
+        class="tw-bg-brand-secondary tw-w-full tw-cursor-pointer tw-pointer-events-auto md:tw-text-12 tw-text-10 tw-uppercase tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center tw-py-2 tw-no-underline"
+      >
+        Sign in to shop
+      </a>
+    {% elsif cur_product.available %}
+      <div class="tw-flex tw-flex-wrap tw-gap-2 tw-items-stretch tw-w-full">
+        <div class="tw-flex tw-items-center tw-gap-2 tw-grow tw-text-brand-greyer">
+          <label for="{{ product_id }}-qty" class="tw-whitespace-nowrap">
+            {{- 'QTY' -}}
+            {%- if min_qty > 1 %} (Min {{ min_qty }}{% if qty_step > 1 %}, x{{ qty_step }}{% endif %}){% elsif qty_step > 1 %} (x{{ qty_step }}){% endif -%}
+            :
+          </label>
+          <input
+            id="{{ product_id }}-qty"
+            type="number"
+            min="{{ min_qty }}"
+            step="{{ qty_step }}"
+            {% if qty_max %}max="{{ qty_max }}"{% endif %}
+            placeholder="{{ min_qty }}"
+            v-model.number="quantity"
+            @input="capQuantity($event.target)"
+            @change="quantity = validQuantity(quantity, {{ min_qty }}, {{ qty_step }}, {{ qty_max | default: 'Infinity' }})"
+            class="tw-w-full tw-min-w-10 tw-text-center tw-leading-none tw-py-1 tw-border tw-border-brand-grey tw-rounded tw-text-12 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
+            :disabled="addingToCart"
+          >
+        </div>
+        <button
+          type="button"
+          id="{{ product_atc_id }}"
+          class="tw-bg-brand-secondary tw-grow tw-cursor-pointer tw-pointer-events-auto md:tw-text-12 tw-text-10 tw-uppercase tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center tw-py-2"
+          @click="addToCart()"
+          :disabled="addingToCart"
+        >
+          [[ addingToCart ? 'Adding...' : 'Add to Cart' ]]
+        </button>
+      </div>
+    {% endif %}
   </div>
 </div>
 
@@ -68,25 +125,33 @@
       return {
         addingToCart: false,
         productPrice: '{{ cur_product.price }}',
-        quantity: 1,
+        quantity: {{ min_qty }},
       };
     },
-    mounted() {
-      console.log("Card Mounted")
-    },
     methods: {
+      // Keep the typed quantity at or under stock / the rule max
+      capQuantity(input) {
+        const max = {{ qty_max | default: 'Infinity' }};
+        if (Number(input.value) > max) {
+          input.value = max;
+          this.quantity = max;
+        }
+      },
       addToCart() {
         this.addingToCart = true;
+        this.quantity = this.validQuantity(this.quantity, {{ min_qty }}, {{ qty_step }}, {{ qty_max | default: 'Infinity' }});
         let items = [
           {
             quantity: this.quantity,
             'properties': {
               '_tags': {{ cur_product.tags | json }},
+              {%- if isbn != blank %}
+              '_isbn': {{ isbn | append: '' | json }},
+              {%- endif %}
             },
             id: '{{ cur_product.selected_or_first_available_variant.id }}',
           },
         ];
-        console.log(items);
 
         fetch('/cart/add.js', {
           method: 'POST',
@@ -97,20 +162,12 @@
           if (!r.ok) throw data;
           return data;
         }).then((data) => {
-          console.log(data);
-          this.bus.$emit('showCart');
+          // Same bus events as the related-products quick add, so the add-to-cart popup shows
+          this.bus.$emit('cartItemAdded', data.items?.[0] || data);
           this.bus.$emit('refreshCart');
-          this.addingToCart = false;
-          const recentItem = data.items?.[0];
-          this.bus.$emit('cartItemAdded', recentItem);
-          this.$forceUpdate();
         }).catch((error) => {
-          console.log(error, 'caught error');
-          Swal.fire({
-            icon: 'error',
-            text: error && error.description ? error.description : 'Unable to add item to cart.',
-          });
-          this.addingToCart = false;
+          console.error('Unable to add item to cart', error);
+          this.bus.$emit('cartFailedToAdd', error);
         }).finally(() => {
           this.addingToCart = false;
         });

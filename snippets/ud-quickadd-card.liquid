@@ -1,5 +1,22 @@
 {% assign product_id = section.id | append: '-' | append: cur_product.handle %}
 {% assign product_atc_id = product_id | append: '-atc' %}
+{% assign min_qty = cur_product.selected_or_first_available_variant.quantity_rule.min | default: 1 %}
+{% assign qty_step = cur_product.selected_or_first_available_variant.quantity_rule.increment | default: 1 %}
+{%- liquid
+  # Cap at stock only when Shopify refuses to oversell, and at the B2B rule max
+  assign qty_variant = cur_product.selected_or_first_available_variant
+  assign qty_max = nil
+  if qty_variant.inventory_management == 'shopify' and qty_variant.inventory_policy == 'deny'
+    assign qty_max = qty_variant.inventory_quantity | at_least: 1
+  endif
+  if qty_variant.quantity_rule.max
+    if qty_max == nil or qty_variant.quantity_rule.max < qty_max
+      assign qty_max = qty_variant.quantity_rule.max
+    endif
+  endif
+  assign qty_max = qty_max | default: 'Infinity'
+-%}
+{% assign isbn = cur_product.metafields.facts.isbn | default: cur_product.metafields.custom.isbn %}
 
 <div
   id="{{ product_id }}"
@@ -52,9 +69,9 @@
           </h3>
         {% endif %}
         <!-- ISBN -->
-        {% if cur_product.metafields.facts.isbn != blank %}
+        {% if isbn != blank %}
           <h3 class="tw-font-semibold tw-text-14 tw-text-brand-greyer/50 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
-            ISBN: {{ cur_product.metafields.facts.isbn }}
+            ISBN: {{ isbn }}
           </h3>
         {% endif %}
         <h3 class="tw-font-semibold tw-text-14 tw-text-brand-greyer tw-w-full tw-leading-tight tw-h-fit tw-m-0">
@@ -84,12 +101,15 @@
       {% if show_button_type == 'quick-add' %}
         <div class="tw-flex tw-gap-2 tw-items-stretch tw-w-full tw-h-full">
           <div class="tw-flex tw-items-center tw-gap-2 tw-w-full tw-h-full tw-text-brand-greyer">
-            <span>QTY:</span>
+            <span class="tw-whitespace-nowrap">QTY{% if min_qty > 1 %} (Min {{ min_qty }}{% if qty_step > 1 %}, x{{ qty_step }}{% endif %}){% elsif qty_step > 1 %} (x{{ qty_step }}){% endif %}:</span>
             <input
               type="number"
-              min="1"
-              placeholder="1"
+              min="{{ min_qty }}"
+              step="{{ qty_step }}"
+              {% if qty_max != 'Infinity' %}max="{{ qty_max }}"{% endif %}
+              placeholder="{{ min_qty }}"
               v-model.number="quantity"
+              @change="quantity = validQuantity(quantity, {{ min_qty }}, {{ qty_step }}, {{ qty_max }})"
               class="tw-w-full tw-text-center tw-leading-none tw-py-0.5 tw-border tw-border-brand-grey tw-rounded tw-h-full tw-text-12 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
               :disabled="addingToCart"
             >
@@ -124,7 +144,7 @@
       return {
         addingToCart: false,
         productPrice: '{{ cur_product.price }}',
-        quantity: 1,
+        quantity: {{ min_qty }},
       };
     },
     mounted() {
@@ -133,11 +153,15 @@
     methods: {
       addToCart() {
         this.addingToCart = true;
+        this.quantity = this.validQuantity(this.quantity, {{ min_qty }}, {{ qty_step }}, {{ qty_max }});
         let items = [
           {
             quantity: this.quantity,
             'properties': {
               '_tags': {{ cur_product.tags | json }},
+              {%- if isbn != blank %}
+              '_isbn': {{ isbn | append: '' | json }},
+              {%- endif %}
             },
             id: '{{ cur_product.selected_or_first_available_variant.id }}',
           },

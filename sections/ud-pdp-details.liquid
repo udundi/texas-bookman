@@ -203,12 +203,18 @@
     mixins: [global, pdpdata],
     data() {
       return {
-        quantity: 1,
+        quantity: {{ single_variant.quantity_rule.min | default: 1 }},
         currentVariantId: '{{ single_variant.id }}',
         singleVariantId: '{{ single_variant.id }}',
         caseVariantId: '{{ case_variant.id }}',
         casesAvailable: {{ cases_available }},
         stockMax: {{ stock_max }},
+        // B2B catalog quantity rules per variant (min/increment/max); Shopify enforces them at checkout
+        quantityRules: {
+          {%- for variant in product.variants -%}
+            '{{ variant.id }}': { min: {{ variant.quantity_rule.min | default: 1 }}, step: {{ variant.quantity_rule.increment | default: 1 }}, max: {{ variant.quantity_rule.max | default: 'null' }} }{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        },
         productPrice: '{{ product_price }}',
         openedBlocks: {% if section.blocks.size > 0 %}[String('block-{{ section.blocks[0].id }}').slice(0, -2)]{% else %}[]{% endif %},
         sitewideDiscount: {{ settings.sitewide_sale_discount | divided_by: 100.0 }},
@@ -220,8 +226,19 @@
       buyingCase() {
         return !!this.caseVariantId && String(this.currentVariantId) === this.caseVariantId;
       },
+      quantityRule() {
+        return this.quantityRules[String(this.currentVariantId)] || {};
+      },
+      // For the Case variant these count cases, so a case-pack minimum is one case
+      minQty() {
+        return this.quantityRule.min || 1;
+      },
+      qtyStep() {
+        return this.quantityRule.step || 1;
+      },
       qtyMax() {
-        return this.buyingCase ? this.casesAvailable : Math.max(this.stockMax, 1);
+        const stockCap = this.buyingCase ? this.casesAvailable : Math.max(this.stockMax, 1);
+        return Math.min(stockCap, this.quantityRule.max || Infinity);
       },
       soldOut() {
         return !this.buyingCase && this.stockMax < 1;
@@ -230,7 +247,7 @@
     methods: {
       selectPack(variantId) {
         this.currentVariantId = variantId;
-        this.quantity = 1;
+        this.quantity = this.minQty;
       },
       clickingTab(id) {
         this.clickedTab = id;
@@ -241,17 +258,18 @@
         const params = new URLSearchParams(window.location.search);
         const urlVariant = params.get('variant');
         let variantIdToAdd = Number(this.currentVariantId || urlVariant || '{{ single_variant.id }}');
-        let finalQuantity = this.quantity || 1;
-        if (this.buyingCase) {
-          finalQuantity = Math.min(finalQuantity, this.casesAvailable);
-        }
+        let finalQuantity = this.validQuantity(this.quantity, this.minQty, this.qtyStep, this.qtyMax);
+        this.quantity = finalQuantity;
         let mainItem = {
           quantity: finalQuantity,
           id: variantIdToAdd,
         };
 
         mainItemProperties['_tags'] = {{ product.tags | json }};
-        mainItemProperties['_isbn'] = {{ product.metafields.facts.isbn | json }};
+        {%- assign isbn = product.metafields.facts.isbn | default: product.metafields.custom.isbn -%}
+        {%- if isbn != blank %}
+        mainItemProperties['_isbn'] = {{ isbn | append: '' | json }};
+        {%- endif %}
         mainItemProperties['_tb'] = {{ product.metafields.custom.tb_code | json }};
         // Only add properties if there are any
         if (Object.keys(mainItemProperties).length > 0) {
@@ -302,6 +320,7 @@
       const urlVariant = params.get('variant');
       if (urlVariant && (urlVariant !== this.caseVariantId || this.casesAvailable > 0)) {
         this.currentVariantId = urlVariant;
+        this.quantity = this.minQty;
       }
     }
   });

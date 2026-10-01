@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "main": {
@@ -31,7 +22,8 @@
                 "filter_type": "filter.p.vendor=",
                 "children_collapsed": false
               },
-              "blocks": {}
+              "blocks": {},
+              "disabled": false
             },
             "collection_filter_kq7hjx": {
               "type": "_collection-filter",
@@ -42,11 +34,13 @@
                 "filter_type": "filter.p.vendor=",
                 "children_collapsed": false
               },
-              "blocks": {}
+              "blocks": {},
+              "disabled": false
             },
             "collection_filter_zrwRdN": {
               "type": "_collection-filter",
               "name": "Collection Filter",
+              "disabled": false,
               "settings": {
                 "tag": "Piccadilly Inc.",
                 "title": "Piccadilly Inc.",
@@ -85,7 +79,7 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "games-toys-puzzles",
+                "collection_gate": "games-puzzles",
                 "title": "{{ closest.collection.title }}"
               },
               "blocks": {}
@@ -121,7 +115,7 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "stationery-notecards",
+                "collection_gate": "notecards",
                 "title": "{{ closest.collection.title }}"
               },
               "blocks": {}
@@ -148,7 +142,7 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "decorative-books",
+                "collection_gate": "bby-decorative-books",
                 "title": "Decorative Books"
               },
               "blocks": {}
@@ -198,7 +192,7 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "childrens-picture-story-books",
+                "collection_gate": "picture-story-books",
                 "title": "{{ closest.collection.title }}"
               },
               "blocks": {}
@@ -207,7 +201,7 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "childrens-educational-nonfiction",
+                "collection_gate": "educational-nonfiction",
                 "title": "{{ closest.collection.title }}"
               },
               "blocks": {}
@@ -237,7 +231,50 @@
                 "collection_gate": "art",
                 "title": "Art"
               },
-              "blocks": {}
+              "blocks": {
+                "collection_gate_xD8ym6": {
+                  "type": "_collection-gate",
+                  "name": "Collection Gate",
+                  "settings": {
+                    "collection_gate": "artists",
+                    "title": ""
+                  },
+                  "blocks": {}
+                },
+                "collection_gate_tdA1ps": {
+                  "type": "_collection-gate",
+                  "name": "Collection Gate",
+                  "settings": {
+                    "collection_gate": "art-instruction",
+                    "title": ""
+                  },
+                  "blocks": {}
+                },
+                "collection_gate_tW1CFo": {
+                  "type": "_collection-gate",
+                  "name": "Collection Gate",
+                  "settings": {
+                    "collection_gate": "design-decorative-arts",
+                    "title": ""
+                  },
+                  "blocks": {}
+                },
+                "collection_gate_fv2tov": {
+                  "type": "_collection-gate",
+                  "name": "Collection Gate",
+                  "settings": {
+                    "collection_gate": "fashion",
+                    "title": ""
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "collection_gate_xD8ym6",
+                "collection_gate_tdA1ps",
+                "collection_gate_tW1CFo",
+                "collection_gate_fv2tov"
+              ]
             },
             "collection_gate_3n3UgU": {
               "type": "_collection-gate",
@@ -301,7 +338,50 @@
                 "collection_gate": "history",
                 "title": "History"
               },
-              "blocks": {}
+              "blocks": {
+                "collection_gate_YIdaQA": {
+                  "type": "_collection-gate",
+                  "name": "Collection Gate",
+                  "settings": {
+                    "collection_gate": "archaeology-ancient-history",
+                    "title": ""
+                  },
+                  "blocks": {}
+                },
+                "collection_gate_L5MYyV": {
+                  "type": "_collection-gate",
+                  "name": "Collection Gate",
+                  "settings": {
+                    "collection_gate": "military-history",
+                    "title": ""
+                  },
+                  "blocks": {}
+                },
+                "collection_gate_pvIDbe": {
+                  "type": "_collection-gate",
+                  "name": "Collection Gate",
+                  "settings": {
+                    "collection_gate": "united-states-history",
+                    "title": ""
+                  },
+                  "blocks": {}
+                },
+                "collection_gate_QO6zjg": {
+                  "type": "_collection-gate",
+                  "name": "Collection Gate",
+                  "settings": {
+                    "collection_gate": "world-history",
+                    "title": ""
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "collection_gate_YIdaQA",
+                "collection_gate_L5MYyV",
+                "collection_gate_pvIDbe",
+                "collection_gate_QO6zjg"
+              ]
             },
             "collection_gate_9gn7mC": {
               "type": "_collection-gate",
@@ -316,7 +396,7 @@
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
-                "collection_gate": "",
+                "collection_gate": "mythology-folktales",
                 "title": "Mythology & Folktales"
               },
               "blocks": {}

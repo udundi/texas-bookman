@@ -1,0 +1,31 @@
+{%- comment -%}
+  Outputs the case-pack facts of a product as JSON, or null when it has no Case variant:
+  {"case_variant_id", "size", "single_price", "case_price", "cases_available"}. cases_available is
+  null when the Single variant can be oversold, since Case variants don't track their own stock. Case size and the Single/Case
+  variant lookup follow blocks/_pdp-box-quantity.liquid. Used by the cart and the add-to-cart
+  popup (through templates/product.case-info.liquid) to show the pack size and the saving.
+
+  Accepts:
+  - product: {Object} the product
+{%- endcomment -%}
+{%- liquid
+  assign single_variant = nil
+  assign case_variant = nil
+  for variant in product.variants
+    if variant.option1 == 'Case'
+      assign case_variant = variant
+    elsif single_variant == nil
+      assign single_variant = variant
+    endif
+  endfor
+  assign case_size = product.metafields.custom.case_size.value | default: case_variant.metafields.custom.case_quantity.value | default: 1
+  assign cases_available = 'null'
+  if single_variant.inventory_management == 'shopify' and single_variant.inventory_policy == 'deny'
+    assign cases_available = single_variant.inventory_quantity | at_least: 0 | divided_by: case_size
+  endif
+-%}
+{%- if case_variant and single_variant and case_size > 1 -%}
+  {"case_variant_id": {{ case_variant.id }}, "size": {{ case_size }}, "single_price": {{ single_variant.price }}, "case_price": {{ case_variant.price }}, "cases_available": {{ cases_available }}}
+{%- else -%}
+  null
+{%- endif -%}

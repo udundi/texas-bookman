@@ -175,11 +175,20 @@
               {% if item.object_type == 'product' %}
                 {% assign product = item %}
                 {%- liquid
+                  assign isbn = product.metafields.facts.isbn | default: product.metafields.custom.isbn
                   # Cap the quick-add input at stock only when Shopify refuses to oversell
                   assign qty_variant = product.selected_or_first_available_variant
                   assign qty_max = nil
                   if qty_variant.inventory_management == 'shopify' and qty_variant.inventory_policy == 'deny'
                     assign qty_max = qty_variant.inventory_quantity | at_least: 1
+                  endif
+                  # B2B catalog quantity rule: start at the min, step by the increment, never pass its max
+                  assign min_qty = qty_variant.quantity_rule.min | default: 1
+                  assign qty_step = qty_variant.quantity_rule.increment | default: 1
+                  if qty_variant.quantity_rule.max
+                    if qty_max == nil or qty_variant.quantity_rule.max < qty_max
+                      assign qty_max = qty_variant.quantity_rule.max
+                    endif
                   endif
                 -%}
                 <div class="tw-flex tw-flex-col tw-justify-between tw-p-4 tw-border tw-border-brand-grey tw-bg-white tw-mr-[-1px] tw-mb-[-1px] tw-h-full">
@@ -219,9 +228,9 @@
                             TB Code: <span class="tw-font-normal">{{ product.metafields.custom.tb_code }}</span>
                           </p>
                         {% endif %}
-                        {% if product.metafields.custom.isbn != blank %}
+                        {% if isbn != blank %}
                           <p class="tw-font-semibold tw-text-14 tw-text-brand-greyer/50 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
-                            ISBN: <span class="tw-font-normal">{{ product.metafields.custom.isbn }}</span>
+                            ISBN: <span class="tw-font-normal">{{ isbn }}</span>
                           </p>
                         {% endif %}
                         <p class="tw-font-semibold tw-text-14 tw-text-gray-600 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
@@ -248,14 +257,16 @@
                     {% else %}
                       <div class="tw-flex tw-gap-2 tw-w-full tw-mt-auto">
                         <div class="tw-flex tw-items-center tw-gap-2 tw-w-full">
-                          <span class="tw-text-12 tw-font-semibold">QTY:</span>
+                          <span class="tw-text-12 tw-font-semibold tw-whitespace-nowrap">QTY{% if min_qty > 1 %} (Min {{ min_qty }}{% if qty_step > 1 %}, x{{ qty_step }}{% endif %}){% elsif qty_step > 1 %} (x{{ qty_step }}){% endif %}:</span>
                           <input
                             type="number"
-                            min="1"
+                            min="{{ min_qty }}"
+                            step="{{ qty_step }}"
                             {% if qty_max %}max="{{ qty_max }}"{% endif %}
-                            placeholder="1"
-                            :value="getQty({{ product.selected_or_first_available_variant.id }})"
+                            placeholder="{{ min_qty }}"
+                            :value="getQty({{ product.selected_or_first_available_variant.id }}, {{ min_qty }})"
                             @input="setQty({{ product.selected_or_first_available_variant.id }}, $event.target, {{ qty_max | default: 'Infinity' }})"
+                            @change="clampQty({{ product.selected_or_first_available_variant.id }}, $event.target, {{ min_qty }}, {{ qty_step }}, {{ qty_max | default: 'Infinity' }})"
                             class="tw-w-full tw-text-center tw-leading-none tw-py-0.5 tw-border tw-border-brand-grey tw-rounded tw-h-full tw-text-12 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
                             :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                           >
@@ -263,7 +274,7 @@
                         <button
                           type="button"
                           class="tw-bg-brand-secondary tw-w-full tw-cursor-pointer tw-text-12 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4 tw-py-2 tw-font-semibold tw-font-montserrat hover:tw-brightness-95 tw-whitespace-nowrap tw-items-center tw-uppercase"
-                          @click="addToCart({{ product.selected_or_first_available_variant.id }})"
+                          @click="addToCart({{ product.selected_or_first_available_variant.id }}, {{ isbn | append: '' | json | escape }}, {{ min_qty }}, {{ qty_step }}, {{ qty_max | default: 'Infinity' }})"
                           :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                         >
                           [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : 'Add to Cart' ]]
@@ -299,16 +310,25 @@
               {% if item.object_type == 'product' %}
                 {% assign product = item %}
                 {%- liquid
+                  assign isbn = product.metafields.facts.isbn | default: product.metafields.custom.isbn
                   # Cap the quick-add input at stock only when Shopify refuses to oversell
                   assign qty_variant = product.selected_or_first_available_variant
                   assign qty_max = nil
                   if qty_variant.inventory_management == 'shopify' and qty_variant.inventory_policy == 'deny'
                     assign qty_max = qty_variant.inventory_quantity | at_least: 1
                   endif
+                  # B2B catalog quantity rule: start at the min, step by the increment, never pass its max
+                  assign min_qty = qty_variant.quantity_rule.min | default: 1
+                  assign qty_step = qty_variant.quantity_rule.increment | default: 1
+                  if qty_variant.quantity_rule.max
+                    if qty_max == nil or qty_variant.quantity_rule.max < qty_max
+                      assign qty_max = qty_variant.quantity_rule.max
+                    endif
+                  endif
                 -%}
                 <div class="tw-flex tw-flex-row tw-items-center tw-border tw-mb-[-1px] tw-border-brand-grey tw-bg-white tw-p-4 tw-gap-4 tw-w-full">
                   <a href="{{ product.url }}" class="tw-flex-shrink-0">
-                    <div class="tw-h-36 tw-object-cover tw-aspect-5/6 tw-relative">
+                    <div class="tw-h-28 md:tw-h-36 tw-object-cover tw-aspect-5/6 tw-relative">
                       {% if product.featured_image != blank %}
                         {{
                           product.featured_image
@@ -330,13 +350,13 @@
 
                   <div class="tw-py-1 tw-w-full tw-flex tw-flex-col tw-justify-between tw-gap-2 tw-min-w-0 tw-grow">
                     <div class="tw-flex tw-grow tw-flex-col tw-justify-between tw-gap-1">
-                      <div class="tw-flex tw-w-full tw-flex-row tw-justify-between tw-gap-x-3 tw-gap-y-0.5 tw-text-12">
-                        <a href="{{ product.url }}" class="tw-no-underline">
+                      <div class="tw-flex tw-w-full tw-flex-row max-md:tw-flex-wrap tw-justify-between tw-gap-x-3 tw-gap-y-0.5 tw-text-12">
+                        <a href="{{ product.url }}" class="tw-no-underline tw-min-w-0 max-md:tw-w-full">
                           <h3 class="tw-font-semibold tw-text-14 tw-text-brand-primary tw-leading-tight tw-m-0 tw-truncate">
                             {{ product.title }}
                           </h3>
                         </a>
-                        <div class="tw-text-gray-500 tw-text-14 tw-font-normal">
+                        <div class="tw-text-gray-500 tw-text-14 tw-font-normal tw-whitespace-nowrap">
                           List: <span class="tw-font-normal">{{ product.compare_at_price | default: product.price | money }}</span>
                         </div>
                       </div>
@@ -354,16 +374,18 @@
                       <div class="tw-grow tw-text-14 tw-line-clamp-3 tw-text-gray-500">
                         {{ product.description | strip_html | truncatewords: 30 | default: 'No description available.' }}
                       </div>
-                      <div class="tw-flex tw-w-full tw-justify-between tw-items-end tw-gap-x-3 tw-gap-y-0.5 tw-text-14 tw-pt-2">
+                      <div class="tw-flex tw-w-full max-md:tw-flex-col max-md:tw-items-stretch tw-justify-between md:tw-items-end tw-gap-x-3 tw-gap-y-2 md:tw-gap-y-0.5 tw-text-14 tw-pt-2">
                         <div class="tw-flex tw-w-full tw-flex-wrap tw-text-gray-700 tw-font-semibold tw-gap-x-4 tw-gap-y-0.5 tw-text-14">
-                          <div>
-                            ISBN: <span class="tw-font-normal">{{ product.metafields.facts.isbn | default: 'XXXXXXXX' }}</span>
-                          </div>
+                          {% if isbn != blank %}
+                            <div>
+                              ISBN: <span class="tw-font-normal">{{ isbn }}</span>
+                            </div>
+                          {% endif %}
                           <div>
                             QTY: <span class="tw-font-normal">{{ product.selected_or_first_available_variant.inventory_quantity }}</span>
                           </div>
                         </div>
-                        <div class="tw-flex-shrink-0">
+                        <div class="tw-flex-shrink-0 max-md:tw-w-full">
                           {% if customer == null %}
                             <a
                               href="{{ routes.account_login_url }}"
@@ -372,24 +394,26 @@
                               Sign in to shop
                             </a>
                           {% else %}
-                            <div class="tw-flex tw-items-center tw-gap-2 tw-h-full">
+                            <div class="tw-flex max-md:tw-flex-wrap tw-items-center tw-gap-2 tw-h-full">
                               <div class="tw-flex tw-items-center tw-gap-1">
-                                <label class="tw-text-14 tw-font-semibold">QTY:</label>
+                                <label class="tw-text-14 tw-font-semibold tw-whitespace-nowrap">QTY{% if min_qty > 1 %} (Min {{ min_qty }}{% if qty_step > 1 %}, x{{ qty_step }}{% endif %}){% elsif qty_step > 1 %} (x{{ qty_step }}){% endif %}:</label>
                                 <input
                                   type="number"
-                                  min="1"
+                                  min="{{ min_qty }}"
+                                  step="{{ qty_step }}"
                                   {% if qty_max %}max="{{ qty_max }}"{% endif %}
-                                  placeholder="1"
-                                  :value="getQty({{ product.selected_or_first_available_variant.id }})"
+                                  placeholder="{{ min_qty }}"
+                                  :value="getQty({{ product.selected_or_first_available_variant.id }}, {{ min_qty }})"
                                   @input="setQty({{ product.selected_or_first_available_variant.id }}, $event.target, {{ qty_max | default: 'Infinity' }})"
+                                  @change="clampQty({{ product.selected_or_first_available_variant.id }}, $event.target, {{ min_qty }}, {{ qty_step }}, {{ qty_max | default: 'Infinity' }})"
                                   class="tw-w-14 tw-text-center tw-leading-none tw-py-0.5 tw-px-1 tw-border tw-border-brand-grey tw-rounded tw-text-14 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
                                   :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                                 >
                               </div>
                               <button
                                 type="button"
-                                class="tw-bg-brand-secondary tw-cursor-pointer tw-text-11 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-5 tw-py-2 tw-font-semibold tw-font-montserrat hover:tw-brightness-95 tw-whitespace-nowrap tw-items-center tw-uppercase"
-                                @click="addToCart({{ product.selected_or_first_available_variant.id }})"
+                                class="tw-bg-brand-secondary tw-cursor-pointer tw-text-11 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-5 tw-py-2 tw-font-semibold tw-font-montserrat hover:tw-brightness-95 tw-whitespace-nowrap tw-items-center tw-uppercase max-md:tw-grow"
+                                @click="addToCart({{ product.selected_or_first_available_variant.id }}, {{ isbn | append: '' | json | escape }}, {{ min_qty }}, {{ qty_step }}, {{ qty_max | default: 'Infinity' }})"
                                 :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                               >
                                 [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : 'Add to Cart' ]]
@@ -492,8 +516,8 @@
         this.viewMode = mode;
         localStorage.setItem('productViewMode', mode);
       },
-      getQty(variantId) {
-        return this.quantities[variantId] || 1;
+      getQty(variantId, minQty = 1) {
+        return this.quantities[variantId] || minQty;
       },
       setQty(variantId, input, max) {
         const qty = Math.min(parseInt(input.value, 10) || 1, max);
@@ -501,17 +525,24 @@
         if (Number(input.value) > max) input.value = qty;
         this.$set(this.quantities, variantId, qty);
       },
+      // On blur, round up to a quantity the variant's quantity rule accepts
+      clampQty(variantId, input, minQty, qtyStep, max) {
+        const qty = this.validQuantity(this.getQty(variantId, minQty), minQty, qtyStep, max);
+        input.value = qty;
+        this.$set(this.quantities, variantId, qty);
+      },
       isAdding(variantId) {
         return !!this.addingToCartMap[variantId];
       },
-      addToCart(variantId) {
-        const qty = this.getQty(variantId);
+      addToCart(variantId, isbn, minQty = 1, qtyStep = 1, max = Infinity) {
+        const qty = this.validQuantity(this.getQty(variantId, minQty), minQty, qtyStep, max);
+        this.$set(this.quantities, variantId, qty);
         this.$set(this.addingToCartMap, variantId, true);
         fetch('/cart/add.js', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            items: [{ id: variantId, quantity: qty }],
+            items: [{ id: variantId, quantity: qty, ...(isbn && { properties: { '_isbn': isbn } }) }],
           }),
         })
           .then(async (r) => {

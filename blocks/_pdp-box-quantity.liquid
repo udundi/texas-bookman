@@ -49,7 +49,7 @@
     {% if case_size > 1 %}
       <div>
         <span class="tw-font-semibold">Cases Available:</span> {{ cases_available }} |
-        <span class="tw-font-semibold">Cases Include:</span> {{ case_size }} books
+        <span class="tw-font-semibold">Cases Include:</span> {{ case_size }} {% if product.type contains 'Book' %}books{% else %}items{% endif %}
       </div>
     {% endif %}
     {% if case_saving_pct > 0 and cases_available > 0 %}
