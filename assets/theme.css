@@ -3415,6 +3415,10 @@ video {
   outline-offset: 2px;
 }
 
+.disabled\:tw-cursor-wait:disabled {
+  cursor: wait;
+}
+
 .disabled\:tw-bg-gray-100:disabled {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
@@ -3423,6 +3427,10 @@ video {
 .disabled\:tw-text-gray-400:disabled {
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity, 1));
+}
+
+.disabled\:tw-opacity-60:disabled {
+  opacity: 0.6;
 }
 
 .tw-group[open] .group-open\:tw-rotate-180 {
