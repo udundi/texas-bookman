@@ -69,7 +69,10 @@
             <div class="tw-flex tw-w-full tw-justify-between tw-items-end tw-gap-x-3 tw-gap-y-0.5 tw-text-14">
               <!-- Product Details Section -->
               <div class="tw-flex tw-w-full tw-flex-col tw-text-gray-700 tw-font-semibold tw-gap-y-0.5 tw-text-14">
-                <div class="tw-text-[#312F30] tw-text-opacity-80">
+                <div
+                  v-if="recentlyAddedItem.properties && recentlyAddedItem.properties._isbn"
+                  class="tw-text-[#312F30] tw-text-opacity-80"
+                >
                   ISBN:
                   <span class="tw-font-normal">[[ recentlyAddedItem.properties._isbn ]]</span>
                 </div>

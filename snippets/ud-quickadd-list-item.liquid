@@ -1,5 +1,6 @@
 {% assign product_id = section.id | append: '-' | append: product.handle | append: '-list-atc' %}
 {% assign product_atc_id = product_id | append: '-atc' %}
+{% assign isbn = product.metafields.facts.isbn | default: product.metafields.custom.isbn %}
 
 <div
   id="{{ product_id }}"
@@ -68,9 +69,11 @@
       <div class="tw-flex tw-w-full tw-justify-between tw-items-end tw-gap-x-3 tw-gap-y-0.5 tw-text-14">
         <!-- Product Details Section -->
         <div class="tw-flex tw-w-full tw-flex-wrap tw-text-gray-700 tw-font-semibold tw-gap-x-3 tw-gap-y-0.5 tw-text-14">
-          <div>
-            ISBN: <span class="tw-font-normal">{{ product.metafields.facts.isbn | default: 'XXXXXXXX' }}</span>
-          </div>
+          {% if isbn != blank %}
+            <div>
+              ISBN: <span class="tw-font-normal">{{ isbn }}</span>
+            </div>
+          {% endif %}
           {% comment %}
             <div>
               TB CODE: <span class="tw-font-normal">{{ product.metafields.custom.tb.value | default: 'XXXXXXXX' }}</span>
@@ -150,7 +153,9 @@
             quantity: this.quantity,
             properties: {
               '_tags': {{ product.tags | json }},
-              '_isbn': {{ product.metafields.facts.isbn | json }},
+              {%- if isbn != blank %}
+              '_isbn': {{ isbn | append: '' | json }},
+              {%- endif %}
             },
             id: {{ product.selected_or_first_available_variant.id }},
           },

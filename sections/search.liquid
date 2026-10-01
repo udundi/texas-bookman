@@ -175,6 +175,7 @@
               {% if item.object_type == 'product' %}
                 {% assign product = item %}
                 {%- liquid
+                  assign isbn = product.metafields.facts.isbn | default: product.metafields.custom.isbn
                   # Cap the quick-add input at stock only when Shopify refuses to oversell
                   assign qty_variant = product.selected_or_first_available_variant
                   assign qty_max = nil
@@ -219,9 +220,9 @@
                             TB Code: <span class="tw-font-normal">{{ product.metafields.custom.tb_code }}</span>
                           </p>
                         {% endif %}
-                        {% if product.metafields.custom.isbn != blank %}
+                        {% if isbn != blank %}
                           <p class="tw-font-semibold tw-text-14 tw-text-brand-greyer/50 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
-                            ISBN: <span class="tw-font-normal">{{ product.metafields.custom.isbn }}</span>
+                            ISBN: <span class="tw-font-normal">{{ isbn }}</span>
                           </p>
                         {% endif %}
                         <p class="tw-font-semibold tw-text-14 tw-text-gray-600 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
@@ -263,7 +264,7 @@
                         <button
                           type="button"
                           class="tw-bg-brand-secondary tw-w-full tw-cursor-pointer tw-text-12 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4 tw-py-2 tw-font-semibold tw-font-montserrat hover:tw-brightness-95 tw-whitespace-nowrap tw-items-center tw-uppercase"
-                          @click="addToCart({{ product.selected_or_first_available_variant.id }})"
+                          @click="addToCart({{ product.selected_or_first_available_variant.id }}, {{ isbn | append: '' | json | escape }})"
                           :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                         >
                           [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : 'Add to Cart' ]]
@@ -299,6 +300,7 @@
               {% if item.object_type == 'product' %}
                 {% assign product = item %}
                 {%- liquid
+                  assign isbn = product.metafields.facts.isbn | default: product.metafields.custom.isbn
                   # Cap the quick-add input at stock only when Shopify refuses to oversell
                   assign qty_variant = product.selected_or_first_available_variant
                   assign qty_max = nil
@@ -356,9 +358,11 @@
                       </div>
                       <div class="tw-flex tw-w-full tw-justify-between tw-items-end tw-gap-x-3 tw-gap-y-0.5 tw-text-14 tw-pt-2">
                         <div class="tw-flex tw-w-full tw-flex-wrap tw-text-gray-700 tw-font-semibold tw-gap-x-4 tw-gap-y-0.5 tw-text-14">
-                          <div>
-                            ISBN: <span class="tw-font-normal">{{ product.metafields.facts.isbn | default: 'XXXXXXXX' }}</span>
-                          </div>
+                          {% if isbn != blank %}
+                            <div>
+                              ISBN: <span class="tw-font-normal">{{ isbn }}</span>
+                            </div>
+                          {% endif %}
                           <div>
                             QTY: <span class="tw-font-normal">{{ product.selected_or_first_available_variant.inventory_quantity }}</span>
                           </div>
@@ -389,7 +393,7 @@
                               <button
                                 type="button"
                                 class="tw-bg-brand-secondary tw-cursor-pointer tw-text-11 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-5 tw-py-2 tw-font-semibold tw-font-montserrat hover:tw-brightness-95 tw-whitespace-nowrap tw-items-center tw-uppercase"
-                                @click="addToCart({{ product.selected_or_first_available_variant.id }})"
+                                @click="addToCart({{ product.selected_or_first_available_variant.id }}, {{ isbn | append: '' | json | escape }})"
                                 :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                               >
                                 [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : 'Add to Cart' ]]
@@ -504,14 +508,14 @@
       isAdding(variantId) {
         return !!this.addingToCartMap[variantId];
       },
-      addToCart(variantId) {
+      addToCart(variantId, isbn) {
         const qty = this.getQty(variantId);
         this.$set(this.addingToCartMap, variantId, true);
         fetch('/cart/add.js', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            items: [{ id: variantId, quantity: qty }],
+            items: [{ id: variantId, quantity: qty, ...(isbn && { properties: { '_isbn': isbn } }) }],
           }),
         })
           .then(async (r) => {

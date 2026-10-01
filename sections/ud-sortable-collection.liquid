@@ -499,6 +499,7 @@
                     {% endif %}
                   {% endfor %}
                 {% endif %}
+                {% assign isbn = product.metafields.facts.isbn | default: product.metafields.custom.isbn %}
                 {% comment %} Case-pack products: see blocks/_pdp-box-quantity.liquid {% endcomment %}
                 {% assign single_variant = product.selected_or_first_available_variant %}
                 {% assign case_variant = nil %}
@@ -589,11 +590,11 @@
                               </span>
                             </p>
                           {% endif %}
-                          {% if product.metafields.custom.isbn != blank %}
+                          {% if isbn != blank %}
                             <p class="tw-font-semibold tw-text-14 tw-text-brand-greyer/50 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
                               ISBN:
                               <span class="tw-font-normal">
-                                {{- product.metafields.custom.isbn -}}
+                                {{- isbn -}}
                               </span>
                             </p>
                           {% endif %}
@@ -666,7 +667,7 @@
                               data-case-variant-id="{{ case_variant.id }}"
                               data-cases-available="{{ cases_available }}"
                               data-tags="{{ product.tags | json }}"
-                              data-isbn="{{ product.metafields.facts.isbn }}"
+                              data-isbn="{{ isbn }}"
                               class="tw-bg-brand-secondary tw-w-full tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center"
                               @click="addToCart(variantFor({{ single_variant.id }}), $event.currentTarget)"
                               :disabled="isAdding(variantFor({{ single_variant.id }}))"
@@ -765,12 +766,14 @@
                         </div>
                         <div class="tw-flex tw-w-full tw-justify-between tw-items-end tw-gap-x-3 tw-gap-y-0.5 tw-text-14">
                           <div class="tw-flex tw-w-full tw-flex-wrap tw-text-gray-700 tw-font-semibold tw-gap-x-3 tw-gap-y-0.5 tw-text-14">
-                            <div>
-                              ISBN:
-                              <span class="tw-font-normal">
-                                {{- product.metafields.facts.isbn | default: 'XXXXXXXX' -}}
-                              </span>
-                            </div>
+                            {% if isbn != blank %}
+                              <div>
+                                ISBN:
+                                <span class="tw-font-normal">
+                                  {{- isbn -}}
+                                </span>
+                              </div>
+                            {% endif %}
                             <div>
                               QTY:
                               <span class="tw-font-normal">
@@ -817,7 +820,7 @@
                               data-case-variant-id="{{ case_variant.id }}"
                               data-cases-available="{{ cases_available }}"
                                     data-tags="{{ product.tags | json }}"
-                                    data-isbn="{{ product.metafields.facts.isbn }}"
+                                    data-isbn="{{ isbn }}"
                                     class="tw-bg-brand-secondary tw-cursor-pointer tw-pointer-events-auto tw-text-10 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-6 tw-py-1.5 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-sans hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center"
                                     @click="addToCart(variantFor({{ single_variant.id }}), $event.currentTarget)"
                                     :disabled="isAdding(variantFor({{ single_variant.id }}))"
@@ -1023,13 +1026,13 @@
           qty = Math.min(qty, Number(btn.dataset.casesAvailable));
         }
         const tags = JSON.parse(btn.dataset.tags || '[]');
-        const isbn = btn.dataset.isbn || null;
+        const isbn = btn.dataset.isbn;
         this.$set(this.addingToCartMap, variantId, true);
         fetch('/cart/add.js', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            items: [{ id: variantId, quantity: qty, properties: { '_tags': tags, '_isbn': isbn } }],
+            items: [{ id: variantId, quantity: qty, properties: { '_tags': tags, ...(isbn && { '_isbn': isbn }) } }],
           }),
         })
           .then(async (r) => { const data = await r.json(); if (!r.ok) throw data; return data; })
