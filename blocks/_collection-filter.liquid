@@ -96,26 +96,64 @@
       {%- endif -%}
     {%- endif -%}
 
+    {%- liquid
+      assign filter_active = false
+      if query_params contains filter_change
+        assign filter_active = true
+      endif
+      assign filter_count = nil
+
+      # When the store has this filter enabled (Search & Discovery), take the selected
+      # state, URLs and result count from Shopify instead of the URL string. Selecting
+      # several values of one filter ORs them.
+      assign filter_param = block.settings.filter_type | remove_last: '='
+      assign filter_found = false
+      assign filter_value = nil
+      for filter in collection.filters
+        if filter.param_name == filter_param
+          assign filter_found = true
+          for value in filter.values
+            if value.value == block.settings.tag
+              assign filter_value = value
+              break
+            endif
+          endfor
+        endif
+      endfor
+      if filter_value
+        assign filter_active = filter_value.active
+        assign filter_count = filter_value.count
+        if filter_active
+          assign filter_href = filter_value.url_to_remove
+        else
+          assign filter_href = filter_value.url_to_add
+        endif
+      endif
+    -%}
+
     {%- capture child_blocks -%}{%- content_for 'blocks' -%}{%- endcapture -%}
 
+    {%- liquid
+      # Hide values with no results, unless already selected or they hold sub-filters.
+      assign hide_filter = false
+      if filter_found and child_blocks == blank
+        if filter_value == nil
+          assign hide_filter = true
+        elsif filter_active == false and filter_count == 0
+          assign hide_filter = true
+        endif
+      endif
+    -%}
+
+    {%- unless hide_filter -%}
     <div class="tw-flex tw-w-full tw-flex-col">
       <div class="tw-flex tw-w-full tw-items-center tw-gap-1">
-        <a
-          href="{{ filter_href }}"
-          class="tw-flex tw-flex-1 tw-justify-center tw-items-center tw-gap-2 tw-group"
-        >
-          <div class="tw-border group-hover:tw-border-black tw-rounded-[4px] tw-border-offblack tw-size-4 tw-aspect-square tw-p-0.5 tw-my-auto {% if query_params contains filter_change %} tw-bg-black {% endif %}">
-            <svg
-              class="tw-fill-white {% unless query_params contains filter_change %} tw-hidden {% endunless %}"
-              viewBox="0 0 448 512"
-            >
-              <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
-            </svg>
-          </div>
-          <p class="group-hover:tw-underline tw-text-offblack tw-text-14 tw-w-full !tw-m-0">
-            {{ block.settings.title }}
-          </p>
-        </a>
+        {% render 'collection-filter-checkbox',
+          href: filter_href,
+          checked: filter_active,
+          label: block.settings.title,
+          count: filter_count
+        %}
         {%- unless child_blocks == blank -%}
           <button
             type="button"
@@ -141,6 +179,7 @@
         </div>
       {%- endunless -%}
     </div>
+    {%- endunless -%}
   {% else %}
     <div class="tw-flex tw-flex-wrap tw-gap-2 tw-w-full ">
       {% for color in metaobjects.tile_colors.values %}
