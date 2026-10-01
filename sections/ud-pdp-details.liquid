@@ -169,6 +169,31 @@
 
 <!-- Setting Price variables for vue -->
 {% assign product_price = product.selected_or_first_available_variant.price %}
+{% comment %} Case-pack products: see blocks/_pdp-box-quantity.liquid {% endcomment %}
+{% assign single_variant = product.selected_or_first_available_variant %}
+{% assign case_variant = nil %}
+{% for variant in product.variants %}
+  {% if variant.option1 == 'Case' %}
+    {% assign case_variant = variant %}
+  {% elsif single_variant.option1 == 'Case' %}
+    {% assign single_variant = variant %}
+  {% endif %}
+{% endfor %}
+{% assign case_size = product.metafields.custom.case_size.value
+  | default: case_variant.metafields.custom.case_quantity.value
+  | default: 1
+%}
+{% assign cases_available = 0 %}
+{% if case_variant and case_size > 1 %}
+  {% assign cases_available = single_variant.inventory_quantity | at_least: 0 | divided_by: case_size %}
+{% endif %}
+{%- liquid
+  # Cap at stock only when Shopify refuses to oversell the single variant
+  assign stock_max = 'Infinity'
+  if single_variant.inventory_management == 'shopify' and single_variant.inventory_policy == 'deny'
+    assign stock_max = single_variant.inventory_quantity | at_least: 0
+  endif
+-%}
 {% assign sitewide_discount = settings.sitewide_sale | default: false %}
 
 <!-- Vue Main script -->
@@ -179,7 +204,11 @@
     data() {
       return {
         quantity: 1,
-        currentVariantId: '{{ product.selected_or_first_available_variant.id }}',
+        currentVariantId: '{{ single_variant.id }}',
+        singleVariantId: '{{ single_variant.id }}',
+        caseVariantId: '{{ case_variant.id }}',
+        casesAvailable: {{ cases_available }},
+        stockMax: {{ stock_max }},
         productPrice: '{{ product_price }}',
         openedBlocks: {% if section.blocks.size > 0 %}[String('block-{{ section.blocks[0].id }}').slice(0, -2)]{% else %}[]{% endif %},
         sitewideDiscount: {{ settings.sitewide_sale_discount | divided_by: 100.0 }},
@@ -187,7 +216,22 @@
         clickedTab: 0,
       };
     },
+    computed: {
+      buyingCase() {
+        return !!this.caseVariantId && String(this.currentVariantId) === this.caseVariantId;
+      },
+      qtyMax() {
+        return this.buyingCase ? this.casesAvailable : Math.max(this.stockMax, 1);
+      },
+      soldOut() {
+        return !this.buyingCase && this.stockMax < 1;
+      },
+    },
     methods: {
+      selectPack(variantId) {
+        this.currentVariantId = variantId;
+        this.quantity = 1;
+      },
       clickingTab(id) {
         this.clickedTab = id;
       },
@@ -196,8 +240,11 @@
         let mainItemProperties = {};
         const params = new URLSearchParams(window.location.search);
         const urlVariant = params.get('variant');
-        let variantIdToAdd = Number(this.currentVariantId || urlVariant || '{{ product.selected_or_first_available_variant.id }}');
+        let variantIdToAdd = Number(this.currentVariantId || urlVariant || '{{ single_variant.id }}');
         let finalQuantity = this.quantity || 1;
+        if (this.buyingCase) {
+          finalQuantity = Math.min(finalQuantity, this.casesAvailable);
+        }
         let mainItem = {
           quantity: finalQuantity,
           id: variantIdToAdd,
@@ -253,7 +300,7 @@
 
       const params = new URLSearchParams(window.location.search);
       const urlVariant = params.get('variant');
-      if (urlVariant) {
+      if (urlVariant && (urlVariant !== this.caseVariantId || this.casesAvailable > 0)) {
         this.currentVariantId = urlVariant;
       }
     }

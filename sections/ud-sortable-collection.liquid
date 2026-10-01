@@ -76,19 +76,6 @@
   class="section-{{ section.id }}-props tw-border-brand-grey tw-bg-white tw-border-b tw-mb-[-1px]"
   data-filtered-product-count="{{ collection.products_count }}"
 >
-  <style>
-    #filters-{{ block.id }} {
-      height: 100%;
-      background-color: {{ block.settings.background_color }};
-      max-height: 100px;
-      transition: max-height 0.25s ease
-    }
-
-    #filters-{{ block.id }}
-    .collapsed {
-      max-height: 0;
-    }
-  </style>
   <div class="tw-w-full tw-flex tw-justify-center tw-border-y tw-border-brand-grey tw-border-solid tw-p-2 tw-my-[-1px]">
     <div class="tw-flex tw-flex-col tw-gap-2 tw-w-full tw-max-w-screen-2xl md:tw-flex-row md:tw-justify-between md:tw-items-center">
       <div class="tw-flex tw-w-full tw-items-start tw-justify-between tw-gap-2 max-md:tw-px-4 md:tw-w-auto">
@@ -214,6 +201,16 @@
             </option>
           </select>
         </div>
+        {% if customer %}
+          <button
+            type="button"
+            @click="exportCsv"
+            :disabled="exportingCsv"
+            class="tw-flex tw-flex-1 tw-items-center tw-justify-center tw-rounded-[4px] tw-border tw-border-brand-grey tw-bg-white tw-py-2 tw-text-14 tw-text-offblack tw-transition-colors hover:tw-border-offblack disabled:tw-cursor-wait disabled:tw-opacity-60"
+          >
+            [[ exportingCsv ? 'Exporting...' : 'Export CSV' ]]
+          </button>
+        {% endif %}
       </div>
       <div class="tw-hidden md:tw-block">
         <!-- Sort By Selector -->
@@ -327,6 +324,17 @@
               {% render 'icon-arrow-down' %}
             </div>
           </div>
+          {% if customer %}
+            <!-- Export CSV -->
+            <button
+              type="button"
+              @click="exportCsv"
+              :disabled="exportingCsv"
+              class="tw-whitespace-nowrap tw-rounded-[4px] tw-border tw-border-solid tw-border-brand-grey tw-bg-white tw-px-3 tw-py-2 tw-text-14 tw-text-offblack tw-transition-colors hover:tw-border-offblack disabled:tw-cursor-wait disabled:tw-opacity-60"
+            >
+              [[ exportingCsv ? 'Exporting...' : 'Export CSV' ]]
+            </button>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -386,14 +394,11 @@
                     {% assign active_filter_key = active_param_parts[0]
                       | replace: 'filter.p.', ''
                       | replace: 'filter.v.', ''
+                      | replace: 'm.custom.', ''
                       | replace: '.', ' '
                       | replace: '_', ' '
                     %}
-                    {% assign active_filter_value = active_param_parts[1]
-                      | replace: '+', ' '
-                      | replace: '%20', ' '
-                      | replace: '%26', '&'
-                    %}
+                    {% assign active_filter_value = active_param_parts[1] | url_decode %}
                     {% assign remaining_params = '' %}
                     {% for param in query_params %}
                       {% unless param == active_param %}
@@ -478,6 +483,14 @@
                 class="tw-hidden"
               ></span>
               {% for product in collection.products -%}
+                {%- liquid
+                  # Cap the quick-add input at stock only when Shopify refuses to oversell
+                  assign qty_variant = product.selected_or_first_available_variant
+                  assign qty_max = nil
+                  if qty_variant.inventory_management == 'shopify' and qty_variant.inventory_policy == 'deny'
+                    assign qty_max = qty_variant.inventory_quantity | at_least: 1
+                  endif
+                -%}
                 {% assign is_flash_sale = false %}
                 {% if settings.flash_sale %}
                   {% for flash_sale_product in settings.flash_sale_products %}
@@ -486,6 +499,39 @@
                     {% endif %}
                   {% endfor %}
                 {% endif %}
+                {% comment %} Case-pack products: see blocks/_pdp-box-quantity.liquid {% endcomment %}
+                {% assign single_variant = product.selected_or_first_available_variant %}
+                {% assign case_variant = nil %}
+                {% for variant in product.variants %}
+                  {% if variant.option1 == 'Case' %}
+                    {% assign case_variant = variant %}
+                  {% elsif single_variant.option1 == 'Case' %}
+                    {% assign single_variant = variant %}
+                  {% endif %}
+                {% endfor %}
+                {% assign case_size = product.metafields.custom.case_size.value
+                  | default: case_variant.metafields.custom.case_quantity.value
+                  | default: 1
+                %}
+                {% assign cases_available = 0 %}
+                {% assign case_saving_pct = 0 %}
+                {% if case_variant and case_size > 1 %}
+                  {% assign cases_available = single_variant.inventory_quantity | at_least: 0 | divided_by: case_size %}
+                  {% assign case_full_price = single_variant.price | times: case_size %}
+                  {% assign case_saving_pct = case_full_price
+                    | minus: case_variant.price
+                    | times: 100.0
+                    | divided_by: case_full_price
+                    | round
+                  %}
+                {% endif %}
+                {% capture pack_select_options %}
+                  <option value="{{ single_variant.id }}">Single &middot; {{ single_variant.price | money }}</option>
+                  <option value="{{ case_variant.id }}">
+                    Case of {{ case_size }} &middot; {{ case_variant.price | money }}
+                    {%- if case_saving_pct > 0 %} ({{ case_saving_pct }}% off){% endif %}
+                  </option>
+                {% endcapture %}
 
                 <div
                   data-product-grid-item
@@ -554,7 +600,7 @@
                           <p class="tw-font-semibold tw-text-14 tw-text-gray-600 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
                             QTY:
                             <span class="tw-font-normal">
-                              {{- product.selected_or_first_available_variant.inventory_quantity -}}
+                              {{- single_variant.inventory_quantity -}}
                             </span>
                           </p>
                           <div class="tw-flex tw-flex-col">
@@ -591,29 +637,41 @@
                         </a>
                       {% elsif section.settings.button_type != 'none' %}
                         {% if section.settings.button_type == 'quick-add' %}
+                          {% if cases_available > 0 %}
+                            <select
+                              aria-label="Pack size"
+                              @change="setPack({{ single_variant.id }}, $event.target.value)"
+                              class="tw-w-full tw-mt-auto tw-mb-2 tw-py-1 tw-px-1 tw-border tw-border-brand-grey tw-rounded tw-text-12 tw-font-semibold"
+                            >
+                              {{ pack_select_options }}
+                            </select>
+                          {% endif %}
                           <div class="tw-flex tw-gap-2 tw-w-full tw-mt-auto">
                             <div class="tw-flex tw-items-center tw-gap-2 tw-w-full">
                               <span>QTY:</span>
                               <input
                                 type="number"
                                 min="1"
+                                :max="variantFor({{ single_variant.id }}) === {{ single_variant.id }} ? {{ qty_max | default: 'null' }} : {{ cases_available }}"
                                 placeholder="1"
-                                :value="getQty({{ product.selected_or_first_available_variant.id }})"
-                                @input="setQty({{ product.selected_or_first_available_variant.id }}, $event.target.value)"
+                                :value="getQty(variantFor({{ single_variant.id }}))"
+                                @input="setQty(variantFor({{ single_variant.id }}), $event.target, variantFor({{ single_variant.id }}) === {{ single_variant.id }} ? {{ qty_max | default: 'Infinity' }} : {{ cases_available }})"
                                 class="tw-w-full tw-text-center tw-leading-none tw-py-0.5 tw-border tw-border-brand-grey tw-rounded tw-h-full tw-text-12 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
-                                :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
+                                :disabled="isAdding(variantFor({{ single_variant.id }}))"
                               >
                             </div>
                             <button
                               type="button"
-                              data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+                              data-variant-id="{{ single_variant.id }}"
+                              data-case-variant-id="{{ case_variant.id }}"
+                              data-cases-available="{{ cases_available }}"
                               data-tags="{{ product.tags | json }}"
                               data-isbn="{{ product.metafields.facts.isbn }}"
                               class="tw-bg-brand-secondary tw-w-full tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center"
-                              @click="addToCart({{ product.selected_or_first_available_variant.id }}, $event.currentTarget)"
-                              :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
+                              @click="addToCart(variantFor({{ single_variant.id }}), $event.currentTarget)"
+                              :disabled="isAdding(variantFor({{ single_variant.id }}))"
                             >
-                              [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : '
+                              [[ isAdding(variantFor({{ single_variant.id }})) ? 'Adding...' : '
                               {{- section.settings.button_text | default: 'Add to Cart' -}}
                               ' ]]
                             </button>
@@ -716,7 +774,7 @@
                             <div>
                               QTY:
                               <span class="tw-font-normal">
-                                {{- product.selected_or_first_available_variant.inventory_quantity -}}
+                                {{- single_variant.inventory_quantity -}}
                               </span>
                             </div>
                           </div>
@@ -731,28 +789,40 @@
                             {% elsif section.settings.button_type != 'none' %}
                               {% if section.settings.button_type == 'quick-add' %}
                                 <div class="tw-flex tw-items-center tw-gap-2 tw-h-full">
+                                  {% if cases_available > 0 %}
+                                    <select
+                                      aria-label="Pack size"
+                                      @change="setPack({{ single_variant.id }}, $event.target.value)"
+                                      class="tw-py-0.5 tw-px-1 tw-border tw-border-brand-grey tw-rounded tw-text-14 tw-font-semibold"
+                                    >
+                                      {{ pack_select_options }}
+                                    </select>
+                                  {% endif %}
                                   <div class="tw-flex tw-items-center tw-gap-1">
                                     <label class="tw-text-14 tw-font-semibold">QTY:</label>
                                     <input
                                       type="number"
                                       min="1"
+                                      :max="variantFor({{ single_variant.id }}) === {{ single_variant.id }} ? {{ qty_max | default: 'null' }} : {{ cases_available }}"
                                       placeholder="1"
-                                      :value="getQty({{ product.selected_or_first_available_variant.id }})"
-                                      @input="setQty({{ product.selected_or_first_available_variant.id }}, $event.target.value)"
+                                      :value="getQty(variantFor({{ single_variant.id }}))"
+                                      @input="setQty(variantFor({{ single_variant.id }}), $event.target, variantFor({{ single_variant.id }}) === {{ single_variant.id }} ? {{ qty_max | default: 'Infinity' }} : {{ cases_available }})"
                                       class="tw-w-14 tw-text-center tw-leading-none tw-py-0.5 tw-px-1 tw-border tw-border-brand-grey tw-rounded tw-text-14 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
-                                      :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
+                                      :disabled="isAdding(variantFor({{ single_variant.id }}))"
                                     >
                                   </div>
                                   <button
                                     type="button"
-                                    data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+                                    data-variant-id="{{ single_variant.id }}"
+                              data-case-variant-id="{{ case_variant.id }}"
+                              data-cases-available="{{ cases_available }}"
                                     data-tags="{{ product.tags | json }}"
                                     data-isbn="{{ product.metafields.facts.isbn }}"
                                     class="tw-bg-brand-secondary tw-cursor-pointer tw-pointer-events-auto tw-text-10 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-6 tw-py-1.5 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-sans hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center"
-                                    @click="addToCart({{ product.selected_or_first_available_variant.id }}, $event.currentTarget)"
-                                    :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
+                                    @click="addToCart(variantFor({{ single_variant.id }}), $event.currentTarget)"
+                                    :disabled="isAdding(variantFor({{ single_variant.id }}))"
                                   >
-                                    [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : '
+                                    [[ isAdding(variantFor({{ single_variant.id }})) ? 'Adding...' : '
                                     {{- section.settings.button_text | default: 'QUICK ADD' -}}
                                     ' ]]
                                   </button>
@@ -817,33 +887,6 @@
 </div>
 
 <script>
-  (function () {
-    const filters = document.getElementById('filters-{{ block.id }}');
-    let lastKnownScrollPosition = 0;
-    let ticking = false;
-
-    function doSomething(scrollPos) {
-      if (window.scrollY > scrollPos) {
-        filters.classList.add('collapsed');
-      } else {
-        filters.classList.remove('collapsed');
-      }
-    }
-
-    document.addEventListener('scroll', (event) => {
-      lastKnownScrollPosition = window.scrollY;
-
-      if (!ticking) {
-        setTimeout(() => {
-          doSomething(lastKnownScrollPosition);
-          ticking = false;
-        }, 20);
-
-        ticking = true;
-      }
-    });
-  })();
-
   new Vue({
     el: '.section-{{ section.id }}-props',
     delimiters: ['[[', ']]'],
@@ -855,7 +898,10 @@
         openFilters: {},
         viewMode: 'grid',
         quantities: {},
+        // Single variant id -> the variant (Single or Case) picked in the pack size select
+        packs: {},
         addingToCartMap: {},
+        exportingCsv: false,
       };
     },
     watch: {
@@ -953,17 +999,29 @@
         this.viewMode = mode;
         localStorage.setItem('productViewMode', mode);
       },
+      variantFor(singleVariantId) {
+        return this.packs[singleVariantId] || singleVariantId;
+      },
+      setPack(singleVariantId, variantId) {
+        this.$set(this.packs, singleVariantId, Number(variantId));
+      },
       getQty(variantId) {
         return this.quantities[variantId] || 1;
       },
-      setQty(variantId, val) {
-        this.$set(this.quantities, variantId, parseInt(val, 10) || 1);
+      setQty(variantId, input, max) {
+        const qty = Math.min(parseInt(input.value, 10) || 1, max);
+        // Write the cap back, since Vue won't re-render when the stored qty doesn't change
+        if (Number(input.value) > max) input.value = qty;
+        this.$set(this.quantities, variantId, qty);
       },
       isAdding(variantId) {
         return !!this.addingToCartMap[variantId];
       },
       addToCart(variantId, btn) {
-        const qty = this.getQty(variantId);
+        let qty = this.getQty(variantId);
+        if (String(variantId) === btn.dataset.caseVariantId) {
+          qty = Math.min(qty, Number(btn.dataset.casesAvailable));
+        }
         const tags = JSON.parse(btn.dataset.tags || '[]');
         const isbn = btn.dataset.isbn || null;
         this.$set(this.addingToCartMap, variantId, true);
@@ -982,6 +1040,65 @@
           })
           .catch((error) => { this.bus.$emit('cartFailedToAdd', error); })
           .finally(() => { this.$set(this.addingToCartMap, variantId, false); });
+      },
+      // Fetches every page of templates/collection.csv.liquid with the current
+      // filters and sort, then downloads the products as a CSV.
+      async exportCsv() {
+        if (this.exportingCsv) return;
+        this.exportingCsv = true;
+        try {
+          const url = new URL(window.location.href);
+          url.searchParams.delete('limit');
+          url.searchParams.set('view', 'csv');
+          const products = [];
+          let pages = 1;
+          for (let page = 1; page <= pages; page++) {
+            url.searchParams.set('page', page);
+            const res = await fetch(url.toString(), { credentials: 'same-origin' });
+            if (!res.ok) throw new Error(`Export failed on page ${page}: ${res.status}`);
+            const data = await res.json();
+            pages = data.pages;
+            products.push(...data.products);
+          }
+
+          const columns = [
+            ['Title', 'title'],
+            ['Author', 'author'],
+            ['Publisher', 'publisher'],
+            ['ISBN', 'isbn'],
+            {%- if customer.tags contains 'Staff' %}
+            ['TB Code', 'tb_code'],
+            {%- endif %}
+            ['List Price', 'list_price'],
+            ['Net Price', 'net_price'],
+            ['QTY', 'qty'],
+            ['URL', 'url'],
+          ];
+          const cell = (value) => {
+            let text = value == null ? '' : String(value);
+            // Stop spreadsheets from treating cells as formulas
+            if (/^[=+\-@\t\r]/.test(text)) text = `'${text}`;
+            return `"${text.replace(/"/g, '""')}"`;
+          };
+          const lines = [columns.map(([label]) => cell(label)).join(',')];
+          products.forEach((product) => {
+            lines.push(columns.map(([, key]) => cell(product[key])).join(','));
+          });
+
+          const blob = new Blob(['\uFEFF' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = {{ collection.handle | json }} + `-${new Date().toISOString().slice(0, 10)}.csv`;
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          setTimeout(() => URL.revokeObjectURL(link.href), 0);
+        } catch (error) {
+          console.error(error);
+          alert('Sorry, the CSV export failed. Please try again.');
+        } finally {
+          this.exportingCsv = false;
+        }
       },
     },
   });
