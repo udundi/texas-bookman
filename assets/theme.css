@@ -2826,6 +2826,10 @@ video {
   padding-top: 2rem;
 }
 
+.tw-pb-1 {
+  padding-bottom: 0.25rem;
+}
+
 .tw-text-left {
   text-align: left;
 }
