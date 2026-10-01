@@ -3675,6 +3675,10 @@ video {
     left: 50%;
   }
 
+  .md\:tw-left-auto {
+    left: auto;
+  }
+
   .md\:tw-right-0 {
     right: 0px;
   }
