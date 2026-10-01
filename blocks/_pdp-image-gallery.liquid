@@ -1,27 +1,36 @@
 <div
   class="tw-h-fit md:tw-sticky tw-relative md:tw-top-8 tw-w-full tw-flex-grow tw-flex tw-flex-col max-md:tw-items-center max-md:tw-justify-center lg:tw-justify-center tw-gap-2"
   data-pdp-images
+  @click="openZoom($event)"
 >
   {% if product.media.size <= 1 %}
     <!-- Single Image Mobile Treatment: larger image, no carousel card container -->
     {% assign single_image = product.featured_media | default: product.featured_image %}
     <div class="tw-w-full tw-flex tw-items-center tw-justify-center tw-py-2 md:tw-py-4">
       {% if single_image != blank %}
-        {{
-          single_image
-          | image_url: width: 1000
-          | image_tag:
-            preload: true,
-            class: 'tw-w-full max-md:tw-max-w-[22rem] sm:max-md:tw-max-w-[26rem] md:tw-max-w-md lg:tw-max-w-lg tw-h-auto tw-object-contain tw-rounded-[4px] tw-drop-shadow-sm md:tw-border md:tw-border-brand-grey',
-            alt: product.title
-        }}
+        <button
+          type="button"
+          class="pdp-zoom-trigger tw-flex tw-w-full tw-items-center tw-justify-center tw-bg-transparent tw-border-0 tw-p-0"
+          data-zoom-index="0"
+          aria-haspopup="dialog"
+          aria-label="Enlarge image of {{ product.title | escape }}"
+        >
+          {{
+            single_image
+            | image_url: width: 1000
+            | image_tag:
+              preload: true,
+              class: 'tw-w-full max-md:tw-max-w-[22rem] sm:max-md:tw-max-w-[26rem] md:tw-max-w-md lg:tw-max-w-lg tw-h-auto tw-object-contain tw-rounded-[4px] tw-drop-shadow-sm md:tw-border md:tw-border-brand-grey',
+              alt: product.title
+          }}
+        </button>
       {% else %}
         {{ 'product-1' | placeholder_svg_tag: 'tw-w-full max-md:tw-max-w-xs md:tw-max-w-md tw-h-auto tw-object-contain' }}
       {% endif %}
     </div>
   {% else %}
     <!-- Main Image Carousel (Multiple Images) -->
-    <div class="swiper swiper-container tw-h-full lg:tw-h-auto tw-w-full tw-cursor-pointer tw-text-black">
+    <div class="swiper swiper-container tw-h-full lg:tw-h-auto tw-w-full tw-text-black">
       <div class="swiper-wrapper tw-h-fit tw-max-w-96 ">
         <!-- ---------------------- Image Classes ---------------------- -->
         {% if block.settings.image_aspect == '4x3' %}
@@ -41,17 +50,29 @@
         {% assign image_classes = size_classes | append: contain_classes %}
         <!-- --------------------- End Classes --------------------- -->
 
+        {% comment %} Slide order matches snippets/gallery-modal, so zoom_index is the modal slide to open {% endcomment %}
+        {% assign zoom_index = 0 %}
+
         <!-- Variant Image -->
         {% if product.has_only_default_variant == false
           and product.selected_or_first_available_variant.featured_image != blank
         %}
           <div class="swiper-slide tw-rounded-[4px] tw-w-full">
-            {{
-              product.selected_or_first_available_variant.featured_image
-              | image_url: width: 800
-              | image_tag: preload: true, class: image_classes
-            }}
+            <button
+              type="button"
+              class="pdp-zoom-trigger tw-block tw-w-full tw-bg-transparent tw-border-0 tw-p-0"
+              data-zoom-index="{{ zoom_index }}"
+              aria-haspopup="dialog"
+              aria-label="Enlarge image {{ zoom_index | plus: 1 }} of {{ product.title | escape }}"
+            >
+              {{
+                product.selected_or_first_available_variant.featured_image
+                | image_url: width: 800
+                | image_tag: preload: true, class: image_classes
+              }}
+            </button>
           </div>
+          {% assign zoom_index = zoom_index | plus: 1 %}
         {% endif %}
 
         <!-- All Normal Images & Videos -->
@@ -70,6 +91,7 @@
                   controls: true
               }}
             </div>
+            {% assign zoom_index = zoom_index | plus: 1 %}
             <!-- Images -->
           {% elsif media.media_type == 'image' %}
             {% assign compare_media = media %}
@@ -77,8 +99,17 @@
               {% if image.position == compare_media.position %}
                 {% if image.attached_to_variant? != true %}
                   <div class="swiper-slide tw-rounded-[4px] tw-w-full" data-slide-index="{{ forloop.parentloop.index }}">
-                    {{ image | image_url: width: 800 | image_tag: class: image_classes }}
+                    <button
+                      type="button"
+                      class="pdp-zoom-trigger tw-block tw-w-full tw-bg-transparent tw-border-0 tw-p-0"
+                      data-zoom-index="{{ zoom_index }}"
+                      aria-haspopup="dialog"
+                      aria-label="Enlarge image {{ zoom_index | plus: 1 }} of {{ product.title | escape }}"
+                    >
+                      {{ image | image_url: width: 800 | image_tag: class: image_classes }}
+                    </button>
                   </div>
+                  {% assign zoom_index = zoom_index | plus: 1 %}
                 {% endif %}
               {% endif %}
             {% endfor %}
