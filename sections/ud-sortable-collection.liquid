@@ -987,7 +987,9 @@
         this.$set(this.openFilters, id, !current);
       },
       getNavHeight() {
-        const newHeight = document.querySelector('.shopify-section-group-header-group').offsetHeight;
+        // Use the wrapper around the whole header group, not a single section, so the full stuck height is measured
+        const headerGroup = document.getElementById('sticky-header-group');
+        const newHeight = headerGroup ? headerGroup.offsetHeight : 0;
         // If different then change and update Filter Container
         if (newHeight != this.sectionHeight) {
           this.sectionHeight = newHeight;
@@ -996,22 +998,21 @@
       },
       changeFilterSpace() {
         const filterContainer = document.querySelector('.ud-filter-container');
-        const filterCarousel = document.querySelector('.ud-filter-carousel');
         if (window.innerWidth < 768) {
-          if (filterContainer) filterContainer.style.height = '';
+          if (filterContainer) {
+            filterContainer.style.height = '';
+            filterContainer.style.top = '';
+          }
           return;
         }
         if (filterContainer) {
-          // console.log('got Filter Container')
           const windowHeight = window.innerHeight;
           const filterHeight = windowHeight - this.sectionHeight - 40;
-          if (filterCarousel) {
-            filterCarousel.style.top = `${this.sectionHeight}px`;
-            filterCarousel.style.height = `${filterHeight}px`;
-          }
           filterContainer.style.height = `${filterHeight}px`;
-          console.log('new Filter Height', windowHeight);
-          console.log('new Filter Height', filterHeight);
+          // Only pin below the header on desktop; mobile uses a bottom sheet anchored to the viewport
+          filterContainer.style.top = window.matchMedia('(min-width: 768px)').matches
+            ? `${this.sectionHeight}px`
+            : '';
         }
       },
       sortByChange(event) {
