@@ -328,7 +328,7 @@
                 -%}
                 <div class="tw-flex tw-flex-row tw-items-center tw-border tw-mb-[-1px] tw-border-brand-grey tw-bg-white tw-p-4 tw-gap-4 tw-w-full">
                   <a href="{{ product.url }}" class="tw-flex-shrink-0">
-                    <div class="tw-h-36 tw-object-cover tw-aspect-5/6 tw-relative">
+                    <div class="tw-h-28 md:tw-h-36 tw-object-cover tw-aspect-5/6 tw-relative">
                       {% if product.featured_image != blank %}
                         {{
                           product.featured_image
@@ -350,13 +350,13 @@
 
                   <div class="tw-py-1 tw-w-full tw-flex tw-flex-col tw-justify-between tw-gap-2 tw-min-w-0 tw-grow">
                     <div class="tw-flex tw-grow tw-flex-col tw-justify-between tw-gap-1">
-                      <div class="tw-flex tw-w-full tw-flex-row tw-justify-between tw-gap-x-3 tw-gap-y-0.5 tw-text-12">
-                        <a href="{{ product.url }}" class="tw-no-underline">
+                      <div class="tw-flex tw-w-full tw-flex-row max-md:tw-flex-wrap tw-justify-between tw-gap-x-3 tw-gap-y-0.5 tw-text-12">
+                        <a href="{{ product.url }}" class="tw-no-underline tw-min-w-0 max-md:tw-w-full">
                           <h3 class="tw-font-semibold tw-text-14 tw-text-brand-primary tw-leading-tight tw-m-0 tw-truncate">
                             {{ product.title }}
                           </h3>
                         </a>
-                        <div class="tw-text-gray-500 tw-text-14 tw-font-normal">
+                        <div class="tw-text-gray-500 tw-text-14 tw-font-normal tw-whitespace-nowrap">
                           List: <span class="tw-font-normal">{{ product.compare_at_price | default: product.price | money }}</span>
                         </div>
                       </div>
@@ -374,7 +374,7 @@
                       <div class="tw-grow tw-text-14 tw-line-clamp-3 tw-text-gray-500">
                         {{ product.description | strip_html | truncatewords: 30 | default: 'No description available.' }}
                       </div>
-                      <div class="tw-flex tw-w-full tw-justify-between tw-items-end tw-gap-x-3 tw-gap-y-0.5 tw-text-14 tw-pt-2">
+                      <div class="tw-flex tw-w-full max-md:tw-flex-col max-md:tw-items-stretch tw-justify-between md:tw-items-end tw-gap-x-3 tw-gap-y-2 md:tw-gap-y-0.5 tw-text-14 tw-pt-2">
                         <div class="tw-flex tw-w-full tw-flex-wrap tw-text-gray-700 tw-font-semibold tw-gap-x-4 tw-gap-y-0.5 tw-text-14">
                           {% if isbn != blank %}
                             <div>
@@ -385,7 +385,7 @@
                             QTY: <span class="tw-font-normal">{{ product.selected_or_first_available_variant.inventory_quantity }}</span>
                           </div>
                         </div>
-                        <div class="tw-flex-shrink-0">
+                        <div class="tw-flex-shrink-0 max-md:tw-w-full">
                           {% if customer == null %}
                             <a
                               href="{{ routes.account_login_url }}"
@@ -394,7 +394,7 @@
                               Sign in to shop
                             </a>
                           {% else %}
-                            <div class="tw-flex tw-items-center tw-gap-2 tw-h-full">
+                            <div class="tw-flex max-md:tw-flex-wrap tw-items-center tw-gap-2 tw-h-full">
                               <div class="tw-flex tw-items-center tw-gap-1">
                                 <label class="tw-text-14 tw-font-semibold tw-whitespace-nowrap">QTY{% if min_qty > 1 %} (Min {{ min_qty }}{% if qty_step > 1 %}, x{{ qty_step }}{% endif %}){% elsif qty_step > 1 %} (x{{ qty_step }}){% endif %}:</label>
                                 <input
@@ -412,7 +412,7 @@
                               </div>
                               <button
                                 type="button"
-                                class="tw-bg-brand-secondary tw-cursor-pointer tw-text-11 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-5 tw-py-2 tw-font-semibold tw-font-montserrat hover:tw-brightness-95 tw-whitespace-nowrap tw-items-center tw-uppercase"
+                                class="tw-bg-brand-secondary tw-cursor-pointer tw-text-11 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-5 tw-py-2 tw-font-semibold tw-font-montserrat hover:tw-brightness-95 tw-whitespace-nowrap tw-items-center tw-uppercase max-md:tw-grow"
                                 @click="addToCart({{ product.selected_or_first_available_variant.id }}, {{ isbn | append: '' | json | escape }}, {{ min_qty }}, {{ qty_step }}, {{ qty_max | default: 'Infinity' }})"
                                 :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                               >

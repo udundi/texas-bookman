@@ -34,10 +34,12 @@
   {% comment %}
     Shopify's related recommendations fall back to the same few unrelated products on this store,
     so build the list here: first from the product's most specific (smallest) genre collections,
-    then from its broad collections, keeping only the same product type (and publisher, for books).
+    then from its broad collections, keeping only the same product type (and publisher, for books)
+    in both; only if that leaves room are other types from the genre collections used to fill.
+    The limit is above the 4.3 slides shown on desktop so the row always has something to scroll to.
   {% endcomment %}
   {%- liquid
-    assign related_limit = 4
+    assign related_limit = 12
     assign ignored_handles = block.settings.ignored_collections | strip_newlines | remove: ' ' | split: ','
     assign seen_ids = ',' | append: product.id | append: ','
     assign seen_titles = '|' | append: product.title | append: '|'
@@ -46,7 +48,7 @@
   -%}
   <script type="application/json" id="related-products-data-{{ block.id }}">
     [
-      {%- for pass in (1..2) -%}
+      {%- for pass in (1..3) -%}
         {%- for rel_collection in sorted_collections -%}
           {%- if related_count >= related_limit -%}{%- break -%}{%- endif -%}
           {%- liquid
@@ -54,9 +56,11 @@
             if ignored_handles contains rel_collection.handle
               assign is_ignored = true
             endif
-            if pass == 1 and is_ignored
-              continue
-            elsif pass == 2 and is_ignored == false
+            if pass == 2
+              unless is_ignored
+                continue
+              endunless
+            elsif is_ignored
               continue
             endif
           -%}
@@ -67,13 +71,11 @@
               {%- assign rel_title_key = '|' | append: rel_product.title | append: '|' -%}
               {%- if rel_product.available == false or seen_ids contains rel_id_key or seen_titles contains rel_title_key -%}{%- continue -%}{%- endif -%}
               {%- liquid
-                if pass == 2
-                  if rel_product.type != product.type
-                    continue
-                  endif
-                  if product.type == 'Book' and rel_product.vendor != product.vendor
-                    continue
-                  endif
+                if pass < 3 and rel_product.type != product.type
+                  continue
+                endif
+                if pass == 2 and product.type == 'Book' and rel_product.vendor != product.vendor
+                  continue
                 endif
               -%}
               {%- assign seen_ids = seen_ids | append: rel_product.id | append: ',' -%}
@@ -86,13 +88,25 @@
                 "price": {{ rel_product.price | json }},
                 "compare_at_price": {{ rel_product.compare_at_price | json }},
                 "isbn": {{ rel_product.metafields.facts.isbn | default: rel_product.metafields.custom.isbn | append: '' | json }},
-                {%- assign rel_variant = rel_product.selected_or_first_available_variant %}
+                {%- liquid
+                  assign rel_variant = rel_product.selected_or_first_available_variant
+                  # Cap at stock only when Shopify refuses to oversell, and at the B2B rule max
+                  assign rel_max = nil
+                  if rel_variant.inventory_management == 'shopify' and rel_variant.inventory_policy == 'deny'
+                    assign rel_max = rel_variant.inventory_quantity | at_least: 1
+                  endif
+                  if rel_variant.quantity_rule.max
+                    if rel_max == nil or rel_variant.quantity_rule.max < rel_max
+                      assign rel_max = rel_variant.quantity_rule.max
+                    endif
+                  endif
+                -%}
                 "variants": [{
                   "id": {{ rel_variant.id | json }},
                   "quantity_rule": {
                     "min": {{ rel_variant.quantity_rule.min | default: 1 }},
                     "increment": {{ rel_variant.quantity_rule.increment | default: 1 }},
-                    "max": {{ rel_variant.quantity_rule.max | default: 'null' }}
+                    "max": {{ rel_max | default: 'null' }}
                   }
                 }]
               }
@@ -156,6 +170,7 @@
         var rule = (variant && variant.quantity_rule) || {};
         var minQty = rule.min || 1;
         var qtyStep = rule.increment || 1;
+        var maxQty = rule.max || null;
         var image = product.featured_image || (product.images && product.images[0] && product.images[0].src) || '';
         var priceHtml = '';
 
@@ -178,7 +193,7 @@
             '<div class="tw-flex tw-gap-2 tw-items-stretch tw-w-full tw-h-full">' +
             '<div class="tw-flex tw-items-center tw-gap-2 tw-w-full tw-h-full tw-text-brand-greyer">' +
             '<span class="tw-whitespace-nowrap">QTY' + quantityHint(minQty, qtyStep) + ':</span>' +
-            '<input type="number" min="' + minQty + '" step="' + qtyStep + '" placeholder="' + minQty + '" value="' + minQty + '" class="tw-w-full tw-text-center tw-leading-none tw-py-1 tw-border tw-border-brand-grey tw-rounded tw-h-full tw-text-12 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none" data-quantity-input>' +
+            '<input type="number" min="' + minQty + '" step="' + qtyStep + '"' + (maxQty ? ' max="' + maxQty + '"' : '') + ' placeholder="' + minQty + '" value="' + minQty + '" class="tw-w-full tw-text-center tw-leading-none tw-py-1 tw-border tw-border-brand-grey tw-rounded tw-h-full tw-text-12 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none" data-quantity-input>' +
             '</div>' +
             '<button type="button" class="tw-bg-brand-secondary tw-w-full tw-cursor-pointer tw-pointer-events-auto md:tw-text-12 tw-text-10 tw-uppercase tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center tw-py-2" data-variant-id="' +
             (variant ? variant.id : '') +
@@ -210,10 +225,17 @@
         var quantityInput = card.querySelector('[data-quantity-input]');
         var button = card.querySelector('button[data-variant-id]');
         if (button && quantityInput) {
+          // Never let the typed quantity pass stock or the rule max; round to a valid one on blur
+          quantityInput.addEventListener('input', function () {
+            if (maxQty && Number(quantityInput.value) > maxQty) quantityInput.value = maxQty;
+          });
+          quantityInput.addEventListener('change', function () {
+            quantityInput.value = validQuantity(quantityInput.value, minQty, qtyStep, maxQty);
+          });
           button.addEventListener('click', function () {
             var variantId = button.getAttribute('data-variant-id');
             if (!variantId) return;
-            var quantity = validQuantity(quantityInput.value, minQty, qtyStep, rule.max);
+            var quantity = validQuantity(quantityInput.value, minQty, qtyStep, maxQty);
             quantityInput.value = quantity;
             button.disabled = true;
             quantityInput.disabled = true;

@@ -1,3 +1,19 @@
+{%- comment -%}
+  Details fields; each is hidden when empty or holding the import's "Not available" placeholder,
+  and the Details tab itself is dropped when none are left.
+{%- endcomment -%}
+{%- capture details_html -%}
+  {%- assign detail_labels = 'Pub Date|Format|Pages|Illustration Type' | split: '|' -%}
+  {%- assign detail_keys = 'publication_date|format|pages|illustration_type' | split: '|' -%}
+  {%- for detail_key in detail_keys -%}
+    {%- assign detail_value = product.metafields.custom[detail_key] | strip -%}
+    {%- assign detail_value_lower = detail_value | downcase -%}
+    {%- if detail_value != blank and detail_value_lower != 'not available' -%}
+      <div>{{ detail_labels[forloop.index0] }}: {{ detail_value }}</div>
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
 {% style %}
   .section-{{ section.id }} {
     background-color: {{ section.settings.background_color }};
@@ -23,6 +39,7 @@
     {% if block.blocks[0] != blank %}
       <div class="tw-flex tw-justify-start tw-gap-0.5">
         {% assign tab_titles = block.settings.tab_titles | append: '-' | split: '-' %}
+        {% if details_html != blank %}
         <button
           @click="clickingTab('info')"
           class=" tw-text-16 tw-font-montserrat tw-leading-tight tw-px-4 tw-py-2 tw-capitalize tw-text-offblack"
@@ -34,6 +51,7 @@
         >
           Details
         </button>
+        {% endif %}
         {% for block in block.blocks %}
           <button
             @click="clickingTab('{{ forloop.index0 }}')"
@@ -50,6 +68,7 @@
       </div>
     {% endif %}
   </div>
+  {% if details_html != blank %}
   <div
     v-if="clickedTab == 'info'"
     class="tw-overflow-hidden tw-border tw-border-brand-grey tw-rounded-[4px] tw-mt-[-1px] tw-bg-brand-eggshell info-tab-{{ block.id }}"
@@ -58,22 +77,12 @@
     <div class="tw-flex tw-flex-col tw-gap-4 tw-items-center tw-w-full tw-justify-center tw-p-4 ">
       <div class="tw-w-full tw-gap-4 tw-flex tw-items-start tw-justify-start">
         <div class="tw-flex tw-flex-col tw-gap-0.5 tw-items-start tw-w-full tw-justify-start tw-py-4">
-          {% if product.metafields.custom.publication_date != blank %}
-            <div>Pub Date: {{ product.metafields.custom.publication_date }}</div>
-          {% endif %}
-          {% if product.metafields.custom.format != blank %}
-            <div>Format: {{ product.metafields.custom.format }}</div>
-          {% endif %}
-          {% if product.metafields.custom.pages != blank %}
-            <div>Pages: {{ product.metafields.custom.pages }}</div>
-          {% endif %}
-          {% if product.metafields.custom.illustration_type != blank %}
-            <div>Illustration Type: {{ product.metafields.custom.illustration_type }}</div>
-          {% endif %}
+          {{ details_html }}
         </div>
       </div>
     </div>
   </div>
+  {% endif %}
   {% for block in block.blocks %}
     <div
       v-if="clickedTab == {{ forloop.index0 }}"

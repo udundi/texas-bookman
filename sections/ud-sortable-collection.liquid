@@ -732,7 +732,7 @@
                       href="{% if product.metafields.custom.alt_gallery_link != blank %}{{ product.metafields.custom.alt_gallery_link.value.url }}{% else %}{{ product.url | default: '/' }}{% endif %}"
                       class="tw-flex-shrink-0"
                     >
-                      <div class="tw-h-36 tw-object-cover tw-aspect-5/6 tw-relative">
+                      <div class="tw-h-28 md:tw-h-36 tw-object-cover tw-aspect-5/6 tw-relative">
                         {% if product.featured_image != blank %}
                           {{
                             product.featured_image
@@ -757,13 +757,13 @@
                     </a>
                     <div class="tw-py-1 tw-w-full tw-flex tw-flex-col tw-justify-between tw-gap-2 tw-min-w-0 tw-grow">
                       <div class="tw-flex tw-grow tw-flex-col tw-justify-between tw-gap-1">
-                        <div class="tw-flex tw-w-full tw-flex-row tw-justify-between tw-gap-x-3 tw-gap-y-0.5 tw-text-12">
-                          <a href="{{ product.url | default: '/' }}">
+                        <div class="tw-flex tw-w-full tw-flex-row max-md:tw-flex-wrap tw-justify-between tw-gap-x-3 tw-gap-y-0.5 tw-text-12">
+                          <a href="{{ product.url | default: '/' }}" class="tw-min-w-0 max-md:tw-w-full">
                             <h3 class="tw-font-semibold tw-text-13 tw-text-brand-primary tw-text-14 tw-leading-tight tw-m-0 tw-truncate">
                               {{ product.title | default: 'Product title' }}
                             </h3>
                           </a>
-                          <div class="tw-text-gray-500 tw-text-14 tw-font-normal">
+                          <div class="tw-text-gray-500 tw-text-14 tw-font-normal tw-whitespace-nowrap">
                             List:
                             <span class="tw-font-normal">
                               {{- product.compare_at_price | default: product.price | money -}}
@@ -796,7 +796,7 @@
                         <div class="tw-grow tw-text-14 tw-line-clamp-4 tw-text-gray-500">
                           {{ product.description | default: 'No description available.' }}
                         </div>
-                        <div class="tw-flex tw-w-full tw-justify-between tw-items-end tw-gap-x-3 tw-gap-y-0.5 tw-text-14">
+                        <div class="tw-flex tw-w-full max-md:tw-flex-col max-md:tw-items-stretch tw-justify-between md:tw-items-end tw-gap-x-3 tw-gap-y-2 md:tw-gap-y-0.5 tw-text-14">
                           <div class="tw-flex tw-w-full tw-flex-wrap tw-text-gray-700 tw-font-semibold tw-gap-x-3 tw-gap-y-0.5 tw-text-14">
                             {% if isbn != blank %}
                               <div>
@@ -813,7 +813,7 @@
                               </span>
                             </div>
                           </div>
-                          <div class="tw-flex-shrink-0">
+                          <div class="tw-flex-shrink-0 max-md:tw-w-full">
                             {% if customer == null %}
                               <a
                                 href="{{ routes.account_login_url }}"
@@ -823,12 +823,12 @@
                               </a>
                             {% elsif section.settings.button_type != 'none' %}
                               {% if section.settings.button_type == 'quick-add' %}
-                                <div class="tw-flex tw-items-center tw-gap-2 tw-h-full">
+                                <div class="tw-flex max-md:tw-flex-wrap tw-items-center tw-gap-2 tw-h-full">
                                   {% if cases_available > 0 %}
                                     <select
                                       aria-label="Pack size"
                                       @change="setPack({{ single_variant.id }}, $event.target.value)"
-                                      class="tw-py-0.5 tw-px-1 tw-border tw-border-brand-grey tw-rounded tw-text-14 tw-font-semibold"
+                                      class="tw-py-0.5 tw-px-1 tw-border tw-border-brand-grey tw-rounded tw-text-14 tw-font-semibold max-md:tw-w-full"
                                     >
                                       {{ pack_select_options }}
                                     </select>
@@ -855,7 +855,7 @@
                               data-cases-available="{{ cases_available }}"
                                     data-tags="{{ product.tags | json }}"
                                     data-isbn="{{ isbn }}"
-                                    class="tw-bg-brand-secondary tw-cursor-pointer tw-pointer-events-auto tw-text-10 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-6 tw-py-1.5 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-sans hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center"
+                                    class="tw-bg-brand-secondary tw-cursor-pointer tw-pointer-events-auto tw-text-10 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-6 tw-py-1.5 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-sans hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center max-md:tw-grow"
                                     @click="addToCart(variantFor({{ single_variant.id }}), $event.currentTarget, {{ qty_rule }})"
                                     :disabled="isAdding(variantFor({{ single_variant.id }}))"
                                   >

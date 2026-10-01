@@ -81,6 +81,7 @@
                   <span class="tw-font-normal"> [[ recentlyAddedItem.quantity ]] </span>
                 </div>
                 <div class="tw-font-semibold">[[ recentlyAddedItem.price / 100 | currency ]]</div>
+                <div v-if="recentCaseLabel" class="tw-font-semibold tw-text-brand-sale">[[ recentCaseLabel ]]</div>
               </div>
             </div>
           </div>
@@ -152,6 +153,7 @@
         errorMessage: '',
         testVariant: '',
         recentlyAddedItem: null,
+        recentCaseLabel: '',
         fading: false,
         fadingTimeout: null,
         hideCartTimeout: null,
@@ -172,6 +174,8 @@
         this.errorMessage = '';
         this.fading = false;
         this.recentlyAddedItem = item;
+        this.recentCaseLabel = '';
+        this.loadCaseLabel(item);
         this.showCartSidebar = true;
         this.fadingTimeout = setTimeout(() => { this.fading = true }, 3500);
         this.hideCartTimeout = setTimeout(() => { this.recentlyAddedItem = null; this.showCartSidebar = false; this.fading = false; }, 4000);
@@ -193,6 +197,19 @@
       });
     },
     methods: {
+      // Case lines get their pack size and saving (templates/product.case-info.liquid)
+      loadCaseLabel(item) {
+        const isCase = item && (item.options_with_values || []).some((option) => option.value === 'Case');
+        if (!isCase || !item.handle) return;
+        fetch(`${window.Shopify.routes.root}products/${item.handle}?view=case-info`)
+          .then((r) => r.json())
+          .then((info) => {
+            // Skip if another item was added meanwhile (compare keys: data is a reactive proxy)
+            if (!this.recentlyAddedItem || this.recentlyAddedItem.key !== item.key) return;
+            this.recentCaseLabel = this.caseSavingLabel(info, item.original_price ?? item.price, (cents) => `$${(cents / 100).toFixed(2)}`);
+          })
+          .catch(() => {});
+      },
       hideCart() {
         clearTimeout(this.fadingTimeout);
         clearTimeout(this.hideCartTimeout);

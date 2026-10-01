@@ -67,6 +67,20 @@
     return q;
   };
   Vue.prototype.validQuantity = window.validQuantity;
+
+  // Pack size and saving for a Case cart line, from snippets/case-pack-info.liquid facts
+  // ({size, single_price}) and the price charged per case, e.g. "Case of 10 · You save $9.99 (5%)".
+  window.caseSavingLabel = function (info, casePrice, formatMoney) {
+    if (!info || !(info.size > 1)) return '';
+    var label = 'Case of ' + info.size;
+    var singlesPrice = info.single_price * info.size;
+    var saving = singlesPrice - casePrice;
+    if (saving > 0 && singlesPrice > 0) {
+      label += ' \u00b7 You save ' + formatMoney(saving) + ' (' + Math.round((saving * 100) / singlesPrice) + '%)';
+    }
+    return label;
+  };
+  Vue.prototype.caseSavingLabel = window.caseSavingLabel;
 </script>
 <script src="{{ 'vue-tools.js' | asset_url }}"></script>
 {% render 'vue-mix-global' %}

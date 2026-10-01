@@ -2,7 +2,20 @@
 {% assign product_atc_id = product_id | append: '-atc' %}
 {% assign min_qty = cur_product.selected_or_first_available_variant.quantity_rule.min | default: 1 %}
 {% assign qty_step = cur_product.selected_or_first_available_variant.quantity_rule.increment | default: 1 %}
-{% assign qty_max = cur_product.selected_or_first_available_variant.quantity_rule.max | default: 'Infinity' %}
+{%- liquid
+  # Cap at stock only when Shopify refuses to oversell, and at the B2B rule max
+  assign qty_variant = cur_product.selected_or_first_available_variant
+  assign qty_max = nil
+  if qty_variant.inventory_management == 'shopify' and qty_variant.inventory_policy == 'deny'
+    assign qty_max = qty_variant.inventory_quantity | at_least: 1
+  endif
+  if qty_variant.quantity_rule.max
+    if qty_max == nil or qty_variant.quantity_rule.max < qty_max
+      assign qty_max = qty_variant.quantity_rule.max
+    endif
+  endif
+  assign qty_max = qty_max | default: 'Infinity'
+-%}
 {% assign isbn = cur_product.metafields.facts.isbn | default: cur_product.metafields.custom.isbn %}
 
 <div
@@ -93,6 +106,7 @@
               type="number"
               min="{{ min_qty }}"
               step="{{ qty_step }}"
+              {% if qty_max != 'Infinity' %}max="{{ qty_max }}"{% endif %}
               placeholder="{{ min_qty }}"
               v-model.number="quantity"
               @change="quantity = validQuantity(quantity, {{ min_qty }}, {{ qty_step }}, {{ qty_max }})"

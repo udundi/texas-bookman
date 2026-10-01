@@ -82,6 +82,14 @@
             >
               <p class="tw-m-0 tw-truncate">[[ item.title ]]</p>
             </a>
+            <!-- Case Pack Size and Saving -->
+            <div
+              v-if="caseLabel(item)"
+              class="tw-font-semibold"
+              :class="isOutOfStock(item) ? 'tw-text-gray-400' : 'tw-text-brand-sale'"
+            >
+              [[ caseLabel(item) ]]
+            </div>
             <!-- Item Identifiers -->
             <div
               class="tw-flex tw-flex-wrap tw-gap-x-4 tw-gap-y-0.5"
@@ -215,6 +223,14 @@
         debounceTimers: {},
         qtyErrors: {},
         moneyFmt: {{ shop.money_format | json }},
+        // Case-pack facts by Case variant (snippets/case-pack-info.liquid)
+        caseInfo: {
+          {%- for item in cart.items -%}
+            {%- if item.variant.option1 == 'Case' -%}
+              '{{ item.variant_id }}': {% render 'case-pack-info', product: item.product %},
+            {%- endif -%}
+          {%- endfor -%}
+        },
         // B2B catalog quantity rules by variant; /cart.js lines also carry quantity_rule
         quantityRules: {
           {%- for item in cart.items -%}
@@ -235,6 +251,9 @@
           .replace(/\{\{amount\}\}/g, amount)
           .replace(/\{\{amount_no_decimals\}\}/g, String(Math.round(cents / 100)))
           .replace(/\{\{amount_with_comma_separator\}\}/g, amount.replace('.', ','));
+      },
+      caseLabel(item) {
+        return this.caseSavingLabel(this.caseInfo[item.variant_id], item.original_price, this.formatMoney);
       },
       isOutOfStock(item) {
         return !!(item.variant && item.variant.available === false);
