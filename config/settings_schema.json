@@ -109,5 +109,26 @@
         "default": 4
       }
     ]
+  },
+  {
+    "name": "SEO & social sharing",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Fallbacks used when a page, collection or the homepage has no SEO description or image set in the admin."
+      },
+      {
+        "type": "textarea",
+        "id": "seo_default_description",
+        "label": "Default meta description",
+        "default": "Texas Bookman sells clean, high-quality wholesale books and sidelines in every category at a fraction of the publisher's price, with low minimums and fast fulfillment."
+      },
+      {
+        "type": "image_picker",
+        "id": "share_image",
+        "label": "Default social sharing image",
+        "info": "Used for og:image when a page has no image of its own. 1200 x 628px recommended."
+      }
+    ]
   }
 ]

@@ -42,9 +42,9 @@
 <div class="tw-w-full tw-font-montserrat tw-leading-tighter tw-h-fit tw-flex {% if block.settings.align == 'center' %} tw-text-center {% elsif block.settings.align == 'end' %} tw-text-end {% elsif block.settings.align == 'start' %} tw-text-start {% endif %} {% if block.settings.display == 'desktop' %} tw-hidden md:tw-block {% elsif block.settings.display == 'mobile' %} md:tw-hidden {% endif %} tw-relative">
   {% case block.settings.type %}
     {% when 'h1' %}
-      <h2 class="{{ text_classes }} tw-font-sans tw-leading-tight">
+      <h1 class="{{ text_classes }} tw-font-sans tw-leading-tight">
         {{ block.settings.text }}
-      </h2>
+      </h1>
     {% when 'h2' %}
       <h2 class="{{ text_classes }} tw-font-sans tw-leading-tight">
         {{ block.settings.text }}
