@@ -19,6 +19,8 @@
 %}
 {% comment %} {% assign get_full_url = content_for_query_string | split: '"pageurl":"' | last | split: '?' | last %} {% endcomment %}
 {% assign query_params = get_full_url
+  | split: '?'
+  | last
   | replace: 'pb=0', ''
   | replace: '_fd=0', ''
   | replace: '&&', '&'
@@ -463,12 +465,12 @@
       <div class="tw-flex tw-w-full tw-grow tw-flex-col tw-justify-start">
         <!-- Product Grid -->
         <div class="tw-flex tw-w-full tw-h-full tw-flex-col tw-justify-between">
+          {% paginate collection.products by items_per_page -%}
           <div
             id="product-grid-{{ section.id }}"
             :class="viewMode === 'list' ? 'tw-flex tw-flex-col tw-w-full' : 'tw-mx-auto tw-grid tw-max-w-7xl tw-grid-cols-2 max-md:tw-px-4 tw-gap-[-1px] md:tw-grid-cols-2 lg:tw-grid-cols-3 xl:tw-grid-cols-4'"
             class="tw-mx-auto tw-max-w-7xl max-md:tw-px-4 tw-items-stretch"
           >
-            {% paginate collection.products by items_per_page -%}
               <span
                 data-current-page="{{ paginate.current_page }}"
                 data-total-pages="{{ paginate.pages }}"
@@ -770,17 +772,16 @@
                     </div>
                   </div>
                 </div>
-              {%- endfor %}\
-              {% if section.settings.enable_infinite_scroll %}\
-                {% if paginate.next %}\
+              {%- endfor %}
+              {% if section.settings.enable_infinite_scroll %}
+                {% if paginate.next %}
                   <div
                     id="infinite-scroll-sentinel-{{ section.id }}"
                     data-next-url="{{ paginate.next.url }}"
                     class="md:tw-col-span-2 xl:tw-col-span-3 tw-h-4"
                   ></div>
-                {% endif %}\
-              {% endif %}\
-            {%- endpaginate %}
+                {% endif %}
+              {% endif %}
           </div>
           {% if section.settings.enable_infinite_scroll %}
             <div
@@ -808,6 +809,7 @@
           {% else %}
             {% render 'collection-pagination', paginate: paginate, items_per_page: items_per_page %}
           {% endif %}
+          {%- endpaginate %}
         </div>
       </div>
     </div>
