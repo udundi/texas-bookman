@@ -167,14 +167,16 @@
         </div>
       </div>
       <!-- Checkout button / spinner -->
-      <a
-        v-if="!updatingCart"
-        href="{{ routes.checkout_url }}"
-        class="tw-flex tw-gap-3 tw-rounded-[4px] tw-items-center tw-justify-center tw-bg-brand-secondary tw-py-3 tw-px-6 tw-text-offblack tw-font-semibold tw-uppercase tw-text-16 tw-w-full tw-text-center tw-mt-4 tw-transition-all duration-200 hover:tw-brightness-95 tw-no-underline"
-      >
-        <span class="tw-size-4 tw-flex tw-items-center">{% render 'icon-lock' %}</span>
-        Checkout
-      </a>
+      <form v-if="!updatingCart" action="{{ routes.cart_url }}" method="post">
+        <button
+          type="submit"
+          name="checkout"
+          class="tw-flex tw-gap-3 tw-rounded-[4px] tw-items-center tw-justify-center tw-bg-brand-secondary tw-py-3 tw-px-6 tw-text-offblack tw-font-semibold tw-uppercase tw-text-16 tw-w-full tw-text-center tw-mt-4 tw-transition-all duration-200 hover:tw-brightness-95 tw-no-underline"
+        >
+          <span class="tw-size-4 tw-flex tw-items-center">{% render 'icon-lock' %}</span>
+          Checkout
+        </button>
+      </form>
       <div
         v-else
         class="tw-bg-brand-secondary tw-rounded-[4px] tw-py-3 tw-px-6 tw-cursor-wait tw-flex tw-items-center tw-justify-center tw-mt-4"
