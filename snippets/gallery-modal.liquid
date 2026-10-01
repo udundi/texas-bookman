@@ -3,11 +3,16 @@
   class="image-modal"
   id="imageModal-{{ section.id }}"
   data-pdp-modal
+  role="dialog"
+  aria-modal="true"
+  aria-label="Enlarged images of {{ product.title | escape }}"
+  aria-hidden="true"
+  tabindex="-1"
 >
   <!-- Close Button -->
-  <div class="image-modal-close" onclick="closeImageModal()">
+  <button type="button" class="image-modal-close" onclick="closeImageModal()" aria-label="Close enlarged image">
     {% render 'icon-close' %}
-  </div>
+  </button>
 
   <!-- Modal Swiper -->
   <div class="swiper modal-swiper-container">
