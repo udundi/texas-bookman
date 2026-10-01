@@ -76,19 +76,6 @@
   class="section-{{ section.id }}-props tw-border-brand-grey tw-bg-white tw-border-b tw-mb-[-1px]"
   data-filtered-product-count="{{ collection.products_count }}"
 >
-  <style>
-    #filters-{{ block.id }} {
-      height: 100%;
-      background-color: {{ block.settings.background_color }};
-      max-height: 100px;
-      transition: max-height 0.25s ease
-    }
-
-    #filters-{{ block.id }}
-    .collapsed {
-      max-height: 0;
-    }
-  </style>
   <div class="tw-w-full tw-flex tw-justify-center tw-border-y tw-border-brand-grey tw-border-solid tw-p-2 tw-my-[-1px]">
     <div class="tw-flex tw-flex-col tw-gap-2 tw-w-full tw-max-w-screen-2xl md:tw-flex-row md:tw-justify-between md:tw-items-center">
       <div class="tw-flex tw-w-full tw-items-start tw-justify-between tw-gap-2 max-md:tw-px-4 md:tw-w-auto">
@@ -814,33 +801,6 @@
 </div>
 
 <script>
-  (function () {
-    const filters = document.getElementById('filters-{{ block.id }}');
-    let lastKnownScrollPosition = 0;
-    let ticking = false;
-
-    function doSomething(scrollPos) {
-      if (window.scrollY > scrollPos) {
-        filters.classList.add('collapsed');
-      } else {
-        filters.classList.remove('collapsed');
-      }
-    }
-
-    document.addEventListener('scroll', (event) => {
-      lastKnownScrollPosition = window.scrollY;
-
-      if (!ticking) {
-        setTimeout(() => {
-          doSomething(lastKnownScrollPosition);
-          ticking = false;
-        }, 20);
-
-        ticking = true;
-      }
-    });
-  })();
-
   new Vue({
     el: '.section-{{ section.id }}-props',
     delimiters: ['[[', ']]'],

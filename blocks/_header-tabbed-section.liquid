@@ -1,6 +1,11 @@
 <!-- Tab Group -->
 <div class="tw-group tw-relative tw-flex tw-h-full tw-bg-brand-eggshell tw-items-center tw-justify-center">
   <button
+    type="button"
+    data-tab-button="{{ block.id }}"
+    aria-haspopup="true"
+    aria-controls="nav-dropdown-{{ block.id }}"
+    :aria-expanded="(selectedTab === '{{ block.id }}').toString()"
     class="tw-relative tw-hidden tw-border-y-2 tw-border-solid tw-border-transparent group-hover:tw-border-b-brand-primary group-hover:tw-text-brand-primary md:tw-py-[7px] tw-py-3 md:tw-px-0 tw-px-1.5 tw-font-brand-body !tw-text-12 tw-font-semibold md:tw-block tw-text-offblack hover:tw-text-brand-primary tw-leading-[15px] tw-tracking-[0.05em] tw-whitespace-nowrap tw-transition-colors tw-uppercase"
     @click="selectedTab = '{{ block.id }}'; positionDropdown('{{ block.id }}')"
     @mouseenter="selectedTab = '{{ block.id }}'; selectedSubTab = ''; positionDropdown('{{ block.id }}')"
@@ -9,6 +14,10 @@
   </button>
   <!-- Mobile Button -->
   <button
+    type="button"
+    aria-haspopup="true"
+    aria-controls="nav-dropdown-{{ block.id }}"
+    :aria-expanded="(selectedTab === '{{ block.id }}').toString()"
     class="tw-relative tw-flex tw-w-full tw-items-center tw-justify-between tw-gap-2 tw-border-0 tw-border-b tw-border-brand-grey tw-border-solid tw-bg-white tw-px-4 tw-py-4 tw-text-start tw-font-brand-body !tw-text-14 tw-font-semibold tw-uppercase tw-text-offblack"
     @click="selectedTab = '{{ block.id }}';"
     :class="selectedTab ? 'tw-hidden' : 'md:tw-hidden'"
@@ -19,6 +28,7 @@
   <!-- Dropdown: sized to its content, centered under its tab, shifted back on screen if it would overflow -->
   <div
     v-show="selectedTab === '{{ block.id }}'"
+    id="nav-dropdown-{{ block.id }}"
     data-tab-id="{{ block.id }}"
     data-offset="{{ block.settings.dropdown_offset }}"
     class="nav-dropdown md:tw-absolute tw-flex tw-w-full md:tw-w-max tw-flex-col md:tw-flex-row md:tw-left-1/2 tw-top-full tw-max-w-screen-2xl md:-tw-translate-x-1/2 md:tw-z-50 tw-min-h-0 tw-text-black"
