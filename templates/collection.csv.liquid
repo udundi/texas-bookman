@@ -1,0 +1,54 @@
+{%- layout none -%}
+{%- comment -%}
+  One page of collection products as JSON, for the Export CSV button in
+  sections/ud-sortable-collection.liquid (requested with ?view=csv&page=N).
+  The browser turns the pages into the CSV. Guests get no products.
+{%- endcomment -%}
+{%- liquid
+  assign is_staff = false
+  if customer and customer.tags contains 'Staff'
+    assign is_staff = true
+  endif
+-%}
+{%- paginate collection.products by 250 -%}
+{
+  "pages": {{ paginate.pages | json }},
+  "products": [
+    {%- if customer -%}
+      {%- for product in collection.products -%}
+        {%- liquid
+          assign variant = product.selected_or_first_available_variant
+          assign list_price = product.compare_at_price | default: product.price
+          assign net_price = product.price
+          if settings.flash_sale
+            for flash_sale_product in settings.flash_sale_products
+              if flash_sale_product.id == product.id
+                assign flash_sale_discount = settings.flash_sale_discount | times: 0.01
+                assign flash_sale_amount = product.price | times: flash_sale_discount
+                assign net_price = product.price | minus: flash_sale_amount
+              endif
+            endfor
+          endif
+          assign isbn = product.metafields.facts.isbn | default: product.metafields.custom.isbn
+          assign tb_code = ''
+          if is_staff
+            assign tb_code = product.metafields.custom.tb_code
+          endif
+        -%}
+        {
+          "title": {{ product.title | json }},
+          "author": {{ product.metafields.custom.author.value | append: '' | json }},
+          "publisher": {{ product.vendor | json }},
+          "isbn": {{ isbn | append: '' | json }},
+          "tb_code": {{ tb_code | append: '' | json }},
+          "list_price": {{ list_price | money_without_currency | remove: ',' | json }},
+          "net_price": {{ net_price | money_without_currency | remove: ',' | json }},
+          "qty": {{ variant.inventory_quantity | json }},
+          "url": {{ request.origin | append: product.url | json }}
+        }
+        {%- unless forloop.last %},{% endunless -%}
+      {%- endfor -%}
+    {%- endif -%}
+  ]
+}
+{%- endpaginate -%}

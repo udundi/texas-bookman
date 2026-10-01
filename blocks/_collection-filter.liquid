@@ -40,7 +40,7 @@
         {%- assign new_params = '' -%}
         {%- for param in query_params -%}
           {%- if param == filter_change -%}{%- continue -%}{%- endif -%}
-          {%- if new_params != blank -%}{%- assign new_params = new_params | append: '&' -%}{%- endif -%}\
+          {%- if new_params != blank -%}{%- assign new_params = new_params | append: '&' -%}{%- endif -%}
           {%- assign new_params = new_params | append: param -%}
         {%- endfor -%}
         {%- if new_params != blank -%}
@@ -48,11 +48,11 @@
         {%- else -%}
           {%- assign filter_href = collection.url -%}
         {%- endif -%}
-      {%- elsif filter_change contains 'filter.v.price' -%}\
+      {%- elsif filter_change contains 'filter.v.price' -%}
         {%- assign new_params = '' -%}
         {%- for param in query_params -%}
           {%- if param contains 'filter.v.price' -%}{%- continue -%}{%- endif -%}
-          {%- if new_params != blank -%}{%- assign new_params = new_params | append: '&' -%}{%- endif -%}\
+          {%- if new_params != blank -%}{%- assign new_params = new_params | append: '&' -%}{%- endif -%}
           {%- assign new_params = new_params | append: param -%}
         {%- endfor -%}
         {%- if new_params != blank -%}
@@ -72,7 +72,7 @@
             {%- if param contains 'filter.' and filter_change contains 'filter.p.tag' and param == filter_change -%}
               {%- continue -%}
             {%- endif -%}
-            {%- if new_params != blank -%}{%- assign new_params = new_params | append: '&' -%}{%- endif -%}\
+            {%- if new_params != blank -%}{%- assign new_params = new_params | append: '&' -%}{%- endif -%}
             {%- assign new_params = new_params | append: param -%}
           {%- endif -%}
         {%- endfor -%}
@@ -95,139 +95,151 @@
       {%- endif -%}
     {%- endif -%}
 
+    {%- liquid
+      assign filter_active = false
+      if query_params contains filter_change
+        assign filter_active = true
+      endif
+      assign filter_count = nil
+
+      # When the store has this filter enabled (Search & Discovery), take the selected
+      # state, URLs and result count from Shopify instead of the URL string. Selecting
+      # several values of one filter ORs them.
+      assign filter_param = block.settings.filter_type | remove_last: '='
+      assign filter_found = false
+      assign filter_value = nil
+      for filter in collection.filters
+        if filter.param_name == filter_param
+          assign filter_found = true
+          for value in filter.values
+            if value.value == block.settings.tag
+              assign filter_value = value
+              break
+            endif
+          endfor
+        endif
+      endfor
+      if filter_value
+        assign filter_active = filter_value.active
+        assign filter_count = filter_value.count
+        if filter_active
+          assign filter_href = filter_value.url_to_remove
+        else
+          assign filter_href = filter_value.url_to_add
+        endif
+      endif
+    -%}
+
     {%- capture child_blocks -%}{%- content_for 'blocks' -%}{%- endcapture -%}
-    {%- assign child_blocks = child_blocks | strip -%}
+    {%- liquid
+      # Nested filters mark themselves active so their parent stays visible and opens
+      assign child_blocks = child_blocks | strip
+      assign children_collapsed = block.settings.children_collapsed | default: false
+      if child_blocks contains 'data-filter-active'
+        assign children_collapsed = false
+      endif
+    -%}
 
-    {%- comment -%}
-      Count comes from Shopify's own filter data, so it follows the current results. When the store has this
-      filter set up (Search & Discovery) but the value has no results, the value is hidden. Filters the store
-      doesn't have set up (e.g. vendor today) can't be counted and render without one.
-    {%- endcomment -%}
-    {%- assign filter_param = block.settings.filter_type | remove: '=' -%}
-    {%- assign filter_is_active = false -%}
-    {%- if query_params contains filter_change or child_blocks contains 'data-filter-active' -%}
-      {%- assign filter_is_active = true -%}
-    {%- endif -%}
-    {%- assign filter_configured = false -%}
-    {%- assign filter_count = 0 -%}
-    {%- for store_filter in collection.filters -%}
-      {%- if store_filter.param_name == filter_param and store_filter.type == 'list' -%}
-        {%- assign filter_configured = true -%}
-        {%- for store_value in store_filter.values -%}
-          {%- if store_value.value == block.settings.tag -%}
-            {%- assign filter_count = store_value.count -%}
-          {%- endif -%}
-        {%- endfor -%}
-      {%- endif -%}
-    {%- endfor -%}
-    {%- assign show_filter = true -%}
-    {%- if filter_configured and filter_count == 0 and filter_is_active == false -%}
-      {%- assign show_filter = false -%}
-    {%- endif -%}
+    {%- liquid
+      # Hide values with no results, unless already selected or they hold sub-filters.
+      assign hide_filter = false
+      if filter_found and child_blocks == blank
+        if filter_value == nil
+          assign hide_filter = true
+        elsif filter_active == false and filter_count == 0
+          assign hide_filter = true
+        endif
+      endif
+    -%}
 
-    {%- assign children_collapsed = block.settings.children_collapsed | default: false -%}
-    {%- if child_blocks contains 'data-filter-active' -%}
-      {%- assign children_collapsed = false -%}
-    {%- endif -%}
-
-    {%- if show_filter -%}
+    {%- unless hide_filter -%}
     <div class="tw-p-0.5">
-      <div class="tw-flex tw-w-full tw-flex-col"{% if query_params contains filter_change %} data-filter-active{% endif %}>
-        <div class="tw-flex tw-w-full tw-items-center tw-gap-1">
-          <a
-            href="{{ filter_href }}"
-            class="tw-flex tw-flex-1 tw-justify-center tw-items-center tw-gap-2 tw-group"
-          >
-            <div class="tw-border group-hover:tw-border-black tw-rounded-[4px] tw-border-offblack tw-size-4 tw-aspect-square tw-p-0.5 tw-my-auto {% if query_params contains filter_change %} tw-bg-black {% endif %}">
-              <svg
-                class="tw-fill-white {% unless query_params contains filter_change %} tw-hidden {% endunless %}"
-                viewBox="0 0 448 512"
-              >
-                <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
-              </svg>
-            </div>
-            <p class="group-hover:tw-underline tw-text-offblack tw-text-14 tw-w-full !tw-m-0">
-              {{ block.settings.title }}{% if filter_configured %} ({{ filter_count }}){% endif %}
-            </p>
-          </a>
-          {%- unless child_blocks == blank -%}
-            <button
-              type="button"
-              class="tw-flex-shrink-0 tw-fill-offblack tw-size-3 tw-cursor-pointer tw-bg-transparent tw-border-0 tw-p-0 tw-m-0"
-              @click="toggleFilter('{{ block.id }}', {{ children_collapsed }})"
-            >
-              <div
-                class="tw-fill-offblack tw-size-3"
-                v-if="isFilterOpen('{{ block.id }}', {{ children_collapsed }})"
-              >
-                {% render 'icon-arrow-up' %}
-              </div>
-              <div v-else class="tw-fill-offblack tw-size-3">{% render 'icon-arrow-down' %}</div>
-            </button>
-          {%- endunless -%}
-        </div>
+    <div class="tw-flex tw-w-full tw-flex-col"{% if filter_active %} data-filter-active{% endif %}>
+      <div class="tw-flex tw-w-full tw-items-center tw-gap-1">
+        {% render 'collection-filter-checkbox',
+          href: filter_href,
+          checked: filter_active,
+          label: block.settings.title,
+          count: filter_count
+        %}
         {%- unless child_blocks == blank -%}
-          <div
-            class="tw-pl-4 tw-pt-1 tw-flex tw-flex-col tw-gap-[1px]"
-            v-show="isFilterOpen('{{ block.id }}', {{ children_collapsed }})"
+          <button
+            type="button"
+            class="tw-flex-shrink-0 tw-fill-offblack tw-size-3 tw-cursor-pointer tw-bg-transparent tw-border-0 tw-p-0 tw-m-0"
+            @click="toggleFilter('{{ block.id }}', {{ children_collapsed }})"
           >
-            {{ child_blocks }}
-          </div>
+            <div
+              class="tw-fill-offblack tw-size-3"
+              v-if="isFilterOpen('{{ block.id }}', {{ children_collapsed }})"
+            >
+              {% render 'icon-arrow-up' %}
+            </div>
+            <div v-else class="tw-fill-offblack tw-size-3">{% render 'icon-arrow-down' %}</div>
+          </button>
         {%- endunless -%}
       </div>
+      {%- unless child_blocks == blank -%}
+        <div
+          class="tw-pl-4 tw-pt-1 tw-flex tw-flex-col tw-gap-[1px]"
+          v-show="isFilterOpen('{{ block.id }}', {{ children_collapsed }})"
+        >
+          {{ child_blocks }}
+        </div>
+      {%- endunless -%}
     </div>
-    {%- endif -%}
+    </div>
+    {%- endunless -%}
   {% else %}
     <div class="tw-p-0.5">
-      <div class="tw-flex tw-flex-wrap tw-gap-2 tw-w-full ">
-        {% for color in metaobjects.tile_colors.values %}
-          {% assign color_index = forloop.index %}
-          {% for ref in metaobjects.tile_colors.values %}\
-            {% if color_index == ref.position %}
-              {% assign color_ref = ref %}
-            {% endif %}
-          {% endfor %}
-          {% assign filter_change = 'filter.p.tag=' | append: color_ref.name | replace: ' ', '+' %}
-          <a
-            {% assign query_params = get_full_url
-              | replace: 'pb=0', ''
-              | replace: '_fd=0', ''
-              | replace: '&&', '&'
-              | replace: '?&', '?'
-              | replace: '?', ''
-              | split: '&'
-            %}
-            {% if get_full_url contains color_ref.name %}
-              {% assign new_params = '' %}
-              {% for param in query_params %}
-                {% unless forloop.last and param == filter_change %}
-                  {% assign new_params = new_params | append: '&' %}
-                {% endunless %}
-                {% if param != filter_change %}
-                  {% assign new_params = new_params | append: param %}
-                {% endif %}
-              {% endfor %}
-              {% if new_params != blank %}
-                href="{{ collection.url |  append: '?' |  append: new_params | replace: '&&', '&' | replace: '?&', '?' }}"
-              {% else %}
-                href="{{ collection.url }}"
-              {% endif %}
-            {% else %}
-              href="{{ collection.url }}{{ query_params |  join: '&' | prepend: '?' | append: '&' | append: filter_change | replace: '&&', '&' | replace: '?&', '?' }}"
-            {% endif %}
-            class="tw-group tw-h-fit tw-w-fit"
-          >
-            {% assign filter_border_check = 'filter.p.tag=' | append: color_ref.name %}
-            <div
-              class="
-                tw-size-6 tw-border {% if color_ref.bordered %}tw-border-black/100{% else %}tw-border-black/0{% endif %}
-                {% if get_full_url contains filter_border_check %} tw-ring-4 tw-ring-black {% endif %}  tw-rounded-full
-              "
-              style="background-color: {{ color_ref.color }};"
-            ></div>
-          </a>
+    <div class="tw-flex tw-flex-wrap tw-gap-2 tw-w-full ">
+      {% for color in metaobjects.tile_colors.values %}
+        {% assign color_index = forloop.index %}
+        {% for ref in metaobjects.tile_colors.values %}
+          {% if color_index == ref.position %}
+            {% assign color_ref = ref %}
+          {% endif %}
         {% endfor %}
-      </div>
+        {% assign filter_change = 'filter.p.tag=' | append: color_ref.name | replace: ' ', '+' %}
+        <a
+          {% assign query_params = get_full_url
+            | replace: 'pb=0', ''
+            | replace: '_fd=0', ''
+            | replace: '&&', '&'
+            | replace: '?&', '?'
+            | replace: '?', ''
+            | split: '&'
+          %}
+          {% if get_full_url contains color_ref.name %}
+            {% assign new_params = '' %}
+            {% for param in query_params %}
+              {% unless forloop.last and param == filter_change %}
+                {% assign new_params = new_params | append: '&' %}
+              {% endunless %}
+              {% if param != filter_change %}
+                {% assign new_params = new_params | append: param %}
+              {% endif %}
+            {% endfor %}
+            {% if new_params != blank %}
+              href="{{ collection.url |  append: '?' |  append: new_params | replace: '&&', '&' | replace: '?&', '?' }}"
+            {% else %}
+              href="{{ collection.url }}"
+            {% endif %}
+          {% else %}
+            href="{{ collection.url }}{{ query_params |  join: '&' | prepend: '?' | append: '&' | append: filter_change | replace: '&&', '&' | replace: '?&', '?' }}"
+          {% endif %}
+          class="tw-group tw-h-fit tw-w-fit"
+        >
+          {% assign filter_border_check = 'filter.p.tag=' | append: color_ref.name %}
+          <div
+            class="
+              tw-size-6 tw-border {% if color_ref.bordered %}tw-border-black/100{% else %}tw-border-black/0{% endif %}
+              {% if get_full_url contains filter_border_check %} tw-ring-4 tw-ring-black {% endif %}  tw-rounded-full
+            "
+            style="background-color: {{ color_ref.color }};"
+          ></div>
+        </a>
+      {% endfor %}
+    </div>
     </div>
   {% endif %}
 

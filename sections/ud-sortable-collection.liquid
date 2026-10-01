@@ -76,19 +76,6 @@
   class="section-{{ section.id }}-props tw-border-brand-grey tw-bg-white tw-border-b tw-mb-[-1px]"
   data-filtered-product-count="{{ collection.products_count }}"
 >
-  <style>
-    #filters-{{ block.id }} {
-      height: 100%;
-      background-color: {{ block.settings.background_color }};
-      max-height: 100px;
-      transition: max-height 0.25s ease
-    }
-
-    #filters-{{ block.id }}
-    .collapsed {
-      max-height: 0;
-    }
-  </style>
   <div class="tw-w-full tw-flex tw-justify-center tw-border-y tw-border-brand-grey tw-border-solid tw-p-2 tw-my-[-1px]">
     <div class="tw-flex tw-flex-col tw-gap-2 tw-w-full tw-max-w-screen-2xl md:tw-flex-row md:tw-justify-between md:tw-items-center">
       <div class="tw-flex tw-w-full tw-items-start tw-justify-between tw-gap-2 max-md:tw-px-4 md:tw-w-auto">
@@ -214,6 +201,16 @@
             </option>
           </select>
         </div>
+        {% if customer %}
+          <button
+            type="button"
+            @click="exportCsv"
+            :disabled="exportingCsv"
+            class="tw-flex tw-flex-1 tw-items-center tw-justify-center tw-rounded-[4px] tw-border tw-border-brand-grey tw-bg-white tw-py-2 tw-text-14 tw-text-offblack tw-transition-colors hover:tw-border-offblack disabled:tw-cursor-wait disabled:tw-opacity-60"
+          >
+            [[ exportingCsv ? 'Exporting...' : 'Export CSV' ]]
+          </button>
+        {% endif %}
       </div>
       <div class="tw-hidden md:tw-block">
         <!-- Sort By Selector -->
@@ -327,6 +324,17 @@
               {% render 'icon-arrow-down' %}
             </div>
           </div>
+          {% if customer %}
+            <!-- Export CSV -->
+            <button
+              type="button"
+              @click="exportCsv"
+              :disabled="exportingCsv"
+              class="tw-whitespace-nowrap tw-rounded-[4px] tw-border tw-border-solid tw-border-brand-grey tw-bg-white tw-px-3 tw-py-2 tw-text-14 tw-text-offblack tw-transition-colors hover:tw-border-offblack disabled:tw-cursor-wait disabled:tw-opacity-60"
+            >
+              [[ exportingCsv ? 'Exporting...' : 'Export CSV' ]]
+            </button>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -386,14 +394,11 @@
                     {% assign active_filter_key = active_param_parts[0]
                       | replace: 'filter.p.', ''
                       | replace: 'filter.v.', ''
+                      | replace: 'm.custom.', ''
                       | replace: '.', ' '
                       | replace: '_', ' '
                     %}
-                    {% assign active_filter_value = active_param_parts[1]
-                      | replace: '+', ' '
-                      | replace: '%20', ' '
-                      | replace: '%26', '&'
-                    %}
+                    {% assign active_filter_value = active_param_parts[1] | url_decode %}
                     {% assign remaining_params = '' %}
                     {% for param in query_params %}
                       {% unless param == active_param %}
@@ -478,6 +483,14 @@
                 class="tw-hidden"
               ></span>
               {% for product in collection.products -%}
+                {%- liquid
+                  # Cap the quick-add input at stock only when Shopify refuses to oversell
+                  assign qty_variant = product.selected_or_first_available_variant
+                  assign qty_max = nil
+                  if qty_variant.inventory_management == 'shopify' and qty_variant.inventory_policy == 'deny'
+                    assign qty_max = qty_variant.inventory_quantity | at_least: 1
+                  endif
+                -%}
                 {% assign is_flash_sale = false %}
                 {% if settings.flash_sale %}
                   {% for flash_sale_product in settings.flash_sale_products %}
@@ -597,9 +610,10 @@
                               <input
                                 type="number"
                                 min="1"
+                                {% if qty_max %}max="{{ qty_max }}"{% endif %}
                                 placeholder="1"
                                 :value="getQty({{ product.selected_or_first_available_variant.id }})"
-                                @input="setQty({{ product.selected_or_first_available_variant.id }}, $event.target.value)"
+                                @input="setQty({{ product.selected_or_first_available_variant.id }}, $event.target, {{ qty_max | default: 'Infinity' }})"
                                 class="tw-w-full tw-text-center tw-leading-none tw-py-0.5 tw-border tw-border-brand-grey tw-rounded tw-h-full tw-text-12 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
                                 :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                               >
@@ -736,9 +750,10 @@
                                     <input
                                       type="number"
                                       min="1"
+                                      {% if qty_max %}max="{{ qty_max }}"{% endif %}
                                       placeholder="1"
                                       :value="getQty({{ product.selected_or_first_available_variant.id }})"
-                                      @input="setQty({{ product.selected_or_first_available_variant.id }}, $event.target.value)"
+                                      @input="setQty({{ product.selected_or_first_available_variant.id }}, $event.target, {{ qty_max | default: 'Infinity' }})"
                                       class="tw-w-14 tw-text-center tw-leading-none tw-py-0.5 tw-px-1 tw-border tw-border-brand-grey tw-rounded tw-text-14 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
                                       :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                                     >
@@ -817,33 +832,6 @@
 </div>
 
 <script>
-  (function () {
-    const filters = document.getElementById('filters-{{ block.id }}');
-    let lastKnownScrollPosition = 0;
-    let ticking = false;
-
-    function doSomething(scrollPos) {
-      if (window.scrollY > scrollPos) {
-        filters.classList.add('collapsed');
-      } else {
-        filters.classList.remove('collapsed');
-      }
-    }
-
-    document.addEventListener('scroll', (event) => {
-      lastKnownScrollPosition = window.scrollY;
-
-      if (!ticking) {
-        setTimeout(() => {
-          doSomething(lastKnownScrollPosition);
-          ticking = false;
-        }, 20);
-
-        ticking = true;
-      }
-    });
-  })();
-
   new Vue({
     el: '.section-{{ section.id }}-props',
     delimiters: ['[[', ']]'],
@@ -856,6 +844,7 @@
         viewMode: 'grid',
         quantities: {},
         addingToCartMap: {},
+        exportingCsv: false,
       };
     },
     watch: {
@@ -956,8 +945,11 @@
       getQty(variantId) {
         return this.quantities[variantId] || 1;
       },
-      setQty(variantId, val) {
-        this.$set(this.quantities, variantId, parseInt(val, 10) || 1);
+      setQty(variantId, input, max) {
+        const qty = Math.min(parseInt(input.value, 10) || 1, max);
+        // Write the cap back, since Vue won't re-render when the stored qty doesn't change
+        if (Number(input.value) > max) input.value = qty;
+        this.$set(this.quantities, variantId, qty);
       },
       isAdding(variantId) {
         return !!this.addingToCartMap[variantId];
@@ -982,6 +974,65 @@
           })
           .catch((error) => { this.bus.$emit('cartFailedToAdd', error); })
           .finally(() => { this.$set(this.addingToCartMap, variantId, false); });
+      },
+      // Fetches every page of templates/collection.csv.liquid with the current
+      // filters and sort, then downloads the products as a CSV.
+      async exportCsv() {
+        if (this.exportingCsv) return;
+        this.exportingCsv = true;
+        try {
+          const url = new URL(window.location.href);
+          url.searchParams.delete('limit');
+          url.searchParams.set('view', 'csv');
+          const products = [];
+          let pages = 1;
+          for (let page = 1; page <= pages; page++) {
+            url.searchParams.set('page', page);
+            const res = await fetch(url.toString(), { credentials: 'same-origin' });
+            if (!res.ok) throw new Error(`Export failed on page ${page}: ${res.status}`);
+            const data = await res.json();
+            pages = data.pages;
+            products.push(...data.products);
+          }
+
+          const columns = [
+            ['Title', 'title'],
+            ['Author', 'author'],
+            ['Publisher', 'publisher'],
+            ['ISBN', 'isbn'],
+            {%- if customer.tags contains 'Staff' %}
+            ['TB Code', 'tb_code'],
+            {%- endif %}
+            ['List Price', 'list_price'],
+            ['Net Price', 'net_price'],
+            ['QTY', 'qty'],
+            ['URL', 'url'],
+          ];
+          const cell = (value) => {
+            let text = value == null ? '' : String(value);
+            // Stop spreadsheets from treating cells as formulas
+            if (/^[=+\-@\t\r]/.test(text)) text = `'${text}`;
+            return `"${text.replace(/"/g, '""')}"`;
+          };
+          const lines = [columns.map(([label]) => cell(label)).join(',')];
+          products.forEach((product) => {
+            lines.push(columns.map(([, key]) => cell(product[key])).join(','));
+          });
+
+          const blob = new Blob(['\uFEFF' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = {{ collection.handle | json }} + `-${new Date().toISOString().slice(0, 10)}.csv`;
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          setTimeout(() => URL.revokeObjectURL(link.href), 0);
+        } catch (error) {
+          console.error(error);
+          alert('Sorry, the CSV export failed. Please try again.');
+        } finally {
+          this.exportingCsv = false;
+        }
       },
     },
   });
