@@ -409,9 +409,9 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "*MARKDOWNS*",
+                "tag": "MARKDOWNS",
                 "title": "Books on Sale",
-                "filter_type": "filter.p.tag=",
+                "filter_type": "filter.p.m.custom.category=",
                 "children_collapsed": false
               },
               "blocks": {}
