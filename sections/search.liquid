@@ -190,6 +190,12 @@
                       assign qty_max = qty_variant.quantity_rule.max
                     endif
                   endif
+                  capture stock_info
+                    render 'stock-state', product: product
+                  endcapture
+                  assign stock_info = stock_info | split: ' '
+                  assign stock_state = stock_info[0]
+                  assign stock_qty = stock_info[1]
                 -%}
                 <div class="tw-flex tw-flex-col tw-justify-between tw-p-4 tw-border tw-border-brand-grey tw-bg-white tw-mr-[-1px] tw-mb-[-1px] tw-h-full">
                   <a href="{{ product.url }}">
@@ -234,8 +240,9 @@
                           </p>
                         {% endif %}
                         <p class="tw-font-semibold tw-text-14 tw-text-gray-600 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
-                          QTY: <span class="tw-font-normal">{{ product.selected_or_first_available_variant.inventory_quantity }}</span>
+                          QTY: <span class="tw-font-normal">{{ stock_qty }}</span>
                         </p>
+                        {% render 'stock-label', state: stock_state %}
                         <div class="tw-flex tw-flex-col">
                           {%- unless product.type == 'Greeting Card' -%}
                           <div class="tw-text-gray-600 tw-text-14 tw-font-semibold">
@@ -256,6 +263,14 @@
                       >
                         Sign in to shop
                       </a>
+                    {% elsif stock_state == 'out_of_stock' %}
+                      <button
+                        type="button"
+                        disabled
+                        class="tw-bg-brand-secondary tw-w-full tw-text-12 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4 tw-py-2 tw-font-semibold tw-font-montserrat tw-whitespace-nowrap tw-items-center tw-uppercase tw-mt-auto tw-opacity-50 tw-cursor-not-allowed"
+                      >
+                        Out of Stock
+                      </button>
                     {% else %}
                       <div class="tw-flex tw-gap-2 tw-w-full tw-mt-auto">
                         <div class="tw-flex tw-items-center tw-gap-2 tw-w-full">
@@ -327,6 +342,12 @@
                       assign qty_max = qty_variant.quantity_rule.max
                     endif
                   endif
+                  capture stock_info
+                    render 'stock-state', product: product
+                  endcapture
+                  assign stock_info = stock_info | split: ' '
+                  assign stock_state = stock_info[0]
+                  assign stock_qty = stock_info[1]
                 -%}
                 <div class="tw-flex tw-flex-row tw-items-center tw-border tw-mb-[-1px] tw-border-brand-grey tw-bg-white tw-p-4 tw-gap-4 tw-w-full">
                   <a href="{{ product.url }}" class="tw-flex-shrink-0">
@@ -386,8 +407,9 @@
                             </div>
                           {% endif %}
                           <div>
-                            QTY: <span class="tw-font-normal">{{ product.selected_or_first_available_variant.inventory_quantity }}</span>
+                            QTY: <span class="tw-font-normal">{{ stock_qty }}</span>
                           </div>
+                          {% render 'stock-label', state: stock_state, class: 'tw-self-start' %}
                         </div>
                         <div class="tw-flex-shrink-0 max-md:tw-w-full">
                           {% if customer == null %}
@@ -397,6 +419,14 @@
                             >
                               Sign in to shop
                             </a>
+                          {% elsif stock_state == 'out_of_stock' %}
+                            <button
+                              type="button"
+                              disabled
+                              class="tw-bg-brand-secondary tw-text-11 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-5 tw-py-2 tw-font-semibold tw-font-montserrat tw-whitespace-nowrap tw-items-center tw-uppercase max-md:tw-w-full tw-opacity-50 tw-cursor-not-allowed"
+                            >
+                              Out of Stock
+                            </button>
                           {% else %}
                             <div class="tw-flex max-md:tw-flex-wrap tw-items-center tw-gap-2 tw-h-full">
                               <div class="tw-flex tw-items-center tw-gap-1">
