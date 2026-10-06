@@ -63,10 +63,12 @@
           </a>
         </div>
         <div class="tw-flex tw-flex-col">
+          {%- unless cur_product.type == 'Greeting Card' -%}
           <div class="tw-text-gray-600 tw-text-14 tw-font-semibold">
             List:
             <span class="tw-font-normal">{{ cur_product.compare_at_price | default: cur_product.price | money }}</span>
           </div>
+          {%- endunless -%}
           <div class="tw-font-semibold tw-text-14 ">
             {% if customer %}Your{% endif %} Net Price:
             <span class="tw-font-normal">{{ cur_product.price | money }}</span>

@@ -237,9 +237,11 @@
                           QTY: <span class="tw-font-normal">{{ product.selected_or_first_available_variant.inventory_quantity }}</span>
                         </p>
                         <div class="tw-flex tw-flex-col">
+                          {%- unless product.type == 'Greeting Card' -%}
                           <div class="tw-text-gray-600 tw-text-14 tw-font-semibold">
                             List: <span class="tw-font-normal">{{ product.compare_at_price | default: product.price | money }}</span>
                           </div>
+                          {%- endunless -%}
                           <div class="tw-font-semibold tw-text-14">
                             {% if customer %}Your{% endif %} Net Price: <span class="tw-font-normal">{{ product.price | money }}</span>
                           </div>
@@ -356,9 +358,11 @@
                             {{ product.title }}
                           </h3>
                         </a>
+                        {%- unless product.type == 'Greeting Card' -%}
                         <div class="tw-text-gray-500 tw-text-14 tw-font-normal tw-whitespace-nowrap">
                           List: <span class="tw-font-normal">{{ product.compare_at_price | default: product.price | money }}</span>
                         </div>
+                        {%- endunless -%}
                       </div>
                       <div class="tw-flex tw-w-full tw-flex-wrap tw-justify-between tw-gap-x-3 tw-gap-y-0.5 tw-text-14">
                         {% if product.metafields.custom.author.value != blank %}

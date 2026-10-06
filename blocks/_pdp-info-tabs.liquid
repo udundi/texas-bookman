@@ -1,11 +1,13 @@
 {%- comment -%}
   Details fields; each is hidden when empty or holding the import's "Not available" placeholder,
-  and the Details tab itself is dropped when none are left.
+  and the Details tab itself is dropped when none are left. Greeting cards skip Pages, which the
+  import filled with the pack contents ("6 Cards w/ 6 Envelopes").
 {%- endcomment -%}
 {%- capture details_html -%}
   {%- assign detail_labels = 'Pub Date|Format|Pages|Illustration Type' | split: '|' -%}
   {%- assign detail_keys = 'publication_date|format|pages|illustration_type' | split: '|' -%}
   {%- for detail_key in detail_keys -%}
+    {%- if detail_key == 'pages' and product.type == 'Greeting Card' -%}{%- continue -%}{%- endif -%}
     {%- assign detail_value = product.metafields.custom[detail_key] | strip -%}
     {%- assign detail_value_lower = detail_value | downcase -%}
     {%- if detail_value != blank and detail_value_lower != 'not available' -%}

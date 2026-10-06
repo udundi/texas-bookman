@@ -196,17 +196,22 @@
   | default: case_variant.metafields.custom.case_quantity.value
   | default: 1
 %}
-{% assign cases_available = 0 %}
-{% if case_variant and case_size > 1 %}
-  {% assign cases_available = single_variant.inventory_quantity | at_least: 0 | divided_by: case_size %}
-{% endif %}
 {%- liquid
   # Cap at stock only when Shopify refuses to oversell the single variant
   assign stock_max = 'Infinity'
+  assign sellable = single_variant.inventory_quantity | at_least: 0
+  if settings.max_sellable_per_item > 0 and sellable > settings.max_sellable_per_item
+    # The cart refuses more than this of a variant even when more is in stock
+    assign sellable = settings.max_sellable_per_item
+  endif
   if single_variant.inventory_management == 'shopify' and single_variant.inventory_policy == 'deny'
-    assign stock_max = single_variant.inventory_quantity | at_least: 0
+    assign stock_max = sellable
   endif
 -%}
+{% assign cases_available = 0 %}
+{% if case_variant and case_size > 1 %}
+  {% assign cases_available = sellable | divided_by: case_size %}
+{% endif %}
 {% assign sitewide_discount = settings.sitewide_sale | default: false %}
 
 <!-- Vue Main script -->
@@ -221,7 +226,11 @@
         singleVariantId: '{{ single_variant.id }}',
         caseVariantId: '{{ case_variant.id }}',
         casesAvailable: {{ cases_available }},
+        caseSize: {{ case_size }},
         stockMax: {{ stock_max }},
+        productId: {{ product.id }},
+        // Units of this product already in the cart, Singles plus Cases x case size (see loadCartUnits)
+        cartUnits: 0,
         // B2B catalog quantity rules per variant (min/increment/max); Shopify enforces them at checkout
         quantityRules: {
           {%- for variant in product.variants -%}
@@ -249,15 +258,54 @@
       qtyStep() {
         return this.quantityRule.step || 1;
       },
+      // Singles and Cases draw on the Single variant's stock (the Case variant has no stock of its own
+      // and oversells), so what the cart already holds of either comes off what can still be added
+      unitsLeft() {
+        if (this.stockMax === Infinity) return Infinity;
+        return Math.max(this.stockMax - this.cartUnits, 0);
+      },
+      casesLeft() {
+        if (this.stockMax === Infinity) return this.casesAvailable;
+        return Math.min(this.casesAvailable, Math.floor(this.unitsLeft / this.caseSize));
+      },
       qtyMax() {
-        const stockCap = this.buyingCase ? this.casesAvailable : Math.max(this.stockMax, 1);
+        const stockCap = this.buyingCase ? this.casesLeft : this.unitsLeft;
         return Math.min(stockCap, this.quantityRule.max || Infinity);
       },
       soldOut() {
         return !this.buyingCase && this.stockMax < 1;
       },
+      // Everything in stock is already in the cart (only for in-stock products, which soldOut covers otherwise)
+      cartFull() {
+        return !this.soldOut && this.qtyMax < 1;
+      },
+    },
+    watch: {
+      // Keep the box inside the cap when the cart fills up or the pack size changes
+      qtyMax(max) {
+        if (max >= 1 && Number(this.quantity) > max) {
+          this.quantity = this.validQuantity(this.quantity, this.minQty, this.qtyStep, max);
+        }
+      },
     },
     methods: {
+      // Counts this product's units in the cart: each Single line by quantity and each Case line by
+      // quantity x case size, so Single and Case adds share the one stock count
+      async loadCartUnits() {
+        try {
+          const r = await fetch('/cart.js', { headers: { Accept: 'application/json' } });
+          if (!r.ok) return;
+          const cart = await r.json();
+          this.cartUnits = (cart.items || [])
+            .filter((item) => item.product_id === this.productId)
+            .reduce((units, item) => {
+              const perItem = String(item.variant_id) === this.caseVariantId ? this.caseSize : 1;
+              return units + item.quantity * perItem;
+            }, 0);
+        } catch (e) {
+          // Keep the last count; Shopify still refuses Singles beyond stock
+        }
+      },
       selectPack(variantId) {
         this.currentVariantId = variantId;
         this.quantity = this.minQty;
@@ -274,6 +322,7 @@
         window.openImageModal(Number(trigger.dataset.zoomIndex), trigger);
       },
       async addToCart() {
+        if (this.cartFull) return;
         this.addingToCart = true;
         let mainItemProperties = {};
         const params = new URLSearchParams(window.location.search);
@@ -332,10 +381,19 @@
           this.addingToCart = false;
         }).finally(() => {
           this.addingToCart = false;
+          // Partial adds land some units, so recount either way
+          this.loadCartUnits();
         });
       }
     },
     mounted() {
+      this.loadCartUnits();
+      // The cart can change elsewhere (cart popup, /cart in another tab, back/forward cache)
+      this.bus.$on('refreshCart', () => this.loadCartUnits());
+      window.addEventListener('pageshow', () => this.loadCartUnits());
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') this.loadCartUnits();
+      });
 
       const params = new URLSearchParams(window.location.search);
       const urlVariant = params.get('variant');
