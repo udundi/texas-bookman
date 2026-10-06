@@ -1179,8 +1179,17 @@
             ['QTY', 'qty'],
             ['URL', 'url'],
           ];
+          // Some fields (author metafields, titles) hold HTML entities such as "B&eacute;n&eacute;zech",
+          // which the PDP renders as "Bénézech". Parsing into a detached <textarea> decodes entities
+          // only: its contents are plain text, so tags stay literal and nothing runs.
+          const decoder = document.createElement('textarea');
+          const decode = (text) => {
+            if (!text.includes('&')) return text;
+            decoder.innerHTML = text;
+            return decoder.value;
+          };
           const cell = (value) => {
-            let text = value == null ? '' : String(value);
+            let text = value == null ? '' : decode(String(value));
             // Stop spreadsheets from treating cells as formulas
             if (/^[=+\-@\t\r]/.test(text)) text = `'${text}`;
             return `"${text.replace(/"/g, '""')}"`;
