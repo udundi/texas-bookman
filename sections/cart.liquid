@@ -53,7 +53,7 @@
             <img
               v-if="item.featured_image"
               :src="item.featured_image.url"
-              :alt="item.title"
+              :alt="displayTitle(item)"
               loading="lazy"
               class="tw-size-full tw-aspect-3/4 tw-object-cover"
             >
@@ -80,7 +80,7 @@
               class="tw-flex tw-min-w-0 tw-flex-row tw-gap-2 tw-text-14 tw-font-semibold"
               :class="isOutOfStock(item) ? 'tw-text-gray-400 tw-pointer-events-none' : 'tw-text-brand-primary'"
             >
-              <p class="tw-m-0 tw-truncate">[[ item.title ]]</p>
+              <p class="tw-m-0 tw-truncate">[[ displayTitle(item) ]]</p>
             </a>
             <!-- Case Pack Size and Saving -->
             <div
@@ -169,7 +169,7 @@
             </div>
             <div class="tw-flex tw-justify-between tw-w-full tw-gap-4">
               <div>Shipping:</div>
-              <div>FREE</div>
+              <div class="tw-text-right">Calculated at checkout</div>
             </div>
           </div>
         </div>
@@ -251,6 +251,12 @@
           .replace(/\{\{amount\}\}/g, amount)
           .replace(/\{\{amount_no_decimals\}\}/g, String(Math.round(cents / 100)))
           .replace(/\{\{amount_with_comma_separator\}\}/g, amount.replace('.', ','));
+      },
+      // cart.js returns titles HTML-escaped ("Warhol&#39;s"); decode them for display
+      displayTitle(item) {
+        const textarea = document.createElement('textarea');
+        textarea.innerHTML = item.title || '';
+        return textarea.value;
       },
       caseLabel(item) {
         return this.caseSavingLabel(this.caseInfo[item.variant_id], item.original_price, this.formatMoney);
