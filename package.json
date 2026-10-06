@@ -8,7 +8,8 @@
     "build": "tailwindcss build -i ./assets/styles.css -o ./assets/theme.css",
     "dev": "concurrently 'npm:watch:css' 'npm:start'",
     "start": "shopify theme dev --store=texasbookman --live-reload full-page",
-    "css": "tailwindcss build -i ./assets/styles.css -o ./assets/theme.css --watch"
+    "css": "tailwindcss build -i ./assets/styles.css -o ./assets/theme.css --watch",
+    "check:live": "node scripts/check-live-theme.mjs"
   },
   "keywords": [],
   "author": "",
