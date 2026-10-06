@@ -149,6 +149,16 @@ For CSS and JavaScript, we recommend using the [`{% stylesheet %}`](https://shop
 
 The Skeleton Theme explicitly separates essential CSS necessary for every page into a dedicated `critical.css` file.
 
+## Deploying to the live theme (Texas Bookman)
+
+The live theme `texas-bookman/main` (188846997785) is connected to `main` through Shopify's GitHub integration. Shopify deploys each push to `main` on its own diff, and a push that arrives while an earlier one is still deploying can be dropped without any error. The files it changed then stay stale on live, and the next save in the live theme editor can commit those stale copies back to `main` as an "Update from Shopify" commit, which looks like a rollback in git.
+
+- Merge to `main` one PR at a time and wait for the deploy to finish (at least two minutes) before the next merge. To ship several PRs at once, merge them into one branch first and land that with a single merge.
+- Nobody saves in the live theme editor while merges are deploying.
+- Don't run `shopify theme push` or `shopify theme dev` against the live theme. Use `theme dev` (a development theme) or an unpublished theme.
+- After every merge, run `npm run check:live` (or `node scripts/check-live-theme.mjs`). It pulls the live theme read-only and lists every file that differs from `origin/main`, with the commit each stale file matches. Merging again does not fix a stale file that `main` already has: push only the listed files to live with `--only`, then rerun the check.
+- Review every "Update from Shopify" commit. If it reverts code rather than recording an editor change, restore the files from the commit before it.
+
 ## Contributing
 
 We're excited for your contributions to the Skeleton Theme! This repository aims to remain as lean, lightweight, and fundamental as possible, and we kindly ask your contributions to align with this intention.
