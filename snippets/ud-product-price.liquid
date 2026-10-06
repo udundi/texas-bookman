@@ -15,6 +15,13 @@
   {% endcomment %}
 -->
 {% assign no_discount = false %}
+{%- comment -%}
+  Greeting cards carry an imported compare-at price for the 6-card pack (e.g. $23.94 against a
+  $3.50 net), so they show the net price only
+{%- endcomment -%}
+{% if product.type == 'Greeting Card' %}
+  {% assign compare_price = nil %}
+{% endif %}
 
 {% assign flash_sale_live = false %}
 {% if settings.flash_sale %}

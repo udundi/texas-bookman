@@ -41,9 +41,11 @@
             {{ product.title | default: 'Product title' }}
           </h3>
         </a>
+        {%- unless product.type == 'Greeting Card' -%}
         <div class="tw-text-gray-500 tw-text-14 tw-font-normal">
           List: <span class="tw-font-normal">{{ product.compare_at_price | default: product.price | money }}</span>
         </div>
+        {%- endunless -%}
       </div>
       <!-- Author Netprice Row -->
       <div class="tw-flex tw-w-full tw-flex-wrap tw-justify-between tw-gap-x-3 tw-gap-y-0.5 tw-text-14">

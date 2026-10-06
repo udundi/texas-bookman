@@ -635,12 +635,14 @@
                             </span>
                           </p>
                           <div class="tw-flex tw-flex-col">
+                            {%- unless product.type == 'Greeting Card' -%}
                             <div class="tw-text-gray-600 tw-text-14 tw-font-semibold">
                               List:
                               <span class="tw-font-normal">
                                 {{- product.compare_at_price | default: product.price | money -}}
                               </span>
                             </div>
+                            {%- endunless -%}
                             {% if is_flash_sale %}
                               <div class="tw-font-semibold tw-text-14">
                                 {% assign flash_sale_discount = settings.flash_sale_discount | times: 0.01 %}
@@ -763,12 +765,14 @@
                               {{ product.title | default: 'Product title' }}
                             </h3>
                           </a>
+                          {%- unless product.type == 'Greeting Card' -%}
                           <div class="tw-text-gray-500 tw-text-14 tw-font-normal tw-whitespace-nowrap">
                             List:
                             <span class="tw-font-normal">
                               {{- product.compare_at_price | default: product.price | money -}}
                             </span>
                           </div>
+                          {%- endunless -%}
                         </div>
                         <div class="tw-flex tw-w-full tw-flex-wrap tw-justify-between tw-gap-x-3 tw-gap-y-0.5 tw-text-14">
                           <div>
