@@ -200,10 +200,6 @@
   # Cap at stock only when Shopify refuses to oversell the single variant
   assign stock_max = 'Infinity'
   assign sellable = single_variant.inventory_quantity | at_least: 0
-  if settings.max_sellable_per_item > 0 and sellable > settings.max_sellable_per_item
-    # The cart refuses more than this of a variant even when more is in stock
-    assign sellable = settings.max_sellable_per_item
-  endif
   if single_variant.inventory_management == 'shopify' and single_variant.inventory_policy == 'deny'
     assign stock_max = sellable
   endif
