@@ -62,8 +62,8 @@
             </h3>
           </a>
         </div>
-        <!-- TB Code -->
-        {% if cur_product.metafields.custom.tb_code != blank %}
+        <!-- TB Code (staff only) -->
+        {% if cur_product.metafields.custom.tb_code != blank and customer and customer.tags contains 'Staff' %}
           <h3 class="tw-font-semibold tw-text-14 tw-text-brand-greyer/50 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
             TB Code: {{ cur_product.metafields.custom.tb_code }}
           </h3>

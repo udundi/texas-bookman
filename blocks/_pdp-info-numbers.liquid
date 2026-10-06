@@ -16,7 +16,8 @@
   {% if isbn != blank %}
     <div><span class="tw-font-semibold">ISBN:</span> {{ isbn }}</div>
   {% endif %}
-  {% if product.metafields.custom.tb_code != blank %}
+  {% comment %} TB Code is for Texas Bookman staff only {% endcomment %}
+  {% if product.metafields.custom.tb_code != blank and customer and customer.tags contains 'Staff' %}
     <div><span class="tw-font-semibold">TB Code:</span> {{ product.metafields.custom.tb_code }}</div>
   {% endif %}
 </div>
