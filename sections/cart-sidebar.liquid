@@ -58,8 +58,13 @@
           <!-- Title and Product Details -->
           <div class="tw-flex tw-grow tw-flex-col tw-justify-between tw-gap-1">
             <div class="tw-flex tw-w-full tw-flex-row tw-justify-between tw-gap-x-3 tw-gap-y-0.5 tw-text-12">
-              <a :href="recentlyAddedItem.url" class="">
-                <h3 class="tw-font-semibold tw-text-13 tw-text-brand-primary tw-text-14 tw-leading-tight tw-m-0 tw-truncate">
+              <!-- min-w-0 lets the link shrink inside the flex row, so long titles wrap (up to 3 lines) instead of running off phone screens -->
+              <a :href="recentlyAddedItem.url" class="tw-block tw-min-w-0">
+                <h3
+                  class="tw-font-semibold tw-text-brand-primary tw-text-14 tw-leading-tight tw-m-0 tw-line-clamp-3"
+                  style="overflow-wrap: anywhere;"
+                  :title="recentlyAddedItem.title"
+                >
                   [[ recentlyAddedItem.title ]]
                 </h3>
               </a>
