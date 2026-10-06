@@ -271,7 +271,10 @@
         return this.caseSavingLabel(this.caseInfo[item.variant_id], item.original_price, this.formatMoney);
       },
       isOutOfStock(item) {
-        return this.variantAvailable[item.variant_id] === false;
+        if (this.variantAvailable[item.variant_id] === false) return true;
+        // Case variants always sell, so a Case line is out of stock when the Single can't fill one case
+        const caseInfo = this.caseInfo[item.variant_id];
+        return !!caseInfo && caseInfo.cases_available === 0;
       },
       lineDiscountLabel(item) {
         const allocation = item.line_level_discount_allocations && item.line_level_discount_allocations[0];
