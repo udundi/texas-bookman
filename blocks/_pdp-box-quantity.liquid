@@ -31,6 +31,8 @@
   %}
   {% assign available = single_variant.inventory_quantity | at_least: 0 %}
   {% assign cases_available = available | divided_by: case_size %}
+  {%- capture stock_info -%}{% render 'stock-state', product: product %}{%- endcapture -%}
+  {% assign stock_state = stock_info | split: ' ' | first %}
   {% assign case_saving_pct = 0 %}
   {% if case_variant and case_size > 1 %}
     {% assign case_full_price = single_variant.price | times: case_size %}
@@ -44,11 +46,17 @@
   <div class="tw-flex tw-flex-col tw-py-2 tw-px-3 tw-rounded-[4px] tw-bg-brand-eggshell tw-border tw-border-brand-grey tw-items-start tw-gap-1">
     <div>
       <span class="tw-font-semibold">Availability:</span>
-      {{ available }} in stock
+      {% if stock_state == 'in_stock' %}
+        {{ available }} in stock
+      {% else %}
+        {% render 'stock-label', state: stock_state %}
+      {% endif %}
     </div>
     {% if case_size > 1 %}
       <div>
-        <span class="tw-font-semibold">Cases Available:</span> {{ cases_available }} |
+        {% unless stock_state == 'backorder' %}
+          <span class="tw-font-semibold">Cases Available:</span> {{ cases_available }} |
+        {% endunless %}
         <span class="tw-font-semibold">Cases Include:</span> {{ case_size }} {% if product.type contains 'Book' %}books{% else %}items{% endif %}
       </div>
     {% endif %}

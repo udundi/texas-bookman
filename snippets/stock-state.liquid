@@ -1,0 +1,31 @@
+{%- comment -%}
+  Outputs a product's stock state and the stock to show for it, separated by a space:
+  "in_stock 12", "backorder 0" or "out_of_stock 0". Capture it and split on the space.
+
+  The state comes from the Single (non-Case) variants only. Case variants hold no stock of their own
+  and always continue selling, so a Case at 0 stock never makes a product "backorder"; cases are
+  filled from the Single's stock (see blocks/_pdp-box-quantity.liquid).
+  - in_stock: a Single has stock, or Shopify doesn't track its inventory
+  - backorder: no Single has stock, but one is set to continue selling when out of stock
+  - out_of_stock: no Single has stock and none can be oversold, so it can't be added to the cart
+
+  Accepts:
+  - product: {Object} the product
+{%- endcomment -%}
+{%- liquid
+  assign stock_state = 'out_of_stock'
+  assign stock_qty = 0
+  for variant in product.variants
+    if variant.option1 == 'Case' and product.variants.size > 1
+      continue
+    endif
+    if variant.inventory_management != 'shopify' or variant.inventory_quantity > 0
+      assign stock_state = 'in_stock'
+      assign stock_qty = variant.inventory_quantity | at_least: 0
+      break
+    elsif variant.inventory_policy == 'continue'
+      assign stock_state = 'backorder'
+    endif
+  endfor
+  echo stock_state | append: ' ' | append: stock_qty
+-%}

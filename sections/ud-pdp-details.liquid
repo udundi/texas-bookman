@@ -203,11 +203,20 @@
   if single_variant.inventory_management == 'shopify' and single_variant.inventory_policy == 'deny'
     assign stock_max = sellable
   endif
+  # Cases are filled from the Single's stock, so they're unlimited when the Single can be oversold
+  assign cases_available = 0
+  if case_variant and case_size > 1
+    if stock_max == 'Infinity'
+      assign cases_available = 'Infinity'
+    else
+      assign cases_available = sellable | divided_by: case_size
+    endif
+  endif
+  capture stock_info
+    render 'stock-state', product: product
+  endcapture
+  assign stock_state = stock_info | split: ' ' | first
 -%}
-{% assign cases_available = 0 %}
-{% if case_variant and case_size > 1 %}
-  {% assign cases_available = sellable | divided_by: case_size %}
-{% endif %}
 {% assign sitewide_discount = settings.sitewide_sale | default: false %}
 
 <!-- Vue Main script -->
@@ -224,6 +233,8 @@
         casesAvailable: {{ cases_available }},
         caseSize: {{ case_size }},
         stockMax: {{ stock_max }},
+        // in_stock, backorder or out_of_stock (snippets/stock-state.liquid)
+        stockState: '{{ stock_state }}',
         productId: {{ product.id }},
         // Units of this product already in the cart, Singles plus Cases x case size (see loadCartUnits)
         cartUnits: 0,
@@ -270,6 +281,10 @@
       },
       soldOut() {
         return !this.buyingCase && this.stockMax < 1;
+      },
+      // Out of stock but set to continue selling: adds are allowed
+      backorder() {
+        return this.stockState === 'backorder';
       },
       // Everything in stock is already in the cart (only for in-stock products, which soldOut covers otherwise)
       cartFull() {
@@ -318,7 +333,7 @@
         window.openImageModal(Number(trigger.dataset.zoomIndex), trigger);
       },
       async addToCart() {
-        if (this.cartFull) return;
+        if (this.soldOut || this.cartFull) return;
         this.addingToCart = true;
         let mainItemProperties = {};
         const params = new URLSearchParams(window.location.search);
