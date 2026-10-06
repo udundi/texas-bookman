@@ -30,7 +30,12 @@
     | default: 1
   %}
   {% assign available = single_variant.inventory_quantity | at_least: 0 %}
-  {% assign cases_available = available | divided_by: case_size %}
+  {% comment %} Same sellable count as sections/ud-pdp-details.liquid {% endcomment %}
+  {% assign sellable = available %}
+  {% if settings.max_sellable_per_item > 0 and sellable > settings.max_sellable_per_item %}
+    {% assign sellable = settings.max_sellable_per_item %}
+  {% endif %}
+  {% assign cases_available = sellable | divided_by: case_size %}
   {% assign case_saving_pct = 0 %}
   {% if case_variant and case_size > 1 %}
     {% assign case_full_price = single_variant.price | times: case_size %}
@@ -45,6 +50,7 @@
     <div>
       <span class="tw-font-semibold">Availability:</span>
       {{ available }} in stock
+      {%- if sellable < available %} (up to {{ sellable }} per order){% endif %}
     </div>
     {% if case_size > 1 %}
       <div>

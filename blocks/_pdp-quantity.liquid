@@ -37,7 +37,12 @@
     %}
     {% assign cases_available = 0 %}
     {% if case_variant and case_size > 1 %}
-      {% assign cases_available = single_variant.inventory_quantity | at_least: 0 | divided_by: case_size %}
+      {% comment %} Same sellable count as sections/ud-pdp-details.liquid {% endcomment %}
+      {% assign sellable = single_variant.inventory_quantity | at_least: 0 %}
+      {% if settings.max_sellable_per_item > 0 and sellable > settings.max_sellable_per_item %}
+        {% assign sellable = settings.max_sellable_per_item %}
+      {% endif %}
+      {% assign cases_available = sellable | divided_by: case_size %}
     {% endif %}
     {% if cases_available > 0 %}
       <fieldset class="tw-flex tw-flex-col tw-gap-1 tw-pb-2">

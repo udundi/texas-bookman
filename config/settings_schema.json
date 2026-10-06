@@ -49,6 +49,13 @@
         "id": "flash_sale_products",
         "type": "product_list",
         "label": "Flash Sale Products"
+      },
+      {
+        "id": "max_sellable_per_item",
+        "type": "number",
+        "label": "Most of one item a cart can hold",
+        "info": "The product page caps its quantity box at this or the stock, whichever is lower. The store's cart currently refuses more than 50 of any stock-tracked item even when more is in stock. Leave blank for no cap.",
+        "default": 50
       }
     ]
   },

@@ -196,17 +196,22 @@
   | default: case_variant.metafields.custom.case_quantity.value
   | default: 1
 %}
-{% assign cases_available = 0 %}
-{% if case_variant and case_size > 1 %}
-  {% assign cases_available = single_variant.inventory_quantity | at_least: 0 | divided_by: case_size %}
-{% endif %}
 {%- liquid
   # Cap at stock only when Shopify refuses to oversell the single variant
   assign stock_max = 'Infinity'
+  assign sellable = single_variant.inventory_quantity | at_least: 0
+  if settings.max_sellable_per_item > 0 and sellable > settings.max_sellable_per_item
+    # The cart refuses more than this of a variant even when more is in stock
+    assign sellable = settings.max_sellable_per_item
+  endif
   if single_variant.inventory_management == 'shopify' and single_variant.inventory_policy == 'deny'
-    assign stock_max = single_variant.inventory_quantity | at_least: 0
+    assign stock_max = sellable
   endif
 -%}
+{% assign cases_available = 0 %}
+{% if case_variant and case_size > 1 %}
+  {% assign cases_available = sellable | divided_by: case_size %}
+{% endif %}
 {% assign sitewide_discount = settings.sitewide_sale | default: false %}
 
 <!-- Vue Main script -->
