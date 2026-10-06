@@ -17,9 +17,9 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "Arcturus Publishing",
+                "tag": "Arcturus Publishing|Arcturus Publishging",
                 "title": "Arcturus",
-                "filter_type": "filter.p.vendor=",
+                "filter_type": "filter.p.m.custom.publisher=",
                 "children_collapsed": false
               },
               "blocks": {},
@@ -29,9 +29,9 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "Flame Tree Publishing",
+                "tag": "Flame Tree Publishing|Flame Tree Gift|Flame Tree Collectibles|Flame Tree 451|Flame Tree Illustrated|Flame Tree Music|Flame Tree Collections|Flame Tree Collectable Cl",
                 "title": "Flame Tree",
-                "filter_type": "filter.p.vendor=",
+                "filter_type": "filter.p.m.custom.publisher=",
                 "children_collapsed": false
               },
               "blocks": {},
@@ -41,9 +41,9 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "Piccadilly Inc.",
+                "tag": "Piccadilly Inc.|Piccadilly Inc|Piccadilly",
                 "title": "Piccadilly Inc.",
-                "filter_type": "filter.p.vendor=",
+                "filter_type": "filter.p.m.custom.publisher=",
                 "children_collapsed": false
               },
               "blocks": {},
@@ -143,7 +143,8 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "bby-decorative-books",
-                "title": "Decorative Books"
+                "title": "Decorative Books",
+                "filter_value": "BBY - Decorative Books"
               },
               "blocks": {}
             }
@@ -229,7 +230,8 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "art",
-                "title": "Art"
+                "title": "Art",
+                "filter_value": "Art|Art & Design"
               },
               "blocks": {
                 "collection_gate_pO7WPf": {
@@ -492,13 +494,12 @@
               "blocks": {}
             },
             "collection_filter_kQyKac": {
-              "type": "_collection-filter",
-              "name": "Collection Filter",
+              "type": "_collection-gate",
+              "name": "Collection Gate",
               "settings": {
-                "tag": "MARKDOWNS",
+                "collection_gate": "markdowns",
                 "title": "Books on Sale",
-                "filter_type": "filter.p.m.custom.category=",
-                "children_collapsed": false
+                "filter_value": "MARKDOWNS"
               },
               "blocks": {}
             }
@@ -542,9 +543,9 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "Arcturus Publishing",
+                "tag": "Arcturus Publishing|Arcturus Publishging",
                 "title": "Arcturus",
-                "filter_type": "filter.p.vendor=",
+                "filter_type": "filter.p.m.custom.publisher=",
                 "children_collapsed": false
               },
               "blocks": {},
@@ -554,9 +555,9 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "Flame Tree Publishing",
+                "tag": "Flame Tree Publishing|Flame Tree Gift|Flame Tree Collectibles|Flame Tree 451|Flame Tree Illustrated|Flame Tree Music|Flame Tree Collections|Flame Tree Collectable Cl",
                 "title": "Flame Tree",
-                "filter_type": "filter.p.vendor=",
+                "filter_type": "filter.p.m.custom.publisher=",
                 "children_collapsed": false
               },
               "blocks": {},
@@ -566,9 +567,9 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "Yale University Press",
+                "tag": "Yale University Press|Yale Univ Pr",
                 "title": "Yale University Press",
-                "filter_type": "filter.p.vendor=",
+                "filter_type": "filter.p.m.custom.publisher=",
                 "children_collapsed": false
               },
               "blocks": {},
@@ -607,7 +608,7 @@
               "settings": {
                 "tag": "Fiction & Literature",
                 "title": "Fiction & Literature",
-                "filter_type": "filter.p.tag=",
+                "filter_type": "filter.p.m.custom.category=",
                 "children_collapsed": false
               },
               "blocks": {}
@@ -618,7 +619,7 @@
               "settings": {
                 "tag": "Classic & General Fiction",
                 "title": "Classic & General Fiction",
-                "filter_type": "filter.p.tag=",
+                "filter_type": "filter.p.m.custom.category=",
                 "children_collapsed": false
               },
               "blocks": {}
@@ -629,7 +630,7 @@
               "settings": {
                 "tag": "Romance & Erotica",
                 "title": "Romance & Erotica",
-                "filter_type": "filter.p.tag=",
+                "filter_type": "filter.p.m.custom.category=",
                 "children_collapsed": false
               },
               "blocks": {}
@@ -640,7 +641,7 @@
               "settings": {
                 "tag": "Mystery",
                 "title": "Mystery & Thriller",
-                "filter_type": "filter.p.tag=",
+                "filter_type": "filter.p.m.custom.category=",
                 "children_collapsed": false
               },
               "blocks": {}
@@ -651,7 +652,7 @@
               "settings": {
                 "tag": "Science Fiction, Fantasy & Horror",
                 "title": "Science Fiction, Fantasy & Horror",
-                "filter_type": "filter.p.tag=",
+                "filter_type": "filter.p.m.custom.category=",
                 "children_collapsed": false
               },
               "blocks": {}
@@ -662,7 +663,7 @@
               "settings": {
                 "tag": "Drama & Poetry",
                 "title": "Drama & Poetry",
-                "filter_type": "filter.p.tag=",
+                "filter_type": "filter.p.m.custom.category=",
                 "children_collapsed": false
               },
               "blocks": {}
@@ -673,7 +674,7 @@
               "settings": {
                 "tag": "Essays & Literary Criticism",
                 "title": "Literary Criticism",
-                "filter_type": "filter.p.tag=",
+                "filter_type": "filter.p.m.custom.category=",
                 "children_collapsed": false
               },
               "blocks": {}
@@ -685,7 +686,7 @@
               "settings": {
                 "tag": "Historical Fiction",
                 "title": "Historical Fiction",
-                "filter_type": "filter.p.tag=",
+                "filter_type": "filter.p.m.custom.category=",
                 "children_collapsed": false
               },
               "blocks": {}
@@ -702,6 +703,78 @@
             "collection_filter_68xEyN",
             "collection_filter_XA8bkj"
           ]
+        },
+        "collection_filter_box_v2_sd_price": {
+          "type": "_collection-filter-box-v2",
+          "name": "Collection Filter Box",
+          "settings": {
+            "collapsible": true,
+            "collapsed": true,
+            "title": "Price",
+            "nested": false
+          },
+          "blocks": {
+            "storefront_filter_price": {
+              "type": "_collection-storefront-filter",
+              "name": "Storefront Filter",
+              "settings": {
+                "param_name": "filter.v.price",
+                "visible_count": 8
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "storefront_filter_price"
+          ]
+        },
+        "collection_filter_box_v2_sd_publisher": {
+          "type": "_collection-filter-box-v2",
+          "name": "Collection Filter Box",
+          "settings": {
+            "collapsible": true,
+            "collapsed": true,
+            "title": "Publisher",
+            "nested": false
+          },
+          "blocks": {
+            "storefront_filter_publisher": {
+              "type": "_collection-storefront-filter",
+              "name": "Storefront Filter",
+              "settings": {
+                "param_name": "filter.p.m.custom.publisher",
+                "visible_count": 8
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "storefront_filter_publisher"
+          ]
+        },
+        "collection_filter_box_v2_sd_author": {
+          "type": "_collection-filter-box-v2",
+          "name": "Collection Filter Box",
+          "settings": {
+            "collapsible": true,
+            "collapsed": true,
+            "title": "Author",
+            "nested": false
+          },
+          "blocks": {
+            "storefront_filter_author": {
+              "type": "_collection-storefront-filter",
+              "name": "Storefront Filter",
+              "settings": {
+                "param_name": "filter.p.m.custom.author",
+                "visible_count": 8
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "storefront_filter_author"
+          ]
         }
       },
       "block_order": [
@@ -710,7 +783,10 @@
         "collection_filter_box_v2_8paAqE",
         "collection_filter_box_v2_YMiUtx",
         "collection_filter_box_v2_nz8K4p",
-        "collection_filter_box_v2_YdNKP9"
+        "collection_filter_box_v2_YdNKP9",
+        "collection_filter_box_v2_sd_price",
+        "collection_filter_box_v2_sd_publisher",
+        "collection_filter_box_v2_sd_author"
       ],
       "settings": {
         "title": "Lorum Ipsum",
