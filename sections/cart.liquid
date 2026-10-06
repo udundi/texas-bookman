@@ -188,8 +188,40 @@
           </div>
         </div>
       </div>
+      <!-- Order Note: Shopify's cart note, which becomes the order's note -->
+      <div class="tw-flex tw-flex-col tw-gap-2 tw-p-4 tw-mt-4 tw-border tw-border-brand-grey tw-rounded-[4px] tw-bg-brand-eggshell">
+        <label for="CartNote-{{ section.id }}" class="tw-text-16">Order Note</label>
+        <p id="CartNoteHint-{{ section.id }}" class="tw-m-0 tw-font-normal tw-text-gray-600">
+          Add a PO number or special instructions for this order.
+        </p>
+        {%- comment -%}
+          form= posts the note along with Checkout, so a note typed just before
+          clicking Checkout still reaches the order
+        {%- endcomment -%}
+        <textarea
+          id="CartNote-{{ section.id }}"
+          name="note"
+          form="CartCheckout-{{ section.id }}"
+          rows="3"
+          v-model="note"
+          aria-describedby="CartNoteHint-{{ section.id }} CartNoteStatus-{{ section.id }}"
+          class="tw-w-full tw-p-2 tw-border tw-border-brand-grey tw-rounded-[4px] tw-bg-white tw-font-normal tw-text-14"
+          @input="onNoteInput"
+          @blur="saveNote"
+        ></textarea>
+        <div
+          id="CartNoteStatus-{{ section.id }}"
+          class="tw-text-12 tw-font-normal"
+          :class="noteStatus === 'error' ? 'tw-text-brand-sale' : 'tw-text-gray-600'"
+          aria-live="polite"
+        >
+          <span v-if="noteStatus === 'saving'">Saving…</span>
+          <span v-else-if="noteStatus === 'saved'">Note saved</span>
+          <span v-else-if="noteStatus === 'error'">Couldn't save your note. Please try again.</span>
+        </div>
+      </div>
       <!-- Checkout button / spinner -->
-      <form v-if="!updatingCart" action="{{ routes.cart_url }}" method="post">
+      <form v-if="!updatingCart" id="CartCheckout-{{ section.id }}" action="{{ routes.cart_url }}" method="post">
         <button
           type="submit"
           name="checkout"
@@ -225,6 +257,10 @@
         updatingCart: false,
         debounceTimers: {},
         qtyErrors: {},
+        note: {{ cart.note | json }} || '',
+        savedNote: {{ cart.note | json }} || '',
+        noteStatus: '',
+        noteTimer: null,
         moneyFmt: {{ shop.money_format | json }},
         // Case-pack facts by Case variant (snippets/case-pack-info.liquid)
         caseInfo: {
@@ -308,6 +344,32 @@
           input.value = finalQty;
           this.updateQuantity(item, finalQty);
         }, 800);
+      },
+      onNoteInput() {
+        this.noteStatus = '';
+        clearTimeout(this.noteTimer);
+        this.noteTimer = setTimeout(() => this.saveNote(), 800);
+      },
+      async saveNote() {
+        clearTimeout(this.noteTimer);
+        const note = this.note;
+        if (note === this.savedNote) return;
+        this.noteStatus = 'saving';
+        try {
+          const response = await fetch('/cart/update.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ note }),
+          });
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          const body = await response.json();
+          this.savedNote = body.note || '';
+          // Typing may have carried on while this request was in flight
+          this.noteStatus = this.note === this.savedNote ? 'saved' : '';
+        } catch (e) {
+          console.error('Cart note update failed:', e);
+          this.noteStatus = 'error';
+        }
       },
       // Take items and totals from Shopify's cart rather than the requested qty,
       // since Shopify may reject or clamp quantities above available stock.
