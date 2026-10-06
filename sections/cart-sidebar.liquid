@@ -188,7 +188,8 @@
         this.failed = true;
         this.errorMessage = error?.description || error?.message || error?.error || 'This item could not be added to your cart.';
         // Shopify's 422 for over-stock ("Only N items were added to your cart due to availability.") still adds the N
-        this.partial = /added to your cart/i.test(this.errorMessage);
+        // (not the generic fallback above, which also says "added to your cart")
+        this.partial = /\b(were|was) added to your cart/i.test(this.errorMessage);
         if (this.partial) this.bus.$emit('refreshCart');
         this.fading = false;
         this.recentlyAddedItem = {};
