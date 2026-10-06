@@ -36,26 +36,76 @@
   {%- endif -%}
 {%- endfor -%}
 {%- if items_per_page == 0 -%}{%- assign items_per_page = 20 -%}{%- endif -%}
-{%- assign has_applied_filters = false -%}
-{%- for param in query_params -%}
-  {%- if param contains 'filter.' -%}
-    {%- assign has_applied_filters = true -%}
-  {%- endif -%}
-{%- endfor -%}
-{%- assign has_collection_filter = false -%}
-{%- unless collection.url == routes.all_products_collection_url -%}
-  {%- assign has_collection_filter = true -%}
-  {%- assign has_applied_filters = true -%}
-{%- endunless -%}
-{%- assign active_filter_count = 0 -%}
-{%- if has_collection_filter -%}
-  {%- assign active_filter_count = active_filter_count | plus: 1 -%}
-{%- endif -%}
-{%- for param in query_params -%}
-  {%- if param contains 'filter.' -%}
-    {%- assign active_filter_count = active_filter_count | plus: 1 -%}
-  {%- endif -%}
-{%- endfor -%}
+{%- liquid
+  # Sidebar first: the active subcategory gate reports its parent collection, which the
+  # collection chip below links back to.
+  capture sidebar_blocks
+    for block in section.blocks
+      render block
+    endfor
+  endcapture
+  assign collection_parent_url = routes.all_products_collection_url
+  if sidebar_blocks contains 'data-current-collection-parent="'
+    assign collection_parent_url = sidebar_blocks | split: 'data-current-collection-parent="' | last | split: '"' | first | replace: 'ud-parent-collection-url', routes.all_products_collection_url
+  endif
+  assign sidebar_blocks = sidebar_blocks | replace: 'ud-parent-collection-url', routes.all_products_collection_url
+
+  # Applied Search & Discovery filters, from Shopify rather than the URL
+  assign active_value_count = 0
+  for filter in collection.filters
+    if filter.type == 'price_range'
+      if filter.min_value.value != blank or filter.max_value.value != blank
+        assign active_value_count = active_value_count | plus: 1
+      endif
+    else
+      assign active_value_count = active_value_count | plus: filter.active_values.size
+    endif
+  endfor
+
+  assign has_param_filters = false
+  for param in query_params
+    if param contains 'filter.'
+      assign has_param_filters = true
+    endif
+  endfor
+
+  assign has_collection_filter = false
+  unless collection.url == routes.all_products_collection_url
+    assign has_collection_filter = true
+  endunless
+  assign has_applied_filters = false
+  if has_collection_filter or active_value_count > 0 or has_param_filters
+    assign has_applied_filters = true
+  endif
+  assign active_filter_count = active_value_count
+  if has_collection_filter
+    assign active_filter_count = active_filter_count | plus: 1
+  endif
+
+  # Clear All and the collection chip keep the sort and page size but drop the page
+  assign clear_all_params = ''
+  for param in query_params
+    assign param_name = param | split: '=' | first
+    if param == blank or param_name == 'page' or param contains 'filter.'
+      continue
+    endif
+    if clear_all_params != blank
+      assign clear_all_params = clear_all_params | append: '&'
+    endif
+    assign clear_all_params = clear_all_params | append: param
+  endfor
+  assign collection_chip_params = ''
+  for param in query_params
+    assign param_name = param | split: '=' | first
+    if param == blank or param_name == 'page'
+      continue
+    endif
+    if collection_chip_params != blank
+      assign collection_chip_params = collection_chip_params | append: '&'
+    endif
+    assign collection_chip_params = collection_chip_params | append: param
+  endfor
+-%}
 <style>
   select {
     /* for Firefox */
@@ -380,63 +430,48 @@
               <div class="tw-flex tw-w-full tw-flex-wrap tw-gap-2">
                 {% if has_collection_filter %}
                   <a
-                    href="{% if query_params != blank %}{{ routes.all_products_collection_url }}?{{ query_params | join: '&' }}{% else %}{{ routes.all_products_collection_url }}{% endif %}"
+                    href="{{ collection_parent_url }}{% if collection_chip_params != blank %}?{{ collection_chip_params }}{% endif %}"
                     class="tw-flex tw-w-fit tw-items-center tw-gap-2 tw-rounded-[4px] tw-border tw-border-brand-grey tw-bg-white tw-px-3 tw-py-1 tw-text-12 tw-text-offblack hover:tw-border-black"
-                    aria-label="Remove collection filter: {{ collection.title }}"
+                    aria-label="Remove collection filter: {{ collection.title | escape }}"
                   >
                     <span>{{ collection.title }}</span>
                     <span aria-hidden="true" class="tw-text-14 tw-leading-none">&times;</span>
                   </a>
                 {% endif %}
-                {% for active_param in query_params %}
-                  {% if active_param contains 'filter.' %}
-                    {% assign active_param_parts = active_param | split: '=' %}
-                    {% assign active_filter_key = active_param_parts[0]
-                      | replace: 'filter.p.', ''
-                      | replace: 'filter.v.', ''
-                      | replace: 'm.custom.', ''
-                      | replace: '.', ' '
-                      | replace: '_', ' '
-                    %}
-                    {% assign active_filter_value = active_param_parts[1] | url_decode %}
-                    {% assign remaining_params = '' %}
-                    {% for param in query_params %}
-                      {% unless param == active_param %}
-                        {% if remaining_params != blank -%}
-                          {%- assign remaining_params = remaining_params | append: '&' -%}
-                        {%- endif %}
-                        {% assign remaining_params = remaining_params | append: param %}
-                      {% endunless %}
-                    {% endfor %}
-                    <a
-                      href="{% if remaining_params != blank %}{{ collection.url }}?{{ remaining_params }}{% else %}{{ collection.url }}{% endif %}"
-                      class="tw-flex tw-w-fit tw-items-center tw-gap-2 tw-rounded-[4px] tw-border tw-border-brand-grey tw-bg-white tw-px-3 tw-py-1 tw-text-12 tw-text-offblack hover:tw-border-black"
-                      aria-label="Remove {{ active_filter_key }} filter: {{ active_filter_value }}"
-                    >
-                      <span>{{ active_filter_value }}</span>
-                      <span aria-hidden="true" class="tw-text-14 tw-leading-none">&times;</span>
-                    </a>
-                  {% endif %}
-                {% endfor %}
+                {%- for filter in collection.filters -%}
+                  {%- if filter.type == 'price_range' -%}
+                    {%- if filter.min_value.value != blank or filter.max_value.value != blank -%}
+                      <a
+                        href="{{ filter.url_to_remove }}"
+                        class="tw-flex tw-w-fit tw-items-center tw-gap-2 tw-rounded-[4px] tw-border tw-border-brand-grey tw-bg-white tw-px-3 tw-py-1 tw-text-12 tw-text-offblack hover:tw-border-black"
+                        aria-label="Remove {{ filter.label | escape }} filter"
+                      >
+                        <span>
+                          {%- if filter.min_value.value != blank and filter.max_value.value != blank -%}
+                            {{ filter.min_value.value | money }} &ndash; {{ filter.max_value.value | money }}
+                          {%- elsif filter.min_value.value != blank -%}
+                            {{ filter.min_value.value | money }}+
+                          {%- else -%}
+                            Up to {{ filter.max_value.value | money }}
+                          {%- endif -%}
+                        </span>
+                        <span aria-hidden="true" class="tw-text-14 tw-leading-none">&times;</span>
+                      </a>
+                    {%- endif -%}
+                  {%- else -%}
+                    {%- for value in filter.active_values -%}
+                      <a
+                        href="{{ value.url_to_remove }}"
+                        class="tw-flex tw-w-fit tw-items-center tw-gap-2 tw-rounded-[4px] tw-border tw-border-brand-grey tw-bg-white tw-px-3 tw-py-1 tw-text-12 tw-text-offblack hover:tw-border-black"
+                        aria-label="Remove {{ filter.label | escape }} filter: {{ value.label | escape }}"
+                      >
+                        <span>{{ value.label }}</span>
+                        <span aria-hidden="true" class="tw-text-14 tw-leading-none">&times;</span>
+                      </a>
+                    {%- endfor -%}
+                  {%- endif -%}
+                {%- endfor -%}
               </div>
-              {%- liquid
-                assign has_param_filters = false
-                assign clear_all_params = ''
-                for param in query_params
-                  if param contains 'filter.'
-                    assign has_param_filters = true
-                    continue
-                  endif
-                  assign param_name = param | split: '=' | first
-                  if param == blank or param_name == 'page'
-                    continue
-                  endif
-                  if clear_all_params != blank
-                    assign clear_all_params = clear_all_params | append: '&'
-                  endif
-                  assign clear_all_params = clear_all_params | append: param
-                endfor
-              -%}
               {% if has_param_filters %}
                 <a
                   href="{% if clear_all_params != blank %}{{ collection.url }}?{{ clear_all_params }}{% else %}{{ collection.url }}{% endif %}"
@@ -449,9 +484,7 @@
             </div>
           {% endif %}
           <div class="tw-flex tw-flex-col tw-w-full tw-justify-start tw-gap-[2px]">
-            {% for block in section.blocks %}
-              {% render block %}
-            {% endfor %}
+            {{ sidebar_blocks }}
           </div>
         </div>
         <!-- Mobile Sticky Apply Button -->

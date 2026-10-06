@@ -1,0 +1,81 @@
+{%- comment -%}
+  State of one sidebar entry backed by a Search & Discovery filter (collection.filters).
+  An entry can stand for several filter values (e.g. every "Flame Tree" publisher
+  spelling), given as a | separated list. Its count is the sum over those values for
+  the current results, it is checked when any of them is applied, and its link adds
+  all of them (Shopify ORs values of one filter) or removes all of them.
+
+  Usage:
+    {%- capture state -%}{% render 'collection-filter-state', param: 'filter.p.m.custom.publisher', values: 'A|B' %}{%- endcapture -%}
+    {%- assign state = state | split: '@@' -%}
+
+  Outputs "found@@active@@count@@href":
+    found  - "filter" when the store has this filter on the collection, "value" when
+             one of the values exists too, otherwise empty
+    active - "true" or "false"
+    count  - result count of the values within the current results
+    href   - link that toggles the entry (empty when there is nothing to add)
+{%- endcomment -%}
+{%- liquid
+  assign wanted = values | split: '|'
+  assign found = ''
+  assign active = false
+  assign count = 0
+  assign first_add = ''
+  assign first_remove = ''
+  assign other_add = ''
+  assign other_remove = ''
+
+  for filter in collection.filters
+    if filter.param_name != param
+      continue
+    endif
+    assign found = 'filter'
+    for value in filter.values
+      unless wanted contains value.value
+        continue
+      endunless
+      assign found = 'value'
+      assign count = count | plus: value.count
+      assign encoded = value.value | url_encode
+      if value.active
+        assign active = true
+        if first_remove == blank
+          assign first_remove = value.url_to_remove
+        else
+          assign other_remove = other_remove | append: encoded | append: '|'
+        endif
+      elsif value.count > 0
+        if first_add == blank
+          assign first_add = value.url_to_add
+        else
+          assign other_add = other_add | append: encoded | append: '|'
+        endif
+      endif
+    endfor
+  endfor
+
+  if active
+    # Drop the other applied values: match whole "param=value" pairs only, so removing
+    # "Flame Tree" can't eat into "Flame Tree Gift".
+    assign href = first_remove | append: '&'
+    assign other_remove = other_remove | split: '|'
+    for encoded in other_remove
+      assign pair = param | append: '=' | append: encoded | append: '&'
+      assign amp_pair = '&' | append: pair
+      assign query_pair = '?' | append: pair
+      assign href = href | replace: amp_pair, '&' | replace: query_pair, '?'
+    endfor
+    assign last_char = href | slice: -1
+    if last_char == '&' or last_char == '?'
+      assign href = href | remove_last: last_char
+    endif
+  else
+    assign href = first_add
+    assign other_add = other_add | split: '|'
+    for encoded in other_add
+      assign href = href | append: '&' | append: param | append: '=' | append: encoded
+    endfor
+  endif
+-%}
+{{- found }}@@{{ active }}@@{{ count }}@@{{ href -}}
