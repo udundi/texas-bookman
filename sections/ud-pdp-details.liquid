@@ -292,11 +292,20 @@
       },
     },
     watch: {
-      // Keep the box inside the cap when the cart fills up or the pack size changes
-      qtyMax(max) {
-        if (max >= 1 && Number(this.quantity) > max) {
-          this.quantity = this.validQuantity(this.quantity, this.minQty, this.qtyStep, max);
-        }
+      // Keep the box inside the cap when the cart fills up or the pack size changes. With nothing
+      // left to add the box shows 0 (and is disabled), and it comes back at the minimum once
+      // stock frees up again, e.g. after lines are removed from the cart.
+      qtyMax: {
+        handler(max) {
+          if (max < 1) {
+            this.quantity = 0;
+          } else if (Number(this.quantity) < this.minQty) {
+            this.quantity = this.minQty;
+          } else if (Number(this.quantity) > max) {
+            this.quantity = this.validQuantity(this.quantity, this.minQty, this.qtyStep, max);
+          }
+        },
+        immediate: true,
       },
     },
     methods: {
@@ -317,9 +326,13 @@
           // Keep the last count; Shopify still refuses Singles beyond stock
         }
       },
+      // Starting quantity for the current pack: the minimum, or 0 when nothing more can be added
+      resetQuantity() {
+        this.quantity = this.qtyMax < 1 ? 0 : this.minQty;
+      },
       selectPack(variantId) {
         this.currentVariantId = variantId;
-        this.quantity = this.minQty;
+        this.resetQuantity();
       },
       clickingTab(id) {
         this.clickedTab = id;
@@ -410,7 +423,7 @@
       const urlVariant = params.get('variant');
       if (urlVariant && (urlVariant !== this.caseVariantId || this.casesAvailable > 0)) {
         this.currentVariantId = urlVariant;
-        this.quantity = this.minQty;
+        this.resetQuantity();
       }
     }
   });

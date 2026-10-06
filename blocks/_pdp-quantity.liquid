@@ -97,8 +97,8 @@
           type="button"
           id="decrement-button"
           @click="quantity = validQuantity(quantity - qtyStep, minQty, qtyStep)"
-          :disabled="quantity <= minQty"
-          :class="quantity <= minQty ? 'tw-cursor-not-allowed' : ''"
+          :disabled="soldOut || cartFull || quantity <= minQty"
+          :class="soldOut || cartFull || quantity <= minQty ? 'tw-cursor-not-allowed' : ''"
           class="tw-bg-brand-bg-dark tw-rounded-[4px] tw-pl-4 tw-pr-2"
         >
           {% render 'icon-minus' %}
@@ -116,6 +116,7 @@
           @input="quantity = Math.min(Math.max(parseInt(quantity, 10) || 1, 1), qtyMax)"
           @change="quantity = validQuantity(quantity, minQty, qtyStep, qtyMax)"
           v-model="quantity"
+          :disabled="soldOut || cartFull"
           class="tw-text-sm tw-block tw-h-10 tw-w-full tw-py-1 tw-text-center tw-text-offblack"
           required
         >
@@ -124,8 +125,8 @@
           id="increment-button"
           aria-label="increase quantity"
           @click="quantity = validQuantity(Number(quantity) + qtyStep, minQty, qtyStep, qtyMax)"
-          :disabled="Number(quantity) + qtyStep > qtyMax"
-          :class="Number(quantity) + qtyStep > qtyMax ? 'tw-cursor-not-allowed' : ''"
+          :disabled="soldOut || cartFull || Number(quantity) + qtyStep > qtyMax"
+          :class="soldOut || cartFull || Number(quantity) + qtyStep > qtyMax ? 'tw-cursor-not-allowed' : ''"
           class="tw-bg-brand-bg-dark tw-rounded-[4px] tw-pl-2 tw-pr-4"
         >
           {% render 'icon-plus' %}
