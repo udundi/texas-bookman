@@ -15,6 +15,12 @@
     endif
   endif
   assign qty_max = qty_max | default: 'Infinity'
+  capture stock_info
+    render 'stock-state', product: cur_product
+  endcapture
+  assign stock_info = stock_info | split: ' '
+  assign stock_state = stock_info[0]
+  assign stock_qty = stock_info[1]
 -%}
 {% assign isbn = cur_product.metafields.facts.isbn | default: cur_product.metafields.custom.isbn %}
 
@@ -62,8 +68,8 @@
             </h3>
           </a>
         </div>
-        <!-- TB Code -->
-        {% if cur_product.metafields.custom.tb_code != blank %}
+        <!-- TB Code (staff only) -->
+        {% if cur_product.metafields.custom.tb_code != blank and customer and customer.tags contains 'Staff' %}
           <h3 class="tw-font-semibold tw-text-14 tw-text-brand-greyer/50 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
             TB Code: {{ cur_product.metafields.custom.tb_code }}
           </h3>
@@ -76,8 +82,9 @@
         {% endif %}
         <h3 class="tw-font-semibold tw-text-14 tw-text-brand-greyer tw-w-full tw-leading-tight tw-h-fit tw-m-0">
           QTY:
-          <span class="tw-font-normal">{{ cur_product.selected_or_first_available_variant.inventory_quantity }}</span>
+          <span class="tw-font-normal">{{ stock_qty }}</span>
         </h3>
+        {% render 'stock-label', state: stock_state %}
         <div class="tw-flex tw-flex-col">
           {%- unless cur_product.type == 'Greeting Card' -%}
           <div class="tw-text-brand-greyer tw-text-14 tw-font-semibold">
@@ -100,7 +107,15 @@
         Sign in to shop
       </a>
     {% elsif show_button_type != 'none' %}
-      {% if show_button_type == 'quick-add' %}
+      {% if show_button_type == 'quick-add' and stock_state == 'out_of_stock' %}
+        <button
+          type="button"
+          disabled
+          class="tw-bg-brand-secondary tw-w-full tw-text-12 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4 tw-py-2 tw-font-semibold tw-font-montserrat tw-whitespace-nowrap tw-items-center tw-opacity-50 tw-cursor-not-allowed"
+        >
+          Out of Stock
+        </button>
+      {% elsif show_button_type == 'quick-add' %}
         <div class="tw-flex tw-gap-2 tw-items-stretch tw-w-full tw-h-full">
           <div class="tw-flex tw-items-center tw-gap-2 tw-w-full tw-h-full tw-text-brand-greyer">
             <span class="tw-whitespace-nowrap">QTY{% if min_qty > 1 %} (Min {{ min_qty }}{% if qty_step > 1 %}, x{{ qty_step }}{% endif %}){% elsif qty_step > 1 %} (x{{ qty_step }}){% endif %}:</span>

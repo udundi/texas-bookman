@@ -16,6 +16,10 @@
       assign qty_max = qty_variant.quantity_rule.max
     endif
   endif
+  capture stock_info
+    render 'stock-state', product: cur_product
+  endcapture
+  assign stock_state = stock_info | split: ' ' | first
 -%}
 
 <div
@@ -74,6 +78,7 @@
             <span class="tw-font-normal">{{ cur_product.price | money }}</span>
           </div>
         </div>
+        {% render 'stock-label', state: stock_state, class: 'tw-mt-1' %}
       </div>
     </div>
     {% if customer == null %}
@@ -83,7 +88,15 @@
       >
         Sign in to shop
       </a>
-    {% elsif cur_product.available %}
+    {% elsif stock_state == 'out_of_stock' %}
+      <button
+        type="button"
+        disabled
+        class="tw-bg-brand-secondary tw-w-full md:tw-text-12 tw-text-10 tw-uppercase tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4 tw-font-semibold tw-font-montserrat tw-whitespace-nowrap tw-items-center tw-py-2 tw-opacity-50 tw-cursor-not-allowed"
+      >
+        Out of Stock
+      </button>
+    {% else %}
       <div class="tw-flex tw-flex-wrap tw-gap-2 tw-items-stretch tw-w-full">
         <div class="tw-flex tw-items-center tw-gap-2 tw-grow tw-text-brand-greyer">
           <label for="{{ product_id }}-qty" class="tw-whitespace-nowrap">

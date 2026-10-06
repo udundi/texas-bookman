@@ -96,7 +96,10 @@
               :class="isOutOfStock(item) ? 'tw-text-gray-400' : ''"
             >
               <div v-if="item.properties && item.properties._isbn">ISBN: [[ item.properties._isbn ]]</div>
+              {%- comment -%} TB Code is for Texas Bookman staff only; the _tb property stays on the line {%- endcomment -%}
+              {%- if customer and customer.tags contains 'Staff' %}
               <div v-if="item.properties && item.properties._tb">TB Code: [[ item.properties._tb ]]</div>
+              {%- endif %}
             </div>
             <!-- Quantity Editor -->
             <div class="tw-flex tw-items-center tw-w-fit tw-justify-start tw-gap-2">
@@ -268,7 +271,10 @@
         return this.caseSavingLabel(this.caseInfo[item.variant_id], item.original_price, this.formatMoney);
       },
       isOutOfStock(item) {
-        return this.variantAvailable[item.variant_id] === false;
+        if (this.variantAvailable[item.variant_id] === false) return true;
+        // Case variants always sell, so a Case line is out of stock when the Single can't fill one case
+        const caseInfo = this.caseInfo[item.variant_id];
+        return !!caseInfo && caseInfo.cases_available === 0;
       },
       lineDiscountLabel(item) {
         const allocation = item.line_level_discount_allocations && item.line_level_discount_allocations[0];

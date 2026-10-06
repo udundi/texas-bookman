@@ -1,0 +1,17 @@
+{%- comment -%}
+  Renders the "Out of stock" or "Available on backorder" label for a stock state from
+  snippets/stock-state.liquid, and nothing for in-stock products. Shown to guests too.
+
+  Accepts:
+  - state: {String} in_stock, backorder or out_of_stock
+  - class: {String} extra classes (optional)
+{%- endcomment -%}
+{%- if state == 'out_of_stock' -%}
+  <span class="tw-inline-block tw-w-fit tw-rounded tw-border tw-border-brand-sale/20 tw-bg-red-100 tw-px-2 tw-py-1 tw-text-12 tw-font-semibold tw-leading-tight tw-text-brand-sale {{ class }}">
+    Out of stock
+  </span>
+{%- elsif state == 'backorder' -%}
+  <span class="tw-inline-block tw-w-fit tw-rounded tw-border tw-border-brand-grey tw-bg-brand-eggshell tw-px-2 tw-py-1 tw-text-12 tw-font-semibold tw-leading-tight tw-text-offblack {{ class }}">
+    Available on backorder
+  </span>
+{%- endif -%}

@@ -69,7 +69,7 @@
               {%- if related_count >= related_limit -%}{%- break -%}{%- endif -%}
               {%- assign rel_id_key = ',' | append: rel_product.id | append: ',' -%}
               {%- assign rel_title_key = '|' | append: rel_product.title | append: '|' -%}
-              {%- if rel_product.available == false or seen_ids contains rel_id_key or seen_titles contains rel_title_key -%}{%- continue -%}{%- endif -%}
+              {%- if seen_ids contains rel_id_key or seen_titles contains rel_title_key -%}{%- continue -%}{%- endif -%}
               {%- liquid
                 if pass < 3 and rel_product.type != product.type
                   continue
@@ -90,7 +90,21 @@
                 "greeting_card": {% if rel_product.type == 'Greeting Card' %}true{% else %}false{% endif %},
                 "isbn": {{ rel_product.metafields.facts.isbn | default: rel_product.metafields.custom.isbn | append: '' | json }},
                 {%- liquid
+                  # Quick add buys the Single; when it's sold out the first available variant is the
+                  # Case, which oversells, so fall back to the Single and show its stock state instead
                   assign rel_variant = rel_product.selected_or_first_available_variant
+                  if rel_variant.option1 == 'Case'
+                    for variant in rel_product.variants
+                      if variant.option1 != 'Case'
+                        assign rel_variant = variant
+                        break
+                      endif
+                    endfor
+                  endif
+                  capture rel_stock
+                    render 'stock-state', product: rel_product
+                  endcapture
+                  assign rel_stock = rel_stock | split: ' ' | first
                   # Cap at stock only when Shopify refuses to oversell, and at the B2B rule max
                   assign rel_max = nil
                   if rel_variant.inventory_management == 'shopify' and rel_variant.inventory_policy == 'deny'
@@ -102,6 +116,7 @@
                     endif
                   endif
                 -%}
+                "stock_state": {{ rel_stock | json }},
                 "variants": [{
                   "id": {{ rel_variant.id | json }},
                   "quantity_rule": {
@@ -191,8 +206,19 @@
             '</div>';
         }
 
+        // Out of stock / backorder label, shown to guests too (snippets/stock-label.liquid)
+        var stockHtml = '';
+        if (product.stock_state === 'out_of_stock') {
+          stockHtml = '<span class="tw-inline-block tw-w-fit tw-rounded tw-border tw-border-brand-sale/20 tw-bg-red-100 tw-px-2 tw-py-1 tw-text-12 tw-font-semibold tw-leading-tight tw-text-brand-sale tw-mb-2">Out of stock</span>';
+        } else if (product.stock_state === 'backorder') {
+          stockHtml = '<span class="tw-inline-block tw-w-fit tw-rounded tw-border tw-border-brand-grey tw-bg-brand-eggshell tw-px-2 tw-py-1 tw-text-12 tw-font-semibold tw-leading-tight tw-text-offblack tw-mb-2">Available on backorder</span>';
+        }
+
         var actionHtml = '';
-        if (isCustomer) {
+        if (isCustomer && product.stock_state === 'out_of_stock') {
+          actionHtml =
+            '<button type="button" disabled class="tw-bg-brand-secondary tw-w-full md:tw-text-12 tw-text-10 tw-uppercase tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4 tw-font-semibold tw-font-montserrat tw-whitespace-nowrap tw-items-center tw-py-2 tw-opacity-50 tw-cursor-not-allowed">Out of Stock</button>';
+        } else if (isCustomer) {
           actionHtml =
             '<div class="tw-flex tw-gap-2 tw-items-stretch tw-w-full tw-h-full">' +
             '<div class="tw-flex tw-items-center tw-gap-2 tw-w-full tw-h-full tw-text-brand-greyer">' +
@@ -223,6 +249,7 @@
           '<h3 class="tw-font-semibold tw-text-14 tw-text-brand-primary tw-line-clamp-1 tw-m-0 tw-mb-2">' + escapeHtml(product.title) + '</h3>' +
           '</a>' +
           priceHtml +
+          stockHtml +
           actionHtml +
           '</div>';
 
