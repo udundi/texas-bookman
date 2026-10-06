@@ -88,8 +88,9 @@
         </div>
       </div>
 
+      <!-- A partial add still put items in the cart, so offer the same actions -->
       <div
-        v-if="!failed"
+        v-if="!failed || partial"
         class="tw-px-4 tw-pb-8"
       >
         <div class="tw-w-full tw-block">
