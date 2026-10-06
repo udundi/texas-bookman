@@ -67,6 +67,7 @@
     <label class="tw-font-montserrat tw-text-16 tw-font-semibold tw-text-offblack">
       <span v-if="buyingCase">CASES</span><span v-else>QTY</span>
       <span v-if="soldOut" class="tw-font-normal">(Out of stock)</span>
+      <span v-else-if="cartFull" class="tw-font-normal">(All available stock is in your cart)</span>
       <template v-else>
         <span v-if="minQty > 1" class="tw-font-normal"
           >(Minimum Required [[ minQty ]]<template v-if="qtyStep > 1">, multiples of [[ qtyStep ]]</template>)</span
@@ -75,6 +76,9 @@
         <span v-if="qtyMax !== Infinity" class="tw-font-normal">(Max [[ qtyMax ]])</span>
       </template>
     </label>
+    <p v-if="cartUnits > 0 && stockMax !== Infinity && !soldOut" class="tw-font-montserrat tw-text-14 tw-text-offblack">
+      Already in your cart: [[ cartUnits ]]<template v-if="caseVariantId"> (Singles and Cases)</template>
+    </p>
     <div class="tw-flex tw-w-full tw-pb-2">
       <div class="tw-relative tw-flex tw-max-w-28 tw-items-center tw-rounded-[4px] tw-bg-brand-eggshell tw-border tw-border-brand-grey">
         <button
@@ -119,6 +123,8 @@
       <button
         type="submit"
         @click="addToCart()"
+        :disabled="cartFull"
+        :class="cartFull ? 'tw-cursor-not-allowed tw-opacity-50' : ''"
         class="tw-ml-2 tw-w-full tw-rounded-[4px] tw-bg-brand-primary tw-py-2 tw-text-sm tw-font-semibold tw-text-brand-eggshell tw-flex tw-justify-center"
       >
         <span v-if="!addingToCart"> Add to Cart </span>
