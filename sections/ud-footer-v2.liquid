@@ -83,20 +83,87 @@
     </div>
     <!-- Email Signup Container -->
     <div class="lg:tw-border-l tw-max-w-screen-sm tw-w-full tw-border-brand-grey tw-flex tw-flex-col tw-gap-4 tw-p-6 lg:tw-text-16 tw-text-14 tw-tracking-tight tw-mx-auto">
-      <div class="tw-font-semibold">Don't Miss Our New Arrivals! Sign Up for our Bookman Bulletin.</div>
-      <input
-        class="rounded-lg tw-w-full tw-p-2 tw-text-gray-900 focus:tw-shadow-outline tw-outline-brand-primary focus:tw-outline-none tw-border tw-border-brand-grey focus:tw-border-brand-primary tw-rounded-[4px]"
-        :class="{ 'border-2 border-red-500': validationErrors.email }"
-        type="email"
-        name="user_email"
-        placeholder="Email"
-        v-model="formData.email"
-        required
-      >
-      <button class="tw-text-white tw-bg-brand-primary tw-w-full tw-p-2 tw-uppercase tw-rounded-[4px]">Submit</button>
+      {%- form 'customer', id: 'FooterNewsletterForm', class: 'ud-footer-signup tw-flex tw-flex-col tw-gap-4' -%}
+        {%- liquid
+          assign form_result_shown = false
+          if form.posted_successfully? or form.errors
+            assign form_result_shown = true
+          endif
+        -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <h2 id="FooterNewsletterHeading" class="tw-font-semibold">Don't Miss Our New Arrivals! Sign Up for our Bookman Bulletin.</h2>
+        <label for="FooterNewsletterEmail" class="ud-footer-signup__label">Email address</label>
+        <input
+          id="FooterNewsletterEmail"
+          class="rounded-lg tw-w-full tw-p-2 tw-text-gray-900 focus:tw-shadow-outline tw-outline-brand-primary focus:tw-outline-none tw-border tw-border-brand-grey focus:tw-border-brand-primary tw-rounded-[4px]{% if form.errors %} tw-border-brand-sale{% endif %}"
+          type="email"
+          name="contact[email]"
+          value="{{ form.email }}"
+          placeholder="Email"
+          autocomplete="email"
+          autocapitalize="off"
+          spellcheck="false"
+          aria-describedby="FooterNewsletterHeading{% if form.errors %} FooterNewsletterError{% endif %}"
+          {% if form.errors %}
+            aria-invalid="true"
+          {% endif %}
+          required
+        >
+        <button type="submit" class="tw-text-white tw-bg-brand-primary tw-w-full tw-p-2 tw-uppercase tw-rounded-[4px]">Submit</button>
+        {%- if form.posted_successfully? -%}
+          <p id="FooterNewsletterSuccess" class="ud-footer-signup__message tw-font-semibold tw-text-brand-primary" role="status" tabindex="-1">Thanks for signing up! Watch your inbox for the Bookman Bulletin.</p>
+        {%- endif -%}
+        {%- if form.errors -%}
+          <div id="FooterNewsletterError" class="ud-footer-signup__message tw-font-semibold tw-text-brand-sale" role="alert" tabindex="-1">
+            {%- for field in form.errors -%}
+              <p>
+                {%- if field == 'form' -%}
+                  {{ form.errors.messages[field] }}
+                {%- else -%}
+                  {{ form.errors.translated_fields[field] | capitalize }} {{ form.errors.messages[field] }}
+                {%- endif -%}
+              </p>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      {%- endform -%}
+      {%- if form_result_shown -%}
+        <script>
+          (() => {
+            const message = document.querySelector('#FooterNewsletterForm .ud-footer-signup__message');
+            if (!message) return;
+            message.scrollIntoView({ block: 'center' });
+            message.focus({ preventScroll: true });
+          })();
+        </script>
+      {%- endif -%}
     </div>
   </div>
 </div>
+
+{% stylesheet %}
+  .ud-footer-signup__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .ud-footer-signup input:focus-visible,
+  .ud-footer-signup button:focus-visible {
+    outline: 2px solid #20448f;
+    outline-offset: 2px;
+  }
+
+  .ud-footer-signup__message:focus {
+    outline: none;
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
