@@ -2,7 +2,15 @@
   {% content_for 'blocks' %}
 {% endcapture %}
 {%- comment -%} Hide the group when every entry in it hid itself; open it when it holds the active filter. {%- endcomment -%}
+{%- comment -%} Shopify wraps every block in a div, so look for rendered entries rather than any markup (but keep empty groups in the theme editor). {%- endcomment -%}
 {%- assign blocks = blocks | strip -%}
+{%- unless blocks contains 'data-filter-entry' or request.design_mode -%}
+  {%- assign blocks = '' -%}
+{%- endunless -%}
+{%- comment -%} A top-level gate for the current collection unchecks to all products. {%- endcomment -%}
+{%- if blocks contains 'ud-parent-collection-url' -%}
+  {%- assign blocks = blocks | replace: 'ud-parent-collection-url', routes.all_products_collection_url -%}
+{%- endif -%}
 {%- assign box_collapsed = block.settings.collapsed | default: false -%}
 {%- if blocks contains 'data-filter-active' -%}
   {%- assign box_collapsed = false -%}
@@ -94,6 +102,9 @@
     },
     {
       "type": "_collection-filter-box-v2"
+    },
+    {
+      "type": "_collection-storefront-filter"
     }
   ],
   "presets": [

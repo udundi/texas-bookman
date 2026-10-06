@@ -1,0 +1,175 @@
+{%- comment -%}
+  One Search & Discovery filter (collection.filters) rendered in full: a multi-select
+  list with counts for the current results, or a min/max form for price. Put it inside
+  a Collection Filter Box, which supplies the heading and hides itself when the filter
+  has nothing to show on this collection.
+{%- endcomment -%}
+{%- liquid
+  assign sd_filter = nil
+  for filter in collection.filters
+    if filter.param_name == block.settings.param_name
+      assign sd_filter = filter
+      break
+    endif
+  endfor
+  assign visible_count = block.settings.visible_count | default: 8
+-%}
+{%- if sd_filter -%}
+  {%- case sd_filter.type -%}
+    {%- when 'price_range' -%}
+      {%- liquid
+        assign price_active = false
+        if sd_filter.min_value.value != blank or sd_filter.max_value.value != blank
+          assign price_active = true
+        endif
+        # Keep the other filters, sort and page size: Shopify's remove URL is the current
+        # one without the price, so resubmit its params as hidden fields.
+        assign keep_query = sd_filter.url_to_remove | split: '?' | last
+        if sd_filter.url_to_remove contains '?'
+          assign keep_params = keep_query | split: '&'
+        else
+          assign keep_params = ''
+        endif
+      -%}
+      <form
+        action="{{ collection.url }}"
+        method="get"
+        data-filter-entry
+        class="tw-flex tw-flex-col tw-gap-2 tw-p-0.5"
+        {% if price_active %}
+          data-filter-active
+        {% endif %}
+      >
+        {%- for param in keep_params -%}
+          {%- assign param_parts = param | split: '=' -%}
+          {%- if param_parts[0] != blank -%}
+            <input type="hidden" name="{{ param_parts[0] | url_decode | escape }}" value="{{ param_parts[1] | url_decode | escape }}">
+          {%- endif -%}
+        {%- endfor -%}
+        <div class="tw-flex tw-w-full tw-items-center tw-gap-2">
+          <label class="tw-flex tw-flex-1 tw-items-center tw-gap-1 tw-rounded-[4px] tw-border tw-border-brand-grey tw-bg-white tw-px-2 tw-py-1 tw-text-14 tw-text-offblack">
+            <span aria-hidden="true">{{ cart.currency.symbol }}</span>
+            <input
+              type="number"
+              inputmode="decimal"
+              min="0"
+              step="0.01"
+              name="{{ sd_filter.min_value.param_name }}"
+              aria-label="Minimum price"
+              {% if sd_filter.min_value.value != blank %}
+                value="{{ sd_filter.min_value.value | money_without_currency | remove: ',' }}"
+              {% endif %}
+              placeholder="0"
+              class="tw-w-full tw-min-w-0 tw-border-0 tw-bg-transparent tw-p-0 tw-text-14 focus:tw-outline-none"
+            >
+          </label>
+          <span aria-hidden="true" class="tw-text-14 tw-text-offblack">to</span>
+          <label class="tw-flex tw-flex-1 tw-items-center tw-gap-1 tw-rounded-[4px] tw-border tw-border-brand-grey tw-bg-white tw-px-2 tw-py-1 tw-text-14 tw-text-offblack">
+            <span aria-hidden="true">{{ cart.currency.symbol }}</span>
+            <input
+              type="number"
+              inputmode="decimal"
+              min="0"
+              step="0.01"
+              name="{{ sd_filter.max_value.param_name }}"
+              aria-label="Maximum price"
+              {% if sd_filter.max_value.value != blank %}
+                value="{{ sd_filter.max_value.value | money_without_currency | remove: ',' }}"
+              {% endif %}
+              placeholder="{{ sd_filter.range_max | money_without_currency | remove: ',' }}"
+              class="tw-w-full tw-min-w-0 tw-border-0 tw-bg-transparent tw-p-0 tw-text-14 focus:tw-outline-none"
+            >
+          </label>
+        </div>
+        <div class="tw-flex tw-items-center tw-gap-4">
+          <button
+            type="submit"
+            class="tw-cursor-pointer tw-rounded-[4px] tw-border tw-border-offblack tw-bg-white tw-px-3 tw-py-1 tw-text-14 tw-text-offblack hover:tw-bg-gray-100"
+          >
+            Apply
+          </button>
+          {%- if price_active -%}
+            <a href="{{ sd_filter.url_to_remove }}" class="tw-text-14 tw-underline tw-text-brand-link">Reset</a>
+          {%- endif -%}
+        </div>
+      </form>
+    {%- else -%}
+      {%- liquid
+        # Values with no results are hidden unless applied. Applied values always show,
+        # the rest past the first few sit behind "Show more".
+        assign shown = 0
+        assign has_more = false
+        assign any_active = false
+        if sd_filter.active_values.size > 0
+          assign any_active = true
+        endif
+        assign more_id = block.id | append: '-more'
+      -%}
+      <div class="tw-flex tw-w-full tw-flex-col tw-gap-[1px]"{% if any_active %} data-filter-active{% endif %}>
+        {%- for value in sd_filter.values -%}
+          {%- if value.active == false and value.count == 0 -%}{%- continue -%}{%- endif -%}
+          {%- liquid
+            assign beyond = false
+            if shown >= visible_count and value.active == false
+              assign beyond = true
+              assign has_more = true
+            endif
+            unless beyond
+              assign shown = shown | plus: 1
+            endunless
+            if value.active
+              assign value_href = value.url_to_remove
+            else
+              assign value_href = value.url_to_add
+            endif
+          -%}
+          <div class="tw-p-0.5"{% if beyond %} v-cloak v-show="isFilterOpen('{{ more_id }}', true)"{% endif %}>
+            {% render 'collection-filter-checkbox',
+              href: value_href,
+              checked: value.active,
+              label: value.label,
+              count: value.count
+            %}
+          </div>
+        {%- endfor -%}
+        {%- if has_more -%}
+          <button
+            type="button"
+            class="tw-w-fit tw-cursor-pointer tw-border-0 tw-bg-transparent tw-p-0.5 tw-text-left tw-text-14 tw-underline tw-text-brand-link"
+            @click="toggleFilter('{{ more_id }}', true)"
+          >
+            [[ isFilterOpen('{{ more_id }}', true) ? 'Show less' : 'Show more' ]]
+          </button>
+        {%- endif -%}
+      </div>
+  {%- endcase -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Storefront Filter",
+  "settings": [
+    {
+      "type": "text",
+      "id": "param_name",
+      "label": "Search & Discovery filter",
+      "info": "The filter's URL parameter, e.g. filter.p.m.custom.publisher, filter.p.m.custom.author, filter.v.price or filter.v.availability. Configure the filters in the Search & Discovery app.",
+      "default": "filter.p.m.custom.publisher"
+    },
+    {
+      "type": "range",
+      "id": "visible_count",
+      "label": "Values shown before \"Show more\"",
+      "min": 3,
+      "max": 30,
+      "step": 1,
+      "default": 8
+    }
+  ],
+  "presets": [
+    {
+      "name": "Storefront Filter"
+    }
+  ]
+}
+{% endschema %}

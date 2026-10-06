@@ -1,139 +1,32 @@
-  {%- liquid
-    # theme-check-disable
-    capture content_for_query_string
-      echo content_for_header
-    endcapture
-  -%}
-
-  {% assign get_full_url = content_for_query_string
-    | split: '"pageurl":"'
-    | last
-    | split: '"'
-    | first
-    | split: '.myshopify.com'
-    | last
-    | replace: '\/', '/'
-    | replace: '%20', ' '
-    | replace: '\u0026', '&'
-    | replace: collection.url, ''
-    | replace: 'feltright.com', ''
-    | replace: '%2F', '/'
-    | replace: '%27', "'"
-  %}
   {% if block.settings.filter_type != 'color' %}
-    {%- assign filter_change = block.settings.filter_type
-      | append: block.settings.tag
-      | replace: ' ', '+'
-      | replace: '&', '%26'
-    -%}
-    {%- assign query_params = get_full_url
-      | replace: 'pb=0', ''
-      | replace: '_fd=0', ''
-      | replace: '&&', '&'
-      | replace: '?&', '?'
-      | replace: '?', ''
-      | split: '&'
-    -%}
-
-    {%- if get_full_url contains '?' -%}
-      {%- if query_params contains filter_change -%}
-        {%- assign new_params = '' -%}
-        {%- for param in query_params -%}
-          {%- if param == filter_change -%}{%- continue -%}{%- endif -%}
-          {%- if new_params != blank -%}{%- assign new_params = new_params | append: '&' -%}{%- endif -%}
-          {%- assign new_params = new_params | append: param -%}
-        {%- endfor -%}
-        {%- if new_params != blank -%}
-          {%- assign filter_href = collection.url | append: '?' | append: new_params -%}
-        {%- else -%}
-          {%- assign filter_href = collection.url -%}
-        {%- endif -%}
-      {%- elsif filter_change contains 'filter.v.price' -%}
-        {%- assign new_params = '' -%}
-        {%- for param in query_params -%}
-          {%- if param contains 'filter.v.price' -%}{%- continue -%}{%- endif -%}
-          {%- if new_params != blank -%}{%- assign new_params = new_params | append: '&' -%}{%- endif -%}
-          {%- assign new_params = new_params | append: param -%}
-        {%- endfor -%}
-        {%- if new_params != blank -%}
-          {%- assign filter_href = collection.url
-            | append: '?'
-            | append: new_params
-            | append: '&'
-            | append: filter_change
-          -%}
-        {%- else -%}
-          {%- assign filter_href = collection.url | append: '?' | append: filter_change -%}
-        {%- endif -%}
-      {%- else -%}
-        {%- assign new_params = '' -%}
-        {%- for param in query_params -%}
-          {%- if param != blank -%}
-            {%- if param contains 'filter.' and filter_change contains 'filter.p.tag' and param == filter_change -%}
-              {%- continue -%}
-            {%- endif -%}
-            {%- if new_params != blank -%}{%- assign new_params = new_params | append: '&' -%}{%- endif -%}
-            {%- assign new_params = new_params | append: param -%}
-          {%- endif -%}
-        {%- endfor -%}
-        {%- if new_params != blank -%}
-          {%- assign filter_href = collection.url
-            | append: '?'
-            | append: new_params
-            | append: '&'
-            | append: filter_change
-          -%}
-        {%- else -%}
-          {%- assign filter_href = collection.url | append: '?' | append: filter_change -%}
-        {%- endif -%}
-      {%- endif -%}
-    {%- else -%}
-      {%- if block.settings.tag == 'all' -%}
-        {%- assign filter_href = collection.url -%}
-      {%- else -%}
-        {%- assign filter_href = collection.url | append: '?' | append: filter_change -%}
-      {%- endif -%}
-    {%- endif -%}
-
     {%- liquid
+      # Each entry is a Search & Discovery filter value from collection.filters, so it
+      # applies for real, shows its count within the current results and can be combined
+      # with other values (Shopify ORs values of one filter). "Collection Tag" holds the
+      # value, or several spellings separated by | that are applied together.
+      assign filter_param = block.settings.filter_type | remove_last: '='
+      capture filter_state
+        render 'collection-filter-state', param: filter_param, values: block.settings.tag
+      endcapture
+      assign filter_state = filter_state | split: '@@'
       assign filter_active = false
-      if query_params contains filter_change
+      if filter_state[1] == 'true'
         assign filter_active = true
       endif
       assign filter_count = nil
-
-      # When the store has this filter enabled (Search & Discovery), take the selected
-      # state, URLs and result count from Shopify instead of the URL string. Selecting
-      # several values of one filter ORs them.
-      assign filter_param = block.settings.filter_type | remove_last: '='
-      assign filter_found = false
-      assign filter_value = nil
-      for filter in collection.filters
-        if filter.param_name == filter_param
-          assign filter_found = true
-          for value in filter.values
-            if value.value == block.settings.tag
-              assign filter_value = value
-              break
-            endif
-          endfor
-        endif
-      endfor
-      if filter_value
-        assign filter_active = filter_value.active
-        assign filter_count = filter_value.count
-        if filter_active
-          assign filter_href = filter_value.url_to_remove
-        else
-          assign filter_href = filter_value.url_to_add
-        endif
+      if filter_state[0] == 'value'
+        assign filter_count = filter_state[2] | plus: 0
       endif
+      assign filter_href = filter_state[3]
     -%}
-
     {%- capture child_blocks -%}{%- content_for 'blocks' -%}{%- endcapture -%}
     {%- liquid
       # Nested filters mark themselves active so their parent stays visible and opens
       assign child_blocks = child_blocks | strip
+      # Shopify wraps every block in a div, so only count children that rendered an entry
+      unless child_blocks contains 'data-filter-entry'
+        assign child_blocks = ''
+      endunless
       assign children_collapsed = block.settings.children_collapsed | default: false
       if child_blocks contains 'data-filter-active'
         assign children_collapsed = false
@@ -141,14 +34,12 @@
     -%}
 
     {%- liquid
-      # Hide values with no results, unless already selected or they hold sub-filters.
-      assign hide_filter = false
-      if filter_found and child_blocks == blank
-        if filter_value == nil
-          assign hide_filter = true
-        elsif filter_active == false and filter_count == 0
-          assign hide_filter = true
-        endif
+      # Show the entry only when it does something: it is applied, or adding it gives
+      # results. Values no product in the results has, and params the store has no
+      # filter for (e.g. a tag nobody uses), would be dead or empty links.
+      assign hide_filter = true
+      if filter_active or filter_href != blank or child_blocks != blank
+        assign hide_filter = false
       endif
     -%}
 
@@ -190,6 +81,29 @@
     </div>
     {%- endunless -%}
   {% else %}
+  {%- liquid
+    # theme-check-disable
+    # The colour swatches still read the query string from the page URL
+    capture content_for_query_string
+      echo content_for_header
+    endcapture
+  -%}
+
+  {% assign get_full_url = content_for_query_string
+    | split: '"pageurl":"'
+    | last
+    | split: '"'
+    | first
+    | split: '.myshopify.com'
+    | last
+    | replace: '\/', '/'
+    | replace: '%20', ' '
+    | replace: '\u0026', '&'
+    | replace: collection.url, ''
+    | replace: 'feltright.com', ''
+    | replace: '%2F', '/'
+    | replace: '%27', "'"
+  %}
     <div class="tw-p-0.5">
     <div class="tw-flex tw-flex-wrap tw-gap-2 tw-w-full ">
       {% for color in metaobjects.tile_colors.values %}
@@ -228,6 +142,7 @@
             href="{{ collection.url }}{{ query_params |  join: '&' | prepend: '?' | append: '&' | append: filter_change | replace: '&&', '&' | replace: '?&', '?' }}"
           {% endif %}
           class="tw-group tw-h-fit tw-w-fit"
+          data-filter-entry
         >
           {% assign filter_border_check = 'filter.p.tag=' | append: color_ref.name %}
           <div
@@ -250,7 +165,8 @@
     {
       "type": "text",
       "id": "tag",
-      "label": "Collection Tag"
+      "label": "Filter value",
+      "info": "Search & Discovery filter value. Separate several values with | to apply them together (e.g. publisher spellings)."
     },
     {
       "type": "text",
@@ -261,6 +177,7 @@
       "type": "text",
       "id": "filter_type",
       "label": "Filter Type",
+      "info": "Search & Discovery filter parameter followed by =, e.g. filter.p.m.custom.publisher= or filter.p.m.custom.category=. Entries for filters the store doesn't have are hidden.",
       "default": "filter.p.tag="
     },
     {
