@@ -231,6 +231,12 @@
             {%- endif -%}
           {%- endfor -%}
         },
+        // Availability by variant at page load; /cart.js lines carry no variant object
+        variantAvailable: {
+          {%- for item in cart.items -%}
+            '{{ item.variant_id }}': {{ item.variant.available }}{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        },
         // B2B catalog quantity rules by variant; /cart.js lines also carry quantity_rule
         quantityRules: {
           {%- for item in cart.items -%}
@@ -262,7 +268,7 @@
         return this.caseSavingLabel(this.caseInfo[item.variant_id], item.original_price, this.formatMoney);
       },
       isOutOfStock(item) {
-        return !!(item.variant && item.variant.available === false);
+        return this.variantAvailable[item.variant_id] === false;
       },
       lineDiscountLabel(item) {
         const allocation = item.line_level_discount_allocations && item.line_level_discount_allocations[0];

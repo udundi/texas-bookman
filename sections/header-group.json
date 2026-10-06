@@ -107,7 +107,7 @@
               "name": "Menu Links",
               "settings": {
                 "menu_title": "Other",
-                "header_url": "shopify://collections/all-mind-body-spirit",
+                "header_url": "",
                 "menu": "mind-body-spirit-other",
                 "column_layout": "1-col"
               },
