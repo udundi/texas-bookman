@@ -9,6 +9,8 @@
  */
 {
   "current": {
-    "share_image": "shopify://shop_images/bc58b2ce114e7627982b434f25200296d4656fc1.png"
+    "placeholder_image": "shopify://shop_images/no-image-TB.svg",
+    "share_image": "shopify://shop_images/bc58b2ce114e7627982b434f25200296d4656fc1.png",
+    "content_for_index": []
   }
 }
