@@ -18,7 +18,8 @@
                   {{
                     settings.placeholder_image
                     | image_url: width: 400
-                    | image_tag: 'tw-w-full tw-h-full tw-object-cover'
+                    | image_tag:
+                      class: 'tw-w-full tw-h-full tw-object-contain tw-transition-transform tw-duration-300 group-hover:tw-scale-105'
                   }}
                 {% endif %}
               </div>

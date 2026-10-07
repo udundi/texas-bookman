@@ -182,7 +182,7 @@
       decoding="async"
     >
   {% else %}
-    {{ settings.placeholder_image | image_url: width: 400 | image_tag: 'tw-w-full tw-h-full tw-object-contain' }}
+    {{ settings.placeholder_image | image_url: width: 400 | image_tag: class: 'tw-w-full tw-h-full tw-object-contain' }}
   {% endif %}
 
   {% if block.settings.overlay_text != blank %}
