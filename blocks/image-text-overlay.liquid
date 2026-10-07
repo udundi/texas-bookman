@@ -182,17 +182,19 @@
       decoding="async"
     >
   {% else %}
-    {{ 'product-1' | placeholder_svg_tag: 'tw-w-full tw-h-full tw-object-contain' }}
+    {{ settings.placeholder_image | image_url: width: 400 | image_tag: 'tw-w-full tw-h-full tw-object-contain' }}
   {% endif %}
 
   {% if block.settings.overlay_text != blank %}
     <div
       class="block-{{ block.id }}-text tw-absolute tw-inset-0 tw-flex tw-font-montserrat tw-p-6 {{ v_align_class }} {{ h_align_class }} tw-bg-gradient-to-t tw-from-black/60 tw-via-black/20 tw-to-transparent tw-transition-opacity tw-duration-300 group-hover:tw-from-black/75"
     >
-      <div class="tw-drop-shadow-md tw-transition-transform tw-duration-300 group-hover:tw-scale-[1.02]">{{ block.settings.overlay_text }}</div>
+      <div class="tw-drop-shadow-md tw-transition-transform tw-duration-300 group-hover:tw-scale-[1.02]">
+        {{ block.settings.overlay_text }}
+      </div>
     </div>
   {% endif %}
-</{% if card_link != blank %}a{% else %}div{% endif %}>
+</{% if card_link != blank %}a href="{{ card_link }}"{% if block.settings.open_in_new_tab %} target="_blank" rel="noopener"{% endif %}{% else %}div{% endif %}>
 
 {% schema %}
 {

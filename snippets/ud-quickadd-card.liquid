@@ -5,12 +5,12 @@
 {%- liquid
   # Cap at stock only when Shopify refuses to oversell, and at the B2B rule max
   assign qty_variant = cur_product.selected_or_first_available_variant
-  assign qty_max = nil
+  assign qty_max = null
   if qty_variant.inventory_management == 'shopify' and qty_variant.inventory_policy == 'deny'
     assign qty_max = qty_variant.inventory_quantity | at_least: 1
   endif
   if qty_variant.quantity_rule.max
-    if qty_max == nil or qty_variant.quantity_rule.max < qty_max
+    if qty_max == null or qty_variant.quantity_rule.max < qty_max
       assign qty_max = qty_variant.quantity_rule.max
     endif
   endif
@@ -46,7 +46,11 @@
         {% endif %}
       {% else %}
         <div class=" tw-size-full">
-          {{ 'product-1' | placeholder_svg_tag: 'tw-w-full tw-max-w-[450px] tw-mx-auto tw-object-cover' }}
+          {{
+            settings.placeholder_image
+            | image_url: width: 400
+            | image_tag: 'tw-w-full tw-max-w-[450px] tw-mx-auto tw-object-cover'
+          }}
         </div>
       {% endif %}
       {% if cur_product.tags contains 'New Product' %}
@@ -87,13 +91,16 @@
         {% render 'stock-label', state: stock_state %}
         <div class="tw-flex tw-flex-col">
           {%- unless cur_product.type == 'Greeting Card' -%}
-          <div class="tw-text-brand-greyer tw-text-14 tw-font-semibold">
-            List:
-            <span class="tw-font-normal">{{ cur_product.compare_at_price | default: cur_product.price | money }}</span>
-          </div>
+            <div class="tw-text-brand-greyer tw-text-14 tw-font-semibold">
+              List:
+              <span class="tw-font-normal">
+                {{- cur_product.compare_at_price | default: cur_product.price | money -}}
+              </span>
+            </div>
           {%- endunless -%}
           <div class="tw-font-semibold tw-text-14 tw-text-black">
-            {% if customer %}Your{% endif %} Net Price: <span class="tw-font-normal">{{ cur_product.price | money }}</span>
+            {% if customer %}Your{% endif %} Net Price:
+            <span class="tw-font-normal">{{ cur_product.price | money }}</span>
           </div>
         </div>
       </div>
@@ -118,12 +125,23 @@
       {% elsif show_button_type == 'quick-add' %}
         <div class="tw-flex tw-gap-2 tw-items-stretch tw-w-full tw-h-full">
           <div class="tw-flex tw-items-center tw-gap-2 tw-w-full tw-h-full tw-text-brand-greyer">
-            <span class="tw-whitespace-nowrap">QTY{% if min_qty > 1 %} (Min {{ min_qty }}{% if qty_step > 1 %}, x{{ qty_step }}{% endif %}){% elsif qty_step > 1 %} (x{{ qty_step }}){% endif %}:</span>
+            <span class="tw-whitespace-nowrap"
+              >QTY
+              {%- if min_qty > 1 %}
+                (Min {{ min_qty -}}
+                {%- if qty_step > 1 %}, x{{ qty_step }}{% endif %})
+              {%- elsif qty_step > 1 %}
+                (x{{ qty_step }})
+              {%- endif -%}
+              :</span
+            >
             <input
               type="number"
               min="{{ min_qty }}"
               step="{{ qty_step }}"
-              {% if qty_max != 'Infinity' %}max="{{ qty_max }}"{% endif %}
+              {% if qty_max != 'Infinity' %}
+                max="{{ qty_max }}"
+              {% endif %}
               placeholder="{{ min_qty }}"
               v-model.number="quantity"
               @change="quantity = validQuantity(quantity, {{ min_qty }}, {{ qty_step }}, {{ qty_max }})"

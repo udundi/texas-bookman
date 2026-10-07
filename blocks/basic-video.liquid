@@ -161,8 +161,9 @@
   {% else %}
     <div class="tw-flex tw-h-full tw-w-full tw-items-center tw-justify-center tw-bg-offblack tw-text-white">
       {{
-        'product-1'
-        | placeholder_svg_tag: 'tw-w-full tw-max-w-96 tw-aspect-square tw-h-full tw-object-contain tw-fill-white'
+        settings.placeholder_image
+        | image_url: width: 400
+        | image_tag: 'tw-w-full tw-max-w-96 tw-aspect-square tw-h-full tw-object-contain tw-fill-white'
       }}
     </div>
   {% endif %}

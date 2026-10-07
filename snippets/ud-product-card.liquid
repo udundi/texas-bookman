@@ -20,7 +20,11 @@
         {% endif %}
       {% else %}
         <div class=" tw-size-full">
-          {{ 'product-1' | placeholder_svg_tag: 'tw-w-full tw-max-w-[450px] tw-mx-auto tw-object-cover' }}
+          {{
+            settings.placeholder_image
+            | image_url: width: 400
+            | image_tag: 'tw-w-full tw-max-w-[450px] tw-mx-auto tw-object-cover'
+          }}
         </div>
       {% endif %}
       {% if product.tags contains 'New Product' %}

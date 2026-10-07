@@ -111,6 +111,16 @@
     ]
   },
   {
+    "name": "Placeholder Image",
+    "settings": [
+      {
+      "type": "image_picker",
+      "id": "placeholder_image",
+      "label": "Placeholder Image"
+    },
+    ]
+  },
+  {
     "name": "SEO & social sharing",
     "settings": [
       {

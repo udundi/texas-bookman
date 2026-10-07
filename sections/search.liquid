@@ -178,7 +178,7 @@
                   assign isbn = product.metafields.facts.isbn | default: product.metafields.custom.isbn
                   # Cap the quick-add input at stock only when Shopify refuses to oversell
                   assign qty_variant = product.selected_or_first_available_variant
-                  assign qty_max = nil
+                  assign qty_max = null
                   if qty_variant.inventory_management == 'shopify' and qty_variant.inventory_policy == 'deny'
                     assign qty_max = qty_variant.inventory_quantity | at_least: 1
                   endif
@@ -186,7 +186,7 @@
                   assign min_qty = qty_variant.quantity_rule.min | default: 1
                   assign qty_step = qty_variant.quantity_rule.increment | default: 1
                   if qty_variant.quantity_rule.max
-                    if qty_max == nil or qty_variant.quantity_rule.max < qty_max
+                    if qty_max == null or qty_variant.quantity_rule.max < qty_max
                       assign qty_max = qty_variant.quantity_rule.max
                     endif
                   endif
@@ -208,7 +208,11 @@
                         }}
                       {% else %}
                         <div class="tw-size-full">
-                          {{ 'product-1' | placeholder_svg_tag: 'tw-w-full tw-max-w-[450px] tw-mx-auto tw-object-cover' }}
+                          {{
+                            settings.placeholder_image
+                            | image_url: width: 400
+                            | image_tag: 'tw-w-full tw-max-w-[450px] tw-mx-auto tw-object-cover'
+                          }}
                         </div>
                       {% endif %}
                       {% if product.tags contains 'New Product' %}
@@ -229,7 +233,10 @@
                             </h3>
                           </a>
                         </div>
-                        {% if product.metafields.custom.tb_code != blank and customer and customer.tags contains 'Staff' %}
+                        {% if product.metafields.custom.tb_code != blank
+                          and customer
+                          and customer.tags contains 'Staff'
+                        %}
                           <p class="tw-font-semibold tw-text-14 tw-text-brand-greyer/50 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
                             TB Code: <span class="tw-font-normal">{{ product.metafields.custom.tb_code }}</span>
                           </p>
@@ -245,12 +252,16 @@
                         {% render 'stock-label', state: stock_state %}
                         <div class="tw-flex tw-flex-col">
                           {%- unless product.type == 'Greeting Card' -%}
-                          <div class="tw-text-gray-600 tw-text-14 tw-font-semibold">
-                            List: <span class="tw-font-normal">{{ product.compare_at_price | default: product.price | money }}</span>
-                          </div>
+                            <div class="tw-text-gray-600 tw-text-14 tw-font-semibold">
+                              List:
+                              <span class="tw-font-normal">
+                                {{- product.compare_at_price | default: product.price | money -}}
+                              </span>
+                            </div>
                           {%- endunless -%}
                           <div class="tw-font-semibold tw-text-14">
-                            {% if customer %}Your{% endif %} Net Price: <span class="tw-font-normal">{{ product.price | money }}</span>
+                            {% if customer %}Your{% endif %} Net Price:
+                            <span class="tw-font-normal">{{ product.price | money }}</span>
                           </div>
                         </div>
                       </div>
@@ -274,12 +285,23 @@
                     {% else %}
                       <div class="tw-flex tw-gap-2 tw-w-full tw-mt-auto">
                         <div class="tw-flex tw-items-center tw-gap-2 tw-w-full">
-                          <span class="tw-text-12 tw-font-semibold tw-whitespace-nowrap">QTY{% if min_qty > 1 %} (Min {{ min_qty }}{% if qty_step > 1 %}, x{{ qty_step }}{% endif %}){% elsif qty_step > 1 %} (x{{ qty_step }}){% endif %}:</span>
+                          <span class="tw-text-12 tw-font-semibold tw-whitespace-nowrap"
+                            >QTY
+                            {%- if min_qty > 1 %}
+                              (Min {{ min_qty -}}
+                              {%- if qty_step > 1 %}, x{{ qty_step }}{% endif %})
+                            {%- elsif qty_step > 1 %}
+                              (x{{ qty_step }})
+                            {%- endif -%}
+                            :</span
+                          >
                           <input
                             type="number"
                             min="{{ min_qty }}"
                             step="{{ qty_step }}"
-                            {% if qty_max %}max="{{ qty_max }}"{% endif %}
+                            {% if qty_max %}
+                              max="{{ qty_max }}"
+                            {% endif %}
                             placeholder="{{ min_qty }}"
                             :value="getQty({{ product.selected_or_first_available_variant.id }}, {{ min_qty }})"
                             @input="setQty({{ product.selected_or_first_available_variant.id }}, $event.target, {{ qty_max | default: 'Infinity' }})"
@@ -294,7 +316,8 @@
                           @click="addToCart({{ product.selected_or_first_available_variant.id }}, {{ isbn | append: '' | json | escape }}, {{ min_qty }}, {{ qty_step }}, {{ qty_max | default: 'Infinity' }})"
                           :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                         >
-                          [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : 'Add to Cart' ]]
+                          [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : 'Add to
+                          Cart' ]]
                         </button>
                       </div>
                     {% endif %}
@@ -304,13 +327,20 @@
                 <!-- Non-product result (e.g. Page or Article) -->
                 <div class="tw-flex tw-flex-col tw-justify-between tw-p-4 tw-border tw-border-brand-grey tw-bg-white tw-mr-[-1px] tw-mb-[-1px]">
                   <div>
-                    <span class="tw-text-11 tw-uppercase tw-text-gray-400 tw-font-semibold">{{ item.object_type }}</span>
+                    <span class="tw-text-11 tw-uppercase tw-text-gray-400 tw-font-semibold">
+                      {{- item.object_type -}}
+                    </span>
                     <a href="{{ item.url }}" class="tw-no-underline">
                       <h3 class="tw-font-semibold tw-text-16 tw-text-brand-primary tw-mt-1">{{ item.title }}</h3>
                     </a>
-                    <p class="tw-text-13 tw-text-gray-600 tw-line-clamp-3 tw-mt-2">{{ item.content | strip_html | truncatewords: 25 }}</p>
+                    <p class="tw-text-13 tw-text-gray-600 tw-line-clamp-3 tw-mt-2">
+                      {{ item.content | strip_html | truncatewords: 25 }}
+                    </p>
                   </div>
-                  <a href="{{ item.url }}" class="tw-text-13 tw-text-brand-link tw-font-semibold hover:tw-underline tw-mt-4">
+                  <a
+                    href="{{ item.url }}"
+                    class="tw-text-13 tw-text-brand-link tw-font-semibold hover:tw-underline tw-mt-4"
+                  >
                     View {{ item.object_type | capitalize }} &rarr;
                   </a>
                 </div>
@@ -330,7 +360,7 @@
                   assign isbn = product.metafields.facts.isbn | default: product.metafields.custom.isbn
                   # Cap the quick-add input at stock only when Shopify refuses to oversell
                   assign qty_variant = product.selected_or_first_available_variant
-                  assign qty_max = nil
+                  assign qty_settings.placeholder_image | image_url: width: 400 | image_tag:
                   if qty_variant.inventory_management == 'shopify' and qty_variant.inventory_policy == 'deny'
                     assign qty_max = qty_variant.inventory_quantity | at_least: 1
                   endif
@@ -338,7 +368,7 @@
                   assign min_qty = qty_variant.quantity_rule.min | default: 1
                   assign qty_step = qty_variant.quantity_rule.increment | default: 1
                   if qty_variant.quantity_rule.max
-                    if qty_max == nil or qty_variant.quantity_rule.max < qty_max
+                    if qty_max == null or qty_variant.quantity_rule.max < qty_max
                       assign qty_max = qty_variant.quantity_rule.max
                     endif
                   endif
@@ -360,7 +390,11 @@
                         }}
                       {% else %}
                         <div class="tw-size-full">
-                          {{ 'product-1' | placeholder_svg_tag: 'tw-w-full tw-h-full tw-object-cover' }}
+                          {{
+                            settings.placeholder_image
+                            | image_url: width: 400
+                            | image_tag: 'tw-w-full tw-h-full tw-object-cover'
+                          }}
                         </div>
                       {% endif %}
                       {% if product.tags contains 'New Product' %}
@@ -380,24 +414,35 @@
                           </h3>
                         </a>
                         {%- unless product.type == 'Greeting Card' -%}
-                        <div class="tw-text-gray-500 tw-text-14 tw-font-normal tw-whitespace-nowrap">
-                          List: <span class="tw-font-normal">{{ product.compare_at_price | default: product.price | money }}</span>
-                        </div>
+                          <div class="tw-text-gray-500 tw-text-14 tw-font-normal tw-whitespace-nowrap">
+                            List:
+                            <span class="tw-font-normal">
+                              {{- product.compare_at_price | default: product.price | money -}}
+                            </span>
+                          </div>
                         {%- endunless -%}
                       </div>
                       <div class="tw-flex tw-w-full tw-flex-wrap tw-justify-between tw-gap-x-3 tw-gap-y-0.5 tw-text-14">
                         {% if product.metafields.custom.author.value != blank %}
                           <div>
                             <span class="tw-font-medium">by</span>
-                            <span class="tw-font-medium tw-capitalize">{{ product.metafields.custom.author.value }}</span>
+                            <span class="tw-font-medium tw-capitalize">
+                              {{- product.metafields.custom.author.value -}}
+                            </span>
                           </div>
                         {% endif %}
                         <div class="tw-font-semibold tw-text-14">
-                          {% if customer %}Your{% endif %} Net Price: <span class="tw-font-normal">{{ product.price | money }}</span>
+                          {% if customer %}Your{% endif %} Net Price:
+                          <span class="tw-font-normal">{{ product.price | money }}</span>
                         </div>
                       </div>
                       <div class="tw-grow tw-text-14 tw-line-clamp-3 tw-text-gray-500">
-                        {{ product.description | strip_html | truncatewords: 30 | default: 'No description available.' }}
+                        {{
+                          product.description
+                          | strip_html
+                          | truncatewords: 30
+                          | default: 'No description available.'
+                        }}
                       </div>
                       <div class="tw-flex tw-w-full max-md:tw-flex-col max-md:tw-items-stretch tw-justify-between md:tw-items-end tw-gap-x-3 tw-gap-y-2 md:tw-gap-y-0.5 tw-text-14 tw-pt-2">
                         <div class="tw-flex tw-w-full tw-flex-wrap tw-text-gray-700 tw-font-semibold tw-gap-x-4 tw-gap-y-0.5 tw-text-14">
@@ -430,12 +475,23 @@
                           {% else %}
                             <div class="tw-flex max-md:tw-flex-wrap tw-items-center tw-gap-2 tw-h-full">
                               <div class="tw-flex tw-items-center tw-gap-1">
-                                <label class="tw-text-14 tw-font-semibold tw-whitespace-nowrap">QTY{% if min_qty > 1 %} (Min {{ min_qty }}{% if qty_step > 1 %}, x{{ qty_step }}{% endif %}){% elsif qty_step > 1 %} (x{{ qty_step }}){% endif %}:</label>
+                                <label class="tw-text-14 tw-font-semibold tw-whitespace-nowrap"
+                                  >QTY
+                                  {%- if min_qty > 1 %}
+                                    (Min {{ min_qty -}}
+                                    {%- if qty_step > 1 %}, x{{ qty_step }}{% endif %})
+                                  {%- elsif qty_step > 1 %}
+                                    (x{{ qty_step }})
+                                  {%- endif -%}
+                                  :</label
+                                >
                                 <input
                                   type="number"
                                   min="{{ min_qty }}"
                                   step="{{ qty_step }}"
-                                  {% if qty_max %}max="{{ qty_max }}"{% endif %}
+                                  {% if qty_max %}
+                                    max="{{ qty_max }}"
+                                  {% endif %}
                                   placeholder="{{ min_qty }}"
                                   :value="getQty({{ product.selected_or_first_available_variant.id }}, {{ min_qty }})"
                                   @input="setQty({{ product.selected_or_first_available_variant.id }}, $event.target, {{ qty_max | default: 'Infinity' }})"
@@ -450,7 +506,8 @@
                                 @click="addToCart({{ product.selected_or_first_available_variant.id }}, {{ isbn | append: '' | json | escape }}, {{ min_qty }}, {{ qty_step }}, {{ qty_max | default: 'Infinity' }})"
                                 :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                               >
-                                [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : 'Add to Cart' ]]
+                                [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : 'Add
+                                to Cart' ]]
                               </button>
                             </div>
                           {% endif %}
@@ -465,7 +522,9 @@
                   <a href="{{ item.url }}" class="tw-no-underline">
                     <h3 class="tw-font-semibold tw-text-16 tw-text-brand-primary tw-mt-1">{{ item.title }}</h3>
                   </a>
-                  <p class="tw-text-13 tw-text-gray-600 tw-line-clamp-2 tw-mt-1">{{ item.content | strip_html | truncatewords: 35 }}</p>
+                  <p class="tw-text-13 tw-text-gray-600 tw-line-clamp-2 tw-mt-1">
+                    {{ item.content | strip_html | truncatewords: 35 }}
+                  </p>
                 </div>
               {% endif %}
             {% endfor %}
@@ -576,7 +635,7 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            items: [{ id: variantId, quantity: qty, ...(isbn && { properties: { '_isbn': isbn } }) }],
+            items: [{ id: variantId, quantity: qty, ...(isbn && { properties: { _isbn: isbn } }) }],
           }),
         })
           .then(async (r) => {

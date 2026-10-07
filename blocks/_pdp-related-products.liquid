@@ -11,13 +11,20 @@
                   {{
                     rel_product.featured_image
                     | image_url: width: 400
-                    | image_tag: class: 'tw-w-full tw-h-full tw-object-contain tw-transition-transform tw-duration-300 group-hover:tw-scale-105'
+                    | image_tag:
+                      class: 'tw-w-full tw-h-full tw-object-contain tw-transition-transform tw-duration-300 group-hover:tw-scale-105'
                   }}
                 {% else %}
-                  {{ 'product-1' | placeholder_svg_tag: 'tw-w-full tw-h-full tw-object-cover' }}
+                  {{
+                    settings.placeholder_image
+                    | image_url: width: 400
+                    | image_tag: 'tw-w-full tw-h-full tw-object-cover'
+                  }}
                 {% endif %}
               </div>
-              <div class="tw-text-14 md:tw-text-16 tw-font-semibold tw-text-offblack group-hover:tw-underline tw-line-clamp-2">{{ rel_product.title }}</div>
+              <div class="tw-text-14 md:tw-text-16 tw-font-semibold tw-text-offblack group-hover:tw-underline tw-line-clamp-2">
+                {{ rel_product.title }}
+              </div>
               <div class="tw-text-13 md:tw-text-14 tw-text-offblack">
                 {% if customer %}
                   <span class="tw-font-semibold">{{ rel_product.price | money }}</span>

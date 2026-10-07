@@ -20,7 +20,7 @@
         }}
       {% else %}
         <div class="tw-size-full">
-          {{ 'product-1' | placeholder_svg_tag: 'tw-w-full tw-h-full tw-object-cover' }}
+          {{ settings.placeholder_image | image_url: width: 400 | image_tag: 'tw-w-full tw-h-full tw-object-cover' }}
         </div>
       {% endif %}
       {% if product.tags contains 'New Product' %}
@@ -42,9 +42,9 @@
           </h3>
         </a>
         {%- unless product.type == 'Greeting Card' -%}
-        <div class="tw-text-gray-500 tw-text-14 tw-font-normal">
-          List: <span class="tw-font-normal">{{ product.compare_at_price | default: product.price | money }}</span>
-        </div>
+          <div class="tw-text-gray-500 tw-text-14 tw-font-normal">
+            List: <span class="tw-font-normal">{{ product.compare_at_price | default: product.price | money }}</span>
+          </div>
         {%- endunless -%}
       </div>
       <!-- Author Netprice Row -->

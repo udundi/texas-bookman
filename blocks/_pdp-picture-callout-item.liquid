@@ -10,7 +10,7 @@
         | image_tag: class: 'tw-h-14 tw-aspect-square tw-object-contain'
       }}
     {% else %}
-      {{ 'product-1' | placeholder_svg_tag: 'tw-size-14 tw-border' }}
+      {{ settings.placeholder_image | image_url: width: 1000 | image_tag: 'tw-size-14 tw-border' }}
     {% endif %}
   </div>
   <div class="tw-flex tw-flex-col tw-gap-2">

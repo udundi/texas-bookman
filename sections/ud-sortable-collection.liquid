@@ -504,11 +504,11 @@
         <!-- Product Grid -->
         <div class="tw-flex tw-w-full tw-h-full tw-flex-col tw-justify-between">
           {% paginate collection.products by items_per_page -%}
-          <div
-            id="product-grid-{{ section.id }}"
-            :class="viewMode === 'list' ? 'tw-flex tw-flex-col tw-w-full' : 'tw-mx-auto tw-grid tw-max-w-7xl tw-grid-cols-2 max-md:tw-px-4 tw-gap-[-1px] md:tw-grid-cols-2 lg:tw-grid-cols-3 xl:tw-grid-cols-4'"
-            class="tw-mx-auto tw-max-w-7xl max-md:tw-px-4 tw-items-stretch"
-          >
+            <div
+              id="product-grid-{{ section.id }}"
+              :class="viewMode === 'list' ? 'tw-flex tw-flex-col tw-w-full' : 'tw-mx-auto tw-grid tw-max-w-7xl tw-grid-cols-2 max-md:tw-px-4 tw-gap-[-1px] md:tw-grid-cols-2 lg:tw-grid-cols-3 xl:tw-grid-cols-4'"
+              class="tw-mx-auto tw-max-w-7xl max-md:tw-px-4 tw-items-stretch"
+            >
               <span
                 data-current-page="{{ paginate.current_page }}"
                 data-total-pages="{{ paginate.pages }}"
@@ -519,7 +519,7 @@
                 {%- liquid
                   # Cap the quick-add input at stock only when Shopify refuses to oversell
                   assign qty_variant = product.selected_or_first_available_variant
-                  assign qty_max = nil
+                  assign qty_max = null
                   if qty_variant.inventory_management == 'shopify' and qty_variant.inventory_policy == 'deny'
                     assign qty_max = qty_variant.inventory_quantity | at_least: 1
                   endif
@@ -535,7 +535,7 @@
                 {% assign isbn = product.metafields.facts.isbn | default: product.metafields.custom.isbn %}
                 {% comment %} Case-pack products: see blocks/_pdp-box-quantity.liquid {% endcomment %}
                 {% assign single_variant = product.selected_or_first_available_variant %}
-                {% assign case_variant = nil %}
+                {% assign case_variant = null %}
                 {% for variant in product.variants %}
                   {% if variant.option1 == 'Case' %}
                     {% assign case_variant = variant %}
@@ -577,7 +577,7 @@
                   assign single_step = single_variant.quantity_rule.increment | default: 1
                   assign single_max = qty_max
                   if single_variant.quantity_rule.max
-                    if single_max == nil or single_variant.quantity_rule.max < single_max
+                    if single_max == null or single_variant.quantity_rule.max < single_max
                       assign single_max = single_variant.quantity_rule.max
                     endif
                   endif
@@ -619,8 +619,9 @@
                         {% else %}
                           <div class="tw-size-full">
                             {{
-                              'product-1'
-                              | placeholder_svg_tag: 'tw-w-full tw-max-w-[450px] tw-mx-auto tw-object-cover'
+                              settings.placeholder_image
+                              | image_url: width: 400
+                              | image_tag: 'tw-w-full tw-max-w-[450px] tw-mx-auto tw-object-cover'
                             }}
                           </div>
                         {% endif %}
@@ -674,12 +675,12 @@
                           {% render 'stock-label', state: stock_state %}
                           <div class="tw-flex tw-flex-col">
                             {%- unless product.type == 'Greeting Card' -%}
-                            <div class="tw-text-gray-600 tw-text-14 tw-font-semibold">
-                              List:
-                              <span class="tw-font-normal">
-                                {{- product.compare_at_price | default: product.price | money -}}
-                              </span>
-                            </div>
+                              <div class="tw-text-gray-600 tw-text-14 tw-font-semibold">
+                                List:
+                                <span class="tw-font-normal">
+                                  {{- product.compare_at_price | default: product.price | money -}}
+                                </span>
+                              </div>
                             {%- endunless -%}
                             {% if is_flash_sale %}
                               <div class="tw-font-semibold tw-text-14">
@@ -693,7 +694,8 @@
                               </div>
                             {% else %}
                               <div class="tw-font-semibold tw-text-14">
-                                {% if customer %}Your{% endif %} Net Price: <span class="tw-font-normal">{{ product.price | money }} </span>
+                                {% if customer %}Your{% endif %} Net Price:
+                                <span class="tw-font-normal">{{ product.price | money }} </span>
                               </div>
                             {% endif %}
                           </div>
@@ -789,7 +791,11 @@
                           }}
                         {% else %}
                           <div class="tw-size-full">
-                            {{ 'product-1' | placeholder_svg_tag: 'tw-w-full tw-h-full tw-object-cover' }}
+                            {{
+                              settings.placeholder_image
+                              | image_url: width: 400
+                              | image_tag: 'tw-w-full tw-h-full tw-object-cover'
+                            }}
                           </div>
                         {% endif %}
                         {% if product.tags contains 'New Product' %}
@@ -812,12 +818,12 @@
                             </h3>
                           </a>
                           {%- unless product.type == 'Greeting Card' -%}
-                          <div class="tw-text-gray-500 tw-text-14 tw-font-normal tw-whitespace-nowrap">
-                            List:
-                            <span class="tw-font-normal">
-                              {{- product.compare_at_price | default: product.price | money -}}
-                            </span>
-                          </div>
+                            <div class="tw-text-gray-500 tw-text-14 tw-font-normal tw-whitespace-nowrap">
+                              List:
+                              <span class="tw-font-normal">
+                                {{- product.compare_at_price | default: product.price | money -}}
+                              </span>
+                            </div>
                           {%- endunless -%}
                         </div>
                         <div class="tw-flex tw-w-full tw-flex-wrap tw-justify-between tw-gap-x-3 tw-gap-y-0.5 tw-text-14">
@@ -839,7 +845,8 @@
                             </div>
                           {% else %}
                             <div class="tw-font-semibold tw-text-14">
-                              {% if customer %}Your{% endif %} Net Price: <span class="tw-font-normal">{{ product.price | money }} </span>
+                              {% if customer %}Your{% endif %} Net Price:
+                              <span class="tw-font-normal">{{ product.price | money }} </span>
                             </div>
                           {% endif %}
                         </div>
@@ -893,7 +900,9 @@
                                     </select>
                                   {% endif %}
                                   <div class="tw-flex tw-items-center tw-gap-1">
-                                    <label class="tw-text-14 tw-font-semibold tw-whitespace-nowrap">QTY{{ qty_hint }}:</label>
+                                    <label class="tw-text-14 tw-font-semibold tw-whitespace-nowrap"
+                                      >QTY{{ qty_hint }}:</label
+                                    >
                                     <input
                                       type="number"
                                       :min="{{ qty_rule }}.min"
@@ -910,8 +919,8 @@
                                   <button
                                     type="button"
                                     data-variant-id="{{ single_variant.id }}"
-                              data-case-variant-id="{{ case_variant.id }}"
-                              data-cases-available="{{ cases_available }}"
+                                    data-case-variant-id="{{ case_variant.id }}"
+                                    data-cases-available="{{ cases_available }}"
                                     data-tags="{{ product.tags | json }}"
                                     data-isbn="{{ isbn }}"
                                     class="tw-bg-brand-secondary tw-cursor-pointer tw-pointer-events-auto tw-text-10 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-6 tw-py-1.5 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-sans hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center max-md:tw-grow"
@@ -948,33 +957,33 @@
                   ></div>
                 {% endif %}
               {% endif %}
-          </div>
-          {% if section.settings.enable_infinite_scroll %}
-            <div
-              id="infinite-scroll-spinner-{{ section.id }}"
-              class="tw-w-full tw-flex tw-justify-center tw-animate-spin tw-items-center tw-py-10 md:tw-col-span-2 xl:tw-col-span-3"
-            >
-              <div
-                style="
-                  width: 48px;
-                  height: 48px;
-                  border: 4px solid #e5e7eb;
-                  border-top-color: #1e3a5f;
-                  border-radius: 50%;
-                  animation: ud-spin 0.75s linear infinite;
-                "
-              ></div>
             </div>
-            <style>
-              @keyframes ud-spin {
-                to {
-                  transform: rotate(360deg);
+            {% if section.settings.enable_infinite_scroll %}
+              <div
+                id="infinite-scroll-spinner-{{ section.id }}"
+                class="tw-w-full tw-flex tw-justify-center tw-animate-spin tw-items-center tw-py-10 md:tw-col-span-2 xl:tw-col-span-3"
+              >
+                <div
+                  style="
+                    width: 48px;
+                    height: 48px;
+                    border: 4px solid #e5e7eb;
+                    border-top-color: #1e3a5f;
+                    border-radius: 50%;
+                    animation: ud-spin 0.75s linear infinite;
+                  "
+                ></div>
+              </div>
+              <style>
+                @keyframes ud-spin {
+                  to {
+                    transform: rotate(360deg);
+                  }
                 }
-              }
-            </style>
-          {% else %}
-            {% render 'collection-pagination', paginate: paginate, items_per_page: items_per_page %}
-          {% endif %}
+              </style>
+            {% else %}
+              {% render 'collection-pagination', paginate: paginate, items_per_page: items_per_page %}
+            {% endif %}
           {%- endpaginate %}
         </div>
       </div>

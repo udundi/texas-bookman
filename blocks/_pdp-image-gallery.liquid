@@ -25,7 +25,11 @@
           }}
         </button>
       {% else %}
-        {{ 'product-1' | placeholder_svg_tag: 'tw-w-full max-md:tw-max-w-xs md:tw-max-w-md tw-h-auto tw-object-contain' }}
+        {{
+          settings.placeholder_image
+          | image_url: width: 1000
+          | image_tag: 'tw-w-full max-md:tw-max-w-xs md:tw-max-w-md tw-h-auto tw-object-contain'
+        }}
       {% endif %}
     </div>
   {% else %}
@@ -98,7 +102,10 @@
             {% for image in product.images %}
               {% if image.position == compare_media.position %}
                 {% if image.attached_to_variant? != true %}
-                  <div class="swiper-slide tw-rounded-[4px] tw-w-full" data-slide-index="{{ forloop.parentloop.index }}">
+                  <div
+                    class="swiper-slide tw-rounded-[4px] tw-w-full"
+                    data-slide-index="{{ forloop.parentloop.index }}"
+                  >
                     <button
                       type="button"
                       class="pdp-zoom-trigger tw-block tw-w-full tw-bg-transparent tw-border-0 tw-p-0"

@@ -132,7 +132,11 @@
     decoding="async"
   >
 {% else %}
-  {{ 'product-1' | placeholder_svg_tag: 'tw-w-full tw-max-w-96 tw-aspect-square tw-h-full tw-object-contain' }}
+  {{
+    settings.placeholder_image
+    | image_url: width: 400
+    | image_tag: 'tw-w-full tw-max-w-96 tw-aspect-square tw-h-full tw-object-contain'
+  }}
 {% endif %}
 
 {% schema %}
