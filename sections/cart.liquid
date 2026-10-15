@@ -51,12 +51,15 @@
             class="tw-h-24 md:tw-h-32 tw-w-20 md:tw-w-24 tw-flex-shrink-0 tw-object-cover tw-aspect-3/4 tw-relative tw-py-2"
           >
             <img
-              v-if="item.featured_image"
+              v-if="item.featured_image && item.featured_image.url"
               :src="item.featured_image.url"
               :alt="displayTitle(item)"
               loading="lazy"
               class="tw-size-full tw-aspect-3/4 tw-object-cover"
             >
+            <div v-else class="tw-size-full">
+              {% render 'placeholder-image', width: 200, class: 'tw-size-full tw-object-contain' %}
+            </div>
           </a>
           <div class="tw-flex tw-min-w-0 tw-w-full tw-flex-col tw-gap-1">
             <!-- Out of Stock Badge -->

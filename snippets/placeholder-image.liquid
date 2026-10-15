@@ -1,0 +1,14 @@
+{% comment %}
+  Renders the theme's Placeholder Image setting, or Shopify's product SVG when it's empty.
+  The setting comes back blank when nothing is picked or the file isn't an image (e.g. an SVG from Files).
+
+  Accepts:
+  - class: {String} CSS classes for the image
+  - width: {Number} Image width (default: 400)
+{% endcomment %}
+{%- if settings.placeholder_image != blank -%}
+  {%- assign image_width = width | default: 400 -%}
+  {{ settings.placeholder_image | image_url: width: image_width | image_tag: class: class, alt: '' }}
+{%- else -%}
+  {{ 'product-1' | placeholder_svg_tag: class }}
+{%- endif -%}

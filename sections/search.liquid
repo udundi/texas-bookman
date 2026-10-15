@@ -208,11 +208,7 @@
                         }}
                       {% else %}
                         <div class="tw-size-full">
-                          {{
-                            settings.placeholder_image
-                            | image_url: width: 400
-                            | image_tag: 'tw-w-full tw-max-w-[450px] tw-mx-auto tw-object-cover'
-                          }}
+                          {% render 'placeholder-image', width: 400, class: 'tw-w-full tw-max-w-[450px] tw-mx-auto tw-object-cover' %}
                         </div>
                       {% endif %}
                       {% if product.tags contains 'New Product' %}
@@ -360,7 +356,7 @@
                   assign isbn = product.metafields.facts.isbn | default: product.metafields.custom.isbn
                   # Cap the quick-add input at stock only when Shopify refuses to oversell
                   assign qty_variant = product.selected_or_first_available_variant
-                  assign qty_settings.placeholder_image | image_url: width: 400 | image_tag:
+                  assign qty_max = null
                   if qty_variant.inventory_management == 'shopify' and qty_variant.inventory_policy == 'deny'
                     assign qty_max = qty_variant.inventory_quantity | at_least: 1
                   endif
@@ -390,11 +386,7 @@
                         }}
                       {% else %}
                         <div class="tw-size-full">
-                          {{
-                            settings.placeholder_image
-                            | image_url: width: 400
-                            | image_tag: 'tw-w-full tw-h-full tw-object-cover'
-                          }}
+                          {% render 'placeholder-image', width: 400, class: 'tw-w-full tw-h-full tw-object-cover' %}
                         </div>
                       {% endif %}
                       {% if product.tags contains 'New Product' %}

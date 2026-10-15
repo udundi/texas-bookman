@@ -20,7 +20,7 @@
         }}
       {% else %}
         <div class="tw-size-full">
-          {{ settings.placeholder_image | image_url: width: 400 | image_tag: 'tw-w-full tw-h-full tw-object-cover' }}
+          {% render 'placeholder-image', width: 400, class: 'tw-w-full tw-h-full tw-object-cover' %}
         </div>
       {% endif %}
       {% if product.tags contains 'New Product' %}
