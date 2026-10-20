@@ -1,0 +1,13 @@
+{% comment %}
+  Outputs the URL of the no-image placeholder, for images built in JavaScript.
+  Same source as snippets/placeholder-image: the Placeholder Image setting, else assets/no-image.svg.
+
+  Accepts:
+  - width: {Number} Image width (default: 400)
+{% endcomment %}
+{%- if settings.placeholder_image != blank -%}
+  {%- assign image_width = width | default: 400 -%}
+  {{- settings.placeholder_image | image_url: width: image_width -}}
+{%- else -%}
+  {{- 'no-image.svg' | asset_url -}}
+{%- endif -%}
