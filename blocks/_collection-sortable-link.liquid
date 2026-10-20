@@ -57,11 +57,7 @@
             class: 'tw-w-full tw-aspect-square tw-h-full tw-object-cover hover:tw-scale-105 tw-transition-transform tw-duration-500 tw-delay-50'
         }}
       {% else %}
-        {{
-          settings.placeholder_image
-          | image_url: width: 400
-          | image_tag: 'tw-w-full tw-aspect-square tw-h-full tw-object-contain tw-bg-offblack tw-fill-white'
-        }}
+        {% render 'placeholder-image', width: 400, class: 'tw-w-full tw-aspect-square tw-h-full tw-object-contain tw-bg-offblack tw-fill-white' %}
       {% endif %}
     </div>
     <!-- Title -->

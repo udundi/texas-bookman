@@ -25,11 +25,7 @@
           }}
         </button>
       {% else %}
-        {{
-          settings.placeholder_image
-          | image_url: width: 1000
-          | image_tag: 'tw-w-full max-md:tw-max-w-xs md:tw-max-w-md tw-h-auto tw-object-contain'
-        }}
+        {% render 'placeholder-image', width: 1000, class: 'tw-w-full max-md:tw-max-w-xs md:tw-max-w-md tw-h-auto tw-object-contain' %}
       {% endif %}
     </div>
   {% else %}

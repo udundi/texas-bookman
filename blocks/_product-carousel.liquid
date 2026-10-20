@@ -43,11 +43,7 @@
                     {% else %}
                       <!-- Placeholder Image -->
                       <div class="tw-border tw-size-full tw-bg-offblack">
-                        {{
-                          settings.placeholder_image
-                          | image_url: width: 400
-                          | image_tag: 'tw-w-full tw-max-w-[450px] tw-mx-auto tw-object-cover tw-fill-white'
-                        }}
+                        {% render 'placeholder-image', width: 400, class: 'tw-w-full tw-max-w-[450px] tw-mx-auto tw-object-cover tw-fill-white' %}
                       </div>
                     {% endif %}
                     {% if product.tags contains 'New Product' %}
@@ -124,11 +120,7 @@
                     {% else %}
                       <!-- Placeholder Image -->
                       <div class="tw-border tw-size-full tw-bg-offblack">
-                        {{
-                          settings.placeholder_image
-                          | image_url: width: 400
-                          | image_tag: 'tw-w-full tw-max-w-[450px] tw-mx-auto tw-object-cover tw-fill-white'
-                        }}
+                        {% render 'placeholder-image', width: 400, class: 'tw-w-full tw-max-w-[450px] tw-mx-auto tw-object-cover tw-fill-white' %}
                       </div>
                     {% endif %}
                     {% if product.tags contains 'New Product' %}

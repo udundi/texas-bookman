@@ -160,11 +160,7 @@
     }}
   {% else %}
     <div class="tw-flex tw-h-full tw-w-full tw-items-center tw-justify-center tw-bg-offblack tw-text-white">
-      {{
-        settings.placeholder_image
-        | image_url: width: 400
-        | image_tag: 'tw-w-full tw-max-w-96 tw-aspect-square tw-h-full tw-object-contain tw-fill-white'
-      }}
+      {% render 'placeholder-image', width: 400, class: 'tw-w-full tw-max-w-96 tw-aspect-square tw-h-full tw-object-contain tw-fill-white' %}
     </div>
   {% endif %}
 </div>
