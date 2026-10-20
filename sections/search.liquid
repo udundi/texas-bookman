@@ -208,7 +208,7 @@
                         }}
                       {% else %}
                         <div class="tw-size-full">
-                          {% render 'placeholder-image', width: 400, class: 'tw-w-full tw-max-w-[450px] tw-mx-auto tw-object-cover' %}
+                          {% render 'placeholder-image', width: 400, class: 'tw-size-full tw-object-contain' %}
                         </div>
                       {% endif %}
                       {% if product.tags contains 'New Product' %}
@@ -312,8 +312,7 @@
                           @click="addToCart({{ product.selected_or_first_available_variant.id }}, {{ isbn | append: '' | json | escape }}, {{ min_qty }}, {{ qty_step }}, {{ qty_max | default: 'Infinity' }})"
                           :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                         >
-                          [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : 'Add to
-                          Cart' ]]
+                          [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : 'Add to Cart' ]]
                         </button>
                       </div>
                     {% endif %}
@@ -386,7 +385,7 @@
                         }}
                       {% else %}
                         <div class="tw-size-full">
-                          {% render 'placeholder-image', width: 400, class: 'tw-w-full tw-h-full tw-object-cover' %}
+                          {% render 'placeholder-image', width: 400, class: 'tw-size-full tw-object-contain' %}
                         </div>
                       {% endif %}
                       {% if product.tags contains 'New Product' %}
@@ -498,8 +497,7 @@
                                 @click="addToCart({{ product.selected_or_first_available_variant.id }}, {{ isbn | append: '' | json | escape }}, {{ min_qty }}, {{ qty_step }}, {{ qty_max | default: 'Infinity' }})"
                                 :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                               >
-                                [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : 'Add
-                                to Cart' ]]
+                                [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : 'Add to Cart' ]]
                               </button>
                             </div>
                           {% endif %}
