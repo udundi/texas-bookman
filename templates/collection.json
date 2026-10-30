@@ -12,7 +12,7 @@
     "main": {
       "type": "ud-sortable-collection",
       "blocks": {
-        "collection_filter_box_v2_YMiUtx": {
+        "collection_filter_box_v2_MfzWCc": {
           "type": "_collection-filter-box-v2",
           "name": "Collection Filter Box",
           "settings": {
@@ -22,18 +22,35 @@
             "nested": false
           },
           "blocks": {
-            "collection_storefront_filter_NBWy4N": {
+            "collection_storefront_filter_itUmii": {
               "type": "_collection-storefront-filter",
               "name": "Storefront Filter",
               "settings": {
                 "param_name": "filter.p.m.custom.genre",
-                "visible_count": 8
+                "visible_count": 30
               },
               "blocks": {}
-            },
+            }
+          },
+          "block_order": [
+            "collection_storefront_filter_itUmii"
+          ]
+        },
+        "collection_filter_box_v2_YMiUtx": {
+          "type": "_collection-filter-box-v2",
+          "name": "Collection Filter Box",
+          "disabled": true,
+          "settings": {
+            "collapsible": true,
+            "collapsed": true,
+            "title": "Book Genre",
+            "nested": false
+          },
+          "blocks": {
             "collection_filter_NtEYBm": {
               "type": "_collection-filter",
               "name": "Collection Filter",
+              "disabled": true,
               "settings": {
                 "tag": "Art/Design",
                 "title": "Art/Design",
@@ -406,7 +423,6 @@
             }
           },
           "block_order": [
-            "collection_storefront_filter_NBWy4N",
             "collection_filter_NtEYBm",
             "collection_gate_3VxQtN",
             "collection_gate_3n3UgU",
@@ -866,6 +882,7 @@
         }
       },
       "block_order": [
+        "collection_filter_box_v2_MfzWCc",
         "collection_filter_box_v2_YMiUtx",
         "collection_filter_box_v2_UitiGe",
         "collection_filter_box_v2_Wt68LX",
