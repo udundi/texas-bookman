@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -22,8 +31,7 @@
                 "filter_type": "filter.p.m.custom.publisher=",
                 "children_collapsed": false
               },
-              "blocks": {},
-              "disabled": false
+              "blocks": {}
             },
             "collection_filter_kq7hjx": {
               "type": "_collection-filter",
@@ -34,13 +42,11 @@
                 "filter_type": "filter.p.m.custom.publisher=",
                 "children_collapsed": false
               },
-              "blocks": {},
-              "disabled": false
+              "blocks": {}
             },
             "collection_filter_zrwRdN": {
               "type": "_collection-filter",
               "name": "Collection Filter",
-              "disabled": false,
               "settings": {
                 "tag": "Piccadilly Inc.|Piccadilly Inc|Piccadilly",
                 "title": "Piccadilly Inc.",
@@ -71,7 +77,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "coloring-books",
-                "title": "{{ closest.collection.title }}"
+                "title": "{{ closest.collection.title }}",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -80,7 +88,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "games-puzzles",
-                "title": "{{ closest.collection.title }}"
+                "title": "{{ closest.collection.title }}",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -89,7 +99,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "gifts-kits",
-                "title": "{{ closest.collection.title }}"
+                "title": "{{ closest.collection.title }}",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -98,7 +110,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "greeting-cards",
-                "title": "{{ closest.collection.title }}"
+                "title": "{{ closest.collection.title }}",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -107,7 +121,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "journals",
-                "title": "{{ closest.collection.title }}"
+                "title": "{{ closest.collection.title }}",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -116,7 +132,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "notecards",
-                "title": "{{ closest.collection.title }}"
+                "title": "{{ closest.collection.title }}",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -125,7 +143,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "vinyl-records",
-                "title": "Vinyl Records"
+                "title": "Vinyl Records",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -134,7 +154,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "sketchbooks",
-                "title": "{{ closest.collection.title }}"
+                "title": "{{ closest.collection.title }}",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -144,6 +166,7 @@
               "settings": {
                 "collection_gate": "bby-decorative-books",
                 "title": "Decorative Books",
+                "filter_param": "",
                 "filter_value": "BBY - Decorative Books"
               },
               "blocks": {}
@@ -176,7 +199,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "teen-young-adult",
-                "title": "{{ closest.collection.title }}"
+                "title": "{{ closest.collection.title }}",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -185,7 +210,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "board-books",
-                "title": "{{ closest.collection.title }}"
+                "title": "{{ closest.collection.title }}",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -194,7 +221,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "picture-story-books",
-                "title": "{{ closest.collection.title }}"
+                "title": "{{ closest.collection.title }}",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -203,7 +232,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "educational-nonfiction",
-                "title": "{{ closest.collection.title }}"
+                "title": "{{ closest.collection.title }}",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             }
@@ -225,21 +256,46 @@
             "nested": false
           },
           "blocks": {
+            "collection_filter_NtEYBm": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Art/Design",
+                "title": "Art/Design",
+                "filter_type": "filter.p.genre=Art",
+                "children_collapsed": true
+              },
+              "blocks": {}
+            },
             "collection_gate_3VxQtN": {
               "type": "_collection-gate",
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "art",
                 "title": "Art",
+                "filter_param": "",
                 "filter_value": "Art|Art & Design"
               },
               "blocks": {
+                "collection_gate_xt4ekt": {
+                  "type": "_collection-gate",
+                  "name": "Collection Gate",
+                  "settings": {
+                    "collection_gate": "",
+                    "title": "Architecture/Interior Design",
+                    "filter_param": "",
+                    "filter_value": "architecture"
+                  },
+                  "blocks": {}
+                },
                 "collection_gate_xD8ym6": {
                   "type": "_collection-gate",
                   "name": "Collection Gate",
                   "settings": {
                     "collection_gate": "artists",
-                    "title": ""
+                    "title": "",
+                    "filter_param": "",
+                    "filter_value": ""
                   },
                   "blocks": {}
                 },
@@ -248,7 +304,9 @@
                   "name": "Collection Gate",
                   "settings": {
                     "collection_gate": "art-instruction",
-                    "title": ""
+                    "title": "",
+                    "filter_param": "",
+                    "filter_value": ""
                   },
                   "blocks": {}
                 },
@@ -257,7 +315,9 @@
                   "name": "Collection Gate",
                   "settings": {
                     "collection_gate": "design-decorative-arts",
-                    "title": ""
+                    "title": "",
+                    "filter_param": "",
+                    "filter_value": ""
                   },
                   "blocks": {}
                 },
@@ -266,12 +326,15 @@
                   "name": "Collection Gate",
                   "settings": {
                     "collection_gate": "fashion",
-                    "title": ""
+                    "title": "",
+                    "filter_param": "",
+                    "filter_value": ""
                   },
                   "blocks": {}
                 }
               },
               "block_order": [
+                "collection_gate_xt4ekt",
                 "collection_gate_xD8ym6",
                 "collection_gate_tdA1ps",
                 "collection_gate_tW1CFo",
@@ -284,7 +347,9 @@
               "disabled": true,
               "settings": {
                 "collection_gate": "audio-books",
-                "title": "Audio Books"
+                "title": "Audio Books",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -293,7 +358,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "architecture",
-                "title": "{{ closest.collection.title }}"
+                "title": "{{ closest.collection.title }}",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -302,7 +369,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "cooking-beverages",
-                "title": "{{ closest.collection.title }}"
+                "title": "{{ closest.collection.title }}",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -311,7 +380,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "crafts",
-                "title": "{{ closest.collection.title }}"
+                "title": "{{ closest.collection.title }}",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -320,7 +391,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "gardening-homesteading",
-                "title": "Gardening & Homesteading"
+                "title": "Gardening & Homesteading",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -329,7 +402,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "health-medicine-parenting",
-                "title": "Health, Medicine, & Parenting"
+                "title": "Health, Medicine, & Parenting",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -338,7 +413,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "history",
-                "title": "History"
+                "title": "History",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {
                 "collection_gate_YIdaQA": {
@@ -346,7 +423,9 @@
                   "name": "Collection Gate",
                   "settings": {
                     "collection_gate": "archaeology-ancient-history",
-                    "title": ""
+                    "title": "",
+                    "filter_param": "",
+                    "filter_value": ""
                   },
                   "blocks": {}
                 },
@@ -355,7 +434,9 @@
                   "name": "Collection Gate",
                   "settings": {
                     "collection_gate": "military-history",
-                    "title": ""
+                    "title": "",
+                    "filter_param": "",
+                    "filter_value": ""
                   },
                   "blocks": {}
                 },
@@ -364,7 +445,9 @@
                   "name": "Collection Gate",
                   "settings": {
                     "collection_gate": "united-states-history",
-                    "title": ""
+                    "title": "",
+                    "filter_param": "",
+                    "filter_value": ""
                   },
                   "blocks": {}
                 },
@@ -373,7 +456,9 @@
                   "name": "Collection Gate",
                   "settings": {
                     "collection_gate": "world-history",
-                    "title": ""
+                    "title": "",
+                    "filter_param": "",
+                    "filter_value": ""
                   },
                   "blocks": {}
                 }
@@ -390,7 +475,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "metaphysics",
-                "title": "Metaphysics"
+                "title": "Metaphysics",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -399,7 +486,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "mythology-folktales",
-                "title": "Mythology & Folktales"
+                "title": "Mythology & Folktales",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -408,7 +497,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "performing-arts",
-                "title": "Performing Arts"
+                "title": "Performing Arts",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -417,7 +508,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "philosophy-religion",
-                "title": "Philosophy & Religion"
+                "title": "Philosophy & Religion",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -426,7 +519,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "photography",
-                "title": "Photography"
+                "title": "Photography",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -435,7 +530,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "pop-culture",
-                "title": "Pop Culture"
+                "title": "Pop Culture",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -444,7 +541,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "reference",
-                "title": "Reference"
+                "title": "Reference",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -453,7 +552,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "science-nature",
-                "title": "Science & Nature"
+                "title": "Science & Nature",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -462,7 +563,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "social-sciences",
-                "title": "Social Sciences"
+                "title": "Social Sciences",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -471,7 +574,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "sports-travel-transportation",
-                "title": "Sports, Travel, & Transportation"
+                "title": "Sports, Travel, & Transportation",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -480,7 +585,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "university-press-titles",
-                "title": "University Press Titles"
+                "title": "University Press Titles",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -489,7 +596,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "used-books",
-                "title": "{{ closest.collection.title }}"
+                "title": "{{ closest.collection.title }}",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
@@ -499,12 +608,14 @@
               "settings": {
                 "collection_gate": "markdowns",
                 "title": "Books on Sale",
+                "filter_param": "",
                 "filter_value": "MARKDOWNS"
               },
               "blocks": {}
             }
           },
           "block_order": [
+            "collection_filter_NtEYBm",
             "collection_gate_3VxQtN",
             "collection_gate_3n3UgU",
             "collection_gate_gRQcUK",
@@ -544,7 +655,9 @@
               "name": "Collection Gate",
               "settings": {
                 "collection_gate": "",
-                "title": "Fiction & Literature"
+                "title": "Fiction & Literature",
+                "filter_param": "",
+                "filter_value": ""
               },
               "blocks": {}
             },
