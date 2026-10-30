@@ -18,7 +18,7 @@
           "settings": {
             "collapsible": true,
             "collapsed": true,
-            "title": "Books",
+            "title": "Book Genre",
             "nested": false
           },
           "blocks": {
