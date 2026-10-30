@@ -1,5 +1,5 @@
 {% capture search_bar %}  
-  <form action="{{ routes.search_url }}" method="get" role="search" class="tw-relative tw-w-full">
+  <form action="{{ routes.search_url }}" method="get" role="search" class="ud-search-container tw-relative tw-w-full">
     <!-- Search Input Icon -->
     <div class="tw-absolute tw-left-4 tw-top-2.5 tw-pointer-events-none tw-z-[1]">
       {% render 'icon-search' %}
@@ -9,7 +9,7 @@
       type="search"
       name="q"
       v-model="search"
-      class="searchInput tw-h-full tw-w-full tw-border tw-border-brand-grey tw-pl-10 tw-p-2 tw-font-montserrat tw-text-16"
+      class="searchInput tw-h-full tw-w-full tw-border tw-border-brand-grey focus:tw-border-brand-primary focus:tw-outline-none tw-pl-10 tw-p-2 tw-font-montserrat tw-text-16"
       @input="startSearch()"
       placeholder="Search for anything..."
       autocomplete="off"
@@ -32,8 +32,7 @@
   <!-- Search Results -->
   <div
     v-cloak
-    class="tw-absolute tw-left-1/2 tw-top-full tw-z-[95] tw-h-20 tw-mx-auto tw-w-full tw-max-w-screen-2xl -tw-translate-x-1/2 tw-bg-white tw-p-0 tw-shadow-md"
-    {% comment %} {% render 'ud-search-v2' %} {% endcomment %}
+    class="ud-search-container tw-absolute tw-left-1/2 tw-top-full tw-z-[95] tw-h-20 tw-mx-auto tw-w-full tw-max-w-screen-2xl -tw-translate-x-1/2 tw-bg-white tw-p-0 tw-shadow-md"
     v-if="showSearch"
     @click.stop
   >
@@ -168,30 +167,6 @@
     <div class="tw-w-full tw-max-w-2xl tw-relative md:tw-block tw-hidden">{{ search_bar }}</div>
 
     <div>
-      {% comment %}
-        <nav
-          v-cloak
-          @mouseleave="handleMouseLeave"
-          role="navigation"
-          aria-label="Main Menu"
-          class="tw-h-full md:tw-h-12"
-          :class="showMobile ? 'tw-block' : 'md:tw-flex tw-hidden'"
-        >
-          <!-- Nav Container -->
-          <div
-            class="tw-absolute tw-right-0 tw-top-[60px] tw-max-h-[600px] tw-min-w-[200px] tw-bg-white tw-p-0 max-md:tw-overflow-y-auto md:tw-static md:tw-z-auto md:tw-h-full"
-            :class="showMobile ? 'tw-z-[900]' : ''"
-          >
-            <!-- Nav Container -->
-            <div class="tw-flex tw-h-full tw-flex-col tw-text-12 max-md:tw-p-4 md:tw-flex-row md:tw-gap-2">
-              {% for block in block.blocks %}
-                {% render block %}
-              {% endfor %}
-            </div>
-          </div>
-        </nav>
-      {% endcomment %}
-
       <div class="mobileDivider mobileShow"></div>
 
       <div class="tw-my-auto tw-flex tw-h-fit tw-items-end md:tw-gap-4 tw-gap-2 tw-pl-2 lg:tw-gap-6" role="search">
@@ -239,14 +214,6 @@
           </div>
         </a>
       </div>
-      {% comment %}
-        <div
-          v-cloak
-          v-if="showSearch"
-          class="tw-fixed tw-inset-0 tw-z-[14] tw-h-screen tw-bg-black tw-bg-opacity-50"
-          @click="showSearch = false"
-        ></div>
-      {% endcomment %}
     </div>
   </div>
   <!-- Desktop Search Bar -->
@@ -308,6 +275,7 @@
         document.documentElement.style.setProperty('--site-header-height', `${this.sectionHeight}px`);
       }, 10);
       window.addEventListener('resize', this.resizeSpacer);
+      document.addEventListener('pointerdown', this.closeSearchOnOutsideClick);
       this.refreshCart();
 
       this.bus.$on('refreshCart', () => {
@@ -319,6 +287,7 @@
     },
     unmounted() {
       window.removeEventListener('resize', this.resizeSpacer);
+      document.removeEventListener('pointerdown', this.closeSearchOnOutsideClick);
     },
 
     watch: {
@@ -407,6 +376,13 @@
         this.startSearch();
       },
 
+      // pointerdown (not click) so the click that opens the search doesn't immediately close it
+      closeSearchOnOutsideClick(event) {
+        if (!this.showSearch) return;
+        if (event.target instanceof Element && event.target.closest('.ud-search-container')) return;
+        this.showSearch = false;
+      },
+
       openSearch() {
         this.showSearch = true;
         this.startSearch();
@@ -452,7 +428,7 @@
               this.$forceUpdate();
             });
 
-          fetch(`/search/suggest.json?q={${this.search}}&resources[type]=product`)
+          fetch(`/search/suggest.json?q={${this.search}}&resources[type]=product&resources[limit]=8`)
             .then((r) => r.json())
             .then(async (data) => {
               // Filter products to only include vendor "felt right"

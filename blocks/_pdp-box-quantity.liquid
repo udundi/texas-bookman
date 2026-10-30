@@ -17,7 +17,7 @@
     so the promo always matches what the cart charges.
   {% endcomment %}
   {% assign single_variant = product.selected_or_first_available_variant %}
-  {% assign case_variant = nil %}
+  {% assign case_variant = null %}
   {% for variant in product.variants %}
     {% if variant.option1 == 'Case' %}
       {% assign case_variant = variant %}
@@ -54,16 +54,15 @@
     </div>
     {% if case_size > 1 %}
       <div>
+        <span class="tw-font-semibold">Case QTY:</span> {{ case_size }}
+        {% if product.type contains 'Book' %}books{% else %}items{% endif %}
         {% unless stock_state == 'backorder' %}
-          <span class="tw-font-semibold">Cases Available:</span> {{ cases_available }} |
+          | <span class="tw-font-semibold">Cases Available:</span> {{ cases_available }}
         {% endunless %}
-        <span class="tw-font-semibold">Cases Include:</span> {{ case_size }} {% if product.type contains 'Book' %}books{% else %}items{% endif %}
       </div>
     {% endif %}
     {% if case_saving_pct > 0 and cases_available > 0 %}
-      <div class="tw-font-semibold">
-        Buy a Case of {{ case_size }} for {{ case_saving_pct }}% Off
-      </div>
+      <div class="tw-font-semibold">Buy a Case of {{ case_size }} for {{ case_saving_pct }}% Off</div>
     {% endif %}
   </div>
 </div>

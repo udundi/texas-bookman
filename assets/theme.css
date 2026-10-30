@@ -2146,6 +2146,10 @@ video {
   align-items: stretch;
 }
 
+.tw-justify-normal {
+  justify-content: normal;
+}
+
 .tw-justify-start {
   justify-content: flex-start;
 }
@@ -2444,6 +2448,11 @@ video {
 .tw-border-brand-primary {
   --tw-border-opacity: 1;
   border-color: rgb(32 68 143 / var(--tw-border-opacity, 1));
+}
+
+.tw-border-brand-sale {
+  --tw-border-opacity: 1;
+  border-color: rgb(189 32 38 / var(--tw-border-opacity, 1));
 }
 
 .tw-border-brand-sale\/20 {

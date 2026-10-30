@@ -20,15 +20,22 @@
               <h3 class="tw-font-playfair tw-text-18 tw-text-offblack tw-font-semibold tw-leading-tight">Products</h3>
               <div class="tw-grid tw-grid-cols-2 sm:tw-grid-cols-3 md:tw-grid-cols-4 tw-gap-4">
                 <template v-for="product in (searchObject.products || []).filter(p => p && p.title && p.tags && !p.title.includes('Design') && !p.tags.includes('NOSEARCH'))">
-                  <div class="tw-justify-between tw-flex tw-flex-col tw-gap-2">
+                  <div class="tw-justify-start tw-flex tw-flex-col tw-gap-2">
                     <!-- Product Card -->
                     <a :href="product.url">
-                      <div class="tw-w-full tw-aspect-video tw-border tw-rounded-[4px]">
+                      <div class="tw-w-full tw-aspect-3/4 tw-border tw-rounded-[4px]">
                         <img
                           v-if="product.image"
                           :src="product.image"
                           loading="lazy"
-                          class="tw-size-full tw-object-cover tw-rounded-[4px]"
+                          class="tw-size-full tw-object-contain tw-rounded-[4px]"
+                          v-if="product.image"
+                        >
+                        <img
+                          src="{{ settings.placeholder_image | image_url: width: 400 }}"
+                          loading="lazy"
+                          class="tw-size-full tw-object-contain tw-rounded-[4px]"
+                          v-else
                         >
                         <template v-else>
                           {% render 'placeholder-image', width: 400, class: 'tw-size-full tw-object-contain tw-rounded-[4px]' %}
@@ -36,8 +43,10 @@
                       </div>
                     </a>
                     <!-- Title -->
-                    <a class="tw-w-fit tw-max-w-96" :href="product.url">
-                      <h3 class="tw-font-semibold tw-text-14 tw-text-offblack tw-w-full">[[ product.title ]]</h3>
+                    <a class="tw-w-fit tw-max-w-96 tw-items-start tw-flex tw-justify-normal" :href="product.url">
+                      <h3 class="tw-font-semibold tw-text-14 tw-text-offblack tw-w-full tw-line-clamp-3 tw-pb-auto">
+                        [[ product.title ]]
+                      </h3>
                     </a>
                   </div>
                 </template>
