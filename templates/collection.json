@@ -26,7 +26,7 @@
               "type": "_collection-storefront-filter",
               "name": "Storefront Filter",
               "settings": {
-                "param_name": "filter.p.custom.genre",
+                "param_name": "filter.p.m.custom.genre",
                 "visible_count": 8
               },
               "blocks": {}
