@@ -208,11 +208,7 @@
                         }}
                       {% else %}
                         <div class="tw-size-full">
-                          {{
-                            settings.placeholder_image
-                            | image_url: width: 400
-                            | image_tag: class: 'tw-size-full tw-aspect-square tw-object-contain'
-                          }}
+                          {% render 'placeholder-image', width: 400, class: 'tw-size-full tw-object-contain' %}
                         </div>
                       {% endif %}
                       {% if product.tags contains 'New Product' %}
@@ -316,8 +312,7 @@
                           @click="addToCart({{ product.selected_or_first_available_variant.id }}, {{ isbn | append: '' | json | escape }}, {{ min_qty }}, {{ qty_step }}, {{ qty_max | default: 'Infinity' }})"
                           :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                         >
-                          [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : 'Add to
-                          Cart' ]]
+                          [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : 'Add to Cart' ]]
                         </button>
                       </div>
                     {% endif %}
@@ -390,11 +385,7 @@
                         }}
                       {% else %}
                         <div class="tw-size-full">
-                          {{
-                            settings.placeholder_image
-                            | image_url: width: 400
-                            | image_tag: class: 'tw-size-full tw-aspect-5/6 tw-object-cover'
-                          }}
+                          {% render 'placeholder-image', width: 400, class: 'tw-size-full tw-object-contain' %}
                         </div>
                       {% endif %}
                       {% if product.tags contains 'New Product' %}
@@ -506,8 +497,7 @@
                                 @click="addToCart({{ product.selected_or_first_available_variant.id }}, {{ isbn | append: '' | json | escape }}, {{ min_qty }}, {{ qty_step }}, {{ qty_max | default: 'Infinity' }})"
                                 :disabled="isAdding({{ product.selected_or_first_available_variant.id }})"
                               >
-                                [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : 'Add
-                                to Cart' ]]
+                                [[ isAdding({{ product.selected_or_first_available_variant.id }}) ? 'Adding...' : 'Add to Cart' ]]
                               </button>
                             </div>
                           {% endif %}

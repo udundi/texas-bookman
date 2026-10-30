@@ -50,6 +50,9 @@
               :alt="recentlyAddedItem.title"
               class="tw-size-full tw-aspect-5/6 tw-object-cover"
             >
+            <template v-else>
+              {% render 'placeholder-image', width: 200, class: 'tw-size-full tw-aspect-5/6 tw-object-contain' %}
+            </template>
           </div>
         </div>
 

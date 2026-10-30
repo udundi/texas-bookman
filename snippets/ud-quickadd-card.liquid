@@ -46,11 +46,7 @@
         {% endif %}
       {% else %}
         <div class=" tw-size-full">
-          {{
-            settings.placeholder_image
-            | image_url: width: 400
-            | image_tag: class: 'tw-size-full tw-object-cover tw-aspect-3/4'
-          }}
+          {% render 'placeholder-image', width: 400, class: 'tw-size-full tw-object-contain' %}
         </div>
       {% endif %}
       {% if cur_product.tags contains 'New Product' %}

@@ -25,10 +25,14 @@
                     <a :href="product.url">
                       <div class="tw-w-full tw-aspect-video tw-border tw-rounded-[4px]">
                         <img
+                          v-if="product.image"
                           :src="product.image"
                           loading="lazy"
                           class="tw-size-full tw-object-cover tw-rounded-[4px]"
                         >
+                        <template v-else>
+                          {% render 'placeholder-image', width: 400, class: 'tw-size-full tw-object-contain tw-rounded-[4px]' %}
+                        </template>
                       </div>
                     </a>
                     <!-- Title -->

@@ -133,6 +133,7 @@
       {%- endfor -%}
     ]
   </script>
+  {%- capture placeholder_image_url -%}{% render 'placeholder-image-url', width: 600 %}{%- endcapture -%}
   <script>
     (function () {
       var wrapper = document.getElementById('related-products-{{ block.id }}');
@@ -180,6 +181,8 @@
         if (minQty > 1) return ' (Min ' + minQty + (qtyStep > 1 ? ', x' + qtyStep : '') + ')';
         return qtyStep > 1 ? ' (x' + qtyStep + ')' : '';
       }
+
+      var placeholderImage = {{ placeholder_image_url | json }};
 
       function buildCard(product) {
         var variant = product.variants && product.variants[0];
@@ -240,9 +243,7 @@
           '<div class="tw-flex tw-flex-col tw-p-4 tw-h-full">' +
           '<a href="' + escapeHtml(product.url) + '">' +
           '<div class="tw-aspect-3/4 tw-w-full tw-relative tw-mb-2">' +
-          (image
-            ? '<img src="' + escapeHtml(image) + '" loading="lazy" alt="' + escapeHtml(product.title) + '" class="tw-w-full tw-object-contain tw-aspect-3/4">'
-            : '') +
+          '<img src="' + escapeHtml(image || placeholderImage) + '" loading="lazy" alt="' + escapeHtml(image ? product.title : '') + '" class="tw-w-full tw-object-contain tw-aspect-3/4">' +
           '</div>' +
           '</a>' +
           '<a href="' + escapeHtml(product.url) + '">' +

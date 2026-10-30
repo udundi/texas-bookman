@@ -5,10 +5,14 @@
       <div class="upsellTop">
         <div class="image">
           <img
+            v-if="upsell.featured_image"
             :src="upsell.featured_image"
             loading="lazy"
             :alt="upsell.title || ''"
           >
+          <template v-else>
+            {% render 'placeholder-image', width: 200 %}
+          </template>
         </div>
         <div class="data">
           <div class="upsellTitle">
