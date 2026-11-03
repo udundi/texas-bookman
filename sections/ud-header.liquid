@@ -49,6 +49,13 @@
   </div>
 {% endunless %}
 <div id="nav-bar-{{ section.id }}" class="tw-border-b tw-border-brand-grey tw-bg-white">
+  <!-- Desktop US / UK Catalog Tabs -->
+  <div class="catalog-tabs-strip max-md:tw-hidden">
+    <div class="tw-mx-auto tw-w-full tw-max-w-screen-2xl tw-px-4">
+      {%- assign catalog_form_id = 'CatalogToggle-' | append: section.id | append: '-desktop' -%}
+      {% render 'catalog-toggle', form_id: catalog_form_id, variant: 'desktop' %}
+    </div>
+  </div>
   <div class="tw-relative tw-z-90 tw-mx-auto tw-flex tw-w-full tw-max-w-screen-2xl tw-items-center tw-justify-between tw-px-4">
     <div class="md:tw-hidden tw-h-full tw-flex tw-gap-2">
       <!-- Mobile Menu Icon -->
@@ -94,12 +101,6 @@
       <div class="mobileDivider mobileShow"></div>
 
       <div class="tw-my-auto tw-flex tw-h-fit tw-items-end md:tw-gap-4 tw-gap-2 tw-pl-2 lg:tw-gap-6" role="search">
-        <!-- Desktop US / UK Catalog Toggle -->
-        <div class="tw-my-auto max-md:tw-hidden">
-          {%- assign catalog_form_id = 'CatalogToggle-' | append: section.id | append: '-desktop' -%}
-          {% render 'catalog-toggle', form_id: catalog_form_id %}
-        </div>
-
         <!-- Account Icon -->
         {% if customer.id == null -%}
           <a
@@ -144,7 +145,7 @@
   <!-- Mobile US / UK Catalog Toggle -->
   <div class="tw-block md:tw-hidden tw-px-2 tw-pb-2">
     {%- assign catalog_form_id = 'CatalogToggle-' | append: section.id | append: '-mobile' -%}
-    {% render 'catalog-toggle', form_id: catalog_form_id %}
+    {% render 'catalog-toggle', form_id: catalog_form_id, variant: 'mobile' %}
   </div>
   <!-- Mobile Search Bar -->
   <div class="tw-w-full tw-max-w-2xl tw-relative tw-block md:tw-hidden tw-px-2 tw-pb-2">{{ search_bar }}</div>
