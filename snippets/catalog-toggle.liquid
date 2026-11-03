@@ -1,14 +1,16 @@
 {%- comment -%}
   US / UK catalog toggle (Figma "Catalog Toggles", "Navigation — Catalog toggle").
-  Each button submits the localization form with its country, so Shopify
-  switches the shopper's market and shows that market's catalog and currency.
+  Each option links to the current page with ?country=XX. Shopify switches
+  the shopper's market from that parameter and remembers it in the
+  localization cookie. Links rather than a localization form POST, because
+  the CLI dev server rejects form posts with 401.
 
   Accepts:
   - form_id {String} unique id for the form
   - class {String} optional extra classes on the wrapper
 {%- endcomment -%}
 {%- if localization.available_countries.size > 1 -%}
-  {%- form 'localization', id: form_id, class: 'catalog-toggle-form' -%}
+  <div class="catalog-toggle-form" id="{{ form_id }}">
     <div class="catalog-toggle {{ class }}" role="group" aria-label="Catalog">
       {%- for country in localization.available_countries -%}
         {%- liquid
@@ -23,21 +25,18 @@
             assign current = true
           endif
         -%}
-        <button
-          type="submit"
-          name="country_code"
-          value="{{ country.iso_code }}"
+        <a
+          href="{{ request.path }}?country={{ country.iso_code }}"
           class="catalog-toggle__option{% if current %} is-active{% endif %}"
-          aria-pressed="{{ current }}"
           {% if current %}
             aria-current="true"
           {% endif %}
         >
           {{- label -}}
-        </button>
+        </a>
       {%- endfor -%}
     </div>
-  {%- endform -%}
+  </div>
 {%- endif -%}
 
 {% stylesheet %}
@@ -52,6 +51,9 @@
   }
   .catalog-toggle__option {
     flex: 1 1 0;
+    display: block;
+    text-align: center;
+    text-decoration: none;
     padding: 0.5rem 1rem;
     border: 0;
     background: transparent;
