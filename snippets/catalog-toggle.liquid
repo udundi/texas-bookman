@@ -1,0 +1,79 @@
+{%- comment -%}
+  US / UK catalog toggle (Figma "Catalog Toggles", "Navigation — Catalog toggle").
+  Each button submits the localization form with its country, so Shopify
+  switches the shopper's market and shows that market's catalog and currency.
+
+  Accepts:
+  - form_id {String} unique id for the form
+  - class {String} optional extra classes on the wrapper
+{%- endcomment -%}
+{%- if localization.available_countries.size > 1 -%}
+  {%- form 'localization', id: form_id, class: 'catalog-toggle-form' -%}
+    <div class="catalog-toggle {{ class }}" role="group" aria-label="Catalog">
+      {%- for country in localization.available_countries -%}
+        {%- liquid
+          assign label = country.name
+          if country.iso_code == 'US'
+            assign label = 'United States'
+          elsif country.iso_code == 'GB'
+            assign label = 'United Kingdom'
+          endif
+          assign current = false
+          if country.iso_code == localization.country.iso_code
+            assign current = true
+          endif
+        -%}
+        <button
+          type="submit"
+          name="country_code"
+          value="{{ country.iso_code }}"
+          class="catalog-toggle__option{% if current %} is-active{% endif %}"
+          aria-pressed="{{ current }}"
+          {% if current %}
+            aria-current="true"
+          {% endif %}
+        >
+          {{- label -}}
+        </button>
+      {%- endfor -%}
+    </div>
+  {%- endform -%}
+{%- endif -%}
+
+{% stylesheet %}
+  .catalog-toggle-form {
+    margin: 0;
+  }
+  .catalog-toggle {
+    display: flex;
+    width: 100%;
+    padding: 2px;
+    background: #f1f1f1;
+  }
+  .catalog-toggle__option {
+    flex: 1 1 0;
+    padding: 0.5rem 1rem;
+    border: 0;
+    background: transparent;
+    color: #6b6b6b;
+    font-family: 'proxima-nova', sans-serif;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s;
+  }
+  .catalog-toggle__option:hover {
+    color: #212121;
+  }
+  .catalog-toggle__option.is-active {
+    background: #20448f;
+    color: #ffffff;
+    font-weight: 600;
+    cursor: default;
+  }
+  .catalog-toggle__option:focus-visible {
+    outline: 2px solid #20448f;
+    outline-offset: 2px;
+  }
+{% endstylesheet %}
