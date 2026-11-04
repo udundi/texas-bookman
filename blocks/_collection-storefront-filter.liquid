@@ -104,9 +104,80 @@
           assign any_active = true
         endif
         assign more_id = block.id | append: '-more'
+        assign group_lines = block.settings.value_groups | newline_to_br | split: '<br />'
+        assign grouped_labels = '@@'
+        assign groups_collapsed = block.settings.groups_collapsed | default: false
       -%}
       <div class="tw-flex tw-w-full tw-flex-col tw-gap-[1px]"{% if any_active %} data-filter-active{% endif %}>
+        {%- comment -%} Value groups: "Group: Value | Value" per line; matching values nest under the group. {%- endcomment -%}
+        {%- for group_line in group_lines -%}
+          {%- liquid
+            assign group_parts = group_line | split: ':'
+            assign group_label = group_parts[0] | strip
+            assign group_members = group_line | remove_first: group_parts[0] | remove_first: ':' | strip | downcase | replace: ' | ', '|' | replace: ' |', '|' | replace: '| ', '|' | split: '|'
+            if group_label == blank or group_members.size == 0
+              continue
+            endif
+            assign group_id = block.id | append: '-group-' | append: forloop.index
+            assign group_active = false
+          -%}
+          {%- capture group_children -%}
+            {%- for value in sd_filter.values -%}
+              {%- assign value_key = value.label | strip | downcase -%}
+              {%- unless group_members contains value_key -%}{%- continue -%}{%- endunless -%}
+              {%- assign grouped_labels = grouped_labels | append: value_key | append: '@@' -%}
+              {%- if value.active == false and value.count == 0 -%}{%- continue -%}{%- endif -%}
+              {%- if value.active -%}
+                {%- assign group_active = true -%}
+                {%- assign value_href = value.url_to_remove -%}
+              {%- else -%}
+                {%- assign value_href = value.url_to_add -%}
+              {%- endif -%}
+              <div class="tw-p-0.5">
+                {% render 'collection-filter-checkbox',
+                  href: value_href,
+                  checked: value.active,
+                  label: value.label,
+                  count: value.count
+                %}
+              </div>
+            {%- endfor -%}
+          {%- endcapture -%}
+          {%- unless group_children contains 'data-filter-entry' -%}{%- continue -%}{%- endunless -%}
+          {%- liquid
+            assign group_closed = groups_collapsed
+            if group_active
+              assign group_closed = false
+            endif
+          -%}
+          <div class="tw-p-0.5">
+            <button
+              type="button"
+              class="tw-flex tw-w-full tw-cursor-pointer tw-items-center tw-justify-between tw-border-0 tw-bg-transparent tw-p-0 tw-text-left"
+              @click="toggleFilter('{{ group_id }}', {{ group_closed }})"
+            >
+              <span
+                class="tw-text-14 tw-text-offblack"
+                :class="{ 'tw-font-semibold': isFilterOpen('{{ group_id }}', {{ group_closed }}) }"
+              >
+                {{- group_label -}}
+              </span>
+              <span class="tw-fill-offblack tw-size-3" v-cloak v-if="isFilterOpen('{{ group_id }}', {{ group_closed }})">
+                {% render 'icon-arrow-up' %}
+              </span>
+              <span v-else class="tw-fill-offblack tw-size-3">{% render 'icon-arrow-down' %}</span>
+            </button>
+            <div
+              class="tw-flex tw-flex-col tw-gap-[1px] tw-pl-4 tw-pt-1"
+              v-show="isFilterOpen('{{ group_id }}', {{ group_closed }})"
+            >
+              {{ group_children }}
+            </div>
+          </div>
+        {%- endfor -%}
         {%- for value in sd_filter.values -%}
+          {%- assign value_key = value.label | strip | downcase | prepend: '@@' | append: '@@' -%}
+          {%- if grouped_labels contains value_key -%}{%- continue -%}{%- endif -%}
           {%- if value.active == false and value.count == 0 -%}{%- continue -%}{%- endif -%}
           {%- liquid
             assign beyond = false
@@ -155,6 +226,19 @@
       "label": "Search & Discovery filter",
       "info": "The filter's URL parameter, e.g. filter.p.m.custom.publisher, filter.p.m.custom.author, filter.v.price or filter.v.availability. Configure the filters in the Search & Discovery app.",
       "default": "filter.p.m.custom.publisher"
+    },
+    {
+      "type": "textarea",
+      "id": "value_groups",
+      "label": "Value groups",
+      "info": "One group per line as Group name: Value | Value | Value. The listed values (matched by label) show nested under the group; other values show below as usual. The group hides itself when none of its values apply."
+    },
+    {
+      "type": "checkbox",
+      "id": "groups_collapsed",
+      "label": "Groups collapsed by default",
+      "info": "A group holding an applied value always opens.",
+      "default": true
     },
     {
       "type": "range",
