@@ -62,8 +62,8 @@
         "mobile_padding_right": 2,
         "background_color": "#ffffff",
         "container_width": "lg_desktop",
-        "product_source": "product_list",
-        "collection": "frontpage",
+        "product_source": "collection",
+        "collection": "activities-games",
         "mobile_grid_layout": true,
         "product_list": [
           "a-cycling-lexicon-bicycle-headbadges-from-a-bygone-era-2506067",
