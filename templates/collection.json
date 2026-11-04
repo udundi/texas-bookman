@@ -26,7 +26,9 @@
               "type": "_collection-storefront-filter",
               "name": "Storefront Filter",
               "settings": {
-                "param_name": "filter.p.m.custom.genre",
+                "param_name": "filter.p.m.custom.category",
+                "value_groups": "",
+                "groups_collapsed": false,
                 "visible_count": 30
               },
               "blocks": {}
@@ -34,6 +36,32 @@
           },
           "block_order": [
             "collection_storefront_filter_itUmii"
+          ]
+        },
+        "collection_filter_box_v2_GAM6Jd": {
+          "type": "_collection-filter-box-v2",
+          "name": "Collection Filter Box",
+          "settings": {
+            "collapsible": true,
+            "collapsed": true,
+            "title": "Book Genre",
+            "nested": false
+          },
+          "blocks": {
+            "collection_storefront_filter_fXmxYJ": {
+              "type": "_collection-storefront-filter",
+              "name": "Storefront Filter",
+              "settings": {
+                "param_name": "filter.p.m.custom.genre",
+                "value_groups": "Art |",
+                "groups_collapsed": true,
+                "visible_count": 30
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "collection_storefront_filter_fXmxYJ"
           ]
         },
         "collection_filter_box_v2_YMiUtx": {
@@ -823,6 +851,8 @@
               "name": "Storefront Filter",
               "settings": {
                 "param_name": "filter.v.price",
+                "value_groups": "",
+                "groups_collapsed": true,
                 "visible_count": 8
               },
               "blocks": {}
@@ -847,6 +877,8 @@
               "name": "Storefront Filter",
               "settings": {
                 "param_name": "filter.p.m.custom.publisher",
+                "value_groups": "",
+                "groups_collapsed": true,
                 "visible_count": 8
               },
               "blocks": {}
@@ -871,6 +903,8 @@
               "name": "Storefront Filter",
               "settings": {
                 "param_name": "filter.p.m.custom.author",
+                "value_groups": "",
+                "groups_collapsed": true,
                 "visible_count": 8
               },
               "blocks": {}
@@ -883,6 +917,7 @@
       },
       "block_order": [
         "collection_filter_box_v2_MfzWCc",
+        "collection_filter_box_v2_GAM6Jd",
         "collection_filter_box_v2_YMiUtx",
         "collection_filter_box_v2_UitiGe",
         "collection_filter_box_v2_Wt68LX",
@@ -1697,6 +1732,8 @@
               "name": "Storefront Filter",
               "settings": {
                 "param_name": "filter.v.price",
+                "value_groups": "",
+                "groups_collapsed": true,
                 "visible_count": 8
               },
               "blocks": {}
@@ -1721,6 +1758,8 @@
               "name": "Storefront Filter",
               "settings": {
                 "param_name": "filter.p.m.custom.publisher",
+                "value_groups": "",
+                "groups_collapsed": true,
                 "visible_count": 8
               },
               "blocks": {}
@@ -1745,6 +1784,8 @@
               "name": "Storefront Filter",
               "settings": {
                 "param_name": "filter.p.m.custom.author",
+                "value_groups": "",
+                "groups_collapsed": true,
                 "visible_count": 8
               },
               "blocks": {}
