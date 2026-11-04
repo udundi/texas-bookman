@@ -17,8 +17,8 @@
           "name": "Collection Filter Box",
           "settings": {
             "collapsible": true,
-            "collapsed": true,
-            "title": "Book Genre",
+            "collapsed": false,
+            "title": "Book Category",
             "nested": false
           },
           "blocks": {
