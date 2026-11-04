@@ -172,7 +172,7 @@
                   "type": "_pdp-info-tab",
                   "name": "Info Tab",
                   "settings": {
-                    "text": "<p>Lorem ipsum dolor sit amet. New Text</p>"
+                    "text": "<p>Lorem ipsum dolor sit amet. New Text<br/><br/>ISBN:&nbsp;{{ closest.product.metafields.custom.isbn.value }}</p>"
                   },
                   "blocks": {}
                 },
