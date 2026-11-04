@@ -168,6 +168,14 @@
                 "container_width": "full_width"
               },
               "blocks": {
+                "pdp_info_tab_JUmWMK": {
+                  "type": "_pdp-info-tab",
+                  "name": "Info Tab",
+                  "settings": {
+                    "text": "<p>Lorem ipsum dolor sit amet. New Text</p>"
+                  },
+                  "blocks": {}
+                },
                 "pdp_info_tab_6ENqUD": {
                   "type": "_pdp-info-tab",
                   "name": "Info Tab",
@@ -178,6 +186,7 @@
                 }
               },
               "block_order": [
+                "pdp_info_tab_JUmWMK",
                 "pdp_info_tab_6ENqUD"
               ]
             }
@@ -219,6 +228,8 @@
           "settings": {
             "button_url": "",
             "button_text": "",
+            "ignored_collections": "all-adult-books, all-childrens-books, all-games-media, all-gifts, all-mind-body-spirit, all-stationery, markdowns, uk-markdowns, used-books, new-arrivals, homepage, holiday-picks, for-your-holiday-display, stocking-stuffers, new-years-self-care, gifts-for-busy-hands, gifts-for-game-and-puzzle-enthusiasts, gifts-for-kids, gifts-for-readers, collector-editions, foiled, other",
+            "use_recommendations": false,
             "show_price": true
           },
           "blocks": {}
