@@ -45,7 +45,7 @@
         else
           assign other_remove = other_remove | append: encoded | append: '|'
         endif
-      elsif value.count > 0
+      else
         if first_add == blank
           assign first_add = value.url_to_add
         else

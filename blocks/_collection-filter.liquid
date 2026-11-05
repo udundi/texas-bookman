@@ -4,10 +4,11 @@
       # applies for real, shows its count within the current results and can be combined
       # with other values (Shopify ORs values of one filter). "Collection Tag" holds the
       # value, or several spellings separated by | that are applied together.
-      assign filter_param = block.settings.filter_type | remove_last: '='
-      capture filter_state
-        render 'collection-filter-state', param: filter_param, values: block.settings.tag
-      endcapture
+        assign filter_param = block.settings.filter_param | default: block.settings.filter_type | remove_last: '='
+        assign filter_value = block.settings.filter_value | default: block.settings.tag
+        capture filter_state
+          render 'collection-filter-state', param: filter_param, values: filter_value
+        endcapture
       assign filter_state = filter_state | split: '@@'
       assign filter_active = false
       if filter_state[1] == 'true'
@@ -18,6 +19,9 @@
         assign filter_count = filter_state[2] | plus: 0
       endif
       assign filter_href = filter_state[3]
+      if filter_href == blank and request.design_mode and filter_value != blank
+        assign filter_href = collection.url | default: routes.all_products_collection_url
+      endif
     -%}
     {%- capture child_blocks -%}{%- content_for 'blocks' -%}{%- endcapture -%}
     {%- liquid
@@ -41,6 +45,12 @@
       if filter_active or filter_href != blank or child_blocks != blank
         assign hide_filter = false
       endif
+      if request.design_mode
+        assign hide_filter = false
+        assign filter_label = block.settings.title | default: filter_value | default: 'Filter Link'
+      else
+        assign filter_label = block.settings.title | default: filter_value
+      endif
     -%}
 
     {%- unless hide_filter -%}
@@ -50,7 +60,7 @@
         {% render 'collection-filter-checkbox',
           href: filter_href,
           checked: filter_active,
-          label: block.settings.title,
+          label: filter_label,
           count: filter_count
         %}
         {%- unless child_blocks == blank -%}
@@ -166,6 +176,7 @@
       "type": "text",
       "id": "tag",
       "label": "Filter value",
+      "visible_if": "{{ block.settings.filter_value == blank }}",
       "info": "Search & Discovery filter value. Separate several values with | to apply them together (e.g. publisher spellings)."
     },
     {
@@ -177,8 +188,23 @@
       "type": "text",
       "id": "filter_type",
       "label": "Filter Type",
+      "visible_if": "{{ block.settings.filter_param == blank }}",
       "info": "Search & Discovery filter parameter followed by =, e.g. filter.p.m.custom.publisher= or filter.p.m.custom.category=. Entries for filters the store doesn't have are hidden.",
       "default": "filter.p.tag="
+    },
+    {
+      "type": "text",
+      "id": "filter_param",
+      "label": "Filter parameter",
+      "placeholder": "filter.p.m.custom.category",
+      "info": "The Search & Discovery filter parameter without an equals sign."
+    },
+    {
+      "type": "text",
+      "id": "filter_value",
+      "label": "Filter value",
+      "placeholder": "Art",
+      "info": "The exact storefront-filter value to add. Separate several values with |."
     },
     {
       "type": "checkbox",
