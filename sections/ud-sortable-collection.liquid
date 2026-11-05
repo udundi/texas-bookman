@@ -69,18 +69,32 @@
     endif
   endfor
 
+  assign has_genre_filter_values = false
+  for filter in collection.filters
+    if filter.param_name == 'filter.p.m.custom.genre'
+      if filter.active_values.size > 0
+        assign has_genre_filter_values = true
+      endif
+    endif
+  endfor
+  unless has_genre_filter_values
+    for param in query_params
+      assign param_name = param | split: '=' | first
+      if param_name == 'filter.p.m.custom.genre'
+        assign active_value_count = active_value_count | plus: 1
+      endif
+    endfor
+  endunless
+
   assign has_collection_filter = false
   unless collection.url == routes.all_products_collection_url
     assign has_collection_filter = true
   endunless
   assign has_applied_filters = false
-  if has_collection_filter or active_value_count > 0 or has_param_filters
+  if active_value_count > 0 or has_param_filters
     assign has_applied_filters = true
   endif
   assign active_filter_count = active_value_count
-  if has_collection_filter
-    assign active_filter_count = active_filter_count | plus: 1
-  endif
 
   # Clear All and the collection chip keep the sort and page size but drop the page
   assign clear_all_params = ''
@@ -471,6 +485,29 @@
                     {%- endfor -%}
                   {%- endif -%}
                 {%- endfor -%}
+                {%- unless has_genre_filter_values -%}
+                  {%- for param in query_params -%}
+                    {%- assign param_name = param | split: '=' | first -%}
+                    {%- if param_name == 'filter.p.m.custom.genre' -%}
+                      {%- assign genre_value = param | split: '=' | last | url_decode | replace: '+', ' ' -%}
+                      {%- assign genre_remove_params = '' -%}
+                      {%- for kept_param in query_params -%}
+                        {%- assign kept_param_name = kept_param | split: '=' | first -%}
+                        {%- if kept_param == param or kept_param_name == 'page' -%}{%- continue -%}{%- endif -%}
+                        {%- if genre_remove_params != blank -%}{%- assign genre_remove_params = genre_remove_params | append: '&' -%}{%- endif -%}
+                        {%- assign genre_remove_params = genre_remove_params | append: kept_param -%}
+                      {%- endfor -%}
+                      <a
+                        href="{% if genre_remove_params != blank %}{{ collection.url }}?{{ genre_remove_params }}{% else %}{{ collection.url }}{% endif %}"
+                        class="tw-flex tw-w-fit tw-items-center tw-gap-2 tw-rounded-[4px] tw-border tw-border-brand-grey tw-bg-white tw-px-3 tw-py-1 tw-text-12 tw-text-offblack hover:tw-border-black"
+                        aria-label="Remove genre filter: {{ genre_value | escape }}"
+                      >
+                        <span>{{ genre_value }}</span>
+                        <span aria-hidden="true" class="tw-text-14 tw-leading-none">&times;</span>
+                      </a>
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- endunless -%}
               </div>
               {% if has_param_filters %}
                 <a

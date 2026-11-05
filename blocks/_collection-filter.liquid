@@ -16,6 +16,20 @@
   endif
   assign filter_href = filter_state[3]
 
+  unless filter_active
+    assign current_url = content_for_header | split: '"pageurl":"' | last | split: '"' | first
+    assign filter_values_for_url = filter_value | split: '|'
+    for filter_value_part in filter_values_for_url
+      assign encoded_value = filter_value_part | strip | url_encode
+      assign query_part = filter_param | append: '=' | append: encoded_value
+      assign query_part_plus = filter_param | append: '=' | append: filter_value_part | strip | replace: ' ', '+'
+      if current_url contains query_part or current_url contains query_part_plus
+        assign filter_active = true
+        break
+      endif
+    endfor
+  endunless
+
   if filter_href == blank and filter_param != blank and filter_value != blank
     assign filter_values = filter_value | split: '|'
     assign filter_href = collection.url | default: routes.all_products_collection_url
@@ -34,7 +48,7 @@
   unless child_blocks contains 'data-filter-entry'
     assign child_blocks = ''
   endunless
-  assign children_collapsed = block.settings.children_collapsed | default: true
+  assign children_collapsed = false
   if filter_active or child_blocks contains 'data-filter-active'
     assign children_collapsed = false
   endif
@@ -116,7 +130,7 @@
       "type": "checkbox",
       "id": "children_collapsed",
       "label": "Nested filters collapsed",
-      "default": true
+      "default": false
     }
   ],
   "blocks": [
