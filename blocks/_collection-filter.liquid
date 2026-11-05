@@ -3,13 +3,38 @@
   assign filter_value = block.settings.filter_value | strip
   assign link_text = block.settings.link_text | strip
 
+  # Read existing theme-editor content saved before the block was simplified.
+  if link_text == blank
+    assign link_text = block.settings.title | strip
+  endif
+  if filter_value == blank
+    assign filter_value = block.settings.tag | strip
+  endif
+  if filter_param == blank
+    assign legacy_filter_type = block.settings.filter_type | strip
+    if legacy_filter_type contains '='
+      assign filter_param = legacy_filter_type | split: '=' | first | strip
+      if filter_value == blank
+        assign legacy_filter_value = legacy_filter_type | split: '=' | last | strip
+        if legacy_filter_value != filter_param
+          assign filter_value = legacy_filter_value
+        endif
+      endif
+    elsif legacy_filter_type != blank
+      assign filter_param = legacy_filter_type
+    endif
+  endif
+
   capture filter_state
     if filter_param != blank and filter_value != blank
       render 'collection-filter-state', param: filter_param, values: filter_value
     endif
   endcapture
   assign filter_state = filter_state | split: '@@'
-  assign filter_active = filter_state[1] == 'true'
+  assign filter_active = false
+  if filter_state[1] == 'true'
+    assign filter_active = true
+  endif
   assign filter_count = nil
   if filter_state[0] == 'value'
     assign filter_count = filter_state[2] | plus: 0
