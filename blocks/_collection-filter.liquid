@@ -45,11 +45,7 @@
     assign filter_href = collection.url | default: routes.all_products_collection_url
     assign separator = '?'
     for filter_value_part in filter_values
-      assign filter_href = filter_href
-      | append: separator
-      | append: filter_param
-      | append: '='
-      | append: filter_value_part | strip | url_encode
+      assign filter_href = filter_href | append: separator | append: filter_param | append: '=' | append: filter_value_part | strip | url_encode
       assign separator = '&'
     endfor
   endif
