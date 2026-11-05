@@ -1,172 +1,84 @@
-  {% if block.settings.filter_type != 'color' %}
-    {%- liquid
-      # Each entry is a Search & Discovery filter value from collection.filters, so it
-      # applies for real, shows its count within the current results and can be combined
-      # with other values (Shopify ORs values of one filter). "Collection Tag" holds the
-      # value, or several spellings separated by | that are applied together.
-        assign filter_param = block.settings.filter_param | default: block.settings.filter_type | remove_last: '='
-        assign filter_value = block.settings.filter_value | default: block.settings.tag
-        capture filter_state
-          render 'collection-filter-state', param: filter_param, values: filter_value
-        endcapture
-      assign filter_state = filter_state | split: '@@'
-      assign filter_active = false
-      if filter_state[1] == 'true'
-        assign filter_active = true
-      endif
-      assign filter_count = nil
-      if filter_state[0] == 'value'
-        assign filter_count = filter_state[2] | plus: 0
-      endif
-      assign filter_href = filter_state[3]
-      if filter_href == blank and request.design_mode and filter_value != blank
-        assign filter_href = collection.url | default: routes.all_products_collection_url
-      endif
-    -%}
-    {%- capture child_blocks -%}{%- content_for 'blocks' -%}{%- endcapture -%}
-    {%- liquid
-      # Nested filters mark themselves active so their parent stays visible and opens
-      assign child_blocks = child_blocks | strip
-      # Shopify wraps every block in a div, so only count children that rendered an entry
-      unless child_blocks contains 'data-filter-entry'
-        assign child_blocks = ''
-      endunless
-      assign children_collapsed = block.settings.children_collapsed | default: false
-      if child_blocks contains 'data-filter-active'
-        assign children_collapsed = false
-      endif
-    -%}
+{%- liquid
+  assign filter_param = block.settings.filter_param | strip
+  assign filter_value = block.settings.filter_value | strip
+  assign link_text = block.settings.link_text | strip
 
-    {%- liquid
-      # Show the entry only when it does something: it is applied, or adding it gives
-      # results. Values no product in the results has, and params the store has no
-      # filter for (e.g. a tag nobody uses), would be dead or empty links.
-      assign hide_filter = true
-      if filter_active or filter_href != blank or child_blocks != blank
-        assign hide_filter = false
-      endif
-      if request.design_mode
-        assign hide_filter = false
-        assign filter_label = block.settings.title | default: filter_value | default: 'Filter Link'
-      else
-        assign filter_label = block.settings.title | default: filter_value
-      endif
-    -%}
+  capture filter_state
+    if filter_param != blank and filter_value != blank
+      render 'collection-filter-state', param: filter_param, values: filter_value
+    endif
+  endcapture
+  assign filter_state = filter_state | split: '@@'
+  assign filter_active = filter_state[1] == 'true'
+  assign filter_count = nil
+  if filter_state[0] == 'value'
+    assign filter_count = filter_state[2] | plus: 0
+  endif
+  assign filter_href = filter_state[3]
 
-    {%- unless hide_filter -%}
-    <div class="tw-p-0.5">
-    <div class="tw-flex tw-w-full tw-flex-col"{% if filter_active %} data-filter-active{% endif %}>
+  capture child_blocks
+    content_for 'blocks'
+  endcapture
+  assign child_blocks = child_blocks | strip
+  unless child_blocks contains 'data-filter-entry'
+    assign child_blocks = ''
+  endunless
+
+  assign children_collapsed = block.settings.children_collapsed | default: true
+  if filter_active or child_blocks contains 'data-filter-active'
+    assign children_collapsed = false
+  endif
+
+  assign show_filter = true
+  if filter_param == blank or filter_value == blank
+    assign show_filter = request.design_mode
+  elsif filter_state[0] == blank and child_blocks == blank
+    assign show_filter = request.design_mode
+  endif
+-%}
+
+{%- if show_filter -%}
+  <div
+    class="tw-p-0.5"
+    {% if filter_active %}data-filter-active{% endif %}
+  >
+    <div class="tw-flex tw-w-full tw-flex-col">
       <div class="tw-flex tw-w-full tw-items-center tw-gap-1">
         {% render 'collection-filter-checkbox',
           href: filter_href,
           checked: filter_active,
-          label: filter_label,
+          label: link_text | default: filter_value | default: 'Filter link',
           count: filter_count
         %}
+
         {%- unless child_blocks == blank -%}
           <button
             type="button"
-            class="tw-flex-shrink-0 tw-fill-offblack tw-size-3 tw-cursor-pointer tw-bg-transparent tw-border-0 tw-p-0 tw-m-0"
+            class="tw-size-3 tw-flex-shrink-0 tw-m-0 tw-cursor-pointer tw-border-0 tw-bg-transparent tw-p-0 tw-fill-offblack"
+            aria-label="Show nested filters"
             @click="toggleFilter('{{ block.id }}', {{ children_collapsed }})"
           >
-            <div
-              class="tw-fill-offblack tw-size-3"
-              v-if="isFilterOpen('{{ block.id }}', {{ children_collapsed }})"
-            >
+            <span class="tw-size-3 tw-fill-offblack" v-if="isFilterOpen('{{ block.id }}', {{ children_collapsed }})">
               {% render 'icon-arrow-up' %}
-            </div>
-            <div v-else class="tw-fill-offblack tw-size-3">{% render 'icon-arrow-down' %}</div>
+            </span>
+            <span class="tw-size-3 tw-fill-offblack" v-else>
+              {% render 'icon-arrow-down' %}
+            </span>
           </button>
         {%- endunless -%}
       </div>
+
       {%- unless child_blocks == blank -%}
         <div
-          class="tw-pl-4 tw-pt-1 tw-flex tw-flex-col tw-gap-[1px]"
+          class="tw-flex tw-flex-col tw-gap-[1px] tw-pl-4 tw-pt-1"
           v-show="isFilterOpen('{{ block.id }}', {{ children_collapsed }})"
         >
           {{ child_blocks }}
         </div>
       {%- endunless -%}
     </div>
-    </div>
-    {%- endunless -%}
-  {% else %}
-  {%- liquid
-    # theme-check-disable
-    # The colour swatches still read the query string from the page URL
-    capture content_for_query_string
-      echo content_for_header
-    endcapture
-  -%}
-
-  {% assign get_full_url = content_for_query_string
-    | split: '"pageurl":"'
-    | last
-    | split: '"'
-    | first
-    | split: '.myshopify.com'
-    | last
-    | replace: '\/', '/'
-    | replace: '%20', ' '
-    | replace: '\u0026', '&'
-    | replace: collection.url, ''
-    | replace: 'feltright.com', ''
-    | replace: '%2F', '/'
-    | replace: '%27', "'"
-  %}
-    <div class="tw-p-0.5">
-    <div class="tw-flex tw-flex-wrap tw-gap-2 tw-w-full ">
-      {% for color in metaobjects.tile_colors.values %}
-        {% assign color_index = forloop.index %}
-        {% for ref in metaobjects.tile_colors.values %}
-          {% if color_index == ref.position %}
-            {% assign color_ref = ref %}
-          {% endif %}
-        {% endfor %}
-        {% assign filter_change = 'filter.p.tag=' | append: color_ref.name | replace: ' ', '+' %}
-        <a
-          {% assign query_params = get_full_url
-            | replace: 'pb=0', ''
-            | replace: '_fd=0', ''
-            | replace: '&&', '&'
-            | replace: '?&', '?'
-            | replace: '?', ''
-            | split: '&'
-          %}
-          {% if get_full_url contains color_ref.name %}
-            {% assign new_params = '' %}
-            {% for param in query_params %}
-              {% unless forloop.last and param == filter_change %}
-                {% assign new_params = new_params | append: '&' %}
-              {% endunless %}
-              {% if param != filter_change %}
-                {% assign new_params = new_params | append: param %}
-              {% endif %}
-            {% endfor %}
-            {% if new_params != blank %}
-              href="{{ collection.url |  append: '?' |  append: new_params | replace: '&&', '&' | replace: '?&', '?' }}"
-            {% else %}
-              href="{{ collection.url }}"
-            {% endif %}
-          {% else %}
-            href="{{ collection.url }}{{ query_params |  join: '&' | prepend: '?' | append: '&' | append: filter_change | replace: '&&', '&' | replace: '?&', '?' }}"
-          {% endif %}
-          class="tw-group tw-h-fit tw-w-fit"
-          data-filter-entry
-        >
-          {% assign filter_border_check = 'filter.p.tag=' | append: color_ref.name %}
-          <div
-            class="
-              tw-size-6 tw-border {% if color_ref.bordered %}tw-border-black/100{% else %}tw-border-black/0{% endif %}
-              {% if get_full_url contains filter_border_check %} tw-ring-4 tw-ring-black {% endif %}  tw-rounded-full
-            "
-            style="background-color: {{ color_ref.color }};"
-          ></div>
-        </a>
-      {% endfor %}
-    </div>
-    </div>
-  {% endif %}
+  </div>
+{%- endif -%}
 
 {% schema %}
 {
@@ -174,42 +86,28 @@
   "settings": [
     {
       "type": "text",
-      "id": "tag",
-      "label": "Filter value",
-      "visible_if": "{{ block.settings.filter_value == blank }}",
-      "info": "Search & Discovery filter value. Separate several values with | to apply them together (e.g. publisher spellings)."
-    },
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Tag Title"
-    },
-    {
-      "type": "text",
-      "id": "filter_type",
-      "label": "Filter Type",
-      "visible_if": "{{ block.settings.filter_param == blank }}",
-      "info": "Search & Discovery filter parameter followed by =, e.g. filter.p.m.custom.publisher= or filter.p.m.custom.category=. Entries for filters the store doesn't have are hidden.",
-      "default": "filter.p.tag="
+      "id": "link_text",
+      "label": "Link text",
+      "default": "Filter link"
     },
     {
       "type": "text",
       "id": "filter_param",
       "label": "Filter parameter",
       "placeholder": "filter.p.m.custom.category",
-      "info": "The Search & Discovery filter parameter without an equals sign."
+      "info": "Search & Discovery filter parameter, without an equals sign."
     },
     {
       "type": "text",
       "id": "filter_value",
       "label": "Filter value",
       "placeholder": "Art",
-      "info": "The exact storefront-filter value to add. Separate several values with |."
+      "info": "Exact value to add when this link is selected. Separate multiple values with |."
     },
     {
       "type": "checkbox",
       "id": "children_collapsed",
-      "label": "Children Collapsed",
+      "label": "Nested filters collapsed",
       "default": true
     }
   ],
