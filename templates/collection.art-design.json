@@ -100,6 +100,19 @@
             "nested": false
           },
           "blocks": {
+            "collection_filter_CgekzD": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "",
+                "title": "Test",
+                "filter_type": "filter.p.tag=",
+                "filter_param": "filter.p.m.custom.category",
+                "filter_value": "Val",
+                "children_collapsed": true
+              },
+              "blocks": {}
+            },
             "collection_filter_eqUGe4": {
               "type": "_collection-filter",
               "name": "Collection Filter",
@@ -115,6 +128,7 @@
             }
           },
           "block_order": [
+            "collection_filter_CgekzD",
             "collection_filter_eqUGe4"
           ]
         }
