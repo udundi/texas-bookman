@@ -90,42 +90,45 @@
             "storefront_filter_author"
           ]
         },
-        "collection_filter_box_v2_YMiUtx": {
+        "collection_filter_box_v2_6gCKy9": {
           "type": "_collection-filter-box-v2",
           "name": "Collection Filter Box",
           "settings": {
             "collapsible": true,
             "collapsed": false,
-            "title": "Subcategories",
+            "title": "Subcategores",
             "nested": false
           },
           "blocks": {
-            "collection_filter_4CfDVV": {
+            "collection_filter_WtWBnM": {
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
                 "tag": "",
-                "title": "Filter Title",
+                "title": "Test",
                 "filter_type": "filter.p.tag=",
                 "children_collapsed": true
               },
-              "blocks": {}
-            },
-            "collection_filter_GLJzBc": {
-              "type": "_collection-filter",
-              "name": "Collection Filter",
-              "settings": {
-                "tag": "Test",
-                "title": "Filter Title",
-                "filter_type": "filter.p.m.custom.genre=",
-                "children_collapsed": true
+              "blocks": {
+                "collection_filter_hnH4AN": {
+                  "type": "_collection-filter",
+                  "name": "Collection Filter",
+                  "settings": {
+                    "tag": "",
+                    "title": "Filter Title",
+                    "filter_type": "filter.p.tag=",
+                    "children_collapsed": true
+                  },
+                  "blocks": {}
+                }
               },
-              "blocks": {}
+              "block_order": [
+                "collection_filter_hnH4AN"
+              ]
             }
           },
           "block_order": [
-            "collection_filter_4CfDVV",
-            "collection_filter_GLJzBc"
+            "collection_filter_WtWBnM"
           ]
         }
       },
@@ -133,7 +136,7 @@
         "collection_filter_box_v2_sd_price",
         "collection_filter_box_v2_sd_publisher",
         "collection_filter_box_v2_sd_author",
-        "collection_filter_box_v2_YMiUtx"
+        "collection_filter_box_v2_6gCKy9"
       ],
       "settings": {
         "title": "Lorum Ipsum",
