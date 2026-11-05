@@ -1,23 +1,4 @@
 {%- liquid
-  capture content_for_query_string
-    echo content_for_header
-  endcapture
-
-  assign get_full_url = content_for_query_string
-  | split: '"pageurl":"'
-  | last
-  | split: '"'
-  | first
-  | split: '.myshopify.com'
-  | last
-  | replace: '\/', '/'
-  | replace: '%20', ' '
-  | replace: '\u0026', '&'
-  | replace: collection.url, ''
-  | replace: 'feltright.com', ''
-  | replace: '%2F', '/'
--%}
-{%- liquid
   assign filter_param = block.settings.filter_type | remove_last: '='
   assign filter_value = block.settings.tag
 
@@ -29,7 +10,7 @@
   if filter_state[1] == 'true'
     assign filter_active = true
   endif
-  assign filter_count = null
+  assign filter_count = nil
   if filter_state[0] == 'value'
     assign filter_count = filter_state[2] | plus: 0
   endif
