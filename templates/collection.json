@@ -100,6 +100,30 @@
             "nested": false
           },
           "blocks": {
+            "collection_gate_wpBctx": {
+              "type": "_collection-gate",
+              "name": "Collection Gate",
+              "settings": {
+                "collection_gate": "activities-games",
+                "title": "Filter Title Test",
+                "filter_param": "Test",
+                "filter_value": "Test"
+              },
+              "blocks": {}
+            },
+            "collection_filter_bbzk77": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "",
+                "title": "",
+                "filter_type": "filter.p.tag=",
+                "filter_param": "",
+                "filter_value": "",
+                "children_collapsed": true
+              },
+              "blocks": {}
+            },
             "collection_filter_eqUGe4": {
               "type": "_collection-filter",
               "name": "Collection Filter",
@@ -115,6 +139,8 @@
             }
           },
           "block_order": [
+            "collection_gate_wpBctx",
+            "collection_filter_bbzk77",
             "collection_filter_eqUGe4"
           ]
         }
