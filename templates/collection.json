@@ -93,6 +93,7 @@
         "collection_filter_box_v2_YMiUtx": {
           "type": "_collection-filter-box-v2",
           "name": "Collection Filter Box",
+          "disabled": true,
           "settings": {
             "collapsible": true,
             "collapsed": false,
