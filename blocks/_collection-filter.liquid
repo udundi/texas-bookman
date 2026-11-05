@@ -35,7 +35,7 @@
   if filter_state[1] == 'true'
     assign filter_active = true
   endif
-  assign filter_count = nil
+  assign filter_count = null
   if filter_state[0] == 'value'
     assign filter_count = filter_state[2] | plus: 0
   endif
@@ -46,10 +46,10 @@
     assign separator = '?'
     for filter_value_part in filter_values
       assign filter_href = filter_href
-        | append: separator
-        | append: filter_param
-        | append: '='
-        | append: filter_value_part | strip | url_encode
+      | append: separator
+      | append: filter_param
+      | append: '='
+      | append: filter_value_part | strip | url_encode
       assign separator = '&'
     endfor
   endif
@@ -66,52 +66,51 @@
   if filter_active or child_blocks contains 'data-filter-active'
     assign children_collapsed = false
   endif
-
-  assign show_filter = true
 -%}
 
-{%- if show_filter -%}
-  <div
-    class="tw-p-0.5"
-    {% if filter_active %}data-filter-active{% endif %}
-  >
-    <div class="tw-flex tw-w-full tw-flex-col">
-      <div class="tw-flex tw-w-full tw-items-center tw-gap-1">
-        {% render 'collection-filter-checkbox',
-          href: filter_href,
-          checked: filter_active,
-          label: link_text | default: filter_value | default: 'Filter link',
-          count: filter_count
-        %}
-
-        {%- unless child_blocks == blank -%}
-          <button
-            type="button"
-            class="tw-size-3 tw-flex-shrink-0 tw-m-0 tw-cursor-pointer tw-border-0 tw-bg-transparent tw-p-0 tw-fill-offblack"
-            aria-label="Show nested filters"
-            @click="toggleFilter('{{ block.id }}', {{ children_collapsed }})"
-          >
-            <span class="tw-size-3 tw-fill-offblack" v-if="isFilterOpen('{{ block.id }}', {{ children_collapsed }})">
-              {% render 'icon-arrow-up' %}
-            </span>
-            <span class="tw-size-3 tw-fill-offblack" v-else>
-              {% render 'icon-arrow-down' %}
-            </span>
-          </button>
-        {%- endunless -%}
-      </div>
+<div
+  class="tw-p-0.5"
+  {% if filter_active %}
+    data-filter-active
+  {% endif %}
+>
+  <div class="tw-flex tw-w-full tw-flex-col">
+    <div class="tw-flex tw-w-full tw-items-center tw-gap-1">
+      {%
+        render 'collection-filter-checkbox',
+        href: filter_href,
+        checked: filter_active,
+        label: link_text | default: filter_value | default: 'Filter link',
+        count: filter_count
+      %}
 
       {%- unless child_blocks == blank -%}
-        <div
-          class="tw-flex tw-flex-col tw-gap-[1px] tw-pl-4 tw-pt-1"
-          v-show="isFilterOpen('{{ block.id }}', {{ children_collapsed }})"
+        <button
+          type="button"
+          class="tw-size-3 tw-flex-shrink-0 tw-m-0 tw-cursor-pointer tw-border-0 tw-bg-transparent tw-p-0 tw-fill-offblack"
+          aria-label="Show nested filters"
+          @click="toggleFilter('{{ block.id }}', {{ children_collapsed }})"
         >
-          {{ child_blocks }}
-        </div>
+          <span class="tw-size-3 tw-fill-offblack" v-if="isFilterOpen('{{ block.id }}', {{ children_collapsed }})">
+            {% render 'icon-arrow-up' %}
+          </span>
+          <span class="tw-size-3 tw-fill-offblack" v-else>
+            {% render 'icon-arrow-down' %}
+          </span>
+        </button>
       {%- endunless -%}
     </div>
+
+    {%- unless child_blocks == blank -%}
+      <div
+        class="tw-flex tw-flex-col tw-gap-[1px] tw-pl-4 tw-pt-1"
+        v-show="isFilterOpen('{{ block.id }}', {{ children_collapsed }})"
+      >
+        {{ child_blocks }}
+      </div>
+    {%- endunless -%}
   </div>
-{%- endif -%}
+</div>
 
 {% schema %}
 {
