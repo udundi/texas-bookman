@@ -107,8 +107,8 @@
                 "tag": "Architecture/Interior Design",
                 "title": "Architecture/Interior Design",
                 "filter_type": "filter.p.m.custom.category=\"Architecture/Interior Design\"",
-                "filter_param": "",
-                "filter_value": "",
+                "filter_param": "filter.p.m.custom.category",
+                "filter_value": "Architecture/Interior Design",
                 "children_collapsed": true
               },
               "blocks": {}
