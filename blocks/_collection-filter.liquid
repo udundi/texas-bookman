@@ -35,7 +35,7 @@
   if filter_state[1] == 'true'
     assign filter_active = true
   endif
-  assign filter_count = null
+  assign filter_count = nil
   if filter_state[0] == 'value'
     assign filter_count = filter_state[2] | plus: 0
   endif
@@ -45,7 +45,8 @@
     assign filter_href = collection.url | default: routes.all_products_collection_url
     assign separator = '?'
     for filter_value_part in filter_values
-      assign filter_href = filter_href | append: separator | append: filter_param | append: '=' | append: filter_value_part | strip | url_encode
+      assign encoded_value = filter_value_part | strip | url_encode
+      assign filter_href = filter_href | append: separator | append: filter_param | append: '=' | append: encoded_value
       assign separator = '&'
     endfor
   endif
