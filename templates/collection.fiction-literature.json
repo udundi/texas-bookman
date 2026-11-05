@@ -104,8 +104,8 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "Crystals/Herbs/Oils",
-                "title": "Crystals/Herbs/Oils",
+                "tag": "Banned Books",
+                "title": "Banned Books",
                 "filter_type": "filter.p.m.custom.genre=",
                 "children_collapsed": false
               },
@@ -115,8 +115,8 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "Divination",
-                "title": "Divination",
+                "tag": "Classics/General Fiction",
+                "title": "Classics/General Fiction",
                 "filter_type": "filter.p.m.custom.genre=",
                 "children_collapsed": false
               },
@@ -125,8 +125,8 @@
                   "type": "_collection-filter",
                   "name": "Collection Filter",
                   "settings": {
-                    "tag": "Astrology",
-                    "title": "Astrology",
+                    "tag": "Arcturus Classics",
+                    "title": "Arcturus Classics",
                     "filter_type": "filter.p.tag=",
                     "children_collapsed": true
                   },
@@ -136,19 +136,8 @@
                   "type": "_collection-filter",
                   "name": "Collection Filter",
                   "settings": {
-                    "tag": "Palmistry",
-                    "title": "Palmistry",
-                    "filter_type": "filter.p.tag=",
-                    "children_collapsed": true
-                  },
-                  "blocks": {}
-                },
-                "collection_filter_X64cf9": {
-                  "type": "_collection-filter",
-                  "name": "Collection Filter",
-                  "settings": {
-                    "tag": "Tarot/Oracle",
-                    "title": "Tarot/Oracle",
+                    "tag": "Flame Tree Publishing",
+                    "title": "Flame Tree Publishing",
                     "filter_type": "filter.p.tag=",
                     "children_collapsed": true
                   },
@@ -157,16 +146,15 @@
               },
               "block_order": [
                 "collection_filter_JHVRnP",
-                "collection_filter_a6EjDW",
-                "collection_filter_X64cf9"
+                "collection_filter_a6EjDW"
               ]
             },
             "collection_filter_fn9mTa": {
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "Esoteric Studies",
-                "title": "Esoteric Studies",
+                "tag": "Drama/Poetry",
+                "title": "Drama/Poetry",
                 "filter_type": "filter.p.m.custom.genre=",
                 "children_collapsed": false
               },
@@ -176,8 +164,8 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "Wicca/Witchcraft",
-                "title": "Wicca/Witchcraft",
+                "tag": "Horror",
+                "title": "Horror",
                 "filter_type": "filter.p.m.custom.genre=",
                 "children_collapsed": false
               },
@@ -187,8 +175,52 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "Yoga/Meditation",
-                "title": "Yoga/Meditation",
+                "tag": "Mystery",
+                "title": "Mystery",
+                "filter_type": "filter.p.m.custom.genre=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_GgJfeJ": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Romance/Erotica",
+                "title": "Romance/Erotica",
+                "filter_type": "filter.p.m.custom.genre=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_LKjRnm": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Science Fiction/Fantasy",
+                "title": "Science Fiction/Fantasy",
+                "filter_type": "filter.p.m.custom.genre=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_CzKtU6": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Short Stories",
+                "title": "Short Stories",
+                "filter_type": "filter.p.m.custom.genre=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_7kgBjV": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Essays/Literary Criticism",
+                "title": "Essays/Literary Criticism",
                 "filter_type": "filter.p.m.custom.genre=",
                 "children_collapsed": false
               },
@@ -200,7 +232,11 @@
             "collection_filter_FRJERY",
             "collection_filter_fn9mTa",
             "collection_filter_Xh6zPU",
-            "collection_filter_PRW4cr"
+            "collection_filter_PRW4cr",
+            "collection_filter_GgJfeJ",
+            "collection_filter_LKjRnm",
+            "collection_filter_CzKtU6",
+            "collection_filter_7kgBjV"
           ]
         }
       },
