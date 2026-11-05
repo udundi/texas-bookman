@@ -40,6 +40,19 @@
     assign filter_count = filter_state[2] | plus: 0
   endif
   assign filter_href = filter_state[3]
+  if filter_href == blank and filter_param != blank and filter_value != blank and filter_active == false
+    assign filter_values = filter_value | split: '|'
+    assign filter_href = collection.url | default: routes.all_products_collection_url
+    assign separator = '?'
+    for filter_value_part in filter_values
+      assign filter_href = filter_href
+        | append: separator
+        | append: filter_param
+        | append: '='
+        | append: filter_value_part | strip | url_encode
+      assign separator = '&'
+    endfor
+  endif
 
   capture child_blocks
     content_for 'blocks'
@@ -55,11 +68,6 @@
   endif
 
   assign show_filter = true
-  if filter_param == blank or filter_value == blank
-    assign show_filter = request.design_mode
-  elsif filter_state[0] == blank and child_blocks == blank
-    assign show_filter = request.design_mode
-  endif
 -%}
 
 {%- if show_filter -%}
