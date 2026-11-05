@@ -93,6 +93,7 @@
         "collection_filter_box_v2_YMiUtx": {
           "type": "_collection-filter-box-v2",
           "name": "Collection Filter Box",
+          "disabled": true,
           "settings": {
             "collapsible": true,
             "collapsed": false,
@@ -107,6 +108,8 @@
                 "tag": "Architecture/Interior Design",
                 "title": "Architecture/Interior Design",
                 "filter_type": "filter.p.m.custom.category=\"Architecture/Interior Design\"",
+                "filter_param": "",
+                "filter_value": "",
                 "children_collapsed": true
               },
               "blocks": {}
@@ -164,6 +167,8 @@
                 "tag": "Arcturus Publishing|Arcturus Publishging",
                 "title": "Arcturus",
                 "filter_type": "filter.p.m.custom.publisher=",
+                "filter_param": "",
+                "filter_value": "",
                 "children_collapsed": false
               },
               "blocks": {}
@@ -175,6 +180,8 @@
                 "tag": "Flame Tree Publishing|Flame Tree Gift|Flame Tree Collectibles|Flame Tree 451|Flame Tree Illustrated|Flame Tree Music|Flame Tree Collections|Flame Tree Collectable Cl",
                 "title": "Flame Tree",
                 "filter_type": "filter.p.m.custom.publisher=",
+                "filter_param": "",
+                "filter_value": "",
                 "children_collapsed": false
               },
               "blocks": {}
@@ -186,6 +193,8 @@
                 "tag": "Piccadilly Inc.|Piccadilly Inc|Piccadilly",
                 "title": "Piccadilly Inc.",
                 "filter_type": "filter.p.m.custom.publisher=",
+                "filter_param": "",
+                "filter_value": "",
                 "children_collapsed": false
               },
               "blocks": {}
@@ -398,6 +407,8 @@
                 "tag": "Art/Design",
                 "title": "Art/Design",
                 "filter_type": "filter.p.genre=Art",
+                "filter_param": "",
+                "filter_value": "",
                 "children_collapsed": true
               },
               "blocks": {
@@ -408,6 +419,8 @@
                     "tag": "",
                     "title": "",
                     "filter_type": "filter.p.tag=",
+                    "filter_param": "",
+                    "filter_value": "",
                     "children_collapsed": true
                   },
                   "blocks": {}
@@ -818,6 +831,8 @@
                 "tag": "Fiction & Literature",
                 "title": "Fiction & Literature",
                 "filter_type": "filter.p.m.custom.category=",
+                "filter_param": "",
+                "filter_value": "",
                 "children_collapsed": false
               },
               "blocks": {}
@@ -829,6 +844,8 @@
                 "tag": "Classic & General Fiction",
                 "title": "Classic & General Fiction",
                 "filter_type": "filter.p.m.custom.category=",
+                "filter_param": "",
+                "filter_value": "",
                 "children_collapsed": false
               },
               "blocks": {}
@@ -840,6 +857,8 @@
                 "tag": "Romance & Erotica",
                 "title": "Romance & Erotica",
                 "filter_type": "filter.p.m.custom.category=",
+                "filter_param": "",
+                "filter_value": "",
                 "children_collapsed": false
               },
               "blocks": {}
@@ -851,6 +870,8 @@
                 "tag": "Mystery",
                 "title": "Mystery & Thriller",
                 "filter_type": "filter.p.m.custom.category=",
+                "filter_param": "",
+                "filter_value": "",
                 "children_collapsed": false
               },
               "blocks": {}
@@ -862,6 +883,8 @@
                 "tag": "Science Fiction, Fantasy & Horror",
                 "title": "Science Fiction, Fantasy & Horror",
                 "filter_type": "filter.p.m.custom.category=",
+                "filter_param": "",
+                "filter_value": "",
                 "children_collapsed": false
               },
               "blocks": {}
@@ -873,6 +896,8 @@
                 "tag": "Drama & Poetry",
                 "title": "Drama & Poetry",
                 "filter_type": "filter.p.m.custom.category=",
+                "filter_param": "",
+                "filter_value": "",
                 "children_collapsed": false
               },
               "blocks": {}
@@ -884,6 +909,8 @@
                 "tag": "Essays & Literary Criticism",
                 "title": "Literary Criticism",
                 "filter_type": "filter.p.m.custom.category=",
+                "filter_param": "",
+                "filter_value": "",
                 "children_collapsed": false
               },
               "blocks": {}
@@ -896,6 +923,8 @@
                 "tag": "Historical Fiction",
                 "title": "Historical Fiction",
                 "filter_type": "filter.p.m.custom.category=",
+                "filter_param": "",
+                "filter_value": "",
                 "children_collapsed": false
               },
               "blocks": {}
