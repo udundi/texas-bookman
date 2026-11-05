@@ -15,6 +15,7 @@
         "collection_filter_box_v2_MfzWCc": {
           "type": "_collection-filter-box-v2",
           "name": "Collection Filter Box",
+          "disabled": true,
           "settings": {
             "collapsible": true,
             "collapsed": false,
@@ -41,6 +42,7 @@
         "collection_filter_box_v2_GAM6Jd": {
           "type": "_collection-filter-box-v2",
           "name": "Collection Filter Box",
+          "disabled": true,
           "settings": {
             "collapsible": true,
             "collapsed": true,
@@ -67,14 +69,24 @@
         "collection_filter_box_v2_YMiUtx": {
           "type": "_collection-filter-box-v2",
           "name": "Collection Filter Box",
-          "disabled": true,
           "settings": {
             "collapsible": true,
             "collapsed": true,
-            "title": "Book Genre",
+            "title": "{{ closest.collection.title }}",
             "nested": false
           },
           "blocks": {
+            "collection_filter_eqUGe4": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "",
+                "title": "",
+                "filter_type": "filter.p.m.custom.category=\"Architecture/Interior Design\"",
+                "children_collapsed": true
+              },
+              "blocks": {}
+            },
             "collection_filter_NtEYBm": {
               "type": "_collection-filter",
               "name": "Collection Filter",
@@ -451,6 +463,7 @@
             }
           },
           "block_order": [
+            "collection_filter_eqUGe4",
             "collection_filter_NtEYBm",
             "collection_gate_3VxQtN",
             "collection_gate_3n3UgU",
