@@ -100,18 +100,7 @@
             "nested": false
           },
           "blocks": {
-            "collection_gate_wpBctx": {
-              "type": "_collection-gate",
-              "name": "Collection Gate",
-              "settings": {
-                "collection_gate": "activities-games",
-                "title": "Filter Title Test",
-                "filter_param": "Test",
-                "filter_value": "Test"
-              },
-              "blocks": {}
-            },
-            "collection_filter_bbzk77": {
+            "collection_filter_LVmUfR": {
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
@@ -123,25 +112,10 @@
                 "children_collapsed": true
               },
               "blocks": {}
-            },
-            "collection_filter_eqUGe4": {
-              "type": "_collection-filter",
-              "name": "Collection Filter",
-              "settings": {
-                "tag": "Architecture/Interior Design",
-                "title": "Architecture/Interior Design",
-                "filter_type": "filter.p.m.custom.category=\"Architecture/Interior Design\"",
-                "filter_param": "",
-                "filter_value": "",
-                "children_collapsed": true
-              },
-              "blocks": {}
             }
           },
           "block_order": [
-            "collection_gate_wpBctx",
-            "collection_filter_bbzk77",
-            "collection_filter_eqUGe4"
+            "collection_filter_LVmUfR"
           ]
         }
       },
