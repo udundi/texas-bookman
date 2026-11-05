@@ -110,10 +110,70 @@
                 "children_collapsed": false
               },
               "blocks": {}
+            },
+            "collection_filter_FRJERY": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Art - Artists",
+                "title": "Art - Artists",
+                "filter_type": "filter.p.m.custom.genre=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_fn9mTa": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Art - History/Criticism",
+                "title": "Art - History/Criticism",
+                "filter_type": "filter.p.m.custom.genre=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_Xh6zPU": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Art - Instruction",
+                "title": "Art - Instruction",
+                "filter_type": "filter.p.m.custom.genre=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_PRW4cr": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Fashion",
+                "title": "Fashion",
+                "filter_type": "filter.p.m.custom.genre=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_9daw3j": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Photography",
+                "title": "Photography",
+                "filter_type": "filter.p.m.custom.genre=",
+                "children_collapsed": false
+              },
+              "blocks": {}
             }
           },
           "block_order": [
-            "collection_filter_WtWBnM"
+            "collection_filter_WtWBnM",
+            "collection_filter_FRJERY",
+            "collection_filter_fn9mTa",
+            "collection_filter_Xh6zPU",
+            "collection_filter_PRW4cr",
+            "collection_filter_9daw3j"
           ]
         }
       },
