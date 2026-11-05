@@ -100,19 +100,63 @@
             "nested": false
           },
           "blocks": {
-            "collection_filter_FBYBxH": {
+            "collection_filter_tUCJgD": {
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "Test",
-                "title": "Test",
+                "tag": "Architecture/Interior Design",
+                "title": "Architecture/Interior Design",
+                "filter_type": "filter.p.m.custom.genre="
+              },
+              "blocks": {}
+            },
+            "collection_filter_b4hN6b": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Architecture/Interior Design",
+                "title": "Architecture/Interior Design",
+                "filter_type": "filter.p.m.custom.genre="
+              },
+              "blocks": {}
+            },
+            "collection_filter_jW63iF": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Architecture/Interior Design",
+                "title": "Architecture/Interior Design",
+                "filter_type": "filter.p.m.custom.genre="
+              },
+              "blocks": {}
+            },
+            "collection_filter_Ty8dyi": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Architecture/Interior Design",
+                "title": "Architecture/Interior Design",
+                "filter_type": "filter.p.m.custom.genre="
+              },
+              "blocks": {}
+            },
+            "collection_filter_gB7Edm": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Architecture/Interior Design",
+                "title": "Architecture/Interior Design",
                 "filter_type": "filter.p.m.custom.genre="
               },
               "blocks": {}
             }
           },
           "block_order": [
-            "collection_filter_FBYBxH"
+            "collection_filter_tUCJgD",
+            "collection_filter_b4hN6b",
+            "collection_filter_jW63iF",
+            "collection_filter_Ty8dyi",
+            "collection_filter_gB7Edm"
           ]
         }
       },
