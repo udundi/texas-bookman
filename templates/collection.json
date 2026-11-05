@@ -100,22 +100,19 @@
             "nested": false
           },
           "blocks": {
-            "collection_filter_LVmUfR": {
+            "collection_filter_FBYBxH": {
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "",
-                "title": "",
-                "filter_type": "filter.p.tag=",
-                "filter_param": "",
-                "filter_value": "",
-                "children_collapsed": true
+                "tag": "Test",
+                "title": "Test",
+                "filter_type": "filter.p.m.custom.genre="
               },
               "blocks": {}
             }
           },
           "block_order": [
-            "collection_filter_LVmUfR"
+            "collection_filter_FBYBxH"
           ]
         }
       },
