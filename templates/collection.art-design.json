@@ -104,27 +104,12 @@
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "",
-                "title": "Test",
-                "filter_type": "filter.p.tag=",
-                "children_collapsed": true
+                "tag": "Architecture/Interior Design",
+                "title": "Architecture/Interior Design",
+                "filter_type": "filter.p.m.custom.genre=",
+                "children_collapsed": false
               },
-              "blocks": {
-                "collection_filter_hnH4AN": {
-                  "type": "_collection-filter",
-                  "name": "Collection Filter",
-                  "settings": {
-                    "tag": "",
-                    "title": "Filter Title",
-                    "filter_type": "filter.p.tag=",
-                    "children_collapsed": true
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "collection_filter_hnH4AN"
-              ]
+              "blocks": {}
             }
           },
           "block_order": [
