@@ -1,0 +1,211 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "ud-sortable-collection",
+      "blocks": {
+        "collection_filter_box_v2_sd_price": {
+          "type": "_collection-filter-box-v2",
+          "name": "Collection Filter Box",
+          "settings": {
+            "collapsible": true,
+            "collapsed": true,
+            "title": "Price",
+            "nested": false
+          },
+          "blocks": {
+            "storefront_filter_price": {
+              "type": "_collection-storefront-filter",
+              "name": "Storefront Filter",
+              "settings": {
+                "param_name": "filter.v.price",
+                "value_groups": "",
+                "groups_collapsed": true,
+                "visible_count": 8
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "storefront_filter_price"
+          ]
+        },
+        "collection_filter_box_v2_sd_publisher": {
+          "type": "_collection-filter-box-v2",
+          "name": "Collection Filter Box",
+          "settings": {
+            "collapsible": true,
+            "collapsed": true,
+            "title": "Publisher",
+            "nested": false
+          },
+          "blocks": {
+            "storefront_filter_publisher": {
+              "type": "_collection-storefront-filter",
+              "name": "Storefront Filter",
+              "settings": {
+                "param_name": "filter.p.m.custom.publisher",
+                "value_groups": "",
+                "groups_collapsed": true,
+                "visible_count": 8
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "storefront_filter_publisher"
+          ]
+        },
+        "collection_filter_box_v2_sd_author": {
+          "type": "_collection-filter-box-v2",
+          "name": "Collection Filter Box",
+          "settings": {
+            "collapsible": true,
+            "collapsed": true,
+            "title": "Author",
+            "nested": false
+          },
+          "blocks": {
+            "storefront_filter_author": {
+              "type": "_collection-storefront-filter",
+              "name": "Storefront Filter",
+              "settings": {
+                "param_name": "filter.p.m.custom.author",
+                "value_groups": "",
+                "groups_collapsed": true,
+                "visible_count": 8
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "storefront_filter_author"
+          ]
+        },
+        "collection_filter_box_v2_6gCKy9": {
+          "type": "_collection-filter-box-v2",
+          "name": "Collection Filter Box",
+          "settings": {
+            "collapsible": true,
+            "collapsed": false,
+            "title": "Subcategores",
+            "nested": false
+          },
+          "blocks": {
+            "collection_filter_WtWBnM": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Architecture/Interior Design",
+                "title": "Architecture/Interior Design",
+                "filter_type": "filter.p.m.custom.genre=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_FRJERY": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Art - Artists",
+                "title": "Art - Artists",
+                "filter_type": "filter.p.m.custom.genre=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_fn9mTa": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Art - History/Criticism",
+                "title": "Art - History/Criticism",
+                "filter_type": "filter.p.m.custom.genre=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_Xh6zPU": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Art - Instruction",
+                "title": "Art - Instruction",
+                "filter_type": "filter.p.m.custom.genre=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_PRW4cr": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Fashion",
+                "title": "Fashion",
+                "filter_type": "filter.p.m.custom.genre=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_9daw3j": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Photography",
+                "title": "Photography",
+                "filter_type": "filter.p.m.custom.genre=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "collection_filter_WtWBnM",
+            "collection_filter_FRJERY",
+            "collection_filter_fn9mTa",
+            "collection_filter_Xh6zPU",
+            "collection_filter_PRW4cr",
+            "collection_filter_9daw3j"
+          ]
+        }
+      },
+      "block_order": [
+        "collection_filter_box_v2_sd_price",
+        "collection_filter_box_v2_sd_publisher",
+        "collection_filter_box_v2_sd_author",
+        "collection_filter_box_v2_6gCKy9"
+      ],
+      "settings": {
+        "title": "Lorum Ipsum",
+        "description": "<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit tenetur, rem in ab nobis autem suscipit. Excepturi officia maxime saepe, perspiciatis accusamus ducimus, nihil odio provident, doloribus omnis recusandae iure.</p>",
+        "padding_top": 2,
+        "padding_bottom": 2,
+        "mobile_padding_top": 2,
+        "mobile_padding_bottom": 2,
+        "enable_infinite_scroll": false,
+        "button_type": "quick-add",
+        "button_text": "",
+        "show_price": true,
+        "show_color_options": false,
+        "enable_cta": false,
+        "cta_background_color": "#f9f8f5",
+        "cta_header": "",
+        "cta_body": "",
+        "cta_button_text": "",
+        "cta_button_link": "",
+        "cta_image_direction": "right"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
