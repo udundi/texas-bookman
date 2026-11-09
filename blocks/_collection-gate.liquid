@@ -8,15 +8,14 @@
     assign filter_param = block.settings.filter_param | default: 'filter.p.m.custom.category'
     assign filter_value = block.settings.filter_value | default: gate.title
     assign filter_found = false
-    unless collection == gate
-      capture gate_state
-        render 'collection-filter-state', param: filter_param, values: filter_value
-      endcapture
-      assign gate_state = gate_state | split: '@@'
-      if gate_state[0] != blank
-        assign filter_found = true
-      endif
-    endunless
+    assign gate_active = false
+    capture gate_state
+      render 'collection-filter-state', param: filter_param, values: filter_value
+    endcapture
+    assign gate_state = gate_state | split: '@@'
+    if gate_state[0] != blank
+      assign filter_found = true
+    endif
   -%}
   {%- capture child_blocks -%}{%- content_for 'blocks' -%}{%- endcapture -%}
   {%- liquid
@@ -32,10 +31,12 @@
     endif
 
     assign show_gate = false
-    assign gate_active = false
     if filter_found
       # Hide subcategories with no results, unless already selected.
       if gate_state[1] == 'true'
+        assign gate_active = true
+      endif
+      if collection == gate
         assign gate_active = true
       endif
       assign gate_href = gate_state[3]
@@ -108,10 +109,7 @@
       endif
     -%}
     {%- liquid
-      assign children_collapsed = true
-      if gate_active or has_active_child
-        assign children_collapsed = false
-      endif
+      assign children_collapsed = false
       assign gate_label = block.settings.title | default: gate.title
     -%}
     <div class="tw-p-1">
