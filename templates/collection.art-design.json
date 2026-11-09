@@ -90,42 +90,90 @@
             "storefront_filter_author"
           ]
         },
-        "collection_filter_box_v2_YMiUtx": {
+        "collection_filter_box_v2_6gCKy9": {
           "type": "_collection-filter-box-v2",
           "name": "Collection Filter Box",
           "settings": {
             "collapsible": true,
             "collapsed": false,
-            "title": "Subcategories",
+            "title": "Subcategores",
             "nested": false
           },
           "blocks": {
-            "collection_filter_4CfDVV": {
+            "collection_filter_WtWBnM": {
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "",
-                "title": "Filter Title",
-                "filter_type": "filter.p.tag=",
-                "children_collapsed": true
+                "tag": "Architecture/Interior Design",
+                "title": "Architecture/Interior Design",
+                "filter_type": "filter.p.m.custom.genre=",
+                "children_collapsed": false
               },
               "blocks": {}
             },
-            "collection_filter_GLJzBc": {
+            "collection_filter_FRJERY": {
               "type": "_collection-filter",
               "name": "Collection Filter",
               "settings": {
-                "tag": "Test",
-                "title": "Filter Title",
+                "tag": "Art - Artists",
+                "title": "Art - Artists",
                 "filter_type": "filter.p.m.custom.genre=",
-                "children_collapsed": true
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_fn9mTa": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Art - History/Criticism",
+                "title": "Art - History/Criticism",
+                "filter_type": "filter.p.m.custom.genre=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_Xh6zPU": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Art - Instruction",
+                "title": "Art - Instruction",
+                "filter_type": "filter.p.m.custom.genre=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_PRW4cr": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Fashion",
+                "title": "Fashion",
+                "filter_type": "filter.p.m.custom.genre=",
+                "children_collapsed": false
+              },
+              "blocks": {}
+            },
+            "collection_filter_9daw3j": {
+              "type": "_collection-filter",
+              "name": "Collection Filter",
+              "settings": {
+                "tag": "Photography",
+                "title": "Photography",
+                "filter_type": "filter.p.m.custom.genre=",
+                "children_collapsed": false
               },
               "blocks": {}
             }
           },
           "block_order": [
-            "collection_filter_4CfDVV",
-            "collection_filter_GLJzBc"
+            "collection_filter_WtWBnM",
+            "collection_filter_FRJERY",
+            "collection_filter_fn9mTa",
+            "collection_filter_Xh6zPU",
+            "collection_filter_PRW4cr",
+            "collection_filter_9daw3j"
           ]
         }
       },
@@ -133,7 +181,7 @@
         "collection_filter_box_v2_sd_price",
         "collection_filter_box_v2_sd_publisher",
         "collection_filter_box_v2_sd_author",
-        "collection_filter_box_v2_YMiUtx"
+        "collection_filter_box_v2_6gCKy9"
       ],
       "settings": {
         "title": "Lorum Ipsum",
