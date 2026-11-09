@@ -36,7 +36,7 @@
         "body_color": "#ffffff",
         "body_size": 18,
         "mobile_body_size": 15,
-        "button_label": "Shop Now",
+        "button_label": "Start Shopping",
         "button_url": "shopify://collections/all",
         "button_bg": "#f0ba3a",
         "button_text_color": "#212121",
