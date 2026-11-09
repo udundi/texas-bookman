@@ -93,7 +93,6 @@
         "collection_filter_box_v2_YMiUtx": {
           "type": "_collection-filter-box-v2",
           "name": "Collection Filter Box",
-          "disabled": true,
           "settings": {
             "collapsible": true,
             "collapsed": false,
@@ -110,7 +109,46 @@
                 "filter_type": "filter.p.m.custom.genre=",
                 "children_collapsed": true
               },
-              "blocks": {}
+              "blocks": {
+                "collection_filter_3CEr4M": {
+                  "type": "_collection-filter",
+                  "name": "Collection Filter",
+                  "settings": {
+                    "tag": "",
+                    "title": "Filter Title",
+                    "filter_type": "filter.p.tag=",
+                    "children_collapsed": true
+                  },
+                  "blocks": {}
+                },
+                "collection_filter_mM69qV": {
+                  "type": "_collection-filter",
+                  "name": "Collection Filter",
+                  "settings": {
+                    "tag": "",
+                    "title": "Filter Title",
+                    "filter_type": "filter.p.tag=",
+                    "children_collapsed": true
+                  },
+                  "blocks": {}
+                },
+                "collection_filter_EXUQkJ": {
+                  "type": "_collection-filter",
+                  "name": "Collection Filter",
+                  "settings": {
+                    "tag": "",
+                    "title": "Filter Title",
+                    "filter_type": "filter.p.tag=",
+                    "children_collapsed": true
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "collection_filter_3CEr4M",
+                "collection_filter_mM69qV",
+                "collection_filter_EXUQkJ"
+              ]
             }
           },
           "block_order": [
