@@ -1,0 +1,109 @@
+{%- comment -%}
+  US / UK catalog toggle (Figma "Catalog Toggles", "Navigation — Catalog tabs" on desktop,
+  "Mobile Menu Level 2" on mobile).
+  Each option links to the current page with ?country=XX. Shopify switches
+  the shopper's market from that parameter and remembers it in the
+  localization cookie. Links rather than a localization form POST, because
+  the CLI dev server rejects form posts with 401.
+
+  Accepts:
+  - form_id {String} unique id for the form
+  - class {String} optional extra classes on the wrapper
+  - variant {String} "desktop" (strip above the header) or "mobile" (full-width row)
+{%- endcomment -%}
+{%- if localization.available_countries.size > 1 -%}
+  <div class="catalog-toggle-form" id="{{ form_id }}">
+    <div class="catalog-toggle catalog-toggle--{{ variant | default: 'desktop' }} {{ class }}" role="group" aria-label="Catalog">
+      {%- liquid
+        assign us_first = localization.available_countries | where: 'iso_code', 'US'
+        assign others = localization.available_countries | reject: 'iso_code', 'US'
+        assign ordered = us_first | concat: others
+      -%}
+      {%- for country in ordered -%}
+        {%- liquid
+          assign label = country.name
+          if country.iso_code == 'US'
+            assign label = 'United States'
+          elsif country.iso_code == 'GB'
+            assign label = 'United Kingdom'
+          endif
+          assign current = false
+          if country.iso_code == localization.country.iso_code
+            assign current = true
+          endif
+        -%}
+        <a
+          href="{{ request.path }}?country={{ country.iso_code }}"
+          class="catalog-toggle__option{% if current %} is-active{% endif %}"
+          {% if current %}
+            aria-current="true"
+          {% endif %}
+        >
+          {{- label -}}
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .catalog-toggle-form {
+    margin: 0;
+  }
+  .catalog-toggle {
+    display: flex;
+  }
+  .catalog-toggle__option {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: #212121;
+    font-family: 'proxima-nova', sans-serif;
+    line-height: 1.2;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .catalog-toggle__option:hover {
+    color: #20448f;
+  }
+  .catalog-toggle__option.is-active {
+    color: #20448f;
+    font-weight: 600;
+    border-bottom-color: #20448f;
+    cursor: default;
+  }
+  .catalog-toggle__option:focus-visible {
+    outline: 2px solid #20448f;
+    outline-offset: -2px;
+  }
+
+  /* Desktop: tabs in a thin strip above the header */
+  .catalog-tabs-strip {
+    background: #fdfbf8;
+    border-bottom: 1px solid #cac8c6;
+  }
+  .catalog-toggle--desktop .catalog-toggle__option {
+    padding: 0.625rem 1rem;
+    font-size: 0.75rem;
+    margin-bottom: -1px;
+  }
+
+  /* Mobile: two equal tabs, grey underline on the inactive one */
+  .catalog-toggle--mobile {
+    width: 100%;
+    gap: 0.5rem;
+  }
+  .catalog-toggle--mobile .catalog-toggle__option {
+    flex: 1 1 0;
+    padding: 0.5rem 0;
+    font-size: 0.8125rem;
+    color: #4a4a4a;
+    border-bottom-width: 3px;
+    border-bottom-color: #cbcbcb;
+  }
+  .catalog-toggle--mobile .catalog-toggle__option.is-active {
+    color: #20448f;
+    border-bottom-color: #20448f;
+  }
+{% endstylesheet %}
