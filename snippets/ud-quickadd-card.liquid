@@ -49,9 +49,29 @@
           {% render 'placeholder-image', width: 400, class: 'tw-size-full tw-object-contain' %}
         </div>
       {% endif %}
-      {% if cur_product.tags contains 'New Product' %}
-        <div class="tw-absolute tw-top-2.5 tw-right-2 tw-text-12 tw-px-4 tw-py-1 tw-bg-black tw-rounded-[4px] tw-text-white tw-font-semibold">
-          New
+      {% assign is_sale_badge = false %}
+      {% if cur_product.tags contains 'SALE' or cur_product.tags contains 'Sale' or cur_product.tags contains 'sale' %}
+        {% assign is_sale_badge = true %}
+      {% elsif settings.flash_sale %}
+        {% for flash_sale_product in settings.flash_sale_products %}
+          {% if flash_sale_product.id == cur_product.id %}
+            {% assign is_sale_badge = true %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+      {% if is_sale_badge or cur_product.tags contains 'New Product' %}
+        <div class="tw-absolute tw-top-2 tw-left-2 tw-flex tw-flex-wrap tw-gap-1">
+          {% if is_sale_badge %}
+            <div class="tw-text-10 tw-px-2.5 tw-py-1 tw-bg-brand-sale tw-rounded-[4px] tw-text-white tw-font-semibold tw-uppercase tw-leading-none">
+              SALE
+            </div>
+          {% endif %}
+          {% if cur_product.tags contains 'New Product' %}
+            <div class="tw-text-10 tw-px-2.5 tw-py-1 tw-bg-brand-primary tw-rounded-[4px] tw-text-white tw-font-semibold tw-uppercase tw-leading-none">
+              NEW
+            </div>
+          {% endif %}
         </div>
       {% endif %}
     </div>
@@ -105,7 +125,7 @@
     {% if customer == null %}
       <a
         href="{{ routes.account_login_url }}"
-        class="tw-bg-brand-primary tw-w-full tw-cursor-pointer tw-text-12 tw-text-white tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-py-2 tw-px-3 tw-transition-all duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-brightness-95 tw-whitespace-nowrap tw-items-center tw-uppercase tw-no-underline"
+        class="tw-bg-brand-secondary tw-w-full tw-cursor-pointer tw-text-12 tw-text-offblack tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-py-2 tw-px-3 tw-transition-all duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-brightness-95 tw-whitespace-nowrap tw-items-center tw-uppercase tw-no-underline"
       >
         Sign in to shop
       </a>
@@ -148,11 +168,11 @@
           <button
             type="button"
             id="{{ product_atc_id }}"
-            class="tw-bg-brand-secondary tw-w-full tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4  tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center"
+            class="tw-bg-brand-secondary tw-w-full tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-offblack tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-py-2 tw-px-3 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center tw-uppercase"
             @click="addToCart()"
             :disabled="addingToCart"
           >
-            [[ addingToCart ? 'Adding...' : '{{ button_text | default: 'Add to Cart' }}' ]]
+            [[ addingToCart ? 'Adding...' : '{{ button_text | default: 'QUICK ADD' }}' ]]
           </button>
         </div>
       {% else %}

@@ -8,6 +8,7 @@
   .ud-faq-{{ section.id }} .faq-container {
     margin: 0 auto;
     padding: 0 1rem;
+    max-width: {{ section.settings.max_width | default: 800 }}px;
   }
 
   .ud-faq-{{ section.id }} .faq-heading {
@@ -30,7 +31,7 @@
   class="ud-faq-{{ section.id }} tw-bg-brand-eggshell"
   data-faq-container
 >
-  <div class="faq-container tw-w-full tw-max-w-screen-2xl">
+  <div class="faq-container tw-w-full">
     {% if section.settings.heading != blank %}
       {%- assign heading_tag = section.settings.heading_tag | default: 'h2' -%}
       <{{ heading_tag }} class="faq-heading md:tw-text-32 tw-text-22">
@@ -44,23 +45,25 @@
       </p>
     {% endif %}
 
-    <div class="tw-mt-8">
+    <div class="tw-mt-8 tw-border-t tw-border-brand-grey">
       {% content_for 'blocks' %}
     </div>
   </div>
 </div>
 
 <script>
-  const faqApp = Vue.createApp({
-    delimiters: ['[[', ']]'],
-    data() {
-      return {
-        selectedDrawer: '',
-      };
-    },
-  });
-
-  faqApp.mount('[data-faq-container]');
+  (function () {
+    const el = document.getElementById('FAQ-{{ section.id }}');
+    if (!el) return;
+    Vue.createApp({
+      delimiters: ['[[', ']]'],
+      data() {
+        return {
+          selectedDrawer: '',
+        };
+      },
+    }).mount(el);
+  })();
 </script>
 
 {% schema %}

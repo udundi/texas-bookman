@@ -23,7 +23,7 @@
     :class="selectedTab ? 'tw-hidden' : 'md:tw-hidden'"
   >
     <span>{{ block.settings.header }}</span>
-    <span class="tw-size-3 tw-flex-shrink-0 tw-fill-offblack">{% render 'icon-chevron-right' %}</span>
+    <span class="tw-size-3.5 tw-flex-shrink-0 tw-fill-offblack">{% render 'icon-chevron-right', class: 'tw-size-full tw-fill-offblack' %}</span>
   </button>
   <!-- Dropdown: sized to its content, centered under its tab, shifted back on screen if it would overflow -->
   <div
@@ -37,10 +37,10 @@
     <div class="tw-flex tw-w-full tw-items-center tw-justify-between tw-border-0 tw-border-b tw-border-brand-grey tw-border-solid tw-bg-white tw-px-4 tw-py-4 md:tw-hidden">
       <button
         type="button"
-        class="tw-flex tw-items-center tw-gap-1 tw-text-14 tw-font-semibold tw-uppercase tw-text-offblack"
+        class="tw-flex tw-items-center tw-gap-2 tw-text-14 tw-font-semibold tw-uppercase tw-text-offblack"
         @click="selectedTab = ''; selectedSubTab = ''"
       >
-        <span class="tw-size-3 tw-fill-offblack">{% render 'icon-chevron-left' %}</span>
+        <span class="tw-size-3.5 tw-flex-shrink-0 tw-fill-offblack">{% render 'icon-chevron-left', class: 'tw-size-full tw-fill-offblack' %}</span>
         Back
       </button>
       <button

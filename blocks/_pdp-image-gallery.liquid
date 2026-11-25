@@ -1,37 +1,82 @@
+{%- liquid
+  assign pdp_flash_sale = false
+  if settings.flash_sale
+    for flash_product in settings.flash_sale_products
+      if flash_product.id == product.id
+        assign pdp_flash_sale = true
+        break
+      endif
+    endfor
+  endif
+  assign pdp_sale_badge = false
+  if pdp_flash_sale or product.tags contains 'SALE' or product.tags contains 'Sale' or product.tags contains 'sale'
+    assign pdp_sale_badge = true
+  endif
+-%}
 <div
   class="tw-h-fit md:tw-sticky tw-relative md:tw-top-8 tw-w-full tw-flex-grow tw-flex tw-flex-col max-md:tw-items-center max-md:tw-justify-center lg:tw-justify-center tw-gap-2"
   data-pdp-images
   @click="openZoom($event)"
 >
   {% if product.media.size <= 1 %}
-    <!-- Single Image Mobile Treatment: larger image, no carousel card container -->
+    <!-- Single Image Treatment: compact max-width matching Figma PDP proportions -->
     {% assign single_image = product.featured_media | default: product.featured_image %}
     <div class="tw-w-full tw-flex tw-items-center tw-justify-center tw-py-2 md:tw-py-4">
-      {% if single_image != blank %}
-        <button
-          type="button"
-          class="pdp-zoom-trigger tw-flex tw-w-full tw-items-center tw-justify-center tw-bg-transparent tw-border-0 tw-p-0"
-          data-zoom-index="0"
-          aria-haspopup="dialog"
-          aria-label="Enlarge image of {{ product.title | escape }}"
-        >
-          {{
-            single_image
-            | image_url: width: 1000
-            | image_tag:
-              preload: true,
-              class: 'tw-w-full max-md:tw-max-w-[22rem] sm:max-md:tw-max-w-[26rem] md:tw-max-w-md lg:tw-max-w-lg tw-h-auto tw-object-contain tw-rounded-[4px] tw-drop-shadow-sm md:tw-border md:tw-border-brand-grey',
-              alt: product.title
-          }}
-        </button>
-      {% else %}
-        {% render 'placeholder-image', width: 1000, class: 'tw-w-full max-md:tw-max-w-xs md:tw-max-w-md tw-h-auto tw-object-contain' %}
-      {% endif %}
+      <div class="tw-relative tw-w-full max-md:tw-max-w-[16rem] md:tw-max-w-[20rem] lg:tw-max-w-[21rem]">
+        {% if single_image != blank %}
+          <button
+            type="button"
+            class="pdp-zoom-trigger tw-flex tw-w-full tw-items-center tw-justify-center tw-bg-transparent tw-border-0 tw-p-0"
+            data-zoom-index="0"
+            aria-haspopup="dialog"
+            aria-label="Enlarge image of {{ product.title | escape }}"
+          >
+            {{
+              single_image
+              | image_url: width: 1000
+              | image_tag:
+                preload: true,
+                class: 'tw-w-full tw-h-auto tw-object-contain tw-rounded-[4px] tw-drop-shadow-sm md:tw-border md:tw-border-brand-grey',
+                alt: product.title
+            }}
+          </button>
+        {% else %}
+          {% render 'placeholder-image', width: 1000, class: 'tw-w-full tw-h-auto tw-object-contain' %}
+        {% endif %}
+        {% if pdp_sale_badge or product.tags contains 'New Product' %}
+          <div class="tw-pointer-events-none tw-absolute tw-top-2 tw-left-2 tw-z-10 tw-flex tw-flex-wrap tw-gap-1">
+            {% if pdp_sale_badge %}
+              <div class="tw-text-12 tw-px-3 tw-py-1 tw-bg-brand-sale tw-rounded-[4px] tw-text-white tw-font-semibold tw-uppercase tw-leading-none">
+                SALE
+              </div>
+            {% endif %}
+            {% if product.tags contains 'New Product' %}
+              <div class="tw-text-12 tw-px-3 tw-py-1 tw-bg-brand-primary tw-rounded-[4px] tw-text-white tw-font-semibold tw-uppercase tw-leading-none">
+                NEW
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
     </div>
   {% else %}
     <!-- Main Image Carousel (Multiple Images) -->
-    <div class="swiper swiper-container tw-h-full lg:tw-h-auto tw-w-full tw-text-black">
-      <div class="swiper-wrapper tw-h-fit tw-max-w-96 ">
+    <div class="swiper swiper-container tw-relative tw-h-full lg:tw-h-auto tw-w-full max-md:tw-max-w-[18rem] md:tw-max-w-[20rem] lg:tw-max-w-[21rem] tw-mx-auto tw-text-black">
+      {% if pdp_sale_badge or product.tags contains 'New Product' %}
+        <div class="tw-pointer-events-none tw-absolute tw-top-2 tw-left-2 tw-z-10 tw-flex tw-flex-wrap tw-gap-1">
+          {% if pdp_sale_badge %}
+            <div class="tw-text-12 tw-px-3 tw-py-1 tw-bg-brand-sale tw-rounded-[4px] tw-text-white tw-font-semibold tw-uppercase tw-leading-none">
+              SALE
+            </div>
+          {% endif %}
+          {% if product.tags contains 'New Product' %}
+            <div class="tw-text-12 tw-px-3 tw-py-1 tw-bg-brand-primary tw-rounded-[4px] tw-text-white tw-font-semibold tw-uppercase tw-leading-none">
+              NEW
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+      <div class="swiper-wrapper tw-h-fit">
         <!-- ---------------------- Image Classes ---------------------- -->
         {% if block.settings.image_aspect == '4x3' %}
           {% assign size_classes = 'tw-w-full tw-aspect-4/3 tw-h-fit ' %}

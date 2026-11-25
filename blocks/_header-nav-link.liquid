@@ -12,7 +12,8 @@
     class="tw-relative tw-flex tw-w-full tw-items-center tw-justify-between tw-gap-2 tw-border-0 tw-border-b tw-border-brand-grey tw-border-solid tw-bg-white tw-px-4 tw-py-4 tw-text-start tw-font-brand-body !tw-text-14 tw-font-semibold tw-uppercase tw-text-offblack tw-no-underline"
     :class="selectedTab ? 'tw-hidden' : 'md:tw-hidden'"
   >
-    {{ block.settings.link_text }}
+    <span>{{ block.settings.link_text }}</span>
+    <span class="tw-size-3.5 tw-flex-shrink-0 tw-fill-offblack">{% render 'icon-chevron-right', class: 'tw-size-full tw-fill-offblack' %}</span>
   </a>
 </div>
 

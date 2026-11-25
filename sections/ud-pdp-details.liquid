@@ -153,6 +153,47 @@
 {% render 'vue-mix-pdp' %}
 
 {% comment %} Main HTML Container {% endcomment %}
+{%- liquid
+  assign crumb_collection = collection
+  if crumb_collection == blank
+    assign ignored_crumb_handles = 'all-adult-books,all-childrens-books,all-games-media,all-gifts,all-mind-body-spirit,all-stationery,markdowns,uk-markdowns,used-books,new-arrivals,homepage,holiday-picks,for-your-holiday-display,stocking-stuffers,new-years-self-care,gifts-for-busy-hands,gifts-for-game-and-puzzle-enthusiasts,gifts-for-kids,gifts-for-readers,collector-editions,foiled,other' | split: ','
+    assign sorted_product_collections = product.collections | sort: 'products_count'
+    for candidate in sorted_product_collections
+      unless ignored_crumb_handles contains candidate.handle
+        assign crumb_collection = candidate
+        break
+      endunless
+    endfor
+    if crumb_collection == blank and sorted_product_collections.size > 0
+      assign crumb_collection = sorted_product_collections.first
+    endif
+  endif
+-%}
+<nav
+  aria-label="Breadcrumb"
+  class="tw-w-full tw-border-b tw-border-brand-grey tw-bg-white tw-px-4 tw-py-2.5"
+>
+  <ol class="tw-mx-auto tw-flex tw-w-full tw-max-w-screen-2xl tw-list-none tw-flex-wrap tw-items-center tw-gap-1.5 tw-p-0 tw-m-0 tw-text-14 tw-text-offblack/80">
+    <li>
+      <a href="{{ routes.root_url }}" class="tw-text-offblack/80 hover:tw-text-brand-primary hover:tw-underline tw-no-underline">Home</a>
+    </li>
+    <li aria-hidden="true" class="tw-text-brand-grey">/</li>
+    {% if crumb_collection != blank %}
+      <li>
+        <a href="{{ crumb_collection.url }}" class="tw-text-offblack/80 hover:tw-text-brand-primary hover:tw-underline tw-no-underline">{{ crumb_collection.title }}</a>
+      </li>
+      <li aria-hidden="true" class="tw-text-brand-grey">/</li>
+    {% else %}
+      <li>
+        <a href="{{ routes.all_products_collection_url }}" class="tw-text-offblack/80 hover:tw-text-brand-primary hover:tw-underline tw-no-underline">All Products</a>
+      </li>
+      <li aria-hidden="true" class="tw-text-brand-grey">/</li>
+    {% endif %}
+    <li aria-current="page" class="tw-min-w-0 tw-truncate tw-text-offblack tw-font-medium">
+      {{ product.title }}
+    </li>
+  </ol>
+</nav>
 <div
   id="MainProduct-{{ section.id }}"
   class="tw-flex tw-w-full tw-items-center tw-px-4 tw-pb-8 tw-justify-center section-{{ section.id }}-props tw-flex-col"

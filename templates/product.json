@@ -12,58 +12,13 @@
     "main": {
       "type": "ud-pdp-details",
       "blocks": {
-        "pdp_column_z7AybX": {
-          "type": "_pdp-column",
-          "name": "Main Details Column",
-          "settings": {
-            "visibility": "mobile",
-            "mobile": "full",
-            "desktop": "50%"
-          },
-          "blocks": {
-            "pdp_title_rating_wjMMtU": {
-              "type": "_pdp-title-rating",
-              "name": "PDP Title & Ratings",
-              "settings": {
-                "title_override": "",
-                "visibility": "mobile"
-              },
-              "blocks": {}
-            },
-            "pdp_description_UAMEnJ": {
-              "type": "_pdp-description",
-              "name": "Author",
-              "settings": {
-                "visibility": "mobile",
-                "font_size": "16",
-                "text_align": "left",
-                "body": "<p><strong>By: </strong>{{ closest.product.metafields.custom.author.value }}</p>",
-                "body_default": ""
-              },
-              "blocks": {}
-            },
-            "pdp_price_3DaFFC": {
-              "type": "_pdp-price",
-              "name": "PDP Price",
-              "settings": {
-                "visibility": "mobile"
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "pdp_title_rating_wjMMtU",
-            "pdp_description_UAMEnJ",
-            "pdp_price_3DaFFC"
-          ]
-        },
         "pdp_column_kbqTYQ": {
           "type": "_pdp-column",
           "name": "Main Details Column",
           "settings": {
             "visibility": "both",
             "mobile": "full",
-            "desktop": "50%"
+            "desktop": "2/5"
           },
           "blocks": {
             "pdp_image_gallery_8eyDQJ": {
@@ -83,7 +38,7 @@
           "settings": {
             "visibility": "both",
             "mobile": "full",
-            "desktop": "50%"
+            "desktop": "3/5"
           },
           "blocks": {
             "pdp_title_rating_kPwfKm": {
@@ -91,7 +46,7 @@
               "name": "PDP Title & Ratings",
               "settings": {
                 "title_override": "",
-                "visibility": "desktop"
+                "visibility": "both"
               },
               "blocks": {}
             },
@@ -99,7 +54,7 @@
               "type": "_pdp-description",
               "name": "Author",
               "settings": {
-                "visibility": "desktop",
+                "visibility": "both",
                 "font_size": "16",
                 "text_align": "left",
                 "body": "<p><strong>By: </strong>{{ closest.product.metafields.custom.author.value }}</p>",
@@ -131,7 +86,7 @@
               "type": "_pdp-price",
               "name": "PDP Price",
               "settings": {
-                "visibility": "desktop"
+                "visibility": "both"
               },
               "blocks": {}
             },
@@ -195,7 +150,6 @@
         }
       },
       "block_order": [
-        "pdp_column_z7AybX",
         "pdp_column_kbqTYQ",
         "pdp_column_6panjT"
       ],

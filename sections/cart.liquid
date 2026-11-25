@@ -112,7 +112,11 @@
                 :value="item.quantity"
                 :min="minQty(item)"
                 :step="qtyStep(item)"
-                :disabled="isOutOfStock(item)"
+                {% if customer %}
+                  :disabled="isOutOfStock(item)"
+                {% else %}
+                  disabled
+                {% endif %}
                 class="tw-p-0.5 tw-px-2 tw-border tw-border-brand-grey tw-w-16 tw-text-center disabled:tw-bg-gray-100 disabled:tw-text-gray-400 [appearance:textfield] [&::-webkit-outer-spin-button]:tw-appearance-none [&::-webkit-inner-spin-button]:tw-appearance-none"
                 @input="onQtyInput(item, $event)"
               >
@@ -192,56 +196,70 @@
         </div>
       </div>
       <!-- Order Note: Shopify's cart note, which becomes the order's note -->
-      <div class="tw-flex tw-flex-col tw-gap-2 tw-p-4 tw-mt-4 tw-border tw-border-brand-grey tw-rounded-[4px] tw-bg-brand-eggshell">
-        <label for="CartNote-{{ section.id }}" class="tw-text-16">Order Note</label>
-        <p id="CartNoteHint-{{ section.id }}" class="tw-m-0 tw-font-normal tw-text-gray-600">
-          Add a PO number or special instructions for this order.
-        </p>
-        {%- comment -%}
-          form= posts the note along with Checkout, so a note typed just before
-          clicking Checkout still reaches the order
-        {%- endcomment -%}
-        <textarea
-          id="CartNote-{{ section.id }}"
-          name="note"
-          form="CartCheckout-{{ section.id }}"
-          rows="3"
-          v-model="note"
-          aria-describedby="CartNoteHint-{{ section.id }} CartNoteStatus-{{ section.id }}"
-          class="tw-w-full tw-p-2 tw-border tw-border-brand-grey tw-rounded-[4px] tw-bg-white tw-font-normal tw-text-14"
-          @input="onNoteInput"
-          @blur="saveNote"
-        ></textarea>
+      {% if customer %}
+        <div class="tw-flex tw-flex-col tw-gap-2 tw-p-4 tw-mt-4 tw-border tw-border-brand-grey tw-rounded-[4px] tw-bg-brand-eggshell">
+          <label for="CartNote-{{ section.id }}" class="tw-text-16">Order Note</label>
+          <p id="CartNoteHint-{{ section.id }}" class="tw-m-0 tw-font-normal tw-text-gray-600">
+            Add a PO number or special instructions for this order.
+          </p>
+          {%- comment -%}
+            form= posts the note along with Checkout, so a note typed just before
+            clicking Checkout still reaches the order
+          {%- endcomment -%}
+          <textarea
+            id="CartNote-{{ section.id }}"
+            name="note"
+            form="CartCheckout-{{ section.id }}"
+            rows="3"
+            v-model="note"
+            aria-describedby="CartNoteHint-{{ section.id }} CartNoteStatus-{{ section.id }}"
+            class="tw-w-full tw-p-2 tw-border tw-border-brand-grey tw-rounded-[4px] tw-bg-white tw-font-normal tw-text-14"
+            @input="onNoteInput"
+            @blur="saveNote"
+          ></textarea>
+          <div
+            id="CartNoteStatus-{{ section.id }}"
+            class="tw-text-12 tw-font-normal"
+            :class="noteStatus === 'error' ? 'tw-text-brand-sale' : 'tw-text-gray-600'"
+            aria-live="polite"
+          >
+            <span v-if="noteStatus === 'saving'">Saving…</span>
+            <span v-else-if="noteStatus === 'saved'">Note saved</span>
+            <span v-else-if="noteStatus === 'error'">Couldn't save your note. Please try again.</span>
+          </div>
+        </div>
+        <!-- Checkout button / spinner -->
+        <form v-if="!updatingCart" id="CartCheckout-{{ section.id }}" action="{{ routes.cart_url }}" method="post">
+          <button
+            type="submit"
+            name="checkout"
+            class="tw-flex tw-gap-3 tw-rounded-[4px] tw-items-center tw-justify-center tw-bg-brand-secondary tw-py-3 tw-px-6 tw-text-offblack tw-font-semibold tw-uppercase tw-text-16 tw-w-full tw-text-center tw-mt-4 tw-transition-all duration-200 hover:tw-brightness-95 tw-no-underline"
+          >
+            <span class="tw-size-4 tw-flex tw-items-center">{% render 'icon-lock' %}</span>
+            Checkout
+          </button>
+        </form>
         <div
-          id="CartNoteStatus-{{ section.id }}"
-          class="tw-text-12 tw-font-normal"
-          :class="noteStatus === 'error' ? 'tw-text-brand-sale' : 'tw-text-gray-600'"
-          aria-live="polite"
+          v-else
+          class="tw-bg-brand-secondary tw-rounded-[4px] tw-py-3 tw-px-6 tw-cursor-wait tw-flex tw-items-center tw-justify-center tw-mt-4"
         >
-          <span v-if="noteStatus === 'saving'">Saving…</span>
-          <span v-else-if="noteStatus === 'saved'">Note saved</span>
-          <span v-else-if="noteStatus === 'error'">Couldn't save your note. Please try again.</span>
+          <div class="tw-size-6 tw-animate-spin">
+            {% render 'icon-spin' %}
+          </div>
         </div>
-      </div>
-      <!-- Checkout button / spinner -->
-      <form v-if="!updatingCart" id="CartCheckout-{{ section.id }}" action="{{ routes.cart_url }}" method="post">
-        <button
-          type="submit"
-          name="checkout"
-          class="tw-flex tw-gap-3 tw-rounded-[4px] tw-items-center tw-justify-center tw-bg-brand-secondary tw-py-3 tw-px-6 tw-text-offblack tw-font-semibold tw-uppercase tw-text-16 tw-w-full tw-text-center tw-mt-4 tw-transition-all duration-200 hover:tw-brightness-95 tw-no-underline"
-        >
-          <span class="tw-size-4 tw-flex tw-items-center">{% render 'icon-lock' %}</span>
-          Checkout
-        </button>
-      </form>
-      <div
-        v-else
-        class="tw-bg-brand-secondary tw-rounded-[4px] tw-py-3 tw-px-6 tw-cursor-wait tw-flex tw-items-center tw-justify-center tw-mt-4"
-      >
-        <div class="tw-size-6 tw-animate-spin">
-          {% render 'icon-spin' %}
+      {% else %}
+        <div class="tw-flex tw-flex-col tw-gap-3 tw-p-4 tw-mt-4 tw-border tw-border-brand-grey tw-rounded-[4px] tw-bg-brand-eggshell">
+          <p class="tw-m-0 tw-font-normal tw-text-14 tw-text-offblack">
+            Please sign in to your account to complete checkout.
+          </p>
+          <a
+            href="{{ routes.account_login_url }}"
+            class="tw-flex tw-gap-2 tw-rounded-[4px] tw-items-center tw-justify-center tw-bg-brand-secondary tw-py-3 tw-px-6 tw-text-offblack tw-font-semibold tw-uppercase tw-text-16 tw-w-full tw-text-center tw-transition-all duration-200 hover:tw-brightness-95 tw-no-underline"
+          >
+            Sign in to shop
+          </a>
         </div>
-      </div>
+      {% endif %}
     </div>
   </div>
 </div>

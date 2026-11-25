@@ -265,12 +265,23 @@
       <div class="tw-hidden md:tw-block">
         <!-- Sort By Selector -->
         <div class="tw-flex tw-items-center tw-justify-start tw-gap-4">
+          {% if customer %}
+            <!-- Export CSV -->
+            <button
+              type="button"
+              @click="exportCsv"
+              :disabled="exportingCsv"
+              class="tw-whitespace-nowrap tw-rounded-[4px] tw-border tw-border-solid tw-border-offblack tw-bg-white tw-px-4 tw-py-2 tw-text-14 tw-font-semibold tw-text-offblack tw-transition-colors hover:tw-bg-gray-100 disabled:tw-cursor-wait disabled:tw-opacity-60"
+            >
+              [[ exportingCsv ? 'Exporting...' : 'Export CSV' ]]
+            </button>
+          {% endif %}
           <!-- View Toggle Buttons -->
           <div class="tw-flex tw-items-center tw-gap-2">
             <button
               type="button"
               @click="toggleViewMode('grid')"
-              :class="viewMode === 'grid' ? '  tw-border-brand-grey' : '  tw-border-brand-grey'"
+              :class="viewMode === 'grid' ? 'tw-border-offblack' : 'tw-border-brand-grey'"
               class="duration-200 tw-p-2 tw-size-10 tw-rounded tw-transition-colors tw-flex tw-text-black tw-items-center tw-justify-center tw-border tw-bg-white hover:tw-bg-gray-100"
               title="Grid View"
             >
@@ -289,7 +300,7 @@
             <button
               type="button"
               @click="toggleViewMode('list')"
-              :class="viewMode === 'list' ? ' tw-border-brand-grey' : ' tw-border-brand-grey'"
+              :class="viewMode === 'list' ? 'tw-border-offblack' : 'tw-border-brand-grey'"
               class="duration-200 tw-p-2 tw-size-10 tw-rounded tw-text-black tw-transition-colors tw-flex tw-items-center tw-justify-center tw-border tw-bg-white hover:tw-bg-gray-100"
               title="List View"
             >
@@ -374,17 +385,6 @@
               {% render 'icon-arrow-down' %}
             </div>
           </div>
-          {% if customer %}
-            <!-- Export CSV -->
-            <button
-              type="button"
-              @click="exportCsv"
-              :disabled="exportingCsv"
-              class="tw-whitespace-nowrap tw-rounded-[4px] tw-border tw-border-solid tw-border-brand-grey tw-bg-white tw-px-3 tw-py-2 tw-text-14 tw-text-offblack tw-transition-colors hover:tw-border-offblack disabled:tw-cursor-wait disabled:tw-opacity-60"
-            >
-              [[ exportingCsv ? 'Exporting...' : 'Export CSV' ]]
-            </button>
-          {% endif %}
         </div>
       </div>
     </div>
@@ -403,39 +403,49 @@
       ></div>
       <!-- Filter Container: on mobile acts as bottom sheet with eggshell bg, rounded top, high z-index -->
       <div
-        class="ud-filter-container tw-fixed tw-bottom-0 tw-left-0 tw-z-[950] tw-w-full tw-flex-col tw-justify-start tw-max-h-[85vh] tw-rounded-t-2xl tw-bg-brand-eggshell tw-shadow-2xl tw-px-2 tw-pt-4 md:tw-sticky md:tw-bottom-auto md:tw-top-0 md:tw-max-h-none md:tw-w-96 md:tw-gap-2 md:tw-rounded-none md:tw-py-4 md:tw-bg-transparent md:tw-shadow-none tw-mb-[-1px]"
+        class="ud-filter-container tw-fixed tw-bottom-0 tw-left-0 tw-z-[950] tw-w-full tw-flex-col tw-justify-start tw-max-h-[85vh] tw-rounded-t-2xl tw-bg-white md:tw-bg-transparent tw-shadow-2xl tw-pt-4 md:tw-sticky md:tw-bottom-auto md:tw-top-0 md:tw-max-h-none md:tw-w-96 md:tw-gap-2 md:tw-rounded-none md:tw-py-4 md:tw-shadow-none tw-mb-[-1px]"
         :class="mobileFiltersOpen ? 'tw-flex' : 'md:tw-flex tw-hidden'"
       >
         <!-- Mobile Sheet Header -->
-        <div class="tw-flex tw-w-full tw-items-center tw-justify-between tw-px-2 tw-pb-4 md:tw-hidden">
+        <div class="tw-flex tw-w-full tw-items-center tw-justify-between tw-border-b tw-border-brand-grey tw-px-4 tw-pb-3 md:tw-hidden">
           <span class="tw-font-brand-header tw-text-18 tw-font-semibold tw-text-black">Filters</span>
-          <button
-            type="button"
-            class="tw-fill-offblack tw-size-4"
-            @click="mobileFiltersOpen = false"
-            aria-label="Close filters"
-          >
-            {% render 'icon-close' %}
-          </button>
+          {% if has_param_filters %}
+            <a
+              href="{% if clear_all_params != blank %}{{ collection.url }}?{{ clear_all_params }}{% else %}{{ collection.url }}{% endif %}"
+              class="tw-text-16 tw-font-normal tw-text-offblack tw-underline tw-underline-offset-2"
+              aria-label="Clear all filters"
+            >
+              Clear
+            </a>
+          {% else %}
+            <button
+              type="button"
+              class="tw-border-0 tw-bg-transparent tw-p-0 tw-text-16 tw-font-normal tw-text-offblack tw-underline tw-underline-offset-2 tw-cursor-pointer"
+              @click="mobileFiltersOpen = false"
+              aria-label="Close filters"
+            >
+              Clear
+            </button>
+          {% endif %}
         </div>
         <div
           :class="mobileFiltersOpen ? 'tw-static tw-top-0 tw-left-0 tw-w-full ' : 'md:tw-flex tw-hidden'"
-          class="tw-z-[500] tw-min-h-0 tw-flex-1 tw-w-full tw-overflow-y-auto tw-overflow-x-hidden tw-pb-8 md:tw-h-full md:tw-w-full md:tw-flex-col md:tw-px-4"
+          class="tw-z-[500] tw-min-h-0 tw-flex-1 tw-w-full tw-overflow-y-auto tw-overflow-x-hidden tw-px-4 tw-pb-8 md:tw-h-full md:tw-w-full md:tw-flex-col"
         >
           {% if has_applied_filters %}
-            <div class="tw-flex tw-w-full tw-flex-col tw-gap-2 tw-pb-4">
-              <div class="tw-font-brand-header tw-text-14 tw-font-semibold tw-leading-tight tw-text-offblack">
+            <div class="tw-flex tw-w-full tw-flex-col tw-gap-2 tw-py-3 md:tw-pt-0 md:tw-pb-4 tw-border-b tw-border-brand-grey">
+              <div class="tw-hidden md:tw-block tw-font-brand-header tw-text-14 tw-font-semibold tw-leading-tight tw-text-offblack">
                 Applied Filters
               </div>
               <div class="tw-flex tw-w-full tw-flex-wrap tw-gap-2">
                 {% if has_collection_filter %}
                   <a
                     href="{{ collection_parent_url }}{% if collection_chip_params != blank %}?{{ collection_chip_params }}{% endif %}"
-                    class="tw-flex tw-w-fit tw-items-center tw-gap-2 tw-rounded-[4px] tw-border tw-border-brand-grey tw-bg-white tw-px-3 tw-py-1 tw-text-12 tw-text-offblack hover:tw-border-black"
+                    class="tw-flex tw-w-fit tw-items-center tw-gap-2 tw-rounded-[4px] tw-border tw-border-offblack md:tw-border-brand-grey tw-bg-white tw-px-3 tw-py-1 tw-text-14 md:tw-text-12 tw-text-offblack hover:tw-border-black"
                     aria-label="Remove collection filter: {{ collection.title | escape }}"
                   >
-                    <span>{{ collection.title }}</span>
-                    <span aria-hidden="true" class="tw-text-14 tw-leading-none">&times;</span>
+                    <span v-pre>{{ collection.title }}</span>
+                    <span aria-hidden="true" class="tw-text-16 md:tw-text-14 tw-leading-none">&times;</span>
                   </a>
                 {% endif %}
                 {%- for filter in collection.filters -%}
@@ -443,10 +453,10 @@
                     {%- if filter.min_value.value != blank or filter.max_value.value != blank -%}
                       <a
                         href="{{ filter.url_to_remove }}"
-                        class="tw-flex tw-w-fit tw-items-center tw-gap-2 tw-rounded-[4px] tw-border tw-border-brand-grey tw-bg-white tw-px-3 tw-py-1 tw-text-12 tw-text-offblack hover:tw-border-black"
+                        class="tw-flex tw-w-fit tw-items-center tw-gap-2 tw-rounded-[4px] tw-border tw-border-offblack md:tw-border-brand-grey tw-bg-white tw-px-3 tw-py-1 tw-text-14 md:tw-text-12 tw-text-offblack hover:tw-border-black"
                         aria-label="Remove {{ filter.label | escape }} filter"
                       >
-                        <span>
+                        <span v-pre>
                           {%- if filter.min_value.value != blank and filter.max_value.value != blank -%}
                             {{ filter.min_value.value | money }} &ndash; {{ filter.max_value.value | money }}
                           {%- elsif filter.min_value.value != blank -%}
@@ -455,18 +465,18 @@
                             Up to {{ filter.max_value.value | money }}
                           {%- endif -%}
                         </span>
-                        <span aria-hidden="true" class="tw-text-14 tw-leading-none">&times;</span>
+                        <span aria-hidden="true" class="tw-text-16 md:tw-text-14 tw-leading-none">&times;</span>
                       </a>
                     {%- endif -%}
                   {%- else -%}
                     {%- for value in filter.active_values -%}
                       <a
                         href="{{ value.url_to_remove }}"
-                        class="tw-flex tw-w-fit tw-items-center tw-gap-2 tw-rounded-[4px] tw-border tw-border-brand-grey tw-bg-white tw-px-3 tw-py-1 tw-text-12 tw-text-offblack hover:tw-border-black"
+                        class="tw-flex tw-w-fit tw-items-center tw-gap-2 tw-rounded-[4px] tw-border tw-border-offblack md:tw-border-brand-grey tw-bg-white tw-px-3 tw-py-1 tw-text-14 md:tw-text-12 tw-text-offblack hover:tw-border-black"
                         aria-label="Remove {{ filter.label | escape }} filter: {{ value.label | escape }}"
                       >
-                        <span>{{ value.label }}</span>
-                        <span aria-hidden="true" class="tw-text-14 tw-leading-none">&times;</span>
+                        <span v-pre>{{ value.label }}</span>
+                        <span aria-hidden="true" class="tw-text-16 md:tw-text-14 tw-leading-none">&times;</span>
                       </a>
                     {%- endfor -%}
                   {%- endif -%}
@@ -475,7 +485,7 @@
               {% if has_param_filters %}
                 <a
                   href="{% if clear_all_params != blank %}{{ collection.url }}?{{ clear_all_params }}{% else %}{{ collection.url }}{% endif %}"
-                  class="tw-flex tw-w-fit tw-items-center tw-gap-2 tw-text-14 tw-underline tw-text-brand-link"
+                  class="tw-hidden md:tw-flex tw-w-fit tw-items-center tw-gap-2 tw-text-14 tw-underline tw-text-brand-link"
                   aria-label="Remove All Filters"
                 >
                   Clear All
@@ -483,12 +493,12 @@
               {% endif %}
             </div>
           {% endif %}
-          <div class="tw-flex tw-flex-col tw-w-full tw-justify-start tw-gap-[2px]">
+          <div class="tw-flex tw-flex-col tw-w-full tw-justify-start">
             {{ sidebar_blocks }}
           </div>
         </div>
         <!-- Mobile Sticky Apply Button -->
-        <div class="tw-sticky tw-bottom-0 tw-w-full tw-border-t tw-border-brand-grey tw-bg-brand-eggshell tw-p-3 md:tw-hidden">
+        <div class="tw-sticky tw-bottom-0 tw-w-full tw-border-t tw-border-brand-grey tw-bg-white tw-p-4 md:tw-hidden">
           <button
             type="button"
             class="tw-w-full tw-rounded-[4px] tw-bg-brand-primary tw-py-3 tw-text-14 tw-font-semibold tw-uppercase tw-text-white tw-transition-all hover:tw-brightness-95"
@@ -531,6 +541,16 @@
                       {% assign is_flash_sale = true %}
                     {% endif %}
                   {% endfor %}
+                {% endif %}
+                {% assign is_sale_badge = false %}
+                {% if is_flash_sale or product.tags contains 'SALE' or product.tags contains 'Sale' or product.tags contains 'sale' %}
+                  {% assign is_sale_badge = true %}
+                {% endif %}
+                {% assign product_link = product.url | within: collection | default: '/' %}
+                {% assign product_author = product.metafields.custom.author.value | strip %}
+                {% assign product_author_lower = product_author | downcase %}
+                {% if product_author_lower == 'not available' %}
+                  {% assign product_author = '' %}
                 {% endif %}
                 {% assign isbn = product.metafields.facts.isbn | default: product.metafields.custom.isbn %}
                 {% comment %} Case-pack products: see blocks/_pdp-box-quantity.liquid {% endcomment %}
@@ -608,7 +628,7 @@
                 >
                   <!-- Inlined ud-quickadd-card -->
                   <div class="tw-justify-between tw-flex tw-flex-col tw-p-4 tw-border tw-border-brand-grey tw-mr-[-1px] tw-mb-[-1px] tw-h-full tw-border-t-0">
-                    <a href="{{ product.url | default: '/' }}">
+                    <a href="{{ product_link }}">
                       <div class="tw-w-full tw-aspect-square tw-object-contain md:tw-mb-3 tw-mb-2 tw-relative">
                         {% if product.featured_image != blank %}
                           {{
@@ -621,14 +641,18 @@
                             {% render 'placeholder-image', width: 400, class: 'tw-size-full tw-object-contain' %}
                           </div>
                         {% endif %}
-                        {% if product.tags contains 'New Product' %}
-                          <div class="tw-absolute tw-top-2.5 tw-left-2 tw-text-9 tw-px-4 tw-py-1 tw-rounded-[4px] tw-bg-brand-primary tw-text-white tw-font-semibold">
-                            NEW
-                          </div>
-                        {% endif %}
-                        {% if is_flash_sale %}
-                          <div class="tw-absolute tw-top-2.5 tw-right-2 tw-text-9 tw-px-4 tw-py-1 tw-bg-brand-sale tw-rounded-[4px] tw-text-white tw-font-semibold">
-                            SALE
+                        {% if is_sale_badge or product.tags contains 'New Product' %}
+                          <div class="tw-absolute tw-top-2 tw-left-2 tw-flex tw-flex-wrap tw-gap-1">
+                            {% if is_sale_badge %}
+                              <div class="tw-text-10 tw-px-2.5 tw-py-1 tw-bg-brand-sale tw-rounded-[4px] tw-text-white tw-font-semibold tw-uppercase tw-leading-none">
+                                SALE
+                              </div>
+                            {% endif %}
+                            {% if product.tags contains 'New Product' %}
+                              <div class="tw-text-10 tw-px-2.5 tw-py-1 tw-rounded-[4px] tw-bg-brand-primary tw-text-white tw-font-semibold tw-uppercase tw-leading-none">
+                                NEW
+                              </div>
+                            {% endif %}
                           </div>
                         {% endif %}
                       </div>
@@ -637,8 +661,8 @@
                       <div class="tw-w-full">
                         <div class="tw-flex tw-gap-x-4 tw-gap-y-1 tw-pb-2 tw-items-center tw-flex-wrap tw-w-full tw-justify-between">
                           <div class="tw-flex tw-w-full tw-flex-row tw-gap-2 tw-items-start tw-justify-between">
-                            <a class="tw-w-full tw-h-fit tw-max-w-96" href="{{ product.url | default: '/' }}">
-                              <h3 class="tw-font-semibold tw-text-14 tw-text-brand-primary tw-w-full tw-leading-tight tw-h-fit tw-m-0">
+                            <a class="tw-w-full tw-h-fit tw-max-w-96" href="{{ product_link }}">
+                              <h3 v-pre class="tw-font-semibold tw-text-14 tw-text-brand-primary tw-w-full tw-leading-tight tw-h-fit tw-m-0">
                                 {{ product.title | default: 'Product title' }}
                               </h3>
                             </a>
@@ -647,7 +671,7 @@
                             and customer
                             and customer.tags contains 'Staff'
                           %}
-                            <p class="tw-font-semibold tw-text-14 tw-text-brand-greyer/50 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
+                            <p v-pre class="tw-font-semibold tw-text-14 tw-text-brand-greyer/50 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
                               TB Code:
                               <span class="tw-font-normal">
                                 {{- product.metafields.custom.tb_code -}}
@@ -655,7 +679,7 @@
                             </p>
                           {% endif %}
                           {% if isbn != blank %}
-                            <p class="tw-font-semibold tw-text-14 tw-text-brand-greyer/50 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
+                            <p v-pre class="tw-font-semibold tw-text-14 tw-text-brand-greyer/50 tw-w-full tw-leading-tight tw-h-fit tw-m-0">
                               ISBN:
                               <span class="tw-font-normal">
                                 {{- isbn -}}
@@ -700,7 +724,7 @@
                       {% if customer == null %}
                         <a
                           href="{{ routes.account_login_url }}"
-                          class="tw-bg-brand-primary tw-w-full tw-cursor-pointer tw-text-12 tw-text-white tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-py-2 tw-px-3 tw-transition-all duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-brightness-95 tw-whitespace-nowrap tw-items-center tw-uppercase tw-mt-auto tw-no-underline"
+                          class="tw-bg-brand-secondary tw-w-full tw-cursor-pointer tw-text-12 tw-text-offblack tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-py-2 tw-px-3 tw-transition-all duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-brightness-95 tw-whitespace-nowrap tw-items-center tw-uppercase tw-mt-auto tw-no-underline"
                         >
                           Sign in to shop
                         </a>
@@ -744,20 +768,20 @@
                               data-variant-id="{{ single_variant.id }}"
                               data-case-variant-id="{{ case_variant.id }}"
                               data-cases-available="{{ cases_available }}"
-                              data-tags="{{ product.tags | json }}"
-                              data-isbn="{{ isbn }}"
-                              class="tw-bg-brand-secondary tw-w-full tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center"
+                              data-tags="{{ product.tags | json | escape }}"
+                              data-isbn="{{ isbn | escape }}"
+                              class="tw-bg-brand-secondary tw-w-full tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-offblack tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-py-2 tw-px-3 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center tw-uppercase"
                               @click="addToCart(variantFor({{ single_variant.id }}), $event.currentTarget, {{ qty_rule }})"
                               :disabled="isAdding(variantFor({{ single_variant.id }}))"
                             >
                               [[ isAdding(variantFor({{ single_variant.id }})) ? 'Adding...' : '
-                              {{- section.settings.button_text | default: 'Add to Cart' -}}
+                              {{- section.settings.button_text | default: 'QUICK ADD' -}}
                               ' ]]
                             </button>
                           </div>
                         {% else %}
                           <a
-                            href="{{ product.url }}"
+                            href="{{ product_link }}"
                             class="tw-bg-white tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-border-black tw-border-2 tw-py-1 tw-px-4 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap"
                           >
                             <span>{{ section.settings.button_text | default: 'Shop Now' }}</span>
@@ -772,13 +796,13 @@
                   class="product-grid-list"
                   :style="{ display: viewMode === 'list' ? 'block' : 'none' }"
                 >
-                  <!-- Inlined ud-quickadd-list-item -->
-                  <div class="tw-flex tw-flex-row tw-items-center tw-border tw-mb-[-1px] tw-border-brand-grey tw-p-4 tw-gap-4 tw-w-full">
+                  <!-- Inlined ud-quickadd-list-item: mobile places image top-left beside title/author/ISBN/TB Code/QTY with description/prices/CTA full-width below -->
+                  <div class="tw-grid tw-grid-cols-[5.5rem_1fr] md:tw-grid-cols-[7.5rem_1fr] tw-items-start tw-border tw-mb-[-1px] tw-border-brand-grey tw-p-4 tw-gap-x-3 md:tw-gap-x-4 tw-gap-y-2 md:tw-gap-y-1 tw-w-full">
                     <a
-                      href="{% if product.metafields.custom.alt_gallery_link != blank %}{{ product.metafields.custom.alt_gallery_link.value.url }}{% else %}{{ product.url | default: '/' }}{% endif %}"
-                      class="tw-flex-shrink-0"
+                      href="{% if product.metafields.custom.alt_gallery_link != blank %}{{ product.metafields.custom.alt_gallery_link.value.url }}{% else %}{{ product_link }}{% endif %}"
+                      class="tw-col-start-1 tw-row-start-1 md:tw-row-span-3 tw-block tw-w-full"
                     >
-                      <div class="tw-h-28 md:tw-h-36 tw-object-cover tw-aspect-5/6 tw-relative">
+                      <div class="tw-w-full tw-aspect-5/6 tw-object-cover tw-relative">
                         {% if product.featured_image != blank %}
                           {{
                             product.featured_image
@@ -790,150 +814,213 @@
                             {% render 'placeholder-image', width: 400, class: 'tw-size-full tw-object-contain' %}
                           </div>
                         {% endif %}
-                        {% if product.tags contains 'New Product' %}
-                          <div class="tw-absolute tw-top-1 tw-left-1 tw-text-9 tw-px-4 tw-py-1 tw-rounded-[4px] tw-bg-brand-primary tw-text-white tw-font-semibold">
-                            NEW
-                          </div>
-                        {% elsif is_flash_sale %}
-                          <div class="tw-absolute tw-top-1 tw-left-1 tw-text-9 tw-px-4 tw-py-1 tw-bg-brand-sale tw-rounded-[4px] tw-text-white tw-font-semibold">
-                            SALE
+                        {% if is_sale_badge or product.tags contains 'New Product' %}
+                          <div class="tw-absolute tw-top-1 tw-left-1 tw-flex tw-flex-col tw-gap-1">
+                            {% if is_sale_badge %}
+                              <div class="tw-text-9 tw-px-2 tw-py-0.5 tw-bg-brand-sale tw-rounded-[4px] tw-text-white tw-font-semibold tw-uppercase tw-leading-none">
+                                SALE
+                              </div>
+                            {% endif %}
+                            {% if product.tags contains 'New Product' %}
+                              <div class="tw-text-9 tw-px-2 tw-py-0.5 tw-rounded-[4px] tw-bg-brand-primary tw-text-white tw-font-semibold tw-uppercase tw-leading-none">
+                                NEW
+                              </div>
+                            {% endif %}
                           </div>
                         {% endif %}
                       </div>
                     </a>
-                    <div class="tw-py-1 tw-w-full tw-flex tw-flex-col tw-justify-between tw-gap-2 tw-min-w-0 tw-grow">
-                      <div class="tw-flex tw-grow tw-flex-col tw-justify-between tw-gap-1">
-                        <div class="tw-flex tw-w-full tw-flex-row max-md:tw-flex-wrap tw-justify-between tw-gap-x-3 tw-gap-y-0.5 tw-text-12">
-                          <a href="{{ product.url | default: '/' }}" class="tw-min-w-0 max-md:tw-w-full">
-                            <h3 class="tw-font-semibold tw-text-13 tw-text-brand-primary tw-text-14 tw-leading-tight tw-m-0 tw-truncate">
-                              {{ product.title | default: 'Product title' }}
-                            </h3>
-                          </a>
-                          {%- unless product.type == 'Greeting Card' -%}
-                            <div class="tw-text-gray-500 tw-text-14 tw-font-normal tw-whitespace-nowrap">
-                              List:
-                              <span class="tw-font-normal">
-                                {{- product.compare_at_price | default: product.price | money -}}
-                              </span>
-                            </div>
-                          {%- endunless -%}
-                        </div>
-                        <div class="tw-flex tw-w-full tw-flex-wrap tw-justify-between tw-gap-x-3 tw-gap-y-0.5 tw-text-14">
-                          <div>
-                            <span class="tw-font-medium">by</span>
-                            <a class="tw-font-medium tw-capitalize">
-                              {{- product.metafields.custom.author.value | default: 'Author Name' -}}
-                            </a>
+                    <!-- Top-right info block (Title, Author; desktop prices right-aligned; mobile ISBN/TB Code/QTY here) -->
+                    <div class="tw-col-start-2 tw-row-start-1 tw-min-w-0 tw-flex tw-flex-col tw-gap-1">
+                      <div class="tw-flex tw-w-full tw-flex-row tw-justify-between tw-items-start tw-gap-x-3 tw-gap-y-0.5">
+                        <a href="{{ product_link }}" class="tw-min-w-0 tw-flex-1">
+                          <h3 v-pre class="tw-font-semibold tw-text-brand-primary tw-text-14 tw-leading-tight tw-m-0 md:tw-truncate">
+                            {{ product.title | default: 'Product title' }}
+                          </h3>
+                        </a>
+                        {%- unless product.type == 'Greeting Card' -%}
+                          <div class="tw-hidden md:tw-block tw-text-gray-500 tw-text-14 tw-font-normal tw-whitespace-nowrap">
+                            List:
+                            <span class="tw-font-normal">
+                              {{- product.compare_at_price | default: product.price | money -}}
+                            </span>
                           </div>
-                          {% if is_flash_sale %}
-                            <div class="tw-font-semibold tw-text-14">
-                              {% assign flash_sale_discount = settings.flash_sale_discount | times: 0.01 %}
-                              {% assign flash_sale_amount = product.price | times: flash_sale_discount %}
-                              {% if customer %}Your{% endif %} Net Price:
-                              <span class="tw-font-normal tw-line-through">{{ product.price | money }} </span>
-                              <span class="tw-font-normal tw-text-brand-sale">
-                                {{- product.price | minus: flash_sale_amount | money -}}
-                              </span>
-                            </div>
-                          {% else %}
-                            <div class="tw-font-semibold tw-text-14">
-                              {% if customer %}Your{% endif %} Net Price:
-                              <span class="tw-font-normal">{{ product.price | money }} </span>
-                            </div>
+                        {%- endunless -%}
+                      </div>
+                      <div class="tw-flex tw-w-full tw-flex-wrap tw-justify-between tw-gap-x-3 tw-gap-y-0.5 tw-text-14">
+                        {% if product_author != blank %}
+                          <div v-pre>
+                            <span class="tw-font-medium">by</span>
+                            <span class="tw-font-medium tw-capitalize">{{- product_author -}}</span>
+                          </div>
+                        {% else %}
+                          <div></div>
+                        {% endif %}
+                        {% if is_flash_sale %}
+                          <div class="tw-hidden md:tw-block tw-font-semibold tw-text-14">
+                            {% assign flash_sale_discount = settings.flash_sale_discount | times: 0.01 %}
+                            {% assign flash_sale_amount = product.price | times: flash_sale_discount %}
+                            {% if customer %}Your{% endif %} Net Price:
+                            <span class="tw-font-normal tw-line-through">{{ product.price | money }} </span>
+                            <span class="tw-font-normal tw-text-brand-sale">
+                              {{- product.price | minus: flash_sale_amount | money -}}
+                            </span>
+                          </div>
+                        {% else %}
+                          <div class="tw-hidden md:tw-block tw-font-semibold tw-text-14">
+                            {% if customer %}Your{% endif %} Net Price:
+                            <span class="tw-font-normal">{{ product.price | money }} </span>
+                          </div>
+                        {% endif %}
+                      </div>
+                      <!-- Mobile-only ISBN / TB Code / QTY right next to image -->
+                      <div class="md:tw-hidden tw-flex tw-flex-col tw-gap-0.5 tw-text-14 tw-text-offblack">
+                        <div class="tw-flex tw-flex-wrap tw-gap-x-3 tw-gap-y-0.5">
+                          {% if isbn != blank %}
+                            <div v-pre><span class="tw-font-semibold">ISBN:</span> {{ isbn }}</div>
+                          {% endif %}
+                          {% if product.metafields.custom.tb_code != blank
+                            and customer
+                            and customer.tags contains 'Staff'
+                          %}
+                            <div v-pre><span class="tw-font-semibold">TB CODE:</span> {{ product.metafields.custom.tb_code }}</div>
                           {% endif %}
                         </div>
-                        <div class="tw-grow tw-text-14 tw-line-clamp-4 tw-text-gray-500">
-                          {{ product.description | default: 'No description available.' }}
+                        <div class="tw-flex tw-flex-wrap tw-items-center tw-gap-x-2 tw-gap-y-0.5">
+                          <div><span class="tw-font-semibold">QTY:</span> {{ stock_qty }}</div>
+                          {% render 'stock-label', state: stock_state %}
                         </div>
-                        <div class="tw-flex tw-w-full max-md:tw-flex-col max-md:tw-items-stretch tw-justify-between md:tw-items-end tw-gap-x-3 tw-gap-y-2 md:tw-gap-y-0.5 tw-text-14">
-                          <div class="tw-flex tw-w-full tw-flex-wrap tw-text-gray-700 tw-font-semibold tw-gap-x-3 tw-gap-y-0.5 tw-text-14">
-                            {% if isbn != blank %}
-                              <div>
-                                ISBN:
-                                <span class="tw-font-normal">
-                                  {{- isbn -}}
-                                </span>
-                              </div>
-                            {% endif %}
-                            <div>
-                              QTY:
+                      </div>
+                    </div>
+                    <!-- Description (full-width under image on mobile; right column on desktop) -->
+                    <div v-pre class="tw-col-span-2 md:tw-col-span-1 md:tw-col-start-2 tw-text-14 tw-line-clamp-3 tw-text-gray-500">
+                      {{ product.description | strip_html | default: 'No description available.' }}
+                    </div>
+                    <!-- Prices (mobile) + Desktop meta + Quick Add / Sign in (full-width on mobile; right column on desktop) -->
+                    <div class="tw-col-span-2 md:tw-col-span-1 md:tw-col-start-2 tw-flex tw-flex-col tw-gap-2">
+                      <!-- Mobile-only Price row below description -->
+                      <div class="md:tw-hidden tw-flex tw-flex-wrap tw-items-baseline tw-gap-x-4 tw-gap-y-0.5 tw-text-14">
+                        {%- unless product.type == 'Greeting Card' -%}
+                          <div class="tw-text-offblack tw-font-normal tw-whitespace-nowrap">
+                            List: {{ product.compare_at_price | default: product.price | money }}
+                          </div>
+                        {%- endunless -%}
+                        {% if is_flash_sale %}
+                          <div class="tw-font-semibold tw-text-offblack">
+                            {% assign flash_sale_discount = settings.flash_sale_discount | times: 0.01 %}
+                            {% assign flash_sale_amount = product.price | times: flash_sale_discount %}
+                            {% if customer %}Your{% endif %} Net Price:
+                            <span class="tw-font-normal tw-line-through">{{ product.price | money }} </span>
+                            <span class="tw-font-semibold tw-text-brand-sale">
+                              {{- product.price | minus: flash_sale_amount | money -}}
+                            </span>
+                          </div>
+                        {% else %}
+                          <div class="tw-font-semibold tw-text-offblack">
+                            {% if customer %}Your{% endif %} Net Price: {{ product.price | money }}
+                          </div>
+                        {% endif %}
+                      </div>
+                      <div class="tw-flex tw-w-full max-md:tw-flex-col max-md:tw-items-stretch tw-justify-between md:tw-items-end tw-gap-x-3 tw-gap-y-2 md:tw-gap-y-0.5 tw-text-14">
+                        <!-- Desktop-only ISBN / TB Code / QTY -->
+                        <div class="tw-hidden md:tw-flex tw-w-full tw-flex-wrap tw-text-gray-700 tw-font-semibold tw-gap-x-3 tw-gap-y-0.5 tw-text-14">
+                          {% if isbn != blank %}
+                            <div v-pre>
+                              ISBN:
                               <span class="tw-font-normal">
-                                {{- stock_qty -}}
+                                {{- isbn -}}
                               </span>
                             </div>
-                            {% render 'stock-label', state: stock_state, class: 'tw-self-start' %}
+                          {% endif %}
+                          {% if product.metafields.custom.tb_code != blank
+                            and customer
+                            and customer.tags contains 'Staff'
+                          %}
+                            <div v-pre>
+                              TB Code:
+                              <span class="tw-font-normal">
+                                {{- product.metafields.custom.tb_code -}}
+                              </span>
+                            </div>
+                          {% endif %}
+                          <div>
+                            QTY:
+                            <span class="tw-font-normal">
+                              {{- stock_qty -}}
+                            </span>
                           </div>
-                          <div class="tw-flex-shrink-0 max-md:tw-w-full">
-                            {% if customer == null %}
-                              <a
-                                href="{{ routes.account_login_url }}"
-                                class="tw-bg-brand-primary tw-cursor-pointer tw-text-11 tw-text-white tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4 tw-py-2 tw-transition-all duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-brightness-95 tw-whitespace-nowrap tw-items-center tw-uppercase tw-no-underline"
+                          {% render 'stock-label', state: stock_state, class: 'tw-self-start' %}
+                        </div>
+                        <div class="tw-flex-shrink-0 max-md:tw-w-full">
+                          {% if customer == null %}
+                            <a
+                              href="{{ routes.account_login_url }}"
+                              class="tw-bg-brand-secondary tw-cursor-pointer tw-text-12 tw-text-offblack tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-4 tw-py-2.5 tw-transition-all duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-brightness-95 tw-whitespace-nowrap tw-items-center tw-uppercase tw-no-underline max-md:tw-w-full"
+                            >
+                              Sign in to shop
+                            </a>
+                          {% elsif section.settings.button_type != 'none' %}
+                            {% if section.settings.button_type == 'quick-add' and stock_state == 'out_of_stock' %}
+                              <button
+                                type="button"
+                                disabled
+                                class="tw-bg-brand-secondary tw-text-12 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-6 tw-py-2 tw-font-semibold tw-font-montserrat tw-whitespace-nowrap tw-items-center tw-uppercase max-md:tw-w-full tw-opacity-50 tw-cursor-not-allowed"
                               >
-                                Sign in to shop
-                              </a>
-                            {% elsif section.settings.button_type != 'none' %}
-                              {% if section.settings.button_type == 'quick-add' and stock_state == 'out_of_stock' %}
-                                <button
-                                  type="button"
-                                  disabled
-                                  class="tw-bg-brand-secondary tw-text-10 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-6 tw-py-2 tw-font-semibold tw-font-sans tw-whitespace-nowrap tw-items-center tw-uppercase max-md:tw-w-full tw-opacity-50 tw-cursor-not-allowed"
-                                >
-                                  Out of Stock
-                                </button>
-                              {% elsif section.settings.button_type == 'quick-add' %}
-                                <div class="tw-flex max-md:tw-flex-wrap tw-items-center tw-gap-2 tw-h-full">
-                                  {% if cases_available > 0 %}
-                                    <select
-                                      aria-label="Pack size"
-                                      @change="setPack({{ single_variant.id }}, $event.target.value)"
-                                      class="tw-py-0.5 tw-px-1 tw-border tw-border-brand-grey tw-rounded tw-text-14 tw-font-semibold max-md:tw-w-full"
-                                    >
-                                      {{ pack_select_options }}
-                                    </select>
-                                  {% endif %}
-                                  <div class="tw-flex tw-items-center tw-gap-1">
-                                    <label class="tw-text-14 tw-font-semibold tw-whitespace-nowrap"
-                                      >QTY{{ qty_hint }}:</label
-                                    >
-                                    <input
-                                      type="number"
-                                      :min="{{ qty_rule }}.min"
-                                      :step="{{ qty_rule }}.step"
-                                      :max="{{ qty_rule }}.max === Infinity ? null : {{ qty_rule }}.max"
-                                      :placeholder="{{ qty_rule }}.min"
-                                      :value="getQty(variantFor({{ single_variant.id }}), {{ qty_rule }}.min)"
-                                      @input="setQty(variantFor({{ single_variant.id }}), $event.target, {{ qty_rule }}.max)"
-                                      @change="clampQty(variantFor({{ single_variant.id }}), $event.target, {{ qty_rule }})"
-                                      class="tw-w-14 tw-text-center tw-leading-none tw-py-0.5 tw-px-1 tw-border tw-border-brand-grey tw-rounded tw-text-14 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
-                                      :disabled="isAdding(variantFor({{ single_variant.id }}))"
-                                    >
-                                  </div>
-                                  <button
-                                    type="button"
-                                    data-variant-id="{{ single_variant.id }}"
-                                    data-case-variant-id="{{ case_variant.id }}"
-                                    data-cases-available="{{ cases_available }}"
-                                    data-tags="{{ product.tags | json }}"
-                                    data-isbn="{{ isbn }}"
-                                    class="tw-bg-brand-secondary tw-cursor-pointer tw-pointer-events-auto tw-text-10 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-6 tw-py-1.5 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-sans hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center max-md:tw-grow"
-                                    @click="addToCart(variantFor({{ single_variant.id }}), $event.currentTarget, {{ qty_rule }})"
+                                Out of Stock
+                              </button>
+                            {% elsif section.settings.button_type == 'quick-add' %}
+                              <div class="tw-flex max-md:tw-flex-wrap tw-items-center tw-gap-2 tw-h-full">
+                                {% if cases_available > 0 %}
+                                  <select
+                                    aria-label="Pack size"
+                                    @change="setPack({{ single_variant.id }}, $event.target.value)"
+                                    class="tw-py-1 tw-px-2 tw-border tw-border-brand-grey tw-rounded tw-text-14 tw-font-semibold max-md:tw-w-full"
+                                  >
+                                    {{ pack_select_options }}
+                                  </select>
+                                {% endif %}
+                                <div class="tw-flex tw-items-center tw-gap-2">
+                                  <label class="tw-text-14 tw-font-semibold tw-whitespace-nowrap"
+                                    >QTY{{ qty_hint }}:</label
+                                  >
+                                  <input
+                                    type="number"
+                                    :min="{{ qty_rule }}.min"
+                                    :step="{{ qty_rule }}.step"
+                                    :max="{{ qty_rule }}.max === Infinity ? null : {{ qty_rule }}.max"
+                                    :placeholder="{{ qty_rule }}.min"
+                                    :value="getQty(variantFor({{ single_variant.id }}), {{ qty_rule }}.min)"
+                                    @input="setQty(variantFor({{ single_variant.id }}), $event.target, {{ qty_rule }}.max)"
+                                    @change="clampQty(variantFor({{ single_variant.id }}), $event.target, {{ qty_rule }})"
+                                    class="tw-w-16 tw-text-center tw-leading-none tw-py-1.5 tw-px-1 tw-border tw-border-brand-grey tw-rounded tw-text-14 tw-font-semibold [appearance:textfield] [&::-webkit-inner-spin-button]:tw-appearance-none [&::-webkit-outer-spin-button]:tw-appearance-none"
                                     :disabled="isAdding(variantFor({{ single_variant.id }}))"
                                   >
-                                    [[ isAdding(variantFor({{ single_variant.id }})) ? 'Adding...' : '
-                                    {{- section.settings.button_text | default: 'QUICK ADD' -}}
-                                    ' ]]
-                                  </button>
                                 </div>
-                              {% else %}
-                                <a
-                                  href="{{ product.url }}"
-                                  class="tw-bg-white tw-cursor-pointer tw-pointer-events-auto tw-text-11 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-border-black tw-border tw-py-1 tw-px-3 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap"
+                                <button
+                                  type="button"
+                                  data-variant-id="{{ single_variant.id }}"
+                                  data-case-variant-id="{{ case_variant.id }}"
+                                  data-cases-available="{{ cases_available }}"
+                                  data-tags="{{ product.tags | json | escape }}"
+                                  data-isbn="{{ isbn | escape }}"
+                                  class="tw-bg-brand-secondary tw-cursor-pointer tw-pointer-events-auto tw-text-12 tw-text-offblack tw-rounded-[4px] tw-flex tw-justify-center tw-leading-none tw-px-6 tw-py-2.5 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap tw-items-center tw-uppercase max-md:tw-grow"
+                                  @click="addToCart(variantFor({{ single_variant.id }}), $event.currentTarget, {{ qty_rule }})"
+                                  :disabled="isAdding(variantFor({{ single_variant.id }}))"
                                 >
-                                  <span>{{ section.settings.button_text | default: 'View' }}</span>
-                                </a>
-                              {% endif %}
+                                  [[ isAdding(variantFor({{ single_variant.id }})) ? 'Adding...' : '
+                                  {{- section.settings.button_text | default: 'QUICK ADD' -}}
+                                  ' ]]
+                                </button>
+                              </div>
+                            {% else %}
+                              <a
+                                href="{{ product_link }}"
+                                class="tw-bg-white tw-cursor-pointer tw-pointer-events-auto tw-text-11 tw-text-black tw-rounded-[4px] tw-flex tw-justify-center tw-border-black tw-border tw-py-1 tw-px-3 tw-transition-button duration-200 ease-in-out tw-font-semibold tw-font-montserrat hover:tw-scale-[105%] tw-whitespace-nowrap"
+                              >
+                                <span>{{ section.settings.button_text | default: 'View' }}</span>
+                              </a>
                             {% endif %}
-                          </div>
+                          {% endif %}
                         </div>
                       </div>
                     </div>
@@ -1044,7 +1131,7 @@
       },
       toggleFilter(id, defaultCollapsed) {
         const current = this.isFilterOpen(id, defaultCollapsed);
-        this.$set(this.openFilters, id, !current);
+        this.openFilters = Object.assign({}, this.openFilters, { [id]: !current });
       },
       getNavHeight() {
         // Use the wrapper around the whole header group, not a single section, so the full stuck height is measured

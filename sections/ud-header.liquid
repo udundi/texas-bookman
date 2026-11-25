@@ -143,17 +143,17 @@
       </div>
     </div>
     <!-- Logo -->
-    <div class="logo tw-flex tw-gap-4 md:tw-py-2">
+    <div class="logo tw-flex tw-gap-4 md:tw-py-1">
       <a
         href="/"
         aria-label="Home"
-        class="tw-h-16 md:tw-w-24 tw-w-full tw-max-w-40"
+        class="tw-h-16 md:tw-h-20 lg:tw-h-24 md:tw-w-36 lg:tw-w-44 tw-w-full tw-max-w-40 md:tw-max-w-none tw-flex tw-items-center"
       >
         {% if section.settings.site_logo != blank %}
           {{
             section.settings.site_logo
-            | image_url: width: 400
-            | image_tag: alt: 'Site Logo', class: 'md:tw-block tw-hidden tw-h-16 tw-w-full tw-object-contain'
+            | image_url: width: 600
+            | image_tag: alt: 'Site Logo', class: 'md:tw-block tw-hidden tw-h-full tw-w-full tw-object-contain'
           }}
           {{
             section.settings.mobile_site_logo

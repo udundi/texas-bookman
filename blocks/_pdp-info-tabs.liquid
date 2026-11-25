@@ -11,7 +11,7 @@
     {%- assign detail_value = product.metafields.custom[detail_key] | strip -%}
     {%- assign detail_value_lower = detail_value | downcase -%}
     {%- if detail_value != blank and detail_value_lower != 'not available' -%}
-      <div>{{ detail_labels[forloop.index0] }}: {{ detail_value }}</div>
+      <div><span class="tw-font-semibold">{{ detail_labels[forloop.index0] }}:</span> {{ detail_value }}</div>
     {%- endif -%}
   {%- endfor -%}
 {%- endcapture -%}

@@ -48,18 +48,20 @@
       font-style: italic;
     }
   {% endstyle %}
-  <div class="tw-border-[#D2DADC] tw-border-0 tw-border-b tw-border-solid">
+  <div class="tw-border-brand-grey tw-border-0 tw-border-b tw-border-solid">
     <!-- FAQ Item Header -->
     <button
+      type="button"
+      :aria-expanded="(selectedDrawer == '{{ button_id }}').toString()"
       @click="selectedDrawer == '{{ button_id }}' ? selectedDrawer = '' : selectedDrawer = '{{ button_id }}'"
-      class="tw-text-offblack tw-py-4 tw-font-extrabold tw-w-full tw-flex tw-flex-row tw-justify-between tw-gap-4 tw-items-center hover:tw-opacity-80 tw-transition-opacity"
+      class="tw-text-offblack tw-py-4 tw-font-semibold tw-w-full tw-flex tw-flex-row tw-justify-between tw-gap-4 tw-items-center hover:tw-opacity-80 tw-transition-opacity tw-bg-transparent tw-border-0 tw-cursor-pointer"
     >
       <div class="tw-w-fit tw-text-16 tw-font-montserrat tw-font-semibold tw-text-left">
         {{ block.settings.question }}
       </div>
       <div
-        class="tw-size-4 tw-stroke-black tw-transition-transform tw-duration-300 tw-flex-shrink-0"
-        :class="selectedDrawer == '{{ button_id }}' ? 'tw-rotate-0' : '-tw-rotate-180'"
+        class="tw-size-4 tw-fill-offblack tw-transition-transform tw-duration-300 tw-flex-shrink-0"
+        :class="selectedDrawer == '{{ button_id }}' ? 'tw-rotate-180' : 'tw-rotate-0'"
       >
         {% render 'icon-arrow-down' %}
       </div>
@@ -67,9 +69,9 @@
     <!-- FAQ Item Body -->
     <div
       class="tw-transition-all tw-overflow-hidden tw-text-14"
-      :class="selectedDrawer == '{{ button_id }}' ? 'tw-max-h-[500px] tw-duration-300' : 'tw-max-h-0 tw-delay-100 tw-duration-500'"
+      :class="selectedDrawer == '{{ button_id }}' ? 'tw-max-h-[1000px] tw-duration-300' : 'tw-max-h-0 tw-delay-100 tw-duration-500'"
     >
-      <div class="tw-pr-8 tw-pb-4 faq-richtext">
+      <div class="tw-pr-8 tw-pb-4 faq-richtext tw-text-offblack/80">
         {{ block.settings.answer }}
       </div>
     </div>

@@ -8,22 +8,34 @@
       <!-- Recently Added Banner -->
       <div
         v-if="recentlyAddedItem"
-        class="tw-mb-2 tw-flex tw-items-center tw-gap-3 tw-p-3 tw-text-sm"
+        class="tw-flex tw-items-center tw-gap-3 tw-border-b tw-border-brand-grey tw-p-3 tw-text-sm"
       >
         <div
-          :class="failed && !partial ? 'tw-bg-red-500 tw-rotate-45 tw-text-white' : 'tw-bg-amber-400 tw-text-offblack'"
-          class="tw-p-2 tw-rounded-full"
+          :class="failed && !partial ? 'tw-bg-red-500 tw-rotate-45 tw-text-white' : 'tw-bg-brand-secondary tw-text-offblack'"
+          class="tw-p-2 tw-rounded-full tw-flex tw-items-center tw-justify-center"
         >
-          {% render 'icon-plus' %}
+          <svg
+            v-if="!failed || partial"
+            class="tw-h-3 tw-w-3"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 18 18"
+          >
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M3 9.5l4 4L15 5" />
+          </svg>
+          <span v-else>{% render 'icon-plus' %}</span>
         </div>
         <div class="tw-min-w-0 tw-flex-1">
-          <p v-if="!failed" class="tw-text-16 tw-text-black">Added to cart</p>
-          <p v-else-if="partial" class="tw-text-16 tw-text-black tw-font-semibold">Partially added to cart</p>
-          <p v-else class="tw-text-16 tw-text-black tw-font-semibold">Unable to add to cart</p>
+          <p v-if="!failed" class="tw-m-0 tw-text-16 tw-font-semibold tw-text-black">Added to Cart</p>
+          <p v-else-if="partial" class="tw-m-0 tw-text-16 tw-text-black tw-font-semibold">Partially added to cart</p>
+          <p v-else class="tw-m-0 tw-text-16 tw-text-black tw-font-semibold">Unable to add to cart</p>
         </div>
         <button
+          type="button"
           @click="hideCart"
-          class="tw-shrink-0 tw-text-green-600 hover:tw-text-green-900"
+          aria-label="Close"
+          class="tw-shrink-0 tw-text-offblack hover:tw-opacity-70"
         >
           {% render 'icon-times' %}
         </button>

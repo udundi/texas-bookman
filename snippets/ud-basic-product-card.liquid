@@ -47,9 +47,29 @@
           {% render 'placeholder-image', width: 400, class: 'tw-size-full tw-object-contain' %}
         </div>
       {% endif %}
-      {% if cur_product.tags contains 'New Product' %}
-        <div class="tw-absolute tw-top-2.5 tw-right-2 tw-text-12 tw-px-4 tw-py-1 tw-bg-black tw-rounded-[4px] tw-text-white tw-font-semibold">
-          New
+      {% assign is_sale_badge = false %}
+      {% if cur_product.tags contains 'SALE' or cur_product.tags contains 'Sale' or cur_product.tags contains 'sale' %}
+        {% assign is_sale_badge = true %}
+      {% elsif settings.flash_sale %}
+        {% for flash_sale_product in settings.flash_sale_products %}
+          {% if flash_sale_product.id == cur_product.id %}
+            {% assign is_sale_badge = true %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+      {% if is_sale_badge or cur_product.tags contains 'New Product' %}
+        <div class="tw-absolute tw-top-2 tw-left-2 tw-flex tw-flex-wrap tw-gap-1">
+          {% if is_sale_badge %}
+            <div class="tw-text-10 tw-px-2.5 tw-py-1 tw-bg-brand-sale tw-rounded-[4px] tw-text-white tw-font-semibold tw-uppercase tw-leading-none">
+              SALE
+            </div>
+          {% endif %}
+          {% if cur_product.tags contains 'New Product' %}
+            <div class="tw-text-10 tw-px-2.5 tw-py-1 tw-bg-brand-primary tw-rounded-[4px] tw-text-white tw-font-semibold tw-uppercase tw-leading-none">
+              NEW
+            </div>
+          {% endif %}
         </div>
       {% endif %}
     </div>
@@ -134,7 +154,7 @@
           @click="addToCart()"
           :disabled="addingToCart"
         >
-          [[ addingToCart ? 'Adding...' : 'Add to Cart' ]]
+          [[ addingToCart ? 'Adding...' : 'QUICK ADD' ]]
         </button>
       </div>
     {% endif %}

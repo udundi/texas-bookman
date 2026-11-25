@@ -88,6 +88,7 @@
                 "price": {{ rel_product.price | json }},
                 "compare_at_price": {{ rel_product.compare_at_price | json }},
                 "greeting_card": {% if rel_product.type == 'Greeting Card' %}true{% else %}false{% endif %},
+                "on_sale": {% if rel_product.tags contains 'SALE' or rel_product.tags contains 'Sale' or rel_product.tags contains 'sale' %}true{% else %}false{% endif %},
                 "isbn": {{ rel_product.metafields.facts.isbn | default: rel_product.metafields.custom.isbn | append: '' | json }},
                 {%- liquid
                   # Quick add buys the Single; when it's sold out the first available variant is the
@@ -244,6 +245,7 @@
           '<a href="' + escapeHtml(product.url) + '">' +
           '<div class="tw-aspect-3/4 tw-w-full tw-relative tw-mb-2">' +
           '<img src="' + escapeHtml(image || placeholderImage) + '" loading="lazy" alt="' + escapeHtml(image ? product.title : '') + '" class="tw-w-full tw-object-contain tw-aspect-3/4">' +
+          (product.on_sale ? '<div class="tw-absolute tw-top-2 tw-left-2 tw-text-10 tw-px-2.5 tw-py-1 tw-bg-brand-sale tw-rounded-[4px] tw-text-white tw-font-semibold tw-uppercase tw-leading-none">SALE</div>' : '') +
           '</div>' +
           '</a>' +
           '<a href="' + escapeHtml(product.url) + '">' +

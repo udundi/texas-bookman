@@ -18,14 +18,14 @@
     {% if block.settings.title_override != blank %}
       {% assign title_text = block.settings.title_override %}
     {% endif %}
-    {% if block.settings.visibility contains 'desktop' %}
-      <h1 class="tw-text-26 tw-m-0 tw-font-semibold tw-text-offblack tw-w-full max-md:tw-text-center tw-justify-start tw-leading-tight">
-        {{ title_text }}
-      </h1>
-    {% else %}
+    {% if block.settings.visibility == 'mobile' %}
       <p class="tw-text-26 tw-m-0 tw-font-semibold tw-text-offblack tw-w-full tw-justify-start tw-leading-tight">
         {{ title_text }}
       </p>
+    {% else %}
+      <h1 class="tw-text-26 tw-m-0 tw-font-semibold tw-text-offblack tw-w-full tw-text-left tw-justify-start tw-leading-tight">
+        {{ title_text }}
+      </h1>
     {% endif %}
   </div>
 </div>
